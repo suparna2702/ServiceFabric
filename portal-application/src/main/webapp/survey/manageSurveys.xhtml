@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/basemenulayout.xhtml">
+
+	<ui:param name="newContent" value="true" />
+	<ui:param name="skipToolbar" value="true" />
+	<ui:define name="title">Manage Polls</ui:define>
+
+	<ui:define name="centerContent">
+
+		<ui:include src="/survey/surveyToolBar.xhtml" />
+
+		<c:if test="#{empty pollTemplateManagementView.pollTemplateList}">
+			<div class="row-fluid well">
+				<div class="span12">
+					<p>No survey defined</p>
+				</div>
+			</div>
+		</c:if>
+
+
+		<!-- Shows the list of Polls -->
+		<div class="row-fluid control-group">
+			<div class="span12">
+				<ui:repeat var="pollTemplateItem"
+					value="#{pollTemplateManagementView.pollTemplateList}">
+
+					<!-- Each Poll -->
+					<div class="row-fluid well">
+						<div class="span12">
+							<div class="row-fluid control-group">
+
+								<!-- Poll name and Description -->
+								<div class="span7">
+									<h4 class="muted">#{pollTemplateItem.templateName}</h4>
+									<p>#{pollTemplateItem.templateDescription}</p>
+									<h:outputText value="#{pollTemplateItem.createStart}">
+										<f:convertDateTime pattern="MM/dd/yyyy" />
+									</h:outputText>
+
+
+									<br></br> <br></br>
+
+									<!-- Tool Bar for other actions -->
+									<div class="btn-toolbar">
+										<div class="btn-group">
+											<a
+												href="#{root}/survey/addEditSurvey.xhtml?pid=#{pollTemplateItem.id}"
+												class="btn btn-primary" rel="tooltip"
+												data-placement="bottom" title="Add/Edit Poll"> <i
+												class="fa fa-pencil-square-o mrm"></i> Edit
+											</a> <a
+												href="#{root}/survey/runSurvey.xhtml?pid=#{pollTemplateItem.id}"
+												class="btn btn-success" rel="tooltip"
+												data-placement="bottom" title="Run Poll"> <i
+												class="fa fa-share-square-o mrm"></i> Run
+											</a> <a
+												href="#{root}/survey/surveySubmissionResult.xhtml?pid=#{pollTemplateItem.id}"
+												class="btn btn-info" rel="tooltip" data-placement="bottom"
+												title="View Result"> <i class="fa fa-bar-chart-o mrm"></i>
+												Result
+											</a>
+										</div>
+									</div>
+								</div>
+
+								<!-- High Level Stats -->
+								<div class="span3">
+									<blockquote>
+										<p>
+											<i class="fa fa-sign-in muted" rel="tooltip"
+												title="Survey Requests"></i>
+											#{pollTemplateItem.eventStatistics.getTotalRequestCount()} <br></br>
+
+											<!-- Number of deployed survey -->
+											<i class="fui-check-inverted muted" rel="tooltip"
+												title="Survey Submissions"></i>
+											#{pollTemplateItem.eventStatistics.submissionCount} <br></br>
+
+											<!-- Number of submission -->
+											<i class="fa fa-question-circle muted" rel="tooltip"
+												title="Pending Requests"></i>
+											#{pollTemplateItem.eventStatistics.eventCount} <br></br>
+											<!-- Number of Pending -->
+										</p>
+									</blockquote>
+								</div>
+
+							</div>
+						</div>
+					</div>
+
+				</ui:repeat>
+			</div>
+		</div>
+
+		<script language="javascript">
+			$(document).ready(function() {
+				$("[rel='tooltip']").tooltip();
+			})
+		</script>
+
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:dialog id="fileBrowser" width="550" height="300"
+		visible="#{workspaceUploadView.openBrowser eq 'true'}"
+		resizable="false" modal="true" showEffect="explode"
+		header="Select Files" widgetVar="selectFileDlg">
+		<p:outputPanel id="fileBrowserPanel">
+			<p:treeTable id="fileBrowserTree"
+				value="#{workspaceUploadView.cloudFiles}" var="node"
+				scrollable="true" scrollHeight="150" selectionMode="checkbox"
+				selection="#{workspaceUploadView.selectedFiles}"
+				styleClass="hide-column-names">
+				<p:ajax event="expand" update="fileBrowserTree"
+					listener="#{workspaceUploadView.onNodeExpand}" />
+				<p:ajax event="select"
+					update=":form:selectionCountLabel :form:addSelectedFilesButton"
+					listener="#{workspaceUploadView.onNodeSelected}" />
+				<p:ajax event="unselect"
+					update=":form:selectionCountLabel :form:addSelectedFilesButton"
+					listener="#{workspaceUploadView.onNodeUnelected}" />
+
+				<p:column styleClass="noBorder">
+
+				</p:column>
+				<p:column style="width:80%" styleClass="noBorder">
+
+					<p:graphicImage id="fileIcon"
+						value="/images/mimetype/#{mimeTypeBean.getMimeTypeIcon(node.mimeType)}"
+						width="12" height="12" />
+					<h:outputText value="#{node.fileName}" />
+				</p:column>
+
+				<p:column style="width:20%" styleClass="noBorder">
+
+					<h:outputText value="#{node.size}" />
+				</p:column>
+
+			</p:treeTable>
+			<h:outputText id="selectionCountLabel"
+				value="#{workspaceUploadView.selectionCount} file(s) selected." />
+			<br />
+			<p:commandButton id="addSelectedFilesButton" value="Add"
+				action="#{workspaceUploadView.addSelectedFiles}"
+				onclick="fileBrowser.hide();return false"
+				process="@this fileBrowser" update=":form:uploadTable"
+				disabled="#{workspaceUploadView.selectionCount eq 0}"
+				style="margin-top:10px" />
+
+		</p:outputPanel>
+	</p:dialog>
+
+
+	<p:dialog id="localFileUploader" width="550" height="300"
+		resizable="false" modal="true" showEffect="explode"
+		header="Upload Files" widgetVar="localFileUploaderDlg">
+		
+		<p:outputPanel id="localFileUploadPanel">
+			<p:fileUpload
+				fileUploadListener="#{workspaceUploadView.handleFileUpload}"
+				mode="advanced" dragDropSupport="false" multiple="true"
+				update="uploadCountLabel :form:upLoadFileList" sizeLimit="10000000" />
+		</p:outputPanel>
+		
+		<h:outputText id="uploadCountLabel"
+			value="#{workspaceUploadView.localUploadedCount} file(s) uploaded from your computer." />
+		<br />
+		<p:commandButton id="localFileUploadDone" value="Close"
+			process="@this" style="margin-top:10px" update=":form:upLoadFileList"
+			onclick="localFileUploaderDlg.hide();return false;" />
+
+	</p:dialog>
+
+</ui:composition>

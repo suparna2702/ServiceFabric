@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/util 
+                           http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+
+  <!-- Workflow for creating business -->
+  <bean id="businessCreationValidationDecision" class="com.similan.process.action.DecisionStateAction">
+    <property name="decisionMap">
+      <map>
+        <entry key="valid" value="to_Create_Business" />
+        <entry key="inValid" value="to_Send_Member_Business_Validation_Err" />
+      </map>
+    </property>
+  </bean>
+
+  <bean id="sendBusinessCreateValidationErrAction" class="com.similan.process.action.SendEmailAction">
+    <property name="templateName" value="sendBusinessCreateValidationErr.vm" />
+  </bean>
+
+  <bean id="sendBusinessCreateValidationToAdminAction" class="com.similan.process.action.SendEmailAction">
+    <property name="templateName" value="sendBusinessCreateValidationToAdmin.vm" />
+    <property name="toEmailContextVar" value="adminEmail" />
+  </bean>
+
+  <bean id="adminBusinessCreateValidationDecisionAction" class="com.similan.process.action.DecisionStateAction">
+    <property name="decisionMap">
+      <map>
+        <entry key="valid" value="to_Send_Business_Profile_Notification_Email" />
+        <entry key="inValid" value="to_Send_BR_Admin_Validation_Err_To_Member" />
+      </map>
+    </property>
+  </bean>
+
+  <bean id="sendBRAdminValidationErrToMemberAction" class="com.similan.process.action.SendEmailAction">
+    <property name="templateName" value="sendBRAdminValidationErrToMember.vm" />
+  </bean>
+
+  <bean id="sendBusinessProfileEmailToMemberAction" class="com.similan.process.action.SendEmailAction">
+    <property name="templateName" value="sendBusinessProfileEmailToMember.vm" />
+  </bean>
+
+  <!-- Workflow for association -->
+
+  <bean id="sendAssociationValidationEmailToBusinessAction" class="com.similan.process.action.SendEmailAction">
+    <property name="templateName" value="sendAssociationValidationEmailToBusiness.vm" />
+    <property name="toEmailContextVar" value="organizationPrimaryEmail" />
+  </bean>
+
+  <bean id="sendAssociationValidationErrorAction" class="com.similan.process.action.SendEmailAction">
+    <property name="templateName" value="sendAssociationValidationError.vm" />
+  </bean>
+
+  <bean id="sendAssociationWaitConfirmationEmailToMemberAction" class="com.similan.process.action.SendEmailAction">
+    <property name="templateName" value="sendAssociationWaitConfirmationEmailToMember.vm" />
+  </bean>
+
+  <bean id="sendAssociationAcceptanceNotificationEmailToMemberAction" class="com.similan.process.action.SendEmailAction">
+    <property name="templateName" value="sendAssociationAcceptanceNotificationEmailToMember.vm" />
+  </bean>
+
+  <bean id="sendAssociationRejectionNotificationEmailToMemberAction" class="com.similan.process.action.SendEmailAction">
+    <property name="templateName" value="sendAssociationRejectionNotificationEmailToMember.vm" />
+  </bean>
+
+  <bean id="businessAssociationNotificationDecision" class="com.similan.process.action.DecisionStateAction">
+    <property name="decisionMap">
+      <map>
+        <entry key="valid" value="to_Send_Rejection_Notification" />
+        <entry key="inValid" value="to_Send_Acceptance_Notification" />
+      </map>
+    </property>
+  </bean>
+
+  <bean id="businessAssociationInputValidationDecision" class="com.similan.process.action.DecisionStateAction">
+    <property name="decisionMap">
+      <map>
+        <entry key="valid" value="to_Send_Association_Validation_Email_To_Business" />
+        <entry key="inValid" value="to_Send_Association_Validation_Error" />
+      </map>
+    </property>
+  </bean>
+</beans>

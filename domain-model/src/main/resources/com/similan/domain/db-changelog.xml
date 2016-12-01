@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd">
+
+	<include file="com/similan/domain/db/00000-initial.db.xml" />
+	<include file="com/similan/domain/db/00001-docname-edit.db.xml" />
+	<include file="com/similan/domain/db/00002-business-process-hash.db.xml" />
+	<include file="com/similan/domain/db/00003-shared-document-unshare.db.xml" />
+	<include file="com/similan/domain/db/00004-drop-asset-retention.db.xml" />
+	<include file="com/similan/domain/db/00005-asset-store-s3.db.xml" />
+	<include file="com/similan/domain/db/00006-unshared-document-history.db.xml" />
+	<include file="com/similan/domain/db/00007-config-bean-renames.db.xml" />
+	<include file="com/similan/domain/db/00008-framework-config.db.xml" />
+	<include file="com/similan/domain/db/00009-partner-reinvite.db.xml" />
+	<include file="com/similan/domain/db/00010-process-entity.db.xml" />
+	<include file="com/similan/domain/db/00011-partner-reinvite-enhancement.db.xml" />
+	<include file="com/similan/domain/db/00012-partner-reinvite-enhancement.db.xml" />
+	<include file="com/similan/domain/db/00013-youtube-integration.db.xml" />
+	<include file="com/similan/domain/db/00014-user-audit-event.db.xml" />
+	<include file="com/similan/domain/db/00015-drop-box-credential-update.db.xml" />
+	<include file="com/similan/domain/db/00016-linkreference-referencetype-update.db.xml" />
+	<include file="com/similan/domain/db/00017-Partner-inviteEmail-Update-BusinessPortal.db.xml" />
+	<include file="com/similan/domain/db/00018-partner-admin-invitereminder-notification-emialtemplate-fix.db.xml" />
+	<include file="com/similan/domain/db/00019-member-join-notification-emialtemplate.db.xml" />
+
+</databaseChangeLog>

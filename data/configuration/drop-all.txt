@@ -1,0 +1,2 @@
+Step-1: This is to clear MySQL:
+mysql similan_deploy -uroot -p < data/configuration/drop-all.sql

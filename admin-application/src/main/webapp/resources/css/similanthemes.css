@@ -1,0 +1,22 @@
+.buttomBorder{
+	border-left: none !important; border-right: none !important;border-top: none !important;
+}
+.ui-datagrid-no-border>.ui-datagrid-content {
+    border: none;
+}
+.noBorder > div{
+	border: none !important;
+}
+.hide-column-names table thead tr {
+    display: none;
+}
+.similanPublicProfileTopTexts {
+	font-size:8pt; color:#606060;
+}
+.ui-messages-info,.ui-messages-error,.ui-messages-warn,.ui-messages-fatal {
+	position:fixed;
+	top:0px;
+	left:0px;
+	right:0px;
+	z-index:10;
+}

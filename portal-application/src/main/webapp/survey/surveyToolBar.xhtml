@@ -1,0 +1,29 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<!-- The Tool Bar -->
+	<div class="row-fluid">
+		<div class="span12">
+			<div class="iconbar iconbar-horizontal">
+				<ul>
+					<li><a href="#{root}/survey/manageSurveys.xhtml"
+						class="fui-list-small-thumbnails" rel="tooltip"
+						data-placement="bottom" title="Manage Poll"></a></li>
+
+					<li><a href="#{root}/survey/addEditSurvey.xhtml"
+						class="fui-plus" rel="tooltip" data-placement="bottom"
+						title="Add/Edit Poll"></a></li>
+
+					<li><a href="#{root}/survey/surveyDashboard.xhtml"
+						class="fa fa-tachometer fa-lg" rel="tooltip"
+						data-placement="bottom" title="Poll Dashboard"> </a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+</ui:composition>

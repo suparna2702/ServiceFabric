@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/basemenulayout.xhtml">
+
+	<ui:param name="newContent" value="true" />
+	<ui:param name="skipToolbar" value="true" />
+
+	<ui:define name="title">Contentspace Details Help</ui:define>
+	<ui:define name="centerContent">
+
+		<ui:include src="/invite/inviteToolbar.xhtml" />
+		<h1>Invite Help</h1>
+
+		<!-- Actual Help Content -->
+		<div class="row-fluid">
+			<div class="span12">
+				<p class="lead">Invite can be used to invite your existing
+					Business Partners and employees to be part of the Business Reach
+					network to share documents and information, and view their updates</p>
+
+				<p>
+					<i class="fui-radio-unchecked mrm"></i><b>Select Connect from
+						the Main Menu</b>
+				</p>
+
+				<p>
+					<i class="fui-radio-unchecked mrm"></i><b>Select Invite from
+						the Drop down menu</b>
+				</p>
+
+
+			</div>
+		</div>
+
+		<div class="row-fluid">
+			<div class="span12">
+				<img src="#{root}/images/help/invite/ConnectingInvite1.png" />
+			</div>
+		</div>
+
+		<div class="row-fluid">
+			<div class="span12 well">
+
+				<p>
+					<i class="fui-radio-unchecked mrm"></i><b> Invite page appears,
+						enter the Information for the Employee you wish to invite.</b>
+				</p>
+
+				<p>
+					<i class="fui-radio-unchecked mrm"></i><b> Or you can click on
+						Partner Invite icon to go to the page to invite a Business
+						Partner. <font color="red">Current restriction is that a
+							Business Partner business partner would have to be external to
+							Business Reach network.</font>
+					</b>
+				</p>
+
+
+			</div>
+		</div>
+
+		<div class="row-fluid">
+			<div class="span12">
+				<img src="#{root}/images/help/invite/ConnectingInvite2.png" />
+			</div>
+		</div>
+
+		<div class="row-fluid">
+			<div class="span12 well">
+
+				<p>
+					<i class="fui-radio-unchecked mrm"></i><b> Invited employees
+						receive an email invitation and upon accepting, you are notified.
+						The invited persons info appears in your “Connections” list. . </b>
+				</p>
+
+			</div>
+		</div>
+
+
+
+		<script language="javascript">
+			$(document).ready(function() {
+				$("[rel='tooltip']").tooltip();
+				$("[rel='popover']").popover({
+					'trigger' : 'hover',
+					'html' : true
+				});
+			})
+		</script>
+	</ui:define>
+</ui:composition>

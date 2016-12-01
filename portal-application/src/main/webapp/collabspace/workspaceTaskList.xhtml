@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<div class="row-fluid">
+       <div class="span12">
+	      <table class="table table-striped">
+	         <tr>
+	           <th>Created By</th>
+	           <th>Task Name</th>
+	           <th>Statistics</th>
+	         </tr>
+	         <ui:repeat var="task" value="#{workspaceDetailView.openTasks}">
+		         <tr>
+		           <td class="span3">
+		             <p:graphicImage value="/spring/assets/#{workspaceDetailView.getCommentAuthorPhotoLocation(task.creator)}" 
+		                                      width="60px" height="60px" 
+											  styleClass="img-rounded img-responsive" />
+		           </td>
+		           <td class="span3">
+		              <h:outputLink value="#{root}/collabspace/workspaceTask.xhtml">
+	                    <f:param name="wsname" value="#{workspaceDetailView.workspace.key.name}" />
+	                    <f:param name="tname" value="#{task.key.name}" />                    
+	                    <h4 class="muted">#{task.key.name}</h4>
+	                  </h:outputLink>
+		              <h:outputText value="#{task.dueDate}">
+	                    <f:convertDateTime pattern="MM/dd/yyyy" />
+	                  </h:outputText>
+		           </td>
+		           <td>
+		             <p>
+			            <i class="fui-chat"></i> 4
+		             </p>
+		           </td>
+		         </tr>
+	         </ui:repeat>
+	      </table>
+	   </div>
+	</div>
+	
+</ui:composition>

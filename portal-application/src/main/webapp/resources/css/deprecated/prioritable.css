@@ -1,0 +1,33 @@
+.old-content .orderlisttable table {
+	width: 100% !important;
+}
+
+.old-content div.ui-datatable-scrollable {
+	min-width: 300px;
+}
+
+.old-content .orderlisttable .ui-widget-header {
+	display: none;
+}
+.old-content .orderlisttable thead {
+	display: none;
+}
+
+.old-content .ui-dt-c{
+	width:auto !important;
+	
+}
+.old-content .buttonpanel {
+	display: inline;
+	width: 120px;
+	float: right;
+}
+
+.old-content .orderListGrid tr,
+.old-content .orderListGrid td {
+	border: none;
+}
+
+.old-content .orderlisttable .ui-datatable-data td {
+	border-style: none !important;
+}

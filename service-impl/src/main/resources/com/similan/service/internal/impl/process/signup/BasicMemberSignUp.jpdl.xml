@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process name="signup.BasicMemberSignUp" xmlns="http://jbpm.org/4.4/jpdl">
+   <start g="314,35,48,48" name="start1">
+      <transition g="-53,-11" name="Validate_Input" to="Validate_Member_Input"/>
+   </start>
+   
+   <!-- Validates the member input  -->
+   <decision  g="316,244,48,48" name="Validate_Member_Input">
+      <handler expr="#{engine.decide(process.validateInput())}"/>
+      <transition g="503,268:-72,5" name="false" to="error2"/>
+      <transition g="203,268:-82,16" name="true" to="Send_Validation_Email"/>
+   </decision>
+   
+   <!-- Sends the 1st Email -->
+   <custom expr="#{engine.execute(process.sendValidationEmail())}" g="115,332,176,75" name="Send_Validation_Email">
+      <transition g="-77,-13" name="to_Wait_For_Validation" to="Wait_For_Email_Validation"/>
+   </custom>
+   
+   <state g="100,471,207,79" name="Wait_For_Email_Validation">
+      <transition g="-81,-30" name="to_Email_Url_Validation" to="Validate_Email_Decision"/>
+   </state>
+   
+   <decision g="550,612,48,48" name="Validate_Email_Decision">
+      <handler expr="#{engine.decide(process.validateCompletion())}"/>
+      <transition g="712,637:6,-24" name="false" to="error1"/>
+      <transition g="456,637:-102,12" name="true" to="Send_Welcome_Email"/>
+   </decision>
+   
+   <end-error g="693,702,48,48" name="error1"/>
+   <end-error g="480,348,48,48" name="error2"/>
+   
+   <!-- Sends the 2nd Email that is welcome email -->
+   <custom expr="#{engine.execute(process.sendWelcomeEmail())}" 
+                g="368,729,177,66" 
+                name="Send_Welcome_Email">
+           
+      <transition g="-21,-10" name="to_end1" to="end1"/>
+   </custom>
+   
+   <end g="435,838,48,48" name="end1"/>
+   
+   
+</process>

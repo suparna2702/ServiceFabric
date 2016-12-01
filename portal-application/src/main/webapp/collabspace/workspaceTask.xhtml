@@ -1,0 +1,176 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/basemenulayout.xhtml">
+
+	<ui:define name="title">Workspace Task</ui:define>
+	<ui:define name="centerContent">
+	  
+	  <p:overlayPanel id="participantPanel" for="participantButton" hideEffect="fade" dynamic="true">  
+        <p:dataGrid id="participantGrid" var="participant"
+				value="#{workspaceTaskView.participants}" paginator="true" rows="5"
+				columns="1" paginatorAlwaysVisible="false"
+				paginatorPosition="bottom" 
+				styleClass="ui-datagrid-no-border" 
+				rendered="#{not empty workspaceTaskView.participants}">
+				
+		   <p:panel styleClass="buttomBorder">
+		       <p:graphicImage value="/spring/assets#{participant.imagePath}" 
+                                        width="30" height="30"/>
+		       <h:outputText value="#{participant.fullName}" 
+		                     style="margin-left:5px"/>
+		   </p:panel>
+	    </p:dataGrid>  
+      </p:overlayPanel>
+    
+	  <ui:include src="/collabspace/createTaskDialog.xhtml"/>
+	  
+	  <p:spacer height="20" />
+	  <h:panelGrid columns="5" styleClass="toolBarPanelHorizontal">
+            <h:outputLink value="#{root}/collabspace/workspaceDetail.xhtml" style="margin-right:10px">
+			   <f:param name="wsname" value="#{workspaceTaskView.workspace.key.name}" />
+			   <f:param name="owsname" value="#{workspaceTaskView.workspace.key.owner.name}" />
+			   <h:graphicImage library="img" name="collabSpace32.png" width="25"
+				    height="25" title="View participatns" styleClass="toolBarElement"/>
+		    </h:outputLink>
+		    
+		    <p:commandLink id="participantButton" style="margin-right:5px" >
+			    <h:graphicImage library="img" name="participants48.png" width="25"
+				       height="25" title="View participatns" styleClass="toolBarElement"/>
+		    </p:commandLink>
+			  
+			<p:commandLink style="margin-right:5px" onclick="createTaskDlg.show();return false;">
+				<h:graphicImage library="img" name="createTask.png" width="25"
+					height="25" title="Create new task" styleClass="toolBarElement"/>
+			</p:commandLink>
+
+			<p:commandLink action="#{workspaceTaskView.setViewMode('CALENDAR')}"
+				update=":form:taskListPanel" style="margin-right:5px">
+				<h:graphicImage library="img" name="calenderTaskView.png" width="25"
+					height="25" title="View Task Calender" styleClass="toolBarElement"/>
+			</p:commandLink>
+
+			<p:commandLink action="#{workspaceTaskView.setViewMode('LIST')}"
+				update=":form:taskListPanel" style="margin-right:5px">
+				<h:graphicImage library="img" name="listView.png" width="25"
+					height="25" title="Filter by label" styleClass="toolBarElement"/>
+			</p:commandLink>			
+	   </h:panelGrid>
+	   
+	   <p:spacer height="20" />
+	   
+	   <p:panel id="taskListPanel" styleclass='noBorder'>
+	   
+		   <p:schedule id="schedule"
+				rendered="#{workspaceTaskView.viewMode eq 'CALENDAR'}" 
+				value="#{workspaceTaskView.eventModel}">  
+				<p:ajax event="eventSelect" listener="#{workspaceTaskView.onTaskSelect}" update="calendarTaskDlg" oncomplete="calendarTaskDialog.show()" />  
+					
+			</p:schedule>  
+		
+			<p:panel id="taskPanel" rendered="#{workspaceTaskView.viewMode eq 'LIST'}" styleClass="noBorder">
+				<h:panelGrid columns="1" style="width:100%;">
+					 <h:outputText value="Today"
+									style="font-size:10pt;color:#660066" />
+					 <hr style="height:1px;background-color:#D4D4D4;clear:both"></hr>
+					 <p:accordionPanel id="todayList" 
+							value="#{workspaceTaskView.todaysTasks}" var="task">  
+						<p:tab title="#{task.taskData.key.name}">  
+							 <ui:include src="/collabspace/taskDisplayPanel.xhtml"/>
+						</p:tab>  
+					 </p:accordionPanel>
+					 
+					<h:outputText value="Overdue"
+									style="font-size:10pt;color:#660066" />
+					<hr style="height:1px;background-color:#D4D4D4;clear:both"></hr>
+					 <p:accordionPanel id="overDueList" 
+							value="#{workspaceTaskView.overdueTasks}" var="task">  
+						<p:tab title="#{task.taskData.key.name}">  
+							 <ui:include src="/collabspace/taskDisplayPanel.xhtml"/>
+						</p:tab>  
+					 </p:accordionPanel>
+					 
+					 <h:outputText value="Future"
+									style="font-size:10pt;color:#660066" />
+					 <hr style="height:1px;background-color:#D4D4D4;clear:both"></hr>
+					 <p:accordionPanel id="futureList" 
+							value="#{workspaceTaskView.futureTasks}" var="task">  
+						<p:tab title="#{task.taskData.key.name}">  
+							 <ui:include src="/collabspace/taskDisplayPanel.xhtml"/>
+						</p:tab>  
+					 </p:accordionPanel>
+				</h:panelGrid>
+		   </p:panel>
+	   </p:panel>
+	   
+   <p:dialog id="calendarTaskDlg" header="Task Details" 
+              widgetVar="calendarTaskDialog" modal="false" resizable="false"  
+              showEffect="fade" hideEffect="fade"> 
+			<h:panelGrid id="dlgSelectedCommentGrid"
+			                columns="1" >
+				   <h:outputText value="Task : #{workspaceTaskView.selectedTask.taskData.key.name}" 
+				                 style="font-size:10pt;color:#660066" />
+				   <h:outputText value="#{workspaceTaskView.selectedTask.taskData.description}" />
+				   <hr style="height:1px;background-color:#D4D4D4;clear:both"></hr>
+				   
+				   <p:dataGrid id="dlgSelectedTaskComments" var="taskComment"
+						value="#{workspaceTaskView.selectedTask.comments.commentsAndReplies}" paginator="true" rows="5"
+						columns="1" paginatorAlwaysVisible="false"
+						paginatorPosition="bottom" styleClass="ui-datagrid-no-border">
+						
+						<h:panelGrid columns="3" styleClass="buttomBorder" style="margin-bottom:5px">
+							<p:panel styleClass="noBorder">
+							<h:outputLink
+							value="#{root}/member/memberPublicProfile.xhtml?mid=#{workspaceTaskView.getCommentAuthorId(taskComment.comment.author)}">
+								<p:graphicImage height="32" width="32" value="/spring/assets/#{workspaceTaskView.getCommentAuthorFullName(taskComment.comment.author)}"/>
+								</h:outputLink>
+							</p:panel>
+							<p:panel styleClass="noBorder">
+								<h:outputLink
+								value="#{root}/member/memberPublicProfile.xhtml?mid=#{workspaceTaskView.getCommentAuthorId(taskComment.comment.author)}">
+							
+								<h:outputText value="#{workspaceTaskView.getCommentAuthorFullName(taskComment.comment.author)}"/>
+								</h:outputLink>
+								<BR/>
+								<h:outputText value="#{taskComment.comment.content}"/>
+							</p:panel>
+						</h:panelGrid>
+					
+				 </p:dataGrid>
+				 <hr style="height:1px;background-color:#D4D4D4;clear:both"></hr>
+				 <h:panelGroup>
+				      <p:inputText value="#{workspaceTaskView.taskComment}" 
+				                   style="margin-top:5px;margin-bottom:5px" size="30"/>
+				      <p:commandButton value="Post" 
+						process="dlgSelectedCommentGrid"
+						actionListener="#{workspaceTaskView.postTaskComment}"  
+				                       update="dlgSelectedCommentGrid"/> 
+				 </h:panelGroup>
+			 </h:panelGrid>
+			<h:panelGrid columns="2" >
+		                 <p:commandLink style="margin-top:5px" 
+					action="#{workspaceTaskView.completeTask(workspaceTaskView.selectedTask)}"
+					oncomplete="calendarTaskDialog.hide()">
+			                 <h:graphicImage library="img" name="checkIcon48.png" width="30"
+				                height="30" title="Completed" 
+				                styleClass="toolBarElement"/>
+		                 </p:commandLink>
+		
+		                 <p:commandLink 
+					style="margin-right:5px" 
+					action="#{workspaceTaskView.cancelTask(workspaceTaskView.selectedTask)}"
+					oncomplete="calendarTaskDialog.hide()">
+			                 <h:graphicImage library="img" name="cancel48.png" width="30"
+				                height="30" title="Cancel the task" styleClass="toolBarElement"/>
+		                 </p:commandLink>
+	                 </h:panelGrid>			 
+
+    </p:dialog>	   
+ 	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,33 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+    <p:menubar id="leadManagementMenuBar">
+
+		 <p:submenu label="Manage" >
+		    <p:menuitem value="Leads" url="/lead/organizationLeadManagement.xhtml" ajax="false" immediate="true" />
+		    <p:menuitem value="Activity Schedule" url="/lead/leadActivitySchedule.xhtml" ajax="false" immediate="true"/>
+		    <p:menuitem value="Search Filters" url="/lead/leadSearchFilterView.xhtml" ajax="false" immediate="true" />
+		    <p:menuitem value="Auto Distribute" disabled="true" url="/lead/leadAutoDistributeRules.xhtml" ajax="false" immediate="true" />
+		    <p:menuitem value="Upload" url="/lead/organizationLeadUpload.xhtml" ajax="false" immediate="true" />	
+		 </p:submenu>
+		 
+		 <p:submenu label="Reports" >
+		    <p:menuitem value="Reports" disabled="true" url="/lead/leadReports.xhtml" ajax="false" immediate="true"/>
+		 </p:submenu>
+		 
+		 <p:submenu label="Setting" >
+		    <p:menuitem value="Views" disabled="true" url="/lead/leadViewSettings.xhtml" ajax="false" immediate="true" />
+		    <p:menuitem value="Transfer" disabled="true" url="/lead/leadTransferSettings.xhtml" ajax="false" immediate="true"/>
+		    <p:menuitem value="Member" disabled="true" url="/lead/leadMemberSettings.xhtml" ajax="false" immediate="true"/>
+		    <p:menuitem value="Alerts" disabled="true" url="/lead/leadAlertSettings.xhtml" ajax="false" immediate="true"/>
+		    <p:menuitem value="CRM" url="/lead/leadCrmSettings.xhtml" ajax="false" immediate="true"/>
+		 </p:submenu>
+		 
+    </p:menubar>
+
+ 
+</ui:composition>

@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/basemenulayout.xhtml">
+
+	<ui:define name="title">Partnership Detail</ui:define>
+	<ui:define name="centerContent">
+	   <p:spacer height="10"/>	 
+	   <ui:include src="/templates/menu/partnerProgramMenu.xhtml" />
+	   <p:spacer height="10"/>	
+	   
+	   <p:panel style="background:rgb(252,244,254)">
+	      <h:panelGrid columns="2">
+	         <p:graphicImage value="/spring/assets#{partnershipDetailView.program.logoLocation}" 
+                        width="40" height="40"/>
+             <h:outputText value=" " 
+		                style="margin-bottom:10px"/>
+		                
+	         <h:outputText value="Name" style="margin-right:10px; margin-bottom:10px; font-weight:bold"/>
+	         <h:outputText value="#{partnershipDetailView.program.name} " 
+		                style="margin-bottom:10px;font-weight:bold"/>
+		                
+		     <h:outputText value="Description" style="margin-right:10px; margin-bottom:10px; font-weight:bold"/>
+		     <h:outputText value="#{partnershipDetailView.program.description} " 
+		                style="margin-bottom:10px"/>
+	      </h:panelGrid>
+	   </p:panel>
+	   
+	   <p:panel style="border:hidden">
+		   <p:dataGrid id="partnerShipDetailsTable" var="partnership"
+				value="#{partnershipDetailView.partnerships}"
+				paginator="true" rows="5" columns="1" paginatorAlwaysVisible="false"
+				paginatorPosition="bottom"
+				styleClass="ui-datagrid-no-border"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15">
+			
+				<p:panel id="partnershipItemPanel" styleClass="buttomBorder">
+				   <h:panelGrid columns="2">
+				         <h:outputLink id="businessPartnerLink"
+							value="#{root}/business/businessPublicProfile.xhtml?oid=#{partnership.orgPartner.id}" style="margin-right:3px">
+			                <p:graphicImage id="partnerLogoImage" 
+		                                   value="/spring/assets#{partnership.partnerLogo}" 
+	                                       width="30" height="30" style="margin-right:10px"/>
+					      </h:outputLink>
+		                  <h:panelGroup>
+						      <h:outputLink id="businessPartnerNameLink"
+										value="#{root}/business/businessPublicProfile.xhtml?oid=#{partnership.orgPartner.id}" style="margin-right:3px">
+					          <h:outputText value="#{partnership.orgPartner.name}" 
+							                style="margin-bottom:10px;font-weight:bold;text-decoration: underline"/>
+					          </h:outputLink>
+					          <br></br>
+					          <h:outputText value="#{partnership.orgPartner.industry}" style="margin-bottom:10px"/>
+					          <br></br>
+				              <h:outputText value="#{partnership.created}" 
+				                       style="margin-bottom:10px">
+				                   <f:convertDateTime pattern="MM/dd/yyyy" />
+				              </h:outputText>
+						  </h:panelGroup>
+			 		</h:panelGrid>
+			 		<p:accordionPanel activeIndex="-1" rendered="#{!empty partnership.response}" style="margin-top:10px">
+		                <p:tab title="Pre Qual Response">  
+		                   <p:dataGrid id="preQualResponseDataTable" var="prequalResponse"
+		                         value="#{partnership.response.preQualQuestionResponses}"
+		                         columns="1" styleClass="ui-datagrid-no-border">
+		
+							  <p:panel id="preQualSubmissionAnswerPanel" styleClass="buttomBorder">
+							    <ui:include src="/partner/preQualAnswerRating.xhtml" />
+							    <ui:include src="/partner/preQualAnswerChoice.xhtml" />
+							    <ui:include src="/partner/preQualAnswerTextInput.xhtml" />
+						      </p:panel>
+	    
+	                      </p:dataGrid>
+	                   </p:tab>  
+	              </p:accordionPanel>
+				</p:panel>
+	       </p:dataGrid>
+	   </p:panel>
+	   
+	</ui:define>
+	
+</ui:composition>

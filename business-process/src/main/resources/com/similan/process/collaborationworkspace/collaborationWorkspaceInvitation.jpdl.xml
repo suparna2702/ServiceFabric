@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process name="collaborationWorkspaceInvitation" xmlns="http://jbpm.org/4.4/jpdl">
+	<start name="start1">
+		<transition name="to_Invite_Participant_Initiate_Action"
+			to="Invite_Participant_Initiate_Action" />
+	</start>
+	<custom expr="#{inviteParticipantInitiateAction}" name="Invite_Participant_Initiate_Action">
+		<transition name="to_Send_Invite_Participant_Approval_Email"
+			to="Send_Invite_Participant_Approval_Email" />
+	</custom>
+	<custom expr="#{sendInviteParticipantApprovalEmailAction}" name="Send_Invite_Participant_Approval_Email">
+		<transition name="to_Wait_For_Participant_Action" to="Wait_For_Participant_Action" />
+	</custom>
+
+	<state name="Wait_For_Participant_Action">
+		<transition name="to_Invite_Participant_Action_Decision"
+			to="Invite_Participant_Action_Decision" />
+	</state>
+
+	<decision name="Invite_Participant_Action_Decision">
+		<handler expr="#{inviteParticipantActionDecision}" />
+		<transition name="to_End_Rejected" to="End_Rejected" />
+		<transition name="to_Invite_Participant_Approved" to="Invite_Participant_Approved" />
+	</decision>
+
+	<custom expr="#{inviteParticipantApprovedAction}" name="Invite_Participant_Approved">
+		<transition name="to_End_Approved" to="End_Approved" />
+	</custom>
+
+
+	<end name="End_Rejected" />
+
+	<end name="End_Approved" />
+</process>

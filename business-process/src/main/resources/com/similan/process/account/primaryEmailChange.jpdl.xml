@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process name="primaryEmailChange" xmlns="http://jbpm.org/4.4/jpdl">
+   <start g="432,28,48,48" name="start1">
+      <transition g="-177,-25" name="to_Validate_Email_Change" to="Validate_Email_Change"/>
+   </start>
+   <custom expr="#{emailChangeInputValidationAction}" g="366,133,180,55" name="Validate_Email_Change">
+      <transition g="13,-13" name="to_Decision_Validate_Email_Change" to="Decision_Validate_Email_Change"/>
+   </custom>
+   <decision g="432,250,48,48" name="Decision_Validate_Email_Change">   
+      <handler expr="#{decisionValidateEmailChange}"/>  
+      <transition g="766,272:-84,28" name="to_Send_Validation_Email_To_New_Address" to="Send_Validation_Email_To_New_Address"/>
+      <transition g="244,277:-144,26" name="to_Send_Error_To_Old_EmailAddress" to="Send_Error_To_Old_EmailAddress"/>
+   </decision>
+   <custom expr="#{sendValidationEmailToNewAddressAction}" g="599,373,335,84" name="Send_Validation_Email_To_New_Address">
+      <transition g="-236,-6" name="to_Wait_For_New_Email_Validation" to="Wait_For_New_Email_Validation"/>
+   </custom>
+   <custom expr="#{emailValidationErrorToOldAddressAction}" g="107,371,275,78" name="Send_Error_To_Old_EmailAddress">
+      <transition g="-94,-14" name="to_Email_Change_Validation_Error" to="Email_Change_Validation_Error"/>
+   </custom>
+   <end-error g="223,526,48,48" name="Email_Change_Validation_Error"/>
+   <state g="631,548,275,77" name="Wait_For_New_Email_Validation">
+      <transition g="770,766:-133,-67" name="to_New_Email_Url_Validation" to="New_Email_Url_Validation"/>
+   </state>
+   <custom expr="#{newChangeEmailUrlValidationAction}" g="388,724,238,90" name="New_Email_Url_Validation">
+      <transition g="-88,-6" name="to_New_Email_Url_ValidationDecision" to="New_Email_Url_ValidationDecision"/>
+   </custom>
+   <custom expr="#{emailValidationSuccessToNewEmailAction}" g="654,980,371,59" name="Send_Validation_Success_Email_To_NewEmail">
+      <transition g="-178,-11" name="to_Send_Email_ChangeNotification_To_OldEmail" to="Send_Email_ChangeNotification_To_OldEmail"/>
+   </custom>
+   <end g="820,1240,48,48" name="end1"/>
+   <decision g="482,881,48,48" name="New_Email_Url_ValidationDecision">
+      <handler expr="#{decisionNewEmailUrlValidationDecision}"/> 
+      <transition g="836,905:-159,26" name="to_Send_Validation_Success_Email_To_NewEmail" to="Send_Validation_Success_Email_To_NewEmail"/>
+      <transition g="339,908:-125,37" name="to_Email_Change_Notification_Validation_Err" to="Email_Change_Notification_Validation_Err"/>
+   </decision>
+   <end-error g="317,1001,48,48" name="Email_Change_Notification_Validation_Err"/>
+   <custom expr="#{emailChangeNotificationToOldAddressAction}" g="657,1121,366,60" name="Send_Email_ChangeNotification_To_OldEmail">
+      <transition g="-24,-13" name="to end1" to="end1"/>
+   </custom>
+</process>

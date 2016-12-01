@@ -1,0 +1,55 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:cc="http://java.sun.com/jsf/composite"
+	xmlns:p="http://primefaces.org/ui">
+
+	<cc:interface>
+		<cc:attribute name="list" />
+	</cc:interface>
+
+	<cc:implementation>
+		
+		<p:outputPanel id="orderlistpanel">
+			<p:panelGrid columns="2" styleClass="orderListGrid">
+				<p:dataTable 
+					value="#{cc.attrs.list}" selectionMode="multiple"
+					selection="#{orderListBackingBean.prioritables}"
+					rowKey="#{item.id}" rowIndexVar="index" var="item"
+					sortBy="#{item.priority}" sortOrder="descending"
+					id="orderlisttable" styleClass="orderlisttable">
+					<p:column style="width:100%">
+						#{item.label} and Priority is <b>#{item.priority}</b>
+					</p:column>
+				</p:dataTable>
+
+				<p:outputPanel styleClass="buttonpanel">
+					<p:commandButton value="first"
+						style="width:100px;"
+						actionListener="#{orderListBackingBean.firstPriority(cc.attrs.list)}"
+						action="#{orderListBackingBean.sort(cc.attrs.list)}"
+						update="orderlistpanel" process="orderlistpanel @this" />
+						
+					<p:commandButton value="up"
+						 style="width:100px;margin-top:10px"
+						actionListener="#{orderListBackingBean.incrementPriority}"
+						action="#{orderListBackingBean.sort(cc.attrs.list)}"
+						update="orderlistpanel" process="orderlistpanel @this" />
+
+					<p:commandButton value="down"
+						style="width:100px;margin-top:10px"
+						actionListener="#{orderListBackingBean.decrementPriority}"
+						action="#{orderListBackingBean.sort(cc.attrs.list)}"
+						update="orderlistpanel" process="orderlistpanel @this" />
+						
+					<p:commandButton value="end"
+						style="width:100px;margin-top:10px"
+						actionListener="#{orderListBackingBean.lastPriority(cc.attrs.list)}"
+						action="#{orderListBackingBean.sort(cc.attrs.list)}"
+						update="orderlistpanel" process="orderlistpanel @this" />
+				</p:outputPanel>
+			</p:panelGrid>
+		</p:outputPanel>
+	</cc:implementation>
+</ui:composition>

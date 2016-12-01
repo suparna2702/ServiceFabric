@@ -1,0 +1,32 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui">
+	
+	 <div class="row" style="margin-top: 5px">
+		<div class="span10">
+				<div class="row">
+					<div class="span5">
+					   <p:lineChart id="leadImportChart" value="#{adminView.leadImportModel}" legendPosition="e"
+                            title="Login Import Count" />
+					</div>
+					<div class="span5">
+					   <p:lineChart id="leadSyncChart" value="#{adminView.leadSyncModel}" legendPosition="e"
+                            title="CRM Sync Count" />
+					</div>
+					<div class="span5">
+					   <p:lineChart id="leadTransferChart" value="#{adminView.leadTransferModel}" legendPosition="e"
+                                 title="Lead Transfer Count" />
+					</div>
+					<div class="span5">
+					   <p:lineChart id="partnerChart" value="#{adminView.partnerSearchModel}" legendPosition="e"
+                                 title="Partner Search" style="height:200px;width:320px"/>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+</ui:composition>

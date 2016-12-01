@@ -1,0 +1,44 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:composite="http://java.sun.com/jsf/composite/composites"
+	xmlns:p="http://primefaces.org/ui">
+
+	<div class="caption">
+
+		<div class="row-fluid control-group header">
+
+			<div class="span2">
+				<h:outputLink value="#{root}/member/memberPublicProfile.xhtml">
+					<f:param name="mid"
+						value="#{authenticatedMemberInfoView.getCommentAuthorId(wallEntry.initiator.key)}" />
+					<img
+						src="#{root}/spring/assets/#{authenticatedMemberInfoView.getCommentAuthorPhotoLocation(wallEntry.initiator.key)}" />
+				</h:outputLink>
+			</div>
+
+			<div class="span10">
+				<h6>
+					<a
+						href="#{root}/member/memberPublicProfile.xhtml?mid=#{authenticatedMemberInfoView.getCommentAuthorId(wallEntry.initiator.key)}">#{wallEntry.initiator.displayName}</a>
+				</h6>
+				<p>
+					<small><ui:insert name="wallEntryTitle" /> <ui:fragment
+							rendered="#{feedEntry != null}">
+        	                in <span class="label">#{feedEntry.container.displayName}'s</span> wall
+                   </ui:fragment> <b>#{authenticatedMemberInfoView.ago(wallEntry.date)}</b>
+					</small>
+				</p>
+			</div>
+
+		</div>
+
+		<div class="row-fluid control-group body">
+			<ui:insert name="wallEntryBody" />
+		</div>
+
+	</div>
+	
+</ui:composition>

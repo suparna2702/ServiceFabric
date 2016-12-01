@@ -1,0 +1,88 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<p:outputPanel id="memberProfileAboutPanel" layout="block">
+	  <p:panel style="border-style:hidden">
+	     
+	     <p:spacer height="20" />
+	     
+	     <p:panel styleClass="lightHighlightedBorder">
+	        <h:outputText value="About Me" 
+		             style="font-size:12pt;font-weight:bold"/>
+	        <br></br>
+	        <p>#{memberPublicView.member.aboutMe}</p>
+	        
+	        <c:when test="#{memberPublicView.member.addressDto != null}">
+		        <h:outputText value="Address" 
+			             style="margin-bottom:10px; font-size:12pt;font-weight:bold"/>
+			             
+			    <br></br>
+			    <div class="row">
+			       <div class="span4">
+				       <p:gmap zoom="8" type="ROADMAP"   
+				           style="width:300px;height:200px"
+				           center="#{memberPublicView.mapCenterLat}, #{memberPublicView.mapCenterLong}"
+				           mapTypeControl="true" navigationControl="true"  
+				           model="#{memberPublicView.simpleModel}" widgetVar="googleMap" />
+			       </div>
+			           
+			       <div class="span3">
+			          <p:panel style="border:hidden">
+			            <h:panelGrid>
+		                   <h:outputText rendered="#{memberPublicView.member.street != 'null'}" 
+		                                        value="#{memberPublicView.member.street}" />
+	                       <h:outputText rendered="#{memberPublicView.member.city != 'null'}" 
+	                                            value="#{memberPublicView.member.city}" />
+	                       <h:outputText rendered="#{memberPublicView.member.state != 'null'}" 
+	                                            value="#{memberPublicView.member.state}" />
+	                       <h:outputText value="#{memberPublicView.member.country}  #{memberPublicView.member.zipCode}" />
+			            </h:panelGrid>
+			          </p:panel>
+                   </div>
+			         
+			    </div>
+	        </c:when>
+	     </p:panel>
+	     
+	     <p:spacer height="20" />
+	     
+	     <p:panel styleClass="lightHighlightedBorder">
+	       <h:outputText value="Expertise" 
+		             style="font-size:12pt;font-weight:bold"/>
+	       <p:dataGrid id="memberExpertise" value="#{memberPublicView.member.expertise}" 
+	                       var="expertiseInfo" emptyMessage="" styleClass="ui-datagrid-no-border">
+               <p:panel style="border:hidden">
+                  <h:panelGroup>
+	                  <p:graphicImage value="/images/arrowIcon2.jpg" 
+	                        width="25" height="25" style="margin-right:5px"/>
+			          <h:outputText value="#{expertiseInfo.expertise}" />
+		          </h:panelGroup>
+		       </p:panel> 
+            </p:dataGrid>
+          </p:panel>
+          
+          <p:spacer height="20" />
+          
+          <p:panel styleClass="lightHighlightedBorder">
+           <h:outputText value="Interest" 
+		             style="font-size:12pt;font-weight:bold"/>
+	       <p:dataGrid id="memberInterest" value="#{memberPublicView.member.interest}" 
+	                           var="interestInfo" emptyMessage="" styleClass="ui-datagrid-no-border">
+	          
+               <p:panel style="border:hidden">
+                  <h:panelGroup>
+	                  <p:graphicImage value="/images/arrowIcon2.jpg" 
+	                        width="25" height="25"/>
+			          <h:outputText value="#{interestInfo.interest}" />
+		          </h:panelGroup> 
+		       </p:panel>
+           </p:dataGrid>
+	      </p:panel>
+	  </p:panel>
+	</p:outputPanel>
+	
+</ui:composition>

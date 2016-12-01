@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:composite="http://java.sun.com/jsf/composite/composites"
+	xmlns:p="http://primefaces.org/ui" template="/templates/base.xhtml">
+
+	<ui:param name="newContent" value="true" />
+	<ui:param name="skipHeader" value="true" />
+	<ui:define name="title">Membership Confirmation</ui:define>
+	<ui:define name="baseContent">
+
+		<div class="old-content">
+			<div class="row-fluid">
+				<div class="span12">
+					<h:form id="form" prependId="false" enctype="multipart/form-data">
+						<p:outputPanel id="collabWorkspaceApprovalPanel" layout="block">
+							<p:panel style="border-style:hidden;margin-left:30px">
+								<h:panelGrid header=" " style="margin-left:30px">
+									<h:outputText id="dummyId">
+										<f:event type="postAddToView"
+											listener="#{collabWorkspaceInviteNotificationCompleteView.acceptInvite}" />
+									</h:outputText>
+								</h:panelGrid>
+							</p:panel>
+						</p:outputPanel>
+					</h:form>
+				</div>
+			</div>
+		</div>
+
+		<div class="row-fluid">
+			<div class="span12">
+
+				<p class="lead">Collaboration Workspace is a private network
+					where employees and partners can be invited for collaboration on
+					partner business processes. Currently you can share documents among
+					invited participants of the Collaboration Workspace. When
+					participants downloads, views or comments on shared documents all
+					the participants of the workspace receives notification of the
+					activity which creates visibility among participants on activities
+				</p>
+
+			</div>
+		</div>
+
+		<div class="row-fluid">
+			<div class="span3">
+
+				<div class="btn-toolbar">
+					<div class="btn-group">
+
+						<!-- View -->
+						<a
+							href="#{root}/collabspace/workspaceDetail.xhtml?wsname=#{collabWorkspaceInviteNotificationCompleteView.workspaceName}&amp;owsname=#{collabWorkspaceInviteNotificationCompleteView.workspaceOwnerName}"
+							class="btn btn-small btn-info" rel="tooltip"
+							title="View Workspace"> <i class="fui-eye"></i> View
+						</a>
+
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+
+	</ui:define>
+</ui:composition>

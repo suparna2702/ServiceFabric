@@ -1,0 +1,345 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/basemenulayout.xhtml">
+
+	<ui:param name="newContent" value="true" />
+	<ui:param name="skipToolbar" value="true" />
+
+	<ui:define name="title">Contentspace Details Help</ui:define>
+	<ui:define name="centerContent">
+
+		<div class="row-fluid">
+			<div class="span12">
+				<div class="iconbar iconbar-horizontal">
+					<ul>
+						<li><a href="#{root}/member/memberHome.xhtml"
+							class="fui-home" rel="tooltip" data-placement="bottom"
+							title="My Network"></a></li>
+
+						<li><a
+							href="#{root}/docspace/documentWorkspaceListView.xhtml"
+							class="fui-list-columned" rel="tooltip" data-placement="bottom"
+							title="Contentspace List"></a></li>
+
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<div id="C0" class="row-fluid">
+        </div>
+		<p>
+			 <a href="#C1"><h2>Introduction</h2></a> <a href="#C2"><h2>Creating
+					a Content Workspace</h2></a> <a href="#C3"><h2>Upload Content</h2></a> <a
+				href="#C4"><h2>View Content</h2></a>
+		</p>
+		
+        <hr></hr>
+		<br></br>
+		
+		<!-- Actual Help Content : Introduction -->
+        <h2>Introduction</h2>
+		<a href="#C0"><h2>Top</h2></a>
+		<div id="C1" class="row-fluid">
+			<div class="span12 well">
+				<p class="lead">The Content Workspace is your repository of
+					documents that you choose to share with employees, Partner Program
+					members. In the Content Workspace, you can:</p>
+
+				<p>
+					<i class="fui-radio-unchecked mrm"></i><b>Upload/download
+						documents</b>
+				</p>
+
+				<p>
+					<i class="fui-radio-unchecked mrm"></i><b>When you upload a
+						document with the same name, a new version is assigned.</b>
+				</p>
+
+				<p>
+					<i class="fui-radio-unchecked mrm"></i><b>Share Documents with
+						those in the network</b>
+				</p>
+
+				<p>
+					<i class="fui-radio-unchecked mrm"></i><b>View the history of
+						the document</b>
+				</p>
+
+				<p>
+					<i class="fui-radio-unchecked mrm"></i><b>Viewers (those in the
+						document share list) can Download the document (the workspace
+						keeps track of what version was downloaded)</b>
+				</p>
+
+				<p>
+					<i class="fui-radio-unchecked mrm"></i><b>Be Alerted to updated
+						posting of a document ,e.g. new revisions</b>
+				</p>
+
+				<p>
+					<i class="fui-radio-unchecked mrm"></i><b>Comment/Annotate to
+						provide input</b>
+				</p>
+
+				<p>
+					<i class="fui-radio-unchecked mrm"></i><b>View other
+						comments/annotations</b>
+				</p>
+
+				<p>
+					<i class="fui-radio-unchecked mrm"></i><b>View the document
+						history</b>
+				</p>
+
+			</div>
+		</div>
+
+		<!-- Actual Help Content : Creating Content Space -->
+        <h2>Creating a Content Workspace</h2>
+		<a href="#C0"><h2>Top</h2></a>
+		<div id="C2" class="row-fluid">
+			<div class="span12 well">
+				<p class="lead">This section describes how to navigate to a
+					Content Workspace and create one:</p>
+
+				<p>
+					<i class="fui-radio-unchecked mrm"></i><b>Select Collaborate
+						from the Main Menu</b>
+				</p>
+
+				<p>
+					<i class="fui-radio-unchecked mrm"></i><b>Select Content from
+						the dropdown menu</b>
+				</p>
+
+			</div>
+		</div>
+		
+		<div class="row-fluid">
+			<div class="span12">
+			   <img
+					src="#{root}/images/help/contentspace/CreatingContentWorkspace.png" />
+            </div>
+		</div>
+		
+		<div class="row-fluid">
+			<div class="span12 well">
+				<p>
+					<i class="fui-radio-unchecked mrm"></i><b>Select the [+] icon to create a Content 
+					workspace and input the workspace name and description in the pop-up box.</b>
+				</p>
+
+			</div>
+		</div>
+		
+		<div class="row-fluid">
+			<div class="span12">
+			   <img
+					src="#{root}/images/help/contentspace/CreatingContentWorkspace2.png" />
+            </div>
+		</div>
+		
+		<div class="row-fluid">
+			<div class="span12 well">
+				<p>
+					<i class="fui-radio-unchecked mrm"></i><b>Select View to see the created Content workspace.</b>
+				</p>
+
+			</div>
+		</div>
+		
+		<div class="row-fluid">
+			<div class="span12">
+			   <img
+					src="#{root}/images/help/contentspace/CreatingContentWorkspace3.png" />
+            </div>
+		</div>
+		
+		<div class="row-fluid">
+			<div class="span12 well">
+				<p>
+					<i class="fui-radio-unchecked mrm"></i><b>View the created Content Workspace.</b>
+				</p>
+
+			</div>
+		</div>
+		
+		<div class="row-fluid">
+			<div class="span12">
+			   <img
+					src="#{root}/images/help/contentspace/CreatingContentWorkspace4.png" />
+            </div>
+		</div>
+		
+		<!-- Actual Help Content : Creating Content Space -->
+        <h2>Upload Content</h2>
+		<a href="#C0"><h2>Top</h2></a>
+		<div id="C3" class="row-fluid">
+			<div class="span12 well">
+				<p class="lead">This section describes how to upload a content in the Content Workspace:</p>
+
+				<p>
+					<i class="fui-radio-unchecked mrm"></i><b>Select the Up Arrow icon to upload a content</b>
+				</p>
+			</div>
+		</div>
+		
+		<div class="row-fluid">
+			<div class="span12">
+			   <img
+					src="#{root}/images/help/contentspace/UploadingContent1.png" />
+            </div>
+		</div>
+		
+		<div class="row-fluid">
+			<div class="span12 well">
+				
+				<p>
+					<i class="fui-radio-unchecked mrm"></i><b>Select the colored ball icon to upload a content
+					 from your local drive</b>
+				</p>
+			</div>
+		</div>
+		
+		<div class="row-fluid">
+			<div class="span12">
+			   <img
+					src="#{root}/images/help/contentspace/UploadingContent2.png" />
+            </div>
+		</div>
+		
+		<div class="row-fluid">
+			<div class="span12 well">
+				
+				<p>
+					<i class="fui-radio-unchecked mrm"></i><b>Your local drive file 
+					directory will pop-up. Choose the file from your local file folder and 
+					select Open from the pop-up page. The file name will 
+					appear in the Upload Files box.</b>
+				</p>
+			</div>
+		</div>
+		
+		<div class="row-fluid">
+			<div class="span12">
+			   <img
+					src="#{root}/images/help/contentspace/UploadingContent3.png" />
+            </div>
+		</div>
+		
+		<div class="row-fluid">
+			<div class="span12 well">
+				
+				<p>
+					<i class="fui-radio-unchecked mrm"></i><b>Select the Upload button, upload progress bar appears
+                     </b>
+				</p>
+				
+				<p>
+					<i class="fui-radio-unchecked mrm"></i><b>Select Close
+                     </b>
+				</p>
+				
+				<p>
+					<i class="fui-radio-unchecked mrm"></i><b>Select Save. A progress bar 
+					   will indicate the % uploaded to the Content workspace.
+                     </b>
+				</p>
+				
+			</div>
+		</div>
+		
+		<div class="row-fluid">
+			<div class="span12">
+			   <img
+					src="#{root}/images/help/contentspace/UploadingContent4.png" />
+            </div>
+		</div>
+		
+		<div class="row-fluid">
+			<div class="span12 well">
+				
+				<p>
+					<i class="fui-radio-unchecked mrm"></i><b>View Uploaded Document
+                     </b>
+				</p>
+				
+				<p>
+					<i class="fui-radio-unchecked mrm"></i><b>Assign document category, by selecting the pencil icon 
+
+                     </b>
+				</p>
+				
+			</div>
+		</div>
+		
+		<div class="row-fluid">
+			<div class="span12">
+			   <img
+					src="#{root}/images/help/contentspace/UploadingContent5.png" />
+            </div>
+		</div>
+		
+		<div class="row-fluid">
+			<div class="span12 well">
+				
+				<p>
+					<i class="fui-radio-unchecked mrm"></i><b>A pop-up dialog box appears. 
+					Fill in the desired category information . Press the [+] 
+					to add the category. Then, select update.
+                     </b>
+				</p>
+				
+			</div>
+		</div>
+		
+		<div class="row-fluid">
+			<div class="span12">
+			   <img
+					src="#{root}/images/help/contentspace/UploadingContent6.png" />
+            </div>
+		</div>
+		
+		<!-- Actual Help Content : Creating Content Space -->
+        <h2>View Content</h2>
+		<a href="#C0"><h2>Top</h2></a>
+		<div id="C4" class="row-fluid">
+			<div class="span12 well">
+				<p class="lead">This section describes how to view a content in the Content Workspace:</p>
+
+				<p>
+					<i class="fui-radio-unchecked mrm"></i><b>You may view a content and comment</b>
+				</p>
+				
+				<p>
+					<i class="fui-radio-unchecked mrm"></i><b>To comment, select the comment icon. A 2nd level menu
+					will appear with tools : Comment, Draw, Highlight, Text, Strikeout</b>
+				</p>
+			</div>
+		</div>
+		
+		<div class="row-fluid">
+			<div class="span12">
+			   <img
+					src="#{root}/images/help/contentspace/ViewingContentinContentWorkspace.png" />
+            </div>
+		</div>
+		
+		<script language="javascript">
+			$(document).ready(function() {
+				$("[rel='tooltip']").tooltip();
+				$("[rel='popover']").popover({
+					'trigger' : 'hover',
+					'html' : true
+				});
+			})
+		</script>
+	</ui:define>
+</ui:composition>

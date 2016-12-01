@@ -1,0 +1,83 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<p:dialog id="addNewLeadDialog" resizable="false" modal="true" showEffect="explode" 
+	                     header="Add New Lead" widgetVar="dlgAddLead" >
+       <p:outputPanel id="addNewLeadPanel" layout="block" >
+         <h:panelGrid style="margin-top:10px;" columns="2">
+         
+            <h:outputLabel for="firstName" value="First Name "/>
+	        <p:inputText id="firstName" 
+	                   value="#{organizationLeadView.newLeadDto.firstName}" 
+	                   style="margin-bottom:5px" size="30"/>
+	        
+	        <h:outputLabel for="lastName" value="Last Name "/>
+	        <p:inputText id="lastName" 
+	                   value="#{organizationLeadView.newLeadDto.lastName}" 
+	                   style="margin-bottom:5px" size="30"/>
+	                   
+	        <h:outputLabel for="company" value="Company "/>
+	        <p:inputText id="company" 
+	                   value="#{organizationLeadView.newLeadDto.company}" 
+	                   style="margin-bottom:5px" size="30"/>	                   
+	        
+	        <h:outputLabel for="contactPhone" value="Phone "/>
+	        <p:inputText id="contactPhone" 
+	                   value="#{organizationLeadView.newLeadDto.contactPhone}" 
+	                   style="margin-bottom:5px" size="30"/>
+	        
+	        <h:outputLabel for="contactEmail" value="Email "/>
+	        <p:inputText id="contactEmail" 
+	                   value="#{organizationLeadView.newLeadDto.contactEmail}" 
+	                   style="margin-bottom:5px" size="30"/>
+	                   
+	        <h:outputLabel for="leadStreet" value="Street "/>
+	        <p:inputText id="leadStreet" 
+	                     value="#{organizationLeadView.newLeadDto.location.street}" 
+	                     style="margin-bottom:5px" size="30"/>
+	        
+	        <h:outputLabel for="leadCity" value="City "/>
+	        <p:inputText id="leadCity" 
+	                     value="#{organizationLeadView.newLeadDto.location.city}" 
+	                     style="margin-bottom:5px" size="30"/>
+	        
+	        <h:outputLabel for="selectCountry" value="Country "/>
+			<p:selectOneMenu id="selectCountry"
+				style="width: 250px;margin-bottom:10px;margin-top:10px"
+				effect="fade" filter="true" filterMatchMode="startsWith"
+				value="#{organizationLeadView.newLeadDto.location.country}">
+				<f:selectItem itemLabel="Select One..." itemValue="#{null}" />
+				<f:selectItems value="#{countryBean.countryList}" var="countryType"
+					itemLabel="#{countryType.countryName}"
+					itemValue="#{countryType.countryName}" />
+				<p:ajax update="stateSelectList" execute="@this"
+					listener="#{organizationLeadView.loadStatesForSelectedCountry}" />
+			</p:selectOneMenu>
+	
+			<h:outputLabel for="stateSelectList" value="State: "/>
+			<p:selectOneMenu id="stateSelectList"
+				style="margin-bottom:10px;margin-top:10px" effect="fade"
+				filter="true" filterMatchMode="startsWith"
+				value="#{organizationLeadView.newLeadDto.location.state}">
+				<f:selectItem itemLabel="Select One..." itemValue="#{null}" />
+				<f:selectItems value="#{organizationLeadView.selectedStateList}"
+					var="stateType" itemLabel="#{stateType.stateName}"
+					itemValue="#{stateType.stateName}" />
+			</p:selectOneMenu>
+
+				<h:outputLabel for="leadZipCode" value="Zip "/>
+	        <p:inputText id="leadZipCode" 
+	               value="#{organizationLeadView.newLeadDto.location.zipCode}" size="30"/>
+	        
+         </h:panelGrid>
+          	  <p:commandButton  value="Add" id="addNewLeadDialogBtn" 
+          	                    action="#{organizationLeadView.addNewLead}" onclick="dlgAddLead.hide()" 
+          	                    process="@this addNewLeadPanel" 
+	                            update="tabLeadManagementDetail" style="margin-left:10px;margin-top:10px"/>
+       </p:outputPanel>
+	</p:dialog>
+</ui:composition>

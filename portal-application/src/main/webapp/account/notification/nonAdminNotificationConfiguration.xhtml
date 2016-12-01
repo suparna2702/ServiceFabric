@@ -1,0 +1,116 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:composite="http://java.sun.com/jsf/composite/composites"
+	xmlns:p="http://primefaces.org/ui">
+
+	<div class="row-fluid">
+		<div class="span12 panel panel-info">
+
+			<div class="panel-heading">
+				<i class="fui-radio-checked mrm"></i>Collaboration Workspace
+				Notification Configuration
+			</div>
+
+			<div class="panel-body">
+				<h:form autocomplete="off" id="collabWorkspaceConfigForm">
+					<h:panelGrid id="collabWorkspaceConfigPanel" columns="2">
+
+						<h3 class="mrl">Document Share Notification</h3>
+						<p:selectBooleanCheckbox
+							value="#{notificationConfigurationView.collabWorkspaceConfig.collabSpaceDocumentShare}" />
+
+						<h3 class="mrl">Document Download Notification</h3>
+						<p:selectBooleanCheckbox
+							value="#{notificationConfigurationView.collabWorkspaceConfig.collabSpaceDocumentDownload}" />
+
+						<h3 class="mrl">Document Comment Notification</h3>
+						<p:selectBooleanCheckbox
+							value="#{notificationConfigurationView.collabWorkspaceConfig.collabSpaceDocumentComment}" />
+
+						<h3 class="mrl">Document View Notification</h3>
+						<p:selectBooleanCheckbox
+							value="#{notificationConfigurationView.collabWorkspaceConfig.collabSpaceDocumentViewed}" />
+
+						<h3 class="mrl">Participant Joined Notification</h3>
+						<p:selectBooleanCheckbox
+							value="#{notificationConfigurationView.collabWorkspaceConfig.collabSpaceParticipantJoined}" />
+
+						<h3 class="mrl">Update Notification</h3>
+						<p:selectBooleanCheckbox
+							value="#{notificationConfigurationView.collabWorkspaceConfig.collabSpaceUpdated}" />
+
+					</h:panelGrid>
+					<br></br>
+					<p:commandButton id="collabWorkspaceConfigSaveButton" ajax="false"
+						value="Update" styleClass="btn btn-info btn-small"
+						process="collabWorkspaceConfigPanel"
+						actionListener="#{notificationConfigurationView.saveCollabWorkspaceConfig()}" />
+				</h:form>
+			</div>
+
+		</div>
+	</div>
+
+	<br></br>
+
+	<div class="row-fluid">
+		<div class="span12 panel panel-info">
+
+			<div class="panel-heading">
+				<i class="fui-document mrm"></i>Content Workspace Notification
+				Configuration
+			</div>
+
+			<div class="panel-body">
+				<h:form autocomplete="off" id="contentWorkspaceConfigForm">
+					<h:panelGrid id="contentWorkspaceConfigPanel" columns="2">
+
+						<h3 class="mrl">Document Download Notification</h3>
+						<p:selectBooleanCheckbox
+							value="#{notificationConfigurationView.contentWorkspaceConfig.contentSpaceDocumentDownload}" />
+
+						<h3 class="mrl">Document Comment Notification</h3>
+						<p:selectBooleanCheckbox
+							value="#{notificationConfigurationView.contentWorkspaceConfig.contentSpaceDocumentComment}" />
+
+						<h3 class="mrl">Document Annotation Notification</h3>
+						<p:selectBooleanCheckbox
+							value="#{notificationConfigurationView.contentWorkspaceConfig.contentSpaceDocumentAnnotation}" />
+
+						<h3 class="mrl">Document View Notification</h3>
+						<p:selectBooleanCheckbox
+							value="#{notificationConfigurationView.contentWorkspaceConfig.contentSpaceDocumentViewed}" />
+
+						<h3 class="mrl">Document Upload Notification</h3>
+						<p:selectBooleanCheckbox
+							value="#{notificationConfigurationView.contentWorkspaceConfig.contentSpaceDocumentUpload}" />
+
+						<h3 class="mrl">Document CheckIn Notification</h3>
+						<p:selectBooleanCheckbox
+							value="#{notificationConfigurationView.contentWorkspaceConfig.contentSpaceDocumentCheckIn}" />
+
+						<h3 class="mrl">Document CheckOut Notification</h3>
+						<p:selectBooleanCheckbox
+							value="#{notificationConfigurationView.contentWorkspaceConfig.contentSpaceDocumentCheckOut}" />
+
+						<h3 class="mrl">Participant Join Notification</h3>
+						<p:selectBooleanCheckbox
+							value="#{notificationConfigurationView.contentWorkspaceConfig.contentSpaceParticipantJoined}" />
+
+					</h:panelGrid>
+					<br></br>
+					<p:commandButton id="contentWorkspaceConfigSaveButton" ajax="false"
+						value="Update" styleClass="btn btn-info btn-small"
+						process="contentWorkspaceConfigPanel"
+						actionListener="#{notificationConfigurationView.saveContentWorkspaceConfig()}" />
+				</h:form>
+			</div>
+
+		</div>
+	</div>
+
+
+</ui:composition>

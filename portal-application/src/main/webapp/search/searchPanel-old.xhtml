@@ -1,0 +1,39 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:cc="http://java.sun.com/jsf/composite"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui">
+	
+	  <p:outputPanel layout="block" id="searchPanel">
+		<h:panelGrid columns="5" >
+		
+			<p:inputText id="searchText" value="#{searchItemView.searchText}"
+				size="60" />
+			<p:watermark rendered="#{searchItemView.embedded != 'true'}" for="searchText"
+				value="Product, Reseller, Distributor, Supplier" />
+		    <p:overlayPanel rendered="#{searchItemView.embedded != 'true'}" id="searchTypePanel" 
+		             for="searchText" showEffect="drop" hideEffect="fold" 
+		             showEvent="mousedown" hideEvent="mousedown"  
+                     styleClass="ui-helper-clearfix">
+                            
+               <p:panel style="border:hidden">
+                 <p:selectManyCheckbox value="#{searchItemView.selectedSearchType}"  
+                    layout="pageDirection" id="selectedSearchType">  
+                       <f:selectItems value="#{searchItemView.searchTypes}" />  
+                 </p:selectManyCheckbox>  
+               </p:panel>
+            </p:overlayPanel>  
+			<p:commandButton icon="ui-icon-search"
+				process="searchPanel" update="searchPanel"
+				action="#{searchItemView.search}" style="margin:1">
+			</p:commandButton>
+		</h:panelGrid>
+		<div class="span2" style="margin-left:270px;margin-top:5px">
+		   <a style="footerLink" href="#{root}/search/searchAdvancedView.xhtml">Advanced search</a>
+	    </div>
+		             
+	 </p:outputPanel>
+
+</ui:composition>

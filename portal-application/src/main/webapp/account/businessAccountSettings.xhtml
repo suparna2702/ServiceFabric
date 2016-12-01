@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/basemenulayout.xhtml">
+
+	<ui:param name="newContent" value="true" />
+	<ui:param name="skipToolbar" value="true" />
+	<ui:define name="title">Business Account Settings</ui:define>
+	<ui:define name="centerContent">
+
+		<div class="row-fluid">
+			<div class="span12">
+				<div class="iconbar iconbar-horizontal">
+					<ul>
+						<li><a href="#{root}/member/memberHome.xhtml"
+							class="fui-home" rel="tooltip" data-placement="bottom"
+							title="My Network"></a></li>
+
+						<li><a
+							href="#{root}/help/business/businessAccountSettingsHelp.xhtml"
+							class="fui-question" rel="tooltip" data-placement="bottom"
+							title="Business Account Settings Help"></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<!-- embedded URLs -->
+		<c:if
+			test="#{businessAccountView.currentAccount.name eq 'BUSINESS_PLUS'}">
+			<div class="row-fluid">
+				<div class="span6">
+					<div class="panel panel-primary">
+
+						<div class="panel-heading">
+							<h3 class="panel-title">Embedded URL</h3>
+						</div>
+						<div class="panel-body">
+
+							<table class="table">
+								<ui:repeat var="embeddedUrl"
+									value="#{businessAccountView.embeddedUrlList}">
+
+									<tr>
+										<td><p>
+												<b>#{embeddedUrl.urlTag}</b> :
+												#{embeddedUrl.fullUrl}?oid=#{businessAccountView.businessKey.name}
+											</p></td>
+									</tr>
+								</ui:repeat>
+
+
+							</table>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</c:if>
+
+
+		<!-- Business Account -->
+		<div class="row-fluid">
+			<div class="span6">
+				<div class="panel panel-primary">
+
+					<div class="panel-heading">
+						<h3 class="panel-title">#{businessAccountView.getAccountName()}</h3>
+					</div>
+					<div class="panel-body">
+						<div class="the-price">
+							<h1>
+								#{businessAccountView.currentAccount.subscriptionFeePerMonth}<span
+									class="subscript">/mo</span>
+							</h1>
+						</div>
+						<table class="table">
+							<tr>
+								<td>Employees :
+									#{businessAccountView.currentAccount.employeeAllowances}</td>
+							</tr>
+							<tr>
+								<td>Collaboration Workspaces :
+									#{businessAccountView.currentAccount.collaborationWorkspaceAllowances}
+								</td>
+							</tr>
+							<tr class="active">
+								<td>Content Workspaces :
+									#{businessAccountView.currentAccount.managementWorkspaceAllowances}
+								</td>
+							</tr>
+							<tr>
+								<td>Partner Programs :
+									#{businessAccountView.currentAccount.partnerProgramAllowances}
+								</td>
+							</tr>
+							<tr class="active">
+								<td>Documents :
+									#{businessAccountView.currentAccount.numberOfDocumentAllowances}
+								</td>
+							</tr>
+							<tr>
+								<td>Storage :
+									#{businessAccountView.currentAccount.storageSpaceAllowances} GB
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<!-- Upgrade Request -->
+		<c:if
+			test="#{businessAccountView.currentAccount.name eq 'BUSINESS_STANDARD'}">
+			<div class="old-content">
+				<div class="row-fluid">
+					<div class="span12 panel panel-primary">
+						<div class="panel-heading">
+							<h3 class="panel-title">Upgrade Account to Business Plus</h3>
+						</div>
+						<h:form id="form" prependId="false" enctype="multipart/form-data">
+
+							<p:panel style="border-style:hidden"
+								rendered="#{businessAccountView.currentAccount.name eq 'BUSINESS_STANDARD'}">
+								<h:panelGrid id="accountUpgradePanel" columns="2"
+									style="margin-top:10px;">
+
+									<h:outputLabel for="upgadeMessage" value="Message: " />
+									<p:inputTextarea id="upgadeMessage"
+										value="#{businessAccountView.upgradeMessage}"
+										style="margin-bottom:5px;margin-top:5px" rows="6" cols="43" />
+
+
+								</h:panelGrid>
+
+								<p:commandButton value="Send Upgrade Request" id="upgradeBtn"
+									process="@this accountUpgradePanel"
+									styleClass="btn btn-info btn-small"
+									style="margin-left:10px;margin-top:10px"
+									actionListener="#{businessAccountView.upgradeAccount}">
+								</p:commandButton>
+							</p:panel>
+
+						</h:form>
+					</div>
+				</div>
+			</div>
+		</c:if>
+
+
+	</ui:define>
+
+</ui:composition>

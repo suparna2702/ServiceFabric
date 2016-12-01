@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<facelet-taglib xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-facelettaglibrary_2_0.xsd"
+	version="2.0">
+
+	<namespace>http://www.businessreach.com/custom</namespace>
+
+	<function>
+		<function-name>toSelectItems</function-name>
+		<function-class>com.similan.framework.util.FaceletUtils</function-class>
+		<function-signature>java.util.List toSelectItems(java.lang.String)</function-signature>
+	</function>
+	<function>
+		<function-name>isEmpty</function-name>
+		<function-class>com.similan.framework.util.FaceletUtils</function-class>
+		<function-signature>boolean isEmpty(java.util.Collection)</function-signature>
+	</function>
+
+	<function>
+		<function-name>hasMessages</function-name>
+		<function-class>com.similan.framework.util.FaceletUtils</function-class>
+		<function-signature>boolean hasMessages()</function-signature>
+	</function>
+
+	<function>
+		<function-name>size</function-name>
+		<function-class>com.similan.framework.util.FaceletUtils</function-class>
+		<function-signature>int size(java.util.Collection)</function-signature>
+	</function>
+
+	<function>
+		<function-name>sort</function-name>
+		<function-class>com.similan.framework.util.FaceletUtils</function-class>
+		<function-signature>java.util.Collection sort(java.util.Collection)</function-signature>
+	</function>
+
+	<function>
+		<function-name>toList</function-name>
+		<function-class>com.similan.framework.util.FaceletUtils</function-class>
+		<function-signature>java.util.List toList(java.util.Set)</function-signature>
+	</function>
+
+	<function>
+		<function-name>areObjectsEqual</function-name>
+		<function-class>com.similan.framework.util.FaceletUtils</function-class>
+		<function-signature>boolean areObjectsEqual(java.lang.Object,java.lang.Object)</function-signature>
+	</function>
+
+	<function>
+		<function-name>contextPath</function-name>
+		<function-class>com.similan.framework.util.FaceletUtils</function-class>
+		<function-signature>java.lang.String contextPath()</function-signature>
+	</function>
+
+	<function>
+		<function-name>isNull</function-name>
+		<function-class>com.similan.framework.util.FaceletUtils</function-class>
+		<function-signature>boolean isNull(java.lang.Object)</function-signature>
+	</function>
+
+	<function>
+		<function-name>isBlank</function-name>
+		<function-class>com.similan.framework.util.FaceletUtils</function-class>
+		<function-signature>boolean isBlank(java.lang.String)</function-signature>
+	</function>
+	<function>
+		<function-name>integerToString</function-name>
+		<function-class>com.similan.framework.util.FaceletUtils</function-class>
+		<function-signature>java.lang.String integerToString(java.lang.Integer)</function-signature>
+	</function>
+
+</facelet-taglib>

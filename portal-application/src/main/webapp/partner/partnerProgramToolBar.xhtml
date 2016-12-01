@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui">
+
+	<div class="row-fluid">
+		<div class="span12">
+			<div class="iconbar iconbar-horizontal">
+				<ul>
+					<li><a href="#{root}/member/memberHome.xhtml" class="fui-home"
+						rel="tooltip" data-placement="bottom" title="My Network"></a></li>
+
+					<c:if
+						test="#{not sec:areAnyGranted('BUSINESS_STANDARD') and sec:areAnyGranted('PARTNER_PROGRAM_ADMIN')}">
+						<li><a href="#{root}/partner/partnerProgramCreateEdit.xhtml"
+							class="fui-plus" rel="tooltip" data-placement="bottom"
+							title="Add/Edit Partner Program"></a></li>
+
+					</c:if>
+
+
+					<li><a href="#{root}/help/partner/partnerProgramHelp.xhtml"
+						class="fui-question" rel="tooltip" data-placement="bottom"
+						title="Partner Program Help"></a></li>
+
+				</ul>
+			</div>
+		</div>
+	</div>
+
+</ui:composition>
+
+
+

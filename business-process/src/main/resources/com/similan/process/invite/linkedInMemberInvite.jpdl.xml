@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process name="linkedInMemberInvite" xmlns="http://jbpm.org/4.4/jpdl">
+   <start name="start1">
+      <transition name="to_LinkedIn_Invitation_Validate" to="LinkedIn_Invitation_Validate"/>
+   </start>
+
+   <custom expr="#{linkedInInvitationValidateAction}" name="LinkedIn_Invitation_Validate">
+      <transition name="to_SendLinkedIn_Invitation_Message" to="SendLinkedIn_Invitation_Message"/>
+   </custom>
+      
+   <custom expr="#{sendLinkedInMessageAction}" name="SendLinkedIn_Invitation_Message">
+      <transition name="to_Wait_For_Email_Validation" to="Wait_For_Email_Validation"/>
+   </custom>
+     
+   <state name="Wait_For_Email_Validation">
+      <transition name="to_Email_Url_Validation" to="Email_Url_Validation"/>
+   </state>
+   
+   <!-- Validates Email Input  -->
+   <custom expr="#{inviteEmailUrlValidation}" name="Email_Url_Validation">
+           
+      <transition name="to_Validate_Email_Decision" to="Validate_Email_Decision"/>
+   </custom>
+   
+   <decision name="Validate_Email_Decision">
+      <handler expr="#{memberEmailValidationDecision}"/>
+      <transition name="to_error1" to="error1"/>
+      <transition name="to_Send_Welcome_Email" to="Send_Welcome_Email"/>
+   </decision>
+   
+   <end-error name="error1"/>
+   <end-error name="error2"/>
+   
+   <!-- Sends the 2nd Email that is welcome email -->
+   <custom expr="#{welcomeEmailSendAction}" name="Send_Welcome_Email">
+           
+      <transition name="to_end1" to="end1"/>
+   </custom>
+   
+   <end name="end1"/>
+   <end name="end2"/>
+   <end name="end3"/>
+   
+   
+</process>

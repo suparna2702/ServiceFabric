@@ -1,0 +1,26 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:c="http://java.sun.com/jsp/jstl/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  xmlns:sec="http://www.springframework.org/security/tags"
+  xmlns:p="http://primefaces.org/ui">
+
+  <ul class="nav">
+    <ui:include src="subMenuHome.xhtml" />
+    <ui:include src="subMenuConnection.xhtml" />
+    
+    <c:if test="#{sec:areAnyGranted('ROLE_BUSINESS')}">           
+        <ui:include src="subMenuCollaboration.xhtml" />
+        <ui:include src="subMenuPartnerSpace.xhtml" />
+        <ui:include src="subMenuProfile.xhtml" />
+    </c:if>
+    
+	<c:if test="#{not sec:areAnyGranted('ROLE_BUSINESS')}">
+        <ui:include src="subMenuNonAssociatedBusiness.xhtml" />					       
+    </c:if> 
+      
+    <ui:include src="subMenuAccount.xhtml" />
+	</ul>
+	
+</ui:composition>

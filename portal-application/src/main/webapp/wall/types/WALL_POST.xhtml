@@ -1,0 +1,34 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:c="http://java.sun.com/jsp/jstl/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  xmlns:composite="http://java.sun.com/jsf/composite/composites"
+  xmlns:p="http://primefaces.org/ui"
+  xmlns:s="http://www.springframework.org/tags" template="/wall/wallEntryLayout.xhtml">
+
+  <ui:define name="wallEntryTitle">
+    posted</ui:define>
+  <ui:define name="wallEntryBody">
+    <ui:include src="/wall/wallElement.xhtml">
+      <ui:param name="wallElement" value="#{wallEntry}" />
+    </ui:include>
+    <ui:fragment rendered="#{wallEntry.link != null}">
+      <div class="span12 thumbnail" style="margin: 10px 0px 0px 0px;">
+        <a target="_tab" style="color: black;" href="#{wallEntry.link.url}">
+          <h5 style="font-size: medium;">#{wallEntry.link.title}</h5>
+          <div>
+            <ui:fragment rendered="#{wallEntry.link.imageUrl != null}">
+              <div style="width:120px;float:left; margin-right: 4px; margin-bottom: 4px;">
+                <img src="#{wallEntry.link.imageUrl}" style="width:100%;max-height:100%;"/>
+              </div>
+            </ui:fragment>
+            <p style="font-weight: lighter; font-size: small;">
+              #{wallEntry.link.content == null || wallEntry.link.content.length() &lt;= 250? wallEntry.link.content : wallEntry.link.content.substring(0, 250).concat('...')}
+            </p>
+          </div>
+        </a>
+      </div>
+    </ui:fragment>
+  </ui:define>
+
+</ui:composition>

@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:sec="http://www.springframework.org/security/tags"
+	xmlns:p="http://primefaces.org/ui">
+	
+<ui:param name="root" value="#{request.contextPath}" />
+<script type="text/javascript">
+rootUrl = '#{root}';
+</script>
+<f:view contentType="text/html">
+	<ui:insert name="meta" />
+	<ui:include src="baseCommonHeaderInserts.xhtml" />
+	<body class="index-page" data-page="index">
+		<!-- #{session.maxInactiveInterval - 5000} -->
+		<p:idleMonitor rendered="#{sec:areAnyGranted('ROLE_MEMBER')}"
+			timeout="#{session.maxInactiveInterval * 1000 - 60000}"
+			onidle="timeoutDialog.show()">
+			<p:ajax event="idle" listener="#{idleMonitorController.idleListener}"
+				immediate="true"
+				oncomplete="window.location.href = window.location.href" />
+		</p:idleMonitor>
+		<div class="old-content">
+			<div>
+				<p:dialog id="timeoutSession" header="Session Expired"
+					widgetVar="timeoutDialog" showEffect="fade" hideEffect="fade"
+					modal="true" width="400" height="110" closable="false"
+					draggable="true" resizable="false" visible="false"
+					appendToBody="true">
+					<h:outputText
+						value="Your session has expired, you will be redirected to the login page" />
+				</p:dialog>
+				<p:messages id="baseMessage" showDetail="true" autoUpdate="true"
+					closable="true" />
+			</div>
+		</div>
+
+		<!-- header -->
+		<c:if test="#{skipHeader}">
+			<div class="new-content margin-row-large">
+				<div class="navbar navbar-inverse">
+					<div class="navbar-inner">
+						<div class="container-fluid">
+							<a href="#fakelink" class="brand"> <img
+								class="businessLogoImage"
+								src="#{root}/images/businessReachLogo-alt.png" />
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</c:if>
+
+		<c:if test="#{!skipHeader}">
+			<div class="new-content">
+				<ui:include src="header.xhtml" />
+			</div>
+		</c:if>
+
+		<!-- content -->
+		<c:if test="#{!newContent}">
+			<div class="old-content">
+				<h:form id="form" prependId="false" enctype="multipart/form-data">
+					<div class="container">
+						<ui:insert name="baseContent">
+							<b>Insert is Empty in base.xhtml</b>
+						</ui:insert>
+					</div>
+				</h:form>
+			</div>
+		</c:if>
+		<c:if test="#{newContent}">
+			<div class="new-content">
+				<div class="container-fluid">
+					<div class="row-fluid">
+						<div class="span10 offset1">
+							<ui:insert name="baseContent">
+								<b>Insert is Empty in base.xhtml</b>
+							</ui:insert>
+						</div>
+					</div>
+				</div>
+			</div>
+		</c:if>
+
+		<!-- footer -->
+		<div class="new-content">
+			<ui:include src="footer.xhtml" />
+		</div>
+
+		<c:if test="#{!skipHeader}">
+
+		</c:if>
+
+
+		<div class="new-content modal hide fade" id="events-modal">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+				<h3>Event</h3>
+			</div>
+			<div class="modal-body" style="height: 400px"></div>
+			<div class="modal-footer">
+				<a href="#" data-dismiss="modal" class="btn">Close</a>
+			</div>
+		</div>
+	</body>
+
+</f:view>
+</html>

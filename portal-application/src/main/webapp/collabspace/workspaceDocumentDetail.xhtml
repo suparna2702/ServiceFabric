@@ -1,0 +1,156 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/basemenulayout.xhtml">
+
+	<ui:param name="newContent" value="true" />
+	<ui:param name="skipToolbar" value="true" />
+
+	<ui:define name="title">Shared Document #{workspaceDocumentDetailView.sharedDoc.documentInstance.document.key.name}</ui:define>
+	<ui:define name="centerContent">
+
+		<div class="old-content">
+			<div class="row-fluid">
+				<div class="span12">
+					<h:form id="form" prependId="false" enctype="multipart/form-data">
+
+						<p:confirmDialog id="downloadDialog"
+							message="Are you sure you want to download the document?"
+							header="Document document" severity="alert"
+							widgetVar="downloadDialogDlg">
+							<p:commandButton id="downloadOk" value="OK" ajax="false"
+								onclick="downloadDialogDlg.hide();">
+								<p:fileDownload
+									value="#{workspaceDocumentDetailView.downloadDocument}" />
+							</p:commandButton>
+						</p:confirmDialog>
+
+						<p:dialog id="commentDialog" resizable="true" modal="true"
+							showEffect="explode" header="Comment" widgetVar="pageCommentDlg">
+							<p:outputPanel layout="block" style="noBorder">
+								<h:panelGrid>
+									<p:inputTextarea rows="6" cols="33"
+										value="#{workspaceDocumentDetailView.pageComment}"
+										style="margin-left:10px;margin-bottom:10px;margin-top:5px" />
+								</h:panelGrid>
+								<p:commandButton value="Submit" style="margin-top:10px"
+									oncomplete="pageCommentDlg.hide();return false;"
+									action="#{workspaceDocumentDetailView.postPageComment}"
+									process="@this commentDialog" />
+							</p:outputPanel>
+
+						</p:dialog>
+
+						<p:dialog id="pageCommentListDialog" resizable="false"
+							modal="false" width="350" showEffect="explode" header="Comment"
+							widgetVar="pageCommentListDlg">
+							<p:outputPanel layout="block" style="noBorder">
+								<p:dataGrid id="commentListTable" var="comment"
+									value="#{workspaceDocumentDetailView.selectedPage.comments.commentsAndReplies}"
+									paginator="true" rows="5" columns="1"
+									paginatorAlwaysVisible="false" paginatorPosition="bottom"
+									styleClass="ui-datagrid-no-border">
+
+									<h:panelGrid columns="2" styleClass="documentPageBorder"
+										style="margin-bottom:5px">
+										<p:panel styleClass="noBorder">
+											<p:graphicImage height="32" width="32"
+												value="/spring/assets/#{workspaceDocumentDetailView.getCommentAuthorPhotoLocation(comment.comment.author)}" />
+										</p:panel>
+										<p:panel styleClass="noBorder">
+											<h:outputText
+												value="#{workspaceDocumentDetailView.getCommentAuthorFullName(comment.comment.author)}" />
+											<BR />
+											<h:outputText value="#{comment.comment}" />
+										</p:panel>
+									</h:panelGrid>
+
+								</p:dataGrid>
+							</p:outputPanel>
+						</p:dialog>
+
+						<p:confirmDialog id="bookmarkDialog"
+							message="Are you sure you want to bookmark the document?"
+							header="Bookmark Document" severity="alert"
+							widgetVar="bookmarkDlg">
+
+							<p:commandButton id="bookmarkOk" value="OK" update="@all"
+								ajax="false"
+								actionListener="#{workspaceDocumentDetailView.bookmark()}"
+								onclick="bookmarkDlg.hide()">
+
+							</p:commandButton>
+
+						</p:confirmDialog>
+
+						<p:confirmDialog id="unshareDialog"
+							message="Are you sure you want to unshare the document?"
+							header="Unshare Document" severity="alert"
+							widgetVar="unshareDocumentDlg">
+
+							<p:commandButton id="unshareBtn" value="Unshare" update="@all"
+								ajax="false"
+								actionListener="#{workspaceDocumentDetailView.unshare()}"
+								onclick="unshareDocumentDlg.hide()">
+
+							</p:commandButton>
+
+						</p:confirmDialog>
+
+						<ui:include src="/collabspace/shareDocumentWithOtherSpace.xhtml" />
+						<ui:include src="/collabspace/shareDocumentExternalDialog.xhtml" />
+
+					</h:form>
+				</div>
+			</div>
+		</div>
+
+		<ui:fragment
+			rendered="#{workspaceDocumentDetailView.sharedDoc.unshared eq 'true'}">
+			<div class="row-fluid">
+				<div class="span12">
+					<div class="iconbar iconbar-horizontal">
+						<ul>
+
+							<li><a href="#{root}/member/memberHome.xhtml"
+								class="fui-home" rel="tooltip" data-placement="bottom"
+								title="My Network"></a></li>
+
+							<li><a href="#{root}/collabspace/workspaceMain.xhtml"
+								class="fui-list-columned" rel="tooltip" data-placement="bottom"
+								title="Workspace list"></a></li>
+
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<h2>
+				The document <b><i><font color="red">#{workspaceDocumentDetailView.sharedDoc.documentInstance.document.key.name}</font></i></b>
+				is not available for viewing. It was unshared from collaboration
+				workspace.
+			</h2>
+		</ui:fragment>
+
+		<ui:fragment
+			rendered="#{workspaceDocumentDetailView.sharedDoc.unshared eq 'false'}">
+			<ui:include src="/collabspace/workspaceSharedDocumentViewPanel.xhtml" />
+		</ui:fragment>
+
+		<script language="javascript">
+			$(document).ready(function() {
+				$("[rel='tooltip']").tooltip();
+				$("[rel='popover']").popover({
+					'trigger' : 'hover',
+					'html' : true
+				});
+			})
+		</script>
+
+	</ui:define>
+</ui:composition>

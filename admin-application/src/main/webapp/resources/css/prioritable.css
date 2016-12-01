@@ -1,0 +1,32 @@
+.orderlisttable table {
+	width: 100% !important;
+}
+
+div.ui-datatable-scrollable {
+	min-width: 300px;
+}
+
+.orderlisttable .ui-widget-header {
+	display: none;
+}
+.orderlisttable thead {
+	display: none;
+}
+
+.ui-dt-c{
+	width:auto !important;
+	
+}
+.buttonpanel {
+	display: inline;
+	width: 120px;
+	float: right;
+}
+
+.orderListGrid tr,.orderListGrid td {
+	border: none;
+}
+
+.orderlisttable .ui-datatable-data td {
+	border-style: none !important;
+}

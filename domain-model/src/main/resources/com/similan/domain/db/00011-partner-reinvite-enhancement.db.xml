@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd"
+	logicalFilePath="com/similan/domain/db/00011-partner-reinvite-enhancement.db.xml">
+
+	<changeSet id="VelocityDocumentTemplate-partnerAdminReminderNotification"
+		author="Suparna">
+		<preConditions onFail="MARK_RAN">
+			<sqlCheck expectedResult="0">
+				select count(*) from
+				VelocityDocumentTemplate
+				where name =
+				'partnerAdminReminderNotification.vm'
+			</sqlCheck>
+		</preConditions>
+		<insert tableName="VelocityDocumentTemplate">
+			<column name="name" value="partnerAdminReminderNotification.vm" />
+			<column name="templatetype" value="Email" />
+			<column name="templatecontent">
+<![CDATA[
+Partner Program Invitation Reminder Notification!
+<html>
+#parse("emailTemplateStyle.vm")
+<body>
+
+#parse("emailHeader.vm")
+
+<h4 class="h4">
+  Hi
+</h4> 
+
+  <p>
+    A reminder notification has been sent to ${inviteeFirstName} ${inviteeLastName} of ${inviteeBusiness} to 
+    join the <strong>${partnerProgram}</strong> for which an original invite was sent before.
+  </p>
+  
+  <h3>Partner Reminder List</h3>
+  
+  <table style="border-style: solid;border-color: gray;">
+    <!-- Headers -->
+	<tr style="border-style: solid;border-color: gray;">
+		<th>Partner</th>
+		<th>Contact</th>
+		<th>Email</th>
+	</tr>
+	
+    #foreach( $reminder in $partnerReminderList )
+       <tr style="border-style: solid;border-color: gray;">
+         <td>$reminder.inviteeBusiness</td>
+         <td>$reminder.inviteeFirstName  $reminder.inviteeLastName</td>
+         <td>$reminder.inviteeEmail</td>
+       </tr>
+    #end
+  </table>
+ 
+#parse("emailFooter.vm")
+
+</body>
+</html>
+
+]]>
+			</column>
+		</insert>
+		<insert tableName="VelocityTemplateAttribute">
+			<column name="attributes_id"
+				valueComputed="(select id from VelocityDocumentTemplate where name = 'partnerAdminReminderNotification.vm')" />
+			<column name="name" value="inviteeFirstName" />
+			<column name="sourcetype" value="Dynamic" />
+		</insert>
+		<insert tableName="VelocityTemplateAttribute">
+			<column name="attributes_id"
+				valueComputed="(select id from VelocityDocumentTemplate where name = 'partnerAdminReminderNotification.vm')" />
+			<column name="name" value="inviteeLastName" />
+			<column name="sourcetype" value="Dynamic" />
+		</insert>
+		<insert tableName="VelocityTemplateAttribute">
+			<column name="attributes_id"
+				valueComputed="(select id from VelocityDocumentTemplate where name = 'partnerAdminReminderNotification.vm')" />
+			<column name="name" value="partnerProgram" />
+			<column name="sourcetype" value="Dynamic" />
+		</insert>
+		<insert tableName="VelocityTemplateAttribute">
+			<column name="attributes_id"
+				valueComputed="(select id from VelocityDocumentTemplate where name = 'partnerAdminReminderNotification.vm')" />
+			<column name="name" value="inviteeBusiness" />
+			<column name="sourcetype" value="Dynamic" />
+		</insert>
+		<insert tableName="VelocityTemplateAttribute">
+			<column name="attributes_id"
+				valueComputed="(select id from VelocityDocumentTemplate where name = 'partnerAdminReminderNotification.vm')" />
+			<column name="name" value="partnerReminderList" />
+			<column name="sourcetype" value="Dynamic" />
+		</insert>
+	</changeSet>
+
+	<changeSet
+		id="VelocityDocumentTemplate-partnerProgramInviteReminder-enhancement"
+		author="suparna">
+		
+		<preConditions onFail="MARK_RAN">
+			<sqlCheck expectedResult="0">
+				select count(*) from VelocityTemplateAttribute 
+                where attributes_id = (select id from VelocityDocumentTemplate where name='partnerProgramInviteReminder.vm') 
+                and name='partnerLoginUrl';
+			</sqlCheck>
+		</preConditions>
+		
+		<update tableName="VelocityDocumentTemplate">
+			<column name="templatecontent"
+				valueComputed="(select templatecontent from VelocityDocumentTemplate where name = 'partnerProgramInviteReminder.vm')">
+        
+        <![CDATA[
+Partner Program Invitation Reminder from ${inviterBusiness}!
+<html>
+#parse("emailTemplateStyle.vm")
+<body>
+
+#parse("emailHeader.vm")
+
+<h4 class="h4">
+  Hi ${inviteeFirstName} ${inviteeLastName},
+</h4> 
+
+  <p>
+    ${inviterBusiness} has sent you an invitation to join their program <strong>${partnerProgram}</strong> before. Since we have not received any confirmation 
+    this is a reminder notification. Please click the link below to initiate the process.
+  </p>
+  
+  <p style="border-style: solid;border-color: gray;">
+   <a href=${partnerProgramJoinUrl}>Click Here to Join</a>.
+  </p>
+  
+  <br></br>
+  <br></br>
+  
+  <p style="border-style: solid;border-color: gray;">
+   <a href=${partnerLoginUrl}>Please book mark this Partner Login Page for future</a>.
+  </p>
+  
+ 
+#parse("emailFooter.vm")
+
+</body>
+</html>
+
+]]>
+
+			</column>
+			<where>name = 'partnerProgramInviteReminder.vm'</where>
+		</update>
+
+		<insert tableName="VelocityTemplateAttribute">
+			<column name="attributes_id"
+				valueComputed="(select id from VelocityDocumentTemplate where name = 'partnerProgramInviteReminder.vm')" />
+			<column name="name" value="partnerLoginUrl" />
+			<column name="sourcetype" value="Dynamic" />
+		</insert>
+
+	</changeSet>
+
+</databaseChangeLog>

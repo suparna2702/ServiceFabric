@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:dialog id="locationEntryEdit" resizable="false" modal="false"
+		showEffect="explode" header="Edit Location"
+		widgetVar="dlgEditLocation">
+		<p:outputPanel id="locationEntryEditPanel" layout="block">
+
+			<h:panelGrid columns="2">
+
+				<h:outputLabel for="businessLocNameEdit" value="Name : " />
+				<h:inputText id="businessLocNameEdit"
+					styleClass="input-block-level span4"
+					style="margin-bottom:10px; margin-top:10px"
+					value="#{orgView.orgInfo.selectedLocation.name}" size="45" />
+
+				<h:outputLabel for="enterStreetEdit" value="Street : " />
+				<h:inputText id="enterStreetEdit"
+					styleClass="input-block-level span4" style="margin-bottom:10px"
+					value="#{orgView.orgInfo.selectedLocation.street}" size="45" />
+
+				<h:outputLabel for="enterCityEdit" value="City : " />
+				<h:inputText id="enterCityEdit" styleClass="input-block-level span4"
+					style="margin-bottom:10px"
+					value="#{orgView.orgInfo.selectedLocation.city}" size="45" />
+
+				<h:outputLabel for="enterZipEdit" value="Zip : " />
+				<h:inputText id="enterZipEdit" styleClass="input-block-level span4"
+					style="margin-bottom:10px"
+					value="#{orgView.orgInfo.selectedLocation.zipCode}" size="45" />
+
+				<h:outputLabel for="selectCountryEdit" value="Select Country " />
+				<p:selectOneMenu id="selectCountryEdit"
+					style="width: 250px;margin-bottom:10px;margin-top:10px"
+					effect="fade" filter="true" filterMatchMode="startsWith"
+					value="#{orgView.orgInfo.selectedLocation.country}">
+					<f:selectItem itemLabel="Select One..." itemValue="#{null}" />
+					<f:selectItems value="#{countryBean.countryList}" var="countryType"
+						itemLabel="#{countryType.countryName}"
+						itemValue="#{countryType.countryName}" />
+					<p:ajax update="stateSelectList" execute="@this"
+						listener="#{orgView.loadStatesForSelectedCountry}" />
+				</p:selectOneMenu>
+
+				<h:outputLabel for="stateSelectListEdit" value="State: " />
+				<p:selectOneMenu id="stateSelectListEdit"
+					style="margin-bottom:10px;margin-top:10px" effect="fade"
+					filter="true" filterMatchMode="startsWith"
+					value="#{orgView.orgInfo.selectedLocation.state}">
+					<f:selectItem itemLabel="Select One..." itemValue="#{null}" />
+					<f:selectItems value="#{orgView.selectedStateList}" var="stateType"
+						itemLabel="#{stateType.stateName}"
+						itemValue="#{stateType.stateName}" />
+				</p:selectOneMenu>
+
+				<h:outputLabel for="businessLocationTypeEdit"
+					style="margin-bottom:10px" value="Location Type " />
+				<p:selectOneMenu id="businessLocationTypeEdit"
+					style="margin-bottom:10px"
+					value="#{orgView.orgInfo.locationSettings}">
+					<f:selectItem itemLabel="Headquarter" itemValue="Headquarter" />
+					<f:selectItem itemLabel="Sales Office" itemValue="Sales_Office" />
+					<f:selectItem itemLabel="Support Office" itemValue="Support_Office" />
+					<f:selectItem itemLabel="Repair Office" itemValue="Repair_Office" />
+					<f:selectItem itemLabel="Retail Store" itemValue="Retail_Store" />
+					<f:selectItem itemLabel="Development Office"
+						itemValue="Development_Office" />
+					<f:selectItem itemLabel="Manufacturing Site"
+						itemValue="Manufacturing_Site" />
+				</p:selectOneMenu>
+
+
+			</h:panelGrid>
+			<p:commandButton value="Submit" action="#{orgView.editLocation}"
+				onclick="dlgEditLocation.hide()"
+				process="@this locationEntryEditPanel"
+				update="locationEntryEditPanel addBusinessLocations"
+				style="margin-top:10px" />
+
+		</p:outputPanel>
+	</p:dialog>
+</ui:composition>

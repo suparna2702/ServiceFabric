@@ -1,0 +1,84 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:composite="http://java.sun.com/jsf/composite/composites"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:fragment value="#{not empty contactView.contactList}">
+
+		<ui:repeat var="contactEntry" value="#{contactList}">
+			<ui:param name="contactType"
+				value="#{contactEntry.getType().name()}" />
+
+			<ui:fragment rendered="#{contactType == 'Collegue'}">
+				<div class="element-item member mrl" data-category="member">
+					<ui:include src="contactPanel.xhtml">
+						<ui:param name="contactEntryType" value="Colleague" />
+					</ui:include>
+				</div>
+			</ui:fragment>
+
+			<ui:fragment rendered="#{contactType == 'BusinessAssociate'}">
+				<div class="element-item business mrl" data-category="business">
+					<ui:include src="contactPanel.xhtml">
+						<ui:param name="contactEntryType" value="Business Associate" />
+					</ui:include>
+				</div>
+			</ui:fragment>
+
+			<ui:fragment rendered="#{contactType == 'TechnologyPartner'}">
+				<div class="element-item partner mrl" data-category="partner">
+					<ui:include src="contactPanel.xhtml">
+						<ui:param name="contactEntryType" value="Technology Partner" />
+					</ui:include>
+				</div>
+			</ui:fragment>
+
+			<ui:fragment rendered="#{contactType == 'MarketingPartner'}">
+				<div class="element-item partner mrl" data-category="partner">
+					<ui:include src="contactPanel.xhtml">
+						<ui:param name="contactEntryType" value="Marketing Partner" />
+					</ui:include>
+				</div>
+			</ui:fragment>
+
+			<ui:fragment rendered="#{contactType == 'ChannelPartner'}">
+				<div class="element-item partner mrl" data-category="partner">
+					<ui:include src="contactPanel.xhtml">
+						<ui:param name="contactEntryType" value="Channel Partner" />
+					</ui:include>
+				</div>
+			</ui:fragment>
+
+			<ui:fragment rendered="#{contactType == 'Employee'}">
+				<div class="element-item business mrl" data-category="business">
+					<ui:include src="contactPanel.xhtml">
+						<ui:param name="contactEntryType" value="Employee" />
+					</ui:include>
+				</div>
+			</ui:fragment>
+
+			<ui:fragment rendered="#{contactType == 'Associate'}">
+				<div class="element-item member mrl" data-category="member">
+					<ui:include src="contactPanel.xhtml">
+						<ui:param name="contactEntryType" value="Associate" />
+					</ui:include>
+				</div>
+			</ui:fragment>
+
+			<ui:fragment rendered="#{contactType == 'Other'}">
+				<div class="element-item member mrl" data-category="member">
+					<ui:include src="contactPanel.xhtml">
+						<ui:param name="contactEntryType" value="Other" />
+					</ui:include>
+				</div>
+			</ui:fragment>
+
+
+		</ui:repeat>
+	</ui:fragment>
+
+
+</ui:composition>

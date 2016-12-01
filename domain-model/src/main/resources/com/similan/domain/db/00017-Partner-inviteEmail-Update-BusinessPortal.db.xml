@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd"
+	logicalFilePath="00017-Partner-inviteEmail-Update-BusinessPortal.db.xml">
+
+	<changeSet
+		id="VelocityDocumentTemplate-emailNewPartnerInfoInputEmailTemplate-BusinessPortal"
+		author="suparna">
+
+		<preConditions onFail="MARK_RAN">
+			<sqlCheck expectedResult="1">
+				select count(*) from
+				VelocityDocumentTemplate
+				where
+				name='emailNewPartnerInfoInputEmailTemplate.vm'
+			</sqlCheck>
+		</preConditions>
+
+		<update tableName="VelocityDocumentTemplate">
+			<column name="templatecontent">
+        
+        <![CDATA[
+        
+ ${businessName} has invited you to join Partner Portal
+ <html>
+ #parse("emailTemplateStyle.vm")
+ <body>
+
+ #parse("emailHeader.vm")
+
+ <h4>
+   Hi ${inviteeFirstName} ${inviteeLastName},
+ </h4>  
+ </br>
+ 
+ <p>
+    ${businessName} has invited you to join their <strong><i>Partner Portal</strong></i> for the partner program 
+    <strong>${partnerProgramName}</strong> you are part of. You have received this email because ${businessName} 
+    now manages their partners in BusinessReach powered partner network. In order to collaborate with ${businessName} 
+    click the following link to provide additional information and join ${businessName}'s partner network.
+ </p>
+
+ <p style="border-style: solid;border-color: gray;">
+    <a href=${partnerInfoUrl}>Click to provide additional info</a>.
+ </p>
+
+ <br></br>
+ <br></br>
+
+ <p style="border-style: solid;border-color: gray;">
+   <a href=${partnerLoginUrl}>Please book mark this Partner Login Page for future</a>.
+ </p>
+
+#parse("emailFooter.vm")
+
+</body>
+</html>  
+        
+
+]]>
+
+			</column>
+			<where>name = 'emailNewPartnerInfoInputEmailTemplate.vm'</where>
+		</update>
+
+	</changeSet>
+
+	<changeSet
+		id="VelocityDocumentTemplate-partnerProgramInviteReminder-updateWith-BusinessPortal"
+		author="suparna">
+
+		<preConditions onFail="MARK_RAN">
+			<sqlCheck expectedResult="1">
+				select count(*) from
+				VelocityDocumentTemplate
+				where
+				name='partnerProgramInviteReminder.vm'
+			</sqlCheck>
+		</preConditions>
+
+		<update tableName="VelocityDocumentTemplate">
+			<column name="templatecontent">
+        
+        <![CDATA[
+Partner Portal Invitation Reminder from ${inviterBusiness}!
+<html>
+#parse("emailTemplateStyle.vm")
+<body>
+
+#parse("emailHeader.vm")
+
+<h4 class="h4">
+  Hi ${inviteeFirstName} ${inviteeLastName},
+</h4> 
+
+  <p>
+    ${inviterBusiness} has sent you an invitation to join their <strong>Partner Portal</strong> for ${partnerProgram} before. 
+    Since we have not received any confirmation this is a reminder notification. Please click the link below to initiate the process.
+  </p>
+  
+  <div>
+   <a href=${partnerProgramJoinUrl}>Click Here to Join</a>.
+  </div>
+  
+ 
+#parse("emailFooter.vm")
+
+</body>
+</html>
+
+]]>
+
+			</column>
+			<where>name = 'partnerProgramInviteReminder.vm'</where>
+		</update>
+
+	</changeSet>
+
+
+</databaseChangeLog>

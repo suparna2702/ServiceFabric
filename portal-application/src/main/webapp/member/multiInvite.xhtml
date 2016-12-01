@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:selectOneRadio id="multiInviteModeRadio" value="#{memberInviteView.multiInviteMode}">
+		<f:selectItem itemLabel="Enter email" itemValue="email" />
+		<f:selectItem itemLabel="Upload File" itemValue="file" />
+		<f:ajax execute="@this" render="multiInviteMainPanel"/>
+	</p:selectOneRadio>
+
+	<p:outputPanel id="multiInviteMainPanel">
+		<p:outputPanel id="multiInvitePanel" layout="block"
+			rendered="#{memberInviteView.multiInviteMode eq 'email'}">
+			<p:panel style="border-style:hidden">
+				<h:panelGrid columns="2">
+					<h:outputText
+						value="Enter up to 50 email addresses, separated by commas."
+						style="margin-bottom:10px;" />
+					<h:outputText value="" />
+					<p:inputTextarea id="inputarea" rows="15" cols="30"
+						value="#{memberInviteView.memberInfo.multiInviteEmails}"
+						style="margin-top:10px;" />
+				</h:panelGrid>
+			</p:panel>
+			<p:commandButton value="Invite" icon="ui-icon-extlink"
+				action="#{memberInviteView.inviteMultiple}"
+				process="@this multiInvitePanel" update="multiInvitePanel" />
+		</p:outputPanel>
+
+		<p:outputPanel id="bulkInvitePanel" layout="block"
+			rendered="#{memberInviteView.multiInviteMode eq 'file'}"
+			style="margin-top:15px;">
+			<p:fileUpload
+				fileUploadListener="#{memberInviteView.handleFileUpload}"
+				auto="true" mode="advanced" id="bulkInviteFileUpload"
+				sizeLimit="100000" update="bulkInvitePanel"
+				allowTypes="/(\.|\/)(csv)$/" />
+			<p:outputPanel
+				rendered="#{not empty memberInviteView.memberInviteList.memberInvites}">
+
+				<p:sheet var="memberInvite"
+					value="#{memberInviteView.memberInviteList.memberInvites}"
+					id="bulkMemberList">
+
+					<p:column headerText="First Name" width="125">
+						<h:inputText value="#{memberInvite.firstName}" />
+					</p:column>
+
+					<p:column headerText="Last Name" width="125">
+						<h:inputText value="#{memberInvite.lastName}" />
+					</p:column>
+
+					<p:column headerText="Email" width="125">
+						<h:inputText value="#{memberInvite.email}" />
+					</p:column>
+				</p:sheet>
+
+				<p:commandButton value="Invite" icon="ui-icon-extlink" process="@this bulkInvitePanel"
+					update="bulkInvitePanel bulkInviteFileUpload" id="inviteButton"
+					action="#{memberInviteView.inviteBulk}" style="margin-top:15px;" />
+			</p:outputPanel>
+		</p:outputPanel>
+	</p:outputPanel>
+</ui:composition>

@@ -1,0 +1,31 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:composite="http://java.sun.com/jsf/composite/composites"
+	xmlns:p="http://primefaces.org/ui"
+	template="/wall/wallEntryLayout.xhtml">
+
+	<ui:define name="wallEntryTitle">
+       #{wallEntry.name} display notice was viewed 
+  </ui:define>
+
+	<ui:define name="wallEntryBody">
+		<div class="span3">
+			<img src="#{root}/spring/assets/#{wallEntry.initiator.displayImage}"
+				class="imgMember caption" />
+			<p>
+				viewed <b>#{wallEntry.name}</b> display notice
+			</p>
+		</div>
+		<div class="span7">
+			<div style="width: 220px; margin-right: 2px; margin-bottom: 2px;">
+
+				<p:graphicImage value="/spring/assets/#{wallEntry.iconAsset}"
+					width="120px" style="width: 100%; max-height: 100%;"
+					styleClass="img-responsive" />
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>

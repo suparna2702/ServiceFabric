@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd"
+	logicalFilePath="com/similan/domain/db/00009-partner-reinvite.db.xml">
+
+	<changeSet id="VelocityDocumentTemplate-partnerProgramInviteReminder"
+		author="Suparna">
+		<preConditions onFail="MARK_RAN">
+			<sqlCheck expectedResult="0">
+				select count(*) from
+				VelocityDocumentTemplate
+				where name =
+				'partnerProgramInviteReminder.vm'
+			</sqlCheck>
+		</preConditions>
+		<insert tableName="VelocityDocumentTemplate">
+			<column name="name" value="partnerProgramInviteReminder.vm" />
+			<column name="templatetype" value="Email" />
+			<column name="templatecontent">
+<![CDATA[
+Partner Program Invitation Reminder from ${inviterBusiness}!
+<html>
+#parse("emailTemplateStyle.vm")
+<body>
+
+#parse("emailHeader.vm")
+
+<h4 class="h4">
+  Hi ${inviteeFirstName} ${inviteeLastName},
+</h4> 
+
+  <p>
+    ${inviterBusiness} has sent you an invitation to join their program <strong>${partnerProgram}</strong> before. Since we have not received any confirmation 
+    this is a reminder notification. Please click the link below to initiate the process.
+  </p>
+  
+  <div>
+   <a href=${partnerProgramJoinUrl}>Click Here to Join</a>.
+  </div>
+  
+ 
+#parse("emailFooter.vm")
+
+</body>
+</html>
+
+]]>
+			</column>
+		</insert>
+		<insert tableName="VelocityTemplateAttribute">
+			<column name="attributes_id"
+				valueComputed="(select id from VelocityDocumentTemplate where name = 'partnerProgramInviteReminder.vm')" />
+			<column name="name" value="inviterBusiness" />
+			<column name="sourcetype" value="Dynamic" />
+		</insert>
+		<insert tableName="VelocityTemplateAttribute">
+			<column name="attributes_id"
+				valueComputed="(select id from VelocityDocumentTemplate where name = 'partnerProgramInviteReminder.vm')" />
+			<column name="name" value="inviteeFirstName" />
+			<column name="sourcetype" value="Dynamic" />
+		</insert>
+		<insert tableName="VelocityTemplateAttribute">
+			<column name="attributes_id"
+				valueComputed="(select id from VelocityDocumentTemplate where name = 'partnerProgramInviteReminder.vm')" />
+			<column name="name" value="inviteeLastName" />
+			<column name="sourcetype" value="Dynamic" />
+		</insert>
+		<insert tableName="VelocityTemplateAttribute">
+			<column name="attributes_id"
+				valueComputed="(select id from VelocityDocumentTemplate where name = 'partnerProgramInviteReminder.vm')" />
+			<column name="name" value="partnerProgram" />
+			<column name="sourcetype" value="Dynamic" />
+		</insert>
+		<insert tableName="VelocityTemplateAttribute">
+			<column name="attributes_id"
+				valueComputed="(select id from VelocityDocumentTemplate where name = 'partnerProgramInviteReminder.vm')" />
+			<column name="name" value="partnerProgramJoinUrl" />
+			<column name="sourcetype" value="Dynamic" />
+		</insert>
+	</changeSet>
+
+
+
+</databaseChangeLog>

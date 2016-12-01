@@ -1,0 +1,229 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:composite="http://java.sun.com/jsf/composite/composites"
+	xmlns:similan="http://www.businessreach.com/similan"
+	template="/templates/basemenulayout.xhtml">
+
+	<ui:param name="newContent" value="true" />
+	<ui:param name="skipToolbar" value="true" />
+	<ui:define name="title">Content Workspace</ui:define>
+	<ui:define name="centerContent">
+
+		<div class="row-fluid">
+			<div class="span12">
+				<div class="iconbar iconbar-horizontal">
+					<ul>
+						<li><a href="#{root}/member/memberHome.xhtml"
+							class="fui-home" rel="tooltip" data-placement="bottom"
+							title="My Network"></a></li>
+
+						<li><a
+							href="#{root}/docspace/documentWorkspaceListView.xhtml"
+							class="fui-list-large-thumbnails" rel="tooltip"
+							data-placement="bottom" title="My Content Workspaces"></a></li>
+
+						<li><a
+							href="#{docWorkspaceView.managementWorkspaceView('docspace/upload/localDriveFileImportView.xhtml',docWorkspaceView.workspaceKey)}"
+							class="fa fa-cloud-upload fa-lg" rel="tooltip"
+							data-placement="bottom"
+							title="Upload Content in #{docWorkspaceView.workspaceKey.name}"></a></li>
+
+						<c:if test="#{not empty docWorkspaceView.shareList}">
+							<li><a href="#" onclick="addPertDlg.show();return false;"
+								class="fui-user" rel="tooltip" data-placement="bottom"
+								title="Add a Participant"></a></li>
+						</c:if>
+
+						<li><a
+							href="#{root}/help/contentspace/contentSpaceDetailHelp.xhtml"
+							class="fui-question" rel="tooltip" data-placement="bottom"
+							title="Workspace Help"></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<h2 class="well">#{docWorkspaceView.workspaceKey.name}</h2>
+
+		<!-- All the dialog boxes -->
+
+		<div class="old-content">
+			<div class="row-fluid">
+				<div class="span12">
+					<h:form id="formContent" prependId="false"
+						enctype="multipart/form-data">
+
+						<ui:include src="contentSpaceDialogs.xhtml" />
+
+					</h:form>
+				</div>
+			</div>
+		</div>
+
+		<!-- Search Form -->
+
+		<div class="row-fluid">
+			<div class="span12">
+				<h:form id="docSearchForm"
+					action="#{docWorkspaceView.documentSearch}"
+					styleClass="form-search pull-left">
+					<div class="input-append">
+
+						<p:inputText id="docSearchText"
+							value="#{docWorkspaceView.documentSearchText}"
+							styleClass="span4 search-query" />
+						<p:watermark for="docSearchText" value="Search document by title" />
+						<p:commandButton icon="fui-search"
+							action="#{docWorkspaceView.documentSearch}"
+							process="@this docSearchForm" update=":documentList"
+							styleClass="btn btn-large" ajax="true">
+						</p:commandButton>
+
+					</div>
+
+				</h:form>
+				<!-- Doc search form -->
+			</div>
+		</div>
+
+		<!-- Category based filtering and document list -->
+
+		<div class="row-fluid">
+			<div class="span12">
+
+				<!--  Category -->
+				<div class="span2">
+
+					<h:form id="categoryFilterForm" styleClass="pull-left">
+
+						<div class="input-append form-search">
+							<h:inputText id="addCategorytext" styleClass="input-block-level"
+								value="#{docWorkspaceView.categoryToAdd}" size="40" />
+							<p:watermark for="addCategorytext" value="Add Category" />
+							<p:tooltip for="addCategorytext"
+								value="Category is to organize documents" showEffect="fade"
+								hideEffect="fade" />
+
+							<p:commandButton id="addCategorytextBtn" icon="fui-plus"
+								action="#{docWorkspaceView.addCategory()}"
+								process="@this addCategorytext" update="categoryListPanelGrid"
+								styleClass="btn btn-large" />
+						</div>
+
+
+						<h:panelGrid id="categoryListPanelGrid">
+							<ui:repeat var="category"
+								value="#{docWorkspaceView.allFilterCategories}">
+
+								<div class="row-fluid">
+									<div class="span12">
+										<p:commandButton id="categoryFilterBtn"
+											value="#{category.name}"
+											styleClass="btn btn-inverse btn-small input-block-level"
+											action="#{docWorkspaceView.setSelectedFilterCategory(category)}"
+											update=":documentList" ajax="true" />
+									</div>
+								</div>
+								<br></br>
+
+							</ui:repeat>
+
+						</h:panelGrid>
+
+					</h:form>
+
+				</div>
+
+				<!-- Document List -->
+				<div class="span6">
+					<h:panelGroup id="documentList">
+
+						<table class="table table-striped">
+
+							<!-- Headers -->
+							<tr>
+								<th>Icon</th>
+								<th>Name</th>
+								<th>Edit</th>
+								<th>Delete</th>
+								<th>Download</th>
+								<th>View</th>
+								<th>Comment</th>
+
+							</tr>
+
+							<ui:repeat var="document" value="#{docWorkspaceView.documents}">
+
+								<tr>
+									<td><h:outputLink
+											value="#{root}/docspace/viewDocumentDetails.xhtml">
+											<f:param name="msname"
+												value="#{document.data.document.key.workspace.name}" />
+											<f:param name="dname"
+												value="#{document.data.document.key.name}" />
+											<p:graphicImage id="fileIcon" styleClass="documentPageBorder"
+												value="#{docWorkspaceView.getDocumentService().getDocumentIcon(document.data.document.key)}"
+												width="60" height="60" />
+										</h:outputLink> <br /> <small class="muted">Version
+											#{document.data.key.version}</small></td>
+
+									<td><h:outputLink
+											value="#{root}/docspace/viewDocumentDetails.xhtml">
+											<f:param name="msname"
+												value="#{document.data.document.key.workspace.name}" />
+											<f:param name="dname"
+												value="#{document.data.document.key.name}" />
+											#{document.data.document.key.name}
+                                             <br />
+											<small> #{document.data.document.description} </small>
+										</h:outputLink></td>
+
+									<td><h:form id="docEditForm">
+											<p:commandLink
+												action="#{docWorkspaceView.editDocumentStart(document.key.id)}"
+												oncomplete="editFileDlg.show()" ajax="true">
+												<i class="fa fa-pencil-square-o fa-lg"></i>
+											</p:commandLink>
+										</h:form></td>
+
+									<td><h:form id="docDeleteForm"
+											action="#{docWorkspaceView.deleteDocument}">
+											<p:commandButton id="documentDeleteBtn" value="Delete"
+												styleClass="btn btn-inverse btn-small input-block-level"
+												action="#{docWorkspaceView.deleteDocument(document.data.document.key)}"
+												update=":documentList" />
+										</h:form></td>
+
+									<td>#{document.statistics.downloadCount}</td>
+									<td>#{document.statistics.vieweCount}</td>
+									<td>#{document.statistics.commentCount}</td>
+
+								</tr>
+
+							</ui:repeat>
+
+						</table>
+
+					</h:panelGroup>
+				</div>
+
+				<div class="span3 offset1">
+					<h:panelGroup id="perticipantList">
+						<ui:include src="/docspace/contentSpacePerticipantList.xhtml">
+							<ui:param name="contactList"
+								value="#{docWorkspaceView.perticipants}" />
+						</ui:include>
+					</h:panelGroup>
+				</div>
+
+			</div>
+		</div>
+
+	</ui:define>
+</ui:composition>

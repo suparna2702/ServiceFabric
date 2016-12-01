@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process name="businessCreationByMember" xmlns="http://jbpm.org/4.4/jpdl">
+
+	<start g="306,55,48,48" name="start1">
+		<transition g="-87,-13" name="to_Validate_Business_Creation_Input"
+			to="Validate_Business_Creation_Input" />
+	</start>
+
+	<custom expr="#{businessCreationInputValidationAction}" g="201,172,254,69"
+		name="Validate_Business_Creation_Input">
+		<transition g="-90,-25" name="to_Business_Creation_Decision"
+			to="Business_Creation_Decision" />
+	</custom>
+
+	<decision g="308,305,48,48" name="Business_Creation_Decision">
+		<handler expr="#{businessCreationValidationDecision}" />
+		
+		<transition g="183,331:-158,41" name="to_Send_Member_Business_Validation_Err"
+			to="Send_Member_Business_Validation_Err" />
+			
+		<transition g="625,328:-113,36"
+			name="to_Create_Business" to="Create_Business" />
+			
+	</decision>
+
+	<custom expr="#{sendBusinessCreateValidationErrAction}" g="42,435,282,70"
+		name="Send_Member_Business_Validation_Err">
+		<transition g="-69,-12" name="to_Business_Creation_Validation_Error_End"
+			to="Business_Creation_Validation_Error_End" />
+	</custom>
+
+	<end-error g="161,564,48,48" name="Business_Creation_Validation_Error_End" />
+
+	<custom expr="#{businessCreationAction}" g="504,693,249,52"
+		name="Create_Business">
+		<transition g="-87,-4" name="to_Send_Business_Profile_Notification_Email"
+			to="Send_Business_Profile_Notification_Email" />
+	</custom>
+
+	<custom expr="#{sendBusinessProfileEmailToMemberAction}" g="663,927,330,52"
+		name="Send_Business_Profile_Notification_Email">
+		<transition g="-58,-7" name="to_Business_Creation_Success_End" to="Business_Creation_Success_End" />
+	</custom>
+
+	<end g="807,1027,48,48" name="Business_Creation_Success_End" />
+</process>

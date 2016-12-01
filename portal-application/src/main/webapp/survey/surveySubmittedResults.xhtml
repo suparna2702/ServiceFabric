@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:fragment
+		rendered="#{not empty pollSubmissionResultView.pollSubmissions}">
+
+		<ui:repeat value="#{pollSubmissionResultView.pollSubmissions}"
+			var="pollSubmissionItem">
+
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<h3 class="panel-title">Submission by
+						#{pollSubmissionItem.submitterMemberInfo.firstName}
+						#{pollSubmissionItem.submitterMemberInfo.lastName}</h3>
+					<span class="pull-right clickable"><i
+						class="icon-chevron-up"></i></span>
+				</div>
+
+				<div class="panel-body">
+					<h:outputText value="#{pollSubmissionItem.timeStamp}"
+						style="margin-bottom:10px">
+						<f:convertDateTime pattern="MM/dd/yyyy" />
+					</h:outputText>
+
+					<ui:repeat value="#{pollSubmissionItem.answers}" var="answerItem">
+						<ui:include src="/survey/surveyAnswerRating.xhtml" />
+						<ui:include src="/survey/surveyAnswerChoice.xhtml" />
+						<ui:include src="/survey/surveyAnswerTextInput.xhtml" />
+					</ui:repeat>
+
+				</div>
+			</div>
+
+		</ui:repeat>
+
+	</ui:fragment>
+
+	<ui:fragment
+		rendered="#{empty pollSubmissionResultView.pollSubmissions}">
+         No submission available.
+	</ui:fragment>
+</ui:composition>

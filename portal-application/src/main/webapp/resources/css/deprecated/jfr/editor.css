@@ -1,0 +1,112 @@
+.old-content .ui-editor {
+  background: none #FFFFFF;
+}
+
+.old-content .ui-editor  iframe {
+  border: none;
+  margin: 0;
+  padding: 0
+}
+
+.old-content .ui-editor  textarea {
+  border: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: scroll;
+  font: 10pt Arial, Verdana;
+  resize: none;
+  outline: none; /* webkit grip focus */
+}
+
+.old-content .ui-editor-toolbar {
+  background: url("../../../../javax.faces.resource/editor/images/toolbar.gif.xhtml?ln=primefaces") repeat
+}
+
+.old-content .ui-editor-group {
+  float: left;
+  height: 26px
+}
+
+.old-content .ui-editor-button {
+  float: left;
+  width: 24px;
+  height: 24px;
+  margin: 1px 0 1px 0;
+  background: url("../../../../javax.faces.resource/editor/images/buttons.gif.xhtml?ln=primefaces")
+}
+
+.old-content .ui-editor-disabled {
+  opacity: 0.3;
+  filter: alpha(opacity = 30)
+}
+
+.old-content .ui-editor-divider {
+  float: left;
+  width: 1px;
+  height: 23px;
+  margin: 1px 0 1px 0;
+  background: #CCC
+}
+
+.old-content .ui-editor-popup {
+  border: solid 1px #999;
+  background-color: white;
+  position: absolute;
+  font: 10pt Arial, Verdana;
+  cursor: default;
+  z-index: 10000
+}
+
+.old-content .ui-editor-list div {
+  padding: 2px 4px 2px 4px
+}
+
+.old-content .ui-editor-list p,
+.old-content .ui-editor-list h1,
+.old-content .ui-editor-list h2,
+.old-content .ui-editor-list h3,
+.old-content .ui-editor-list h4,
+.old-content .ui-editor-list h5,
+.old-content .ui-editor-list h6,
+.old-content .ui-editor-list font {
+  padding: 0;
+  margin: 0;
+  background-color: Transparent
+}
+
+.old-content .ui-editor-color {
+  width: 150px;
+  padding: 1px 0 0 1px
+}
+
+.old-content .ui-editor-color div {
+  float: left;
+  width: 14px;
+  height: 14px;
+  margin: 0 1px 1px 0
+}
+
+.old-content .ui-editor-prompt {
+  background-color: #F6F7F9;
+  padding: 4px;
+  font-size: 8.5pt
+}
+
+.old-content .ui-editor-prompt input,
+.old-content .ui-editor-prompt textarea {
+  font: 8.5pt Arial, Verdana;
+}
+
+.old-content .ui-editor-message {
+  background-color: #FDFCEE;
+  width: 150px;
+  padding: 4px;
+  font-size: 8.5pt
+} /** IE fix within overlays **/
+.old-content .ui-overlay-hidden .ui-editor iframe {
+  display: none !important;
+}
+
+.old-content .ui-overlay-visible .ui-editor iframe {
+  display: inline !important;
+}

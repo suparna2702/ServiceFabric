@@ -1,0 +1,203 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/basemenulayout.xhtml">
+
+	<ui:param name="newContent" value="true" />
+	<ui:param name="skipToolbar" value="true" />
+	<ui:define name="title">Add/ Edit Survey</ui:define>
+	<ui:define name="centerContent">
+
+		<ui:include src="/survey/surveyToolBar.xhtml" />
+
+		<div class="old-content">
+
+			<div class="row-fluid">
+				<div class="span12">
+
+					<div class="span2">
+
+						<h:form id="surveyBtnForm" prependId="false"
+							enctype="multipart/form-data">
+
+							<h:commandLink id="multiChoiceBtn"
+								action="#{pollTemplateCreateEditView.addMultiChoiceQuestion}"
+								styleClass="input-block-level btn btn-primary"
+								update=":surveyForm :surveyQuestionForm">
+								<span class="fa fa-list fa-lg"></span> Multi Choice
+                            </h:commandLink>
+
+							<h:commandLink id="singleChoiceBtn"
+								action="#{pollTemplateCreateEditView.addSingleChoiceQuestion}"
+								styleClass="input-block-level btn btn-info"
+								update=":surveyForm :surveyQuestionForm">
+								<span class="fa fa-list-ul fa-lg"></span> Single Choice
+                            </h:commandLink>
+
+							<h:commandLink id="textInputBtn"
+								action="#{pollTemplateCreateEditView.addTextInputQuestion}"
+								styleClass="input-block-level btn btn-success"
+								update=":surveyForm :surveyQuestionForm">
+								<span class="fa fa-pencil-square-o fa-lg"></span> Text Input
+                            </h:commandLink>
+
+							<h:commandLink id="ratingInputBtn"
+								action="#{pollTemplateCreateEditView.addRatingQuestion}"
+								styleClass="input-block-level btn btn-info"
+								update=":surveyForm :surveyQuestionForm">
+								<span class="fa fa-star-half-o fa-lg"></span> Rating
+                            </h:commandLink>
+
+						</h:form>
+					</div>
+
+					<div class="span6">
+
+						<h:form id="surveyForm" prependId="false"
+							enctype="multipart/form-data">
+
+
+							<div class="row-fluid">
+								<div class="span12 control-group small">
+									<p:inputText id="pollTemplateName"
+										styleClass="input-block-level"
+										onkeypress="setConfirmUnload(true);"
+										value="#{pollTemplateCreateEditView.pollTemplate.templateName}"
+										required="true" requiredMessage="Enter Survey Name" />
+									<p:watermark for="pollTemplateName" value="Name" />
+								</div>
+							</div>
+
+							<div class="row-fluid">
+								<div class="span12 control-group small">
+									<h:inputTextarea id="pollTemplateDescription"
+										styleClass="input-block-level"
+										onkeypress="setConfirmUnload(true);"
+										value="#{pollTemplateCreateEditView.pollTemplate.templateDescription}"
+										rows="5" cols="45" required="true"
+										requiredMessage="Enter Survey Description" />
+									<p:watermark for="pollTemplateDescription" value="Description" />
+
+								</div>
+							</div>
+
+							<ui:fragment
+								rendered="#{not empty pollTemplateCreateEditView.pollTemplate.templateQuestion}">
+								<ui:repeat
+									value="#{pollTemplateCreateEditView.pollTemplate.templateQuestion}"
+									var="question">
+
+									<div class="panel panel-primary mvm">
+										<div class="panel-heading">
+											<h3 class="panel-title">#{question.questionType()}</h3>
+											<span class="pull-right clickable"><i
+												class="glyphicon glyphicon-minus"></i></span>
+										</div>
+
+										<div class="panel-body">
+											<ui:include src="/survey/surveyQuestionMultiChoice.xhtml" />
+											<ui:include
+												src="/survey/surveyQuestionSingleChoiceList.xhtml" />
+											<ui:include
+												src="/survey/surveyQuestionSingleChoiceRadio.xhtml" />
+											<ui:include
+												src="/survey/surveyQuestionSingleChoiceRating.xhtml" />
+											<ui:include src="/survey/surveyQuestionTextInput.xhtml" />
+										</div>
+
+									</div>
+
+								</ui:repeat>
+							</ui:fragment>
+
+							<ui:fragment
+								rendered="#{empty pollTemplateCreateEditView.pollTemplate.templateQuestion}">
+								<p>No survey question defined</p>
+							</ui:fragment>
+
+							<p:commandButton id="surveyTemplateSave"
+								onclick="setConfirmUnload(false);"
+								styleClass="btn btn-info btn-small"
+								style="margin-top:10px; margin-right:20px" value="Save"
+								action="#{pollTemplateCreateEditView.saveSurveyTemplate}" />
+
+
+
+						</h:form>
+
+					</div>
+
+					<div class="span4">
+
+						<h:form id="surveyQuestionForm" prependId="false"
+							enctype="multipart/form-data">
+
+							<ui:fragment
+								rendered="#{not empty pollTemplateCreateEditView.pollTemplate.templateQuestion}">
+								<ui:repeat
+									value="#{pollTemplateCreateEditView.pollTemplate.templateQuestion}"
+									var="question">
+
+									<div class="panel panel-primary mvm">
+										<div class="panel-heading">
+											<h3 class="panel-title">#{question.questionType()}</h3>
+										</div>
+
+										<div class="panel-body">
+											<ui:include src="/survey/surveyViewQuestionMultiChoice.xhtml" />
+											<ui:include
+												src="/survey/surveyViewQuestionSingleChoiceList.xhtml" />
+											<ui:include
+												src="/survey/surveyViewQuestionSingleChoiceRadio.xhtml" />
+											<ui:include
+												src="/survey/surveyViewQuestionSingleChoiceRating.xhtml" />
+											<ui:include src="/survey/surveyViewQuestionTextInput.xhtml" />
+										</div>
+
+									</div>
+
+								</ui:repeat>
+							</ui:fragment>
+
+							<ui:fragment
+								rendered="#{empty pollTemplateCreateEditView.pollTemplate.templateQuestion}">
+								<p>No survey question defined</p>
+							</ui:fragment>
+
+						</h:form>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+
+		<script>
+			function setConfirmUnload(on) {
+				window.onbeforeunload = on ? unloadMessage : null;
+			}
+
+			function unloadMessage() {
+				return ('You have entered new data on this page. '
+						+ 'If you navigate away from this page without '
+						+ 'first saving your data, the changes will be lost.');
+			}
+		</script>
+
+		<script language="javascript">
+			$(document).ready(function() {
+				$("[rel='tooltip']").tooltip();
+				$("[rel='popover']").popover({
+					'trigger' : 'hover',
+					'html' : true
+				});
+			})
+		</script>
+
+	</ui:define>
+</ui:composition>

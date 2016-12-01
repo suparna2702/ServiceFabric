@@ -1,0 +1,19 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<li class="dropdown"><a href="#" class="dropdown-toggle"
+		data-toggle="dropdown">Connect <b class="caret"></b></a>
+		<ul class="dropdown-menu">
+			<c:if test="#{sec:areAnyGranted('ROLE_BUSINESS')}">
+				<li><a href="#{root}/invite/memberInvite.xhtml"><i
+						class="fui-mail mrm"></i>Invite</a></li>
+			</c:if>
+			<li><a href="#{root}/network/networkConnectionView.xhtml"><i
+					class="fui-user mrm"></i>Connections</a></li>
+		</ul></li>
+
+</ui:composition>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process name="businessInvite" xmlns="http://jbpm.org/4.4/jpdl">
+   <start g="349,56,48,48" name="start1">
+      <transition g="-97,-14" name="to_Business_Info_Validate" to="Business_Info_Validate"/>
+   </start>
+   <custom expr="#{businessInviteValidationAction}" g="271,162,205,62" name="Business_Info_Validate">
+      <transition g="-124,-8" name="to_Business_Info_Validate_Decision" to="Business_Info_Validate_Decision"/>
+   </custom>
+   <decision g="351,296,48,48" name="Business_Info_Validate_Decision">
+      <handler expr="#{businessInfoValidateDecision}"/>
+      <transition g="-75,-17" name="to_Business_Info_Validation_Err" to="Business_Info_Validation_Err"/>
+      <transition g="206,323:-116,111" name="to_Send_Business_Invitation_Email" to="Send_Business_Info_Complete_Email"/>
+      <transition g="670,321:-141,124" name="to_Send_Business_Contact_Approval_Email" to="Send_Business_Contact_Approval_Email"/>
+   </decision>
+   <end-error g="357,414,48,48" name="Business_Info_Validation_Err"/>
+   <custom expr="#{sendBusinessInfoCompleteEmailAction}" g="47,533,325,64" name="Send_Business_Info_Complete_Email">
+      <transition g="-106,-16" name="to_Wait_For_Email_Validation" to="Wait_For_Validation"/>
+   </custom>
+   <state g="93,666,239,67" name="Wait_For_Validation">
+      <transition g="-92,-11" name="to_Analyze_Validation" to="Business_Input_Validation"/>
+   </state>
+   <custom expr="#{businessInviteInfoValidationAction}" g="115,815,201,64" name="Business_Input_Validation">
+      <transition g="-118,-11" name="to_Decision_Business_Attribute_Validation" to="Decision_Business_Attribute_Validation"/>
+   </custom>
+   <decision g="192,949,48,48" name="Decision_Business_Attribute_Validation">
+      <handler expr="#{businessAttributeValidateDecision}"/>
+      <transition g="-78,-12" name="to_Send_Welcome_Email" to="Send_Business_Info_Validation_Email_To_Admin"/>
+      <transition g="-185,-36" name="to_Decision_Business_Attribute_Validation_Err" to="error2"/>
+   </decision>
+   <custom expr="#{sendBusinessInviteBusinessInfoValidationEmailAction}" g="43,1080,349,76" name="Send_Business_Info_Validation_Email_To_Admin">
+      <transition g="-107,-15" name="to_Wait_For_Email_Validation" to="Wait_For_Email_Validation"/>
+   </custom>
+   <end-error g="35,949,48,48" name="error2"/>
+   <state g="96,1244,242,68" name="Wait_For_Email_Validation">
+      <transition g="-90,-9" name="to_Validate_Business_Email" to="Validate_Admin_Business_Email"/>
+   </state>
+   <custom expr="#{analyzeAdminBusinessCreateValidationAction}" g="31,1389,379,71" name="Validate_Admin_Business_Email">
+      <transition g="-94,-34" name="to_Validate_BusinessAdmin_Email" to="Validate_BusinessAdmin_Email"/>
+   </custom>
+   <decision g="575,1395,48,48" name="Validate_BusinessAdmin_Email">
+      <handler expr="#{businessAdminEmailValidateDecision}"/>
+      <transition g="-4,-29" name="to_error3" to="error3"/>
+      <transition g="-118,-6" name="to_Send_Business_Welcome_Email" to="Send_Business_Welcome_Email_To_BusinessAdmin"/>
+   </decision>
+   <end-error g="795,1397,48,48" name="error3"/>
+   <custom expr="#{sendBusinessWelcomeEmailToBusinessAdminAction}" g="386,1535,423,63" name="Send_Business_Welcome_Email_To_BusinessAdmin">
+      <transition g="-178,-13" name="to_Send_Invitation_Success_Email_To_Inviter" to="Send_Invitation_Success_Email_To_Inviter"/>
+   </custom>
+   <end g="574,1794,48,48" name="end1"/>
+   <custom expr="#{sendInvitationSuccessEmailToInviterAction}" g="435,1682,325,52" name="Send_Invitation_Success_Email_To_Inviter">
+      <transition g="-34,-15" name="to_end1" to="end1"/>
+   </custom>
+   <custom expr="#{sendBusinessContactApprovalEmail}" g="520,543,303,52" name="Send_Business_Contact_Approval_Email">
+      <transition g="-183,-6" name="to_Wait_For_Business_Connection_Validation" to="Wait_For_Business_Connection_Approval_Validation"/>
+   </custom>
+   <state g="485,674,377,69" name="Wait_For_Business_Connection_Approval_Validation">
+      <transition g="-162,-4" name="to_Evaluate_Business_Connection_Approval" to="Evaluate_Business_Connection_Approval"/>
+   </state>
+   <custom expr="#{evaluateBusinessConnectionApprovalAction}" g="503,827,347,69" name="Evaluate_Business_Connection_Approval">
+      <transition g="-218,-12" name="to_Send_Business_Connection_Approval_Status_Email" to="Send_Business_Connection_Approval_Status_Email"/>
+   </custom>
+   <custom expr="#{sendBusinessConnectionApprovalStatusEmail}" g="465,971,422,81" name="Send_Business_Connection_Approval_Status_Email">
+      <transition g="-56,-25" name="to end2" to="end2"/>
+   </custom>
+   <end g="651,1125,48,48" name="end2"/>
+</process>

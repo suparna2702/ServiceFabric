@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/util
+		http://www.springframework.org/schema/util/spring-util-3.1.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+		http://www.springframework.org/schema/task
+		http://www.springframework.org/schema/task/spring-task-3.1.xsd">
+
+
+	<util:map id="documentViewers"
+		key-type="com.similan.service.api.asset.dto.basic.AssetType"
+		value-type="com.similan.service.impl.document.viewer.DocumentViewer">
+		<entry key="TEXT" value-ref="textDocumentViewer" />
+		<entry key="OOXML_PRESENTATION" value-ref="genericCrocodocConverterDocumentViewer" />
+		<entry key="MS_POWERPOINT" value-ref="genericCrocodocConverterDocumentViewer" />
+		<entry key="MS_WORD" value-ref="genericCrocodocConverterDocumentViewer" />
+		<entry key="MS_EXCEL" value-ref="genericCrocodocConverterDocumentViewer" />
+		<entry key="OOXML_DOCUMENT" value-ref="genericCrocodocConverterDocumentViewer" />
+		<entry key="OOXML_SHEET" value-ref="genericCrocodocConverterDocumentViewer" />
+		<entry key="OPENDOCUMENT_SPREADSHEET" value-ref="genericJodConverterDocumentViewer" />
+		<entry key="OPENDOCUMENT_TEXT" value-ref="genericJodConverterDocumentViewer" />
+		<entry key="PDF" value-ref="genericCrocodocConverterDocumentViewer" />
+		<entry key="GIF" value-ref="imageAwtDocumentViewer" />
+		<entry key="ICO" value-ref="imageAwtDocumentViewer" />
+		<entry key="JPEG" value-ref="imageAwtDocumentViewer" />
+		<entry key="PNG" value-ref="imageAwtDocumentViewer" />
+		<entry key="SVG" value-ref="imageAwtDocumentViewer" />
+		<entry key="TIFF" value-ref="imageAwtDocumentViewer" />
+		<entry key="OPENDOCUMENT_GRAPHICS" value-ref="imageAwtDocumentViewer" />
+		<entry key="UNKNOWN_IMAGE" value-ref="imageAwtDocumentViewer" />
+		<entry key="UNKNOWN" value-ref="unknownDocumentViewer" />
+	</util:map>
+</beans>

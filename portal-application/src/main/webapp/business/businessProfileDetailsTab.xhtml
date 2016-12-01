@@ -1,0 +1,54 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:sec="http://www.springframework.org/security/tags"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<p:spacer width="5" />
+ 
+    <p:tabView id="memberPublicProfileTabView" 
+               effect="fade" 
+               effectDuration="normal"
+               style="border-style:hidden">
+       
+        <!-- List of searched items -->
+        <p:tab title="Profile">
+           <p:spacer height="10" />
+           <ui:include src="/business/businessPublicProfileDescription.xhtml" />
+           <p:spacer height="10" />
+           <ui:include src="/business/businessPublicProfileAbout.xhtml" />
+        </p:tab>
+        
+        <c:if test="#{not orgPublicView.orgInfo.isOrganizationType('LEADAFFILIATE')}">
+	        <p:tab id="productAndServiceTab" title="Products and Services">
+				<h:panelGroup id="productPagePanelGroup">
+					<p:panel  style="border-style:hidden" rendered="#{!(productHomeView.productList eq null)}">
+						<ui:include src="/product/productPublicProfileView.xhtml" />
+					</p:panel>
+					<p:panel id="productRequestPanel" style="border-style:hidden" 
+					         rendered="#{(productHomeView.productList eq null)}">
+						Currently the company does not have any product/ service listed. You can request a product by filling out the form below. 
+						<br></br>
+	     	 			<p:inputTextarea id="productRequest" style="margin-top:10px;margin-bottom:10px" 
+	     	 				rows="5" cols="45" value="#{orgPublicView.productRequestComment}"/> 
+	     	 			<br></br>
+	  					<p:commandButton id="productRequestButton" value="Request For Product" 
+	                 		action="#{orgPublicView.requestProduct}" update="productRequestPanel" process="@this productRequestPanel"
+	                 		style="margin-top:10px"/>
+					</p:panel>					
+				</h:panelGroup>
+	        </p:tab>
+        </c:if>
+        
+        <c:if test="#{orgPublicView.orgInfo.isOrganizationType('SUPPLIER') or orgPublicView.orgInfo.isOrganizationType('DISTRIBUTOR') }">
+	        <p:tab rendered="#{memberView.member.embeddedMode != 'true' and orgPublicView.orgInfo.partnerPrograms != null}" 
+	               title="Partner Programs">
+	           <ui:include src="/business/businessProfilePartnerProgram.xhtml" />
+	        </p:tab>
+        </c:if>
+               
+    </p:tabView>
+	
+</ui:composition>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process name="existingPartnerInvite" xmlns="http://jbpm.org/4.4/jpdl">
+
+	<start g="349,56,48,48" name="start1">
+		<transition g="-97,-14" name="to_Partner_Info_Validate" to="Partner_Info_Validate" />
+	</start>
+
+	<!-- All the necessary fields r there -->
+	<custom expr="#{exitsingPartnerInviteInputValidationAction}" g="271,162,205,62"
+		name="Partner_Info_Validate">
+		<transition g="-124,-8" name="to_Partner_Info_Validate_Decision"
+			to="Partner_Info_Validate_Decision" />
+	</custom>
+
+	<!-- Decision and its associated nodes 1. Input is wrong 2. Partner is outside 
+		BR Network so invite the Business 1st 3. Partner is in BR Network so send 
+		the partner connection approval -->
+
+	<decision g="351,296,48,48" name="Partner_Info_Validate_Decision">
+		<handler expr="#{partnerInfoValidateDecision}" />
+		<transition g="-75,-17" name="to_Partner_Info_Validation_Error"
+			to="Partner_Info_Validation_Error" />
+		<transition g="206,323:-116,111" name="to_Send_New_Partner_Info_Complete_Email"
+			to="Send_New_Partner_Info_Complete_Email" />
+	</decision>
+
+	<end-error g="357,414,48,48" name="Partner_Info_Validation_Error" />
+
+	<custom expr="#{sendPartnerInfoCompleteEmailAction}" g="47,533,325,64"
+		name="Send_New_Partner_Info_Complete_Email">
+		<transition g="-106,-16" name="to_Wait_For_New_Partner_Info_Complete"
+			to="Wait_For_New_Partner_Info_Complete" />
+	</custom>
+
+	<state g="93,666,239,67" name="Wait_For_New_Partner_Info_Complete">
+		<transition g="-92,-11" name="to_Partner_Input_Validation"
+			to="New_Partner_Info_Validation" />
+	</state>
+
+	<custom expr="#{partnerInviteInfoValidationAction}" g="115,815,201,64"
+		name="New_Partner_Info_Validation">
+		<transition g="-118,-11" name="to_Decision_New_Partner_Info_Validation"
+			to="Decision_New_Partner_Info_Validation" />
+	</custom>
+
+	<custom expr="#{sendPartnerConnectionApprovalStatusEmail}" g="465,971,422,81"
+		name="Send_Partner_Connection_Approval_Status_Email">
+		<transition g="-56,-25" name="to_Partner_Approval_Status_Prep"
+			to="Partner_Approval_Status_Prep" />
+	</custom>
+	
+	<custom expr="#{partnerApprovalStatusPrepAction}" g="465,971,422,81"
+		name="Partner_Approval_Status_Prep">
+		<transition g="-56,-25" name="to_Send_Partner_Welcome_Email"
+			to="Send_Partner_Welcome_Email" />
+	</custom>
+	
+	<custom expr="#{sendPartnerWelcomeEmailAction}" g="47,533,325,64"
+		name="Send_Partner_Welcome_Email">
+		<transition g="-106,-16" name="to_End_Connection_Approved"
+			to="End_Connection_Approved" />
+	</custom>
+
+	<end g="651,1125,48,48" name="End_Connection_Approved" />
+
+	<decision g="192,949,48,48" name="Decision_New_Partner_Info_Validation">
+		<handler expr="#{newPartnerInfoValidateDecision}" />
+		<transition g="-78,-12"
+			name="to_Send_Partner_Connection_Approval_Status_Email"
+			to="Send_Partner_Connection_Approval_Status_Email" />
+		<transition g="-185,-36" name="to_New_Partner_Info_Validation_Error"
+			to="New_Partner_Info_Validation_Error" />
+	</decision>
+
+	<end-error g="35,949,48,48" name="New_Partner_Info_Validation_Error" />
+
+</process>

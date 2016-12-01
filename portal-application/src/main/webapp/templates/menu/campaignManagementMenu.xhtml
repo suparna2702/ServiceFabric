@@ -1,0 +1,29 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+    <p:spacer height="10" />
+    <h:panelGrid columns="3" styleClass="toolBarPanelHorizontal">
+    
+	    <h:outputLink value="#{root}/campaign/addEditPoll.xhtml" style="margin-right:10px">
+			<h:graphicImage library="img" name="addIcon64.png" width="25"
+				height="25" title="New Survey" styleClass="toolBarElement"/>
+		</h:outputLink>
+		
+		<h:outputLink value="#{root}/campaign/managePolls.xhtml" style="margin-right:10px">
+			<h:graphicImage library="img" name="listView.png" width="25"
+				height="25" title="View Surveys" styleClass="toolBarElement"/>
+		</h:outputLink>
+		
+		<h:outputLink value="#{root}/campaign/pollDashboard.xhtml" style="margin-right:10px">
+			<h:graphicImage library="img" name="analyticIcon32.png" width="25"
+				height="25" title="Survey Dashboard" styleClass="toolBarElement"/>
+		</h:outputLink>
+		
+	</h:panelGrid>
+	<p:spacer height="10" />
+ 
+</ui:composition>

@@ -1,0 +1,44 @@
+.padding10 {
+	padding: 10px 10px 10px 10px;
+}
+
+/* for watermarks */
+input::-webkit-input-placeholder {
+	color: grey !important;
+}
+
+input:-moz-placeholder {
+	color: grey !important;
+}
+/* for watermarks */
+<<<<<<< .mine
+=======
+.ui-radiobutton {
+	margin: 0px 2px 10px 5px;
+}
+
+>>>>>>> .r30
+body {
+	font-family: Arial, Verdana, sans-serif !important;
+	font-size: 11px !important;
+	margin-left: 10px;
+	margin-top: 10px;
+}
+
+.footerLink {
+	color: #0000FF;
+	font-family: Arial;
+	font-size: 13px;
+	font-weight: normal;
+	font-style: normal;
+	text-decoration: underline;
+}
+
+.ui-layout-north {
+	z-index: 20 !important;
+	overflow: visible !important;;
+}
+
+.ui-layout-north .ui-layout-unit-content {
+	overflow: visible !important;
+}

@@ -1,0 +1,75 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+
+	<li><a href="#{root}/member/memberHome.xhtml"> <span
+			class="fui-home" rel="tooltip" title="My Network"
+			data-placement="bottom"></span><span class="hidden-desktop">Tools</span>
+	</a></li>
+
+	<c:if test="#{sec:areAnyGranted('ROLE_BUSINESS')}">
+		<li><a href="#{root}/docspace/documentWorkspaceListView.xhtml"
+			class="btn-small"> <span class="fui-document" rel="tooltip"
+				title="Content Workspace" data-placement="bottom"></span><span
+				class="hidden-desktop">Tools</span>
+		</a></li>
+	</c:if>
+
+	<c:if test="#{sec:areAnyGranted('ROLE_BUSINESS')}">
+		<li><a href="#{root}/collabspace/workspaceMain.xhtml"
+			class="btn-small"> <span class="fui-radio-checked" rel="tooltip"
+				title="Collaboration Workspace" data-placement="bottom"></span><span
+				class="hidden-desktop">Tools</span>
+		</a></li>
+	</c:if>
+
+	<c:if test="#{sec:areAnyGranted('ROLE_BUSINESS')}">
+		<li><a href="#{root}/member/bookMarkView.xhtml" class="btn-small">
+				<span class="fui-star-2" rel="tooltip" title="Manage Favorites"
+				data-placement="bottom"></span><span class="hidden-desktop">Tools</span>
+		</a></li>
+	</c:if>
+
+
+	<li><a href="#{root}/invite/memberInvite.xhtml" class="btn-small">
+			<span class="fui-user" rel="tooltip" title="Invite"
+			data-placement="bottom"></span><span class="hidden-desktop">Tools</span>
+	</a></li>
+
+	<li class="dropdown"><a href="#fakeLink"
+		class="btn-small dropdown-toggle" data-toggle="dropdown"> <span
+			class="fui-question"></span><span class="hidden-desktop">Tools</span></a>
+		<ul class="dropdown-menu">
+			<li><a
+				href="#{root}/help/contentspace/contentSpaceDetailHelp.xhtml"><font
+					color="black">Content Workspace Help</font></a></li>
+			<li><a href="#{root}/help/collabspace/workspaceDetailHelp.xhtml"><font
+					color="black">Collaboration Workspace Help</font></a></li>
+			<li><a href="#{root}/help/invite/inviteHelp.xhtml"><font
+					color="black">Invite Help</font></a></li>
+			<li><a href="#{root}/help/business/employeeRightsHelp.xhtml"><font
+					color="black">Rights Management Help</font></a></li>
+			<li><a
+				href="#{root}/help/business/businessAccountSettingsHelp.xhtml"><font
+					color="black">Business Account Help</font></a></li>
+			<li><a href="#{root}/member/memberFeedbackView.xhtml"><font
+					color="black">Report a Problem</font></a></li>
+		</ul></li>
+
+	<script language="javascript">
+		$(document).ready(function() {
+			$("[rel='tooltip']").tooltip();
+			$("[rel='popover']").popover({
+				'trigger' : 'hover',
+				'html' : true
+			});
+		})
+	</script>
+
+
+</ui:composition>

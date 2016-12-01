@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui">
+
+
+	<div class="row-fluid">
+		<div class="span12">
+			<h:form id="externListSearchForm"
+				action="#{workspaceDetailView.externalLinkSearch}"
+				styleClass="form-search pull-left">
+				<div class="input-append">
+
+					<p:inputText id="externalLinkText"
+						value="#{workspaceDetailView.externalLinkText}"
+						styleClass="span4 search-query" />
+					<p:watermark for="externalLinkText" value="Search Shared Links" />
+					<p:commandButton icon="fui-search"
+						action="#{workspaceDetailView.externalLinkSearch()}"
+						process="@this externListSearchForm" update=":externalLinkList"
+						ajax="true" styleClass="btn btn-large">
+					</p:commandButton>
+
+				</div>
+
+			</h:form>
+			<!-- Doc search form -->
+		</div>
+	</div>
+
+	<!-- Category based filtering -->
+
+	<div class="row-fluid">
+		<div class="span12">
+
+			<h:form id="externalLinkCategoryFilterForm">
+
+				<p:commandButton id="categoryFilterYoutubeBtn"
+					action="#{workspaceDetailView.externalLinkFilterByType('YOUTUBE_VIDEO')}"
+					update=":externalLinkList" value="YouTube Video"
+					styleClass="btn btn-small mrl" ajax="true" />
+
+				<p:commandButton id="categoryFilterWebPageBtn"
+					action="#{workspaceDetailView.externalLinkFilterByType('WEBPAGE_ARTICLE')}"
+					update=":externalLinkList" value="Web Content"
+					styleClass="btn btn-small mrl" ajax="true" />
+
+				<p:commandButton id="categoryFilterAllPageBtn"
+					action="#{workspaceDetailView.externalLinkFilterByType('ALL')}"
+					update=":externalLinkList" value="All"
+					styleClass="btn btn-small mrl" ajax="true" />
+
+			</h:form>
+
+		</div>
+	</div>
+
+	<div class="row-fluid">
+		<div class="span12">
+
+			<div class="caption">
+				<h:panelGroup id="externalLinkList">
+
+					<ui:fragment
+						rendered="#{not empty workspaceDetailView.externalLinkEntries}">
+						<ui:repeat var="link"
+							value="#{workspaceDetailView.externalLinkEntries}">
+
+							<ui:fragment rendered="#{link != null}">
+								<div class="span12 panel panel-primary"
+									style="margin: 10px 0px 0px 0px;">
+
+									<div class="panel-heading">
+										<h3 class="panel-title">#{link.title}</h3>
+									</div>
+
+									<!-- Product Tags -->
+									<div class="panel-body">
+										<div class="row-fluid">
+											<a target="_tab" style="color: black;" href="#{link.url}">
+
+												<ui:fragment rendered="#{link.imageUrl != null}">
+													<div
+														style="width: 120px; float: left; margin-right: 4px; margin-bottom: 4px;">
+														<img src="#{link.imageUrl}"
+															style="width: 100%; max-height: 100%;" />
+													</div>
+												</ui:fragment>
+												<p style="font-weight: lighter">#{link.content == null
+													|| link.content.length() &lt;= 500? link.content :
+													link.content.substring(0, 500).concat('...')}</p>
+
+											</a>
+										</div>
+									</div>
+								</div>
+								<br></br>
+							</ui:fragment>
+						</ui:repeat>
+
+					</ui:fragment>
+
+				</h:panelGroup>
+			</div>
+
+
+		</div>
+	</div>
+
+</ui:composition>

@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/basemenulayout.xhtml">
+
+	<ui:define name="title">Lead Upload List</ui:define>
+	<ui:define name="centerContent">
+	<p:spacer height="10"/>
+	<p:panel style="background:rgb(251,251,231)">
+	  <h:panelGrid columns="2">
+	      <h:outputText value="Name "/>
+	      <h:outputText value="#{affiliateLeadListDetailView.leadList.name}" style="margin-left:15px"/>
+	      <h:outputText value="Description "/>
+	      <h:outputText value="#{affiliateLeadListDetailView.leadList.sourceDescription}" style="margin-left:15px"/>
+	      <h:outputText value="Ingestion Time"/>
+	      <h:outputText value="#{affiliateLeadListDetailView.leadList.ingestionTime}" style="margin-left:15px">
+		     <f:convertDateTime pattern="MM/dd/yyyy" />
+		  </h:outputText>
+	      <h:outputText value="Default Price"/>
+	      <h:outputText value="#{affiliateLeadListDetailView.leadList.defaultPrice}" style="margin-left:15px"/>
+	  </h:panelGrid>
+    </p:panel>
+	<p:spacer height="10"/>
+	
+    <p:dataTable id="leadAffiliateListViewTable" var="affiliateLead" 
+                      value="#{affiliateLeadListDetailView.leadList.leadList}">  
+  
+        <p:column headerText="Name" style="width:40px" styleClass="buttomBorder">  
+            <h:outputText value="#{affiliateLead.firstName}  #{affiliateLead.lastName}" />  
+        </p:column>  
+  
+        <p:column headerText="Industry" style="width:30px" styleClass="buttomBorder">  
+            <h:outputText value="#{affiliateLead.industry}" />  
+        </p:column>  
+  
+        <p:column headerText="Keywords" styleClass="buttomBorder">  
+            <h:outputText value="#{affiliateLead.keyword}" />  
+        </p:column>
+        
+        <p:column headerText="Address" styleClass="buttomBorder">  
+            <h:outputText rendered="#{!empty affiliateLead.location}" 
+                          value="#{affiliateLead.location.street} #{affiliateLead.location.city}" />
+            <br />
+            <h:outputText rendered="#{!empty affiliateLead.location}" 
+                          value="#{affiliateLead.location.state} #{affiliateLead.location.country}" />
+            <br />
+            <h:outputText rendered="#{!empty affiliateLead.location}" 
+                          value="#{affiliateLead.location.zipCode}" />  
+        </p:column>  
+  
+        <p:column headerText="Upload Time" style="width:40px" styleClass="buttomBorder">  
+            <h:outputText value="#{affiliateLead.timeStamp}" >
+               <f:convertDateTime pattern="MM/dd/yyyy" />
+            </h:outputText>  
+        </p:column>
+        
+    </p:dataTable>  
+	</ui:define>
+    <ui:define name="leftNavigationBar">
+		<ui:include src="/component/leftNavigationBar.xhtml" />
+	</ui:define>		
+</ui:composition>

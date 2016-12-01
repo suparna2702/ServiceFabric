@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+
+    
+  <bean id="readMonitorMBean" class="com.similan.framework.monitoring.MonitorMBean">
+     <constructor-arg index="0"
+          value="com.boomer.probes.test.MonitoredDatabaseOperations.read">
+     </constructor-arg>
+  </bean>
+  
+  <bean id="writeMonitorMBean" class="com.similan.framework.monitoring.MonitorMBean">
+     <constructor-arg index="0"
+          value="com.boomer.probes.test.MonitoredDatabaseOperations.write">
+          </constructor-arg>
+  </bean>
+    
+  <bean id="monitoringInterceptor" class="com.boomer.probes.MonitoringInterceptor" />
+
+  <bean id="common_monitoringAdvisor" class="org.springframework.aop.support.DefaultPointcutAdvisor">
+    <property name="advice" ref="monitoringInterceptor" />
+    <property name="pointcut">
+      <bean class="org.javasimon.spring.MonitoredMeasuringPointcut" />
+    </property>
+  </bean>
+
+  <bean
+    class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator">
+    <property name="proxyTargetClass" value="true" />
+  </bean>
+  
+</beans>

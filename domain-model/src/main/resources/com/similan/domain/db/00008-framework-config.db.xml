@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd"
+  logicalFilePath="00008-framework-config.db.xml">
+
+  <changeSet id="ConfigurationParameter-awsCredentials-clientId" author="enrique">
+    <preConditions onFail="MARK_RAN">
+      <sqlCheck expectedResult="0">
+        select count(*) from ConfigurationParameter
+        where beanName = 'awsCredentials'
+        and propertyName = 'clientId'
+      </sqlCheck>
+    </preConditions>
+    <insert tableName="ConfigurationParameter">
+      <column name="type" value="java.lang.String" />
+      <column name="beanName" value="awsCredentials" />
+      <column name="propertyName" value="clientId" />
+      <column name="value" value='"AKIAI7MUKJRH2KPZHQ3Q"' />
+    </insert>
+  </changeSet>
+  <changeSet id="ConfigurationParameter-awsCredentials-clientSecret" author="enrique">
+    <preConditions onFail="MARK_RAN">
+      <sqlCheck expectedResult="0">
+        select count(*) from ConfigurationParameter
+        where beanName = 'awsCredentials'
+        and propertyName = 'clientSecret'
+      </sqlCheck>
+    </preConditions>
+    <insert tableName="ConfigurationParameter">
+      <column name="type" value="java.lang.String" />
+      <column name="beanName" value="awsCredentials" />
+      <column name="propertyName" value="clientSecret" />
+      <column name="value" value='"LrVWpOUJ5iBrKDAtkjwQ1aaymuQJdSm9NdweBZXa"' />
+    </insert>
+  </changeSet>
+  <changeSet id="ConfigurationParameter-emailInternalService-emailSenderId" author="enrique">
+    <preConditions onFail="MARK_RAN">
+      <sqlCheck expectedResult="0">
+        select count(*) from ConfigurationParameter
+        where beanName = 'emailInternalService'
+        and propertyName = 'emailSenderId'
+      </sqlCheck>
+    </preConditions>
+    <insert tableName="ConfigurationParameter">
+      <column name="type" value="java.lang.String" />
+      <column name="beanName" value="emailInternalService" />
+      <column name="propertyName" value="emailSenderId" />
+      <column name="value" value='"ses"' />
+    </insert>
+  </changeSet>
+</databaseChangeLog>

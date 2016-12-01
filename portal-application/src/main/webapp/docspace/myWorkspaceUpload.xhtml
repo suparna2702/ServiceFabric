@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:composite="http://java.sun.com/jsf/composite/composites"
+	template="/templates/basemenulayout.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="openBrowser"
+			value="#{workspaceUploadView.openBrowser}" />
+		<f:viewParam name="cloudSource"
+			value="#{workspaceUploadView.cloudSource}" />
+	</f:metadata>
+
+	<ui:param name="skipToolbar" value="true" />
+	<ui:define name="centerContent">
+
+		<ui:include src="fileBrowserDialogs.xhtml" />
+
+		<p:spacer height="20" />
+		<h:panelGrid columns="5" styleClass="toolBarPanelHorizontal">
+
+			<h:outputLink
+				value="#{root}/docspace/documentWorkspaceListView.xhtml">
+				<h:graphicImage library="img" name="listView.png" width="25"
+					height="25" title="Content Workspaces" styleClass="toolBarElement" />
+			</h:outputLink>
+
+			<h:outputLink value="#"
+				onclick="localFileUploaderDlg.show();return false;">
+				<h:graphicImage library="img" name="uploadLocalFile.png" width="25"
+					height="25"
+					title="Upload a local file in #{workspaceUploadView.getManagementKey().getName()}"
+					styleClass="toolBarElement" />
+			</h:outputLink>
+
+			<!--<h:outputLink
+				onclick="window.open('#{root}/docspace/googleDriveOAuthRedirect.xhtml', 'GoogleDrive Auth', 'width=800, height=600');return false;"
+				rendered="#{googleDriveConnectionManager.isConnected() eq false}"
+				style="margin-left:5px">
+				<h:graphicImage library="img" name="importDriveFile.png" width="25"
+					height="25" title="Import files from Google Drive"
+					styleClass="toolBarElement" />
+			</h:outputLink>
+
+			<p:commandLink
+				action="#{workspaceUploadView.setCloudSource('google')}"
+				update="fileBrowser" oncomplete="selectFileDlg.show()"
+				rendered="#{googleDriveConnectionManager.isConnected() eq true}">
+				<h:graphicImage library="img" name="importDriveFile.png" width="25"
+					height="25" title="Import files from Google Drive"
+					styleClass="toolBarElement" />
+			</p:commandLink>-->
+
+		</h:panelGrid>
+
+		<br></br>
+        <h2>Content Workspace : #{workspaceUploadView.getManagementKey().getName()}</h2>
+        <br></br>
+        
+		<p:progressBar widgetVar="pbAjax" ajax="true"
+			value="#{workspaceUploadView.progress}" labelTemplate="{value}%"
+			styleClass="animated" global="false">
+			<p:ajax event="complete" oncomplete="uploadBtn.enable()" />
+		</p:progressBar>
+
+		<div class="row-fluid">
+			<div class="span12">
+				<h:panelGrid id="upLoadFileList">
+					<p:dataGrid id="uploadTable" var="uploadFile"
+						value="#{workspaceUploadView.uploadFileList}"
+						rendered="#{not empty workspaceUploadView.uploadFileList}"
+						paginator="true" rows="5" columns="1"
+						paginatorAlwaysVisible="false" paginatorPosition="bottom"
+						styleClass="ui-datagrid-no-border">
+
+						<p:panel id="uploadFileListItemPanel" styleClass="buttomBorder">
+							<h:panelGrid columns="3">
+								<p:panel styleClass="noBorder">
+									<p:selectBooleanCheckbox value="#{uploadFile.selected}" />
+								</p:panel>
+								<p:panel styleClass="noBorder">
+									<h:panelGrid columns="1">
+										<h:outputText value="#{uploadFile.fileName} "
+											style="font-weight:bold" />
+										<h:outputText
+											value="#{workspaceUploadView.formatDate(uploadFile.lastModified)} " />
+									</h:panelGrid>
+								</p:panel>
+								<p:panel styleClass="noBorder">
+									<h:panelGrid>
+										<p:commandLink id="cancelFileUpload"
+											style="margin-right:5px; margin-top:10px"
+											action="#{workspaceUploadView.deleteFile(uploadFile)}"
+											update=":form:uploadTable">
+											<p:graphicImage id="cancelFileUploadButton" library="img"
+												name="deleteFile.png" width="20" styleClass="toolBarElement"
+												height="20" />
+										</p:commandLink>
+
+										<p:tooltip for="cancelFileUpload" value="Delete File"
+											showEffect="fade" hideEffect="fade" />
+									</h:panelGrid>
+								</p:panel>
+							</h:panelGrid>
+						</p:panel>
+
+					</p:dataGrid>
+					<h:panelGroup>
+						<p:commandButton id="uploadSelectedFilesButton"
+							widgetVar="uploadBtn"
+							onclick="pbAjax.start();uploadBtn.disable()"
+							disabled="#{empty workspaceUploadView.uploadFileList}"
+							value="Save" action="#{workspaceUploadView.upload}"
+							process="@this" style="margin-top:10px" />
+
+					</h:panelGroup>
+				</h:panelGrid>
+			</div>
+		</div>
+
+	</ui:define>
+</ui:composition>

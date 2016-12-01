@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/basemenulayout.xhtml">
+
+	<ui:define name="title">Process Instance</ui:define>
+	<ui:define name="centerContent">
+	
+	   <p:panel style="border:hidden">
+	   	  <p:dataTable id="processInstanceAdminTable" var="processInstance" paginator="true" rows="20"
+	   	               value="#{businessProcessInstanceAdminView.workflowInstances}" >
+		      
+	          <p:column id="id" headerText="Id">
+		            <h:outputText value="#{processInstance.id}" />
+		      </p:column>
+		      
+		      <p:column id="processInstanceType" headerText="Instance Type">
+		            <h:outputText value="#{processInstance.stateType}" />
+		      </p:column>
+		      
+		      <p:column id="processInstanceId" style="width:60px" headerText="Password">
+		            <h:outputText value="#{processInstance.processInstanceId}" />
+		      </p:column>
+		      
+		      <p:column id="processInstanceDate" headerText="Date">
+		            <h:outputText value="#{processInstance.timeStamp}" />
+		      </p:column>
+		      
+			  <p:column id="processInstanceAttributes" headerText="Attributes">
+		          <ui:repeat var="attr" value="#{processInstance.attributes}" varStatus="status">
+		             <h:outputText value="#{attr.attributeName} = " />
+		             <h:outputText value="#{attr.attributeValue}" />
+					 <br />
+		          </ui:repeat>
+		            
+		      </p:column>
+		      
+ 				<p:column id="processInstanceDelete" style="width:40px" headerText="Delete">
+			      <h:commandLink
+					actionListener="#{businessProcessInstanceAdminView.deleteProcessInstance(processInstance.id)}">
+					<f:ajax execute="@this" update="processInstanceAdminTable" />
+					<p:graphicImage value="/images/monoicons/cancelIcon24.png" 
+					        width="15" height="15" />
+				 </h:commandLink>
+		      </p:column>
+			
+		      
+		      
+		  </p:dataTable>
+	 </p:panel>
+	 
+	 </ui:define>
+</ui:composition>

@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/basemenulayout.xhtml">
+
+	<ui:define name="title">Embedded Member</ui:define>
+	<ui:define name="centerContent">
+	
+	 <h3>View All Embedded Members</h3>
+	 <p:spacer height="10"/>
+	
+	   <p:panel style="border:hidden">
+	   	  <p:dataTable id="embeddedMemberAdminTable" var="member" paginator="true" rows="20"
+	   	               value="#{memberAdminView.embeddedMembers}" 
+	   	               selection="#{memberAdminView.selectedMember}" 
+	   	               selectionMode="single">
+	   	               
+	   	      <p:ajax event="rowSelect" listener="#{memberAdminView.onRowSelect}" 
+	   	                                oncomplete="memberDialog.show()" />
+		      
+		      <f:facet name="header">
+	             All Embedded Members
+	          </f:facet>
+	          
+		      <p:column id="memberFirstName" style="width:60px" 
+		            filterBy="#{member.firstName}" headerText="First Name" 
+		            filterMatchMode="startsWith">
+		            <h:outputText value="#{member.firstName}" />
+		      </p:column>
+		      
+		      <p:column id="memberLastName" style="width:60px" 
+		            filterBy="#{member.lastName}" sortBy="#{member.lastName}" headerText="Last Name" 
+		            filterMatchMode="startsWith">
+		            <h:outputText value="#{member.lastName}" />
+		      </p:column>
+		      
+		      <p:column id="memberEmail" style="width:60px" 
+		            filterBy="#{member.email}" headerText="Email" 
+		            filterMatchMode="startsWith">
+		            <h:outputText value="#{member.email}" />
+		      </p:column>
+		      
+		      <p:column id="memberIndustry" style="width:60px" 
+		            filterBy="#{member.industry}" sortBy="#{member.industry}" headerText="Industry" 
+		            filterMatchMode="startsWith">
+		            <h:outputText value="#{member.industry}" />
+		      </p:column>
+		      
+		  </p:dataTable>
+	 </p:panel>
+	 
+      <p:dialog id="memberSelectionDialog" header="Member Detail" 
+              widgetVar="memberDialog" modal="true" resizable="false"  
+              showEffect="explode" hideEffect="explode"> 
+           <p:panel id="memberEmbeddedExtendionPanel" style="border:hidden; font-size:9pt;">
+               <h:outputText value=" Name: #{memberAdminView.selectedMember.firstName} #{memberAdminView.selectedMember.lastName}" />
+               <br></br>
+               <h:outputText value=" Business Phone: #{memberAdminView.selectedMember.businessPhone}" />
+               <br></br>
+               <h:outputText value=" Mobile Phone: #{memberAdminView.selectedMember.mobilePhone}" />
+               <br></br>
+               <h:outputText value=" Industry: #{memberAdminView.selectedMember.industry}" />
+               <br></br>
+               <h:outputText value=" Street: #{memberAdminView.selectedMember.street}" />
+               <br></br>
+               <h:outputText value=" City: #{memberAdminView.selectedMember.city}" />
+               <br></br>
+               <h:outputText value=" Country: #{memberAdminView.selectedMember.country}" />
+               <br></br>
+               <h:outputText value=" Zip Code: #{memberAdminView.selectedMember.country}" />
+               <br></br>
+               <p:commandButton value="Suspend" style="margin-top:10px" 
+                                action="#{memberAdminView.suspendMember(memberAdminView.selectedMember.id)}"/>
+               <p:commandButton value="Reactivate" style="margin-top:10px;margin-left:10px" 
+                                action="#{memberAdminView.reactivateMember(memberAdminView.selectedMember.id)}"/>
+           </p:panel>
+        </p:dialog>
+        
+    </ui:define>
+</ui:composition>

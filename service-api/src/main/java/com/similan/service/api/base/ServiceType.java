@@ -1,0 +1,20 @@
+package com.similan.service.api.base;
+
+public enum ServiceType {
+  GENERAL,
+  ASSET,
+  SECURITY,
+  COLLABORATION_WORKSPACE,
+  COMMENT,
+  DOCUMENT,
+  MEMBER,
+  BUSINESS,
+  CONTENT_WORKSPACE,
+  CONNECTION,
+  LOCATION,
+  WALL,
+  FEED,
+  PRODUCT,
+  DISPLAY_NOTICE,
+  BOOKMARK;
+}

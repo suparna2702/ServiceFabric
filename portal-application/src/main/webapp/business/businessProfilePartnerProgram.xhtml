@@ -1,0 +1,43 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	 <h3>Partner Programs Offered </h3>
+	 <p:outputPanel id="partnerProgramManagementPanel" layout="block">	 
+  	    <p:panel style="border-style: hidden;">
+          <p:dataGrid id="partnerProgram" var="partnerProgram"
+			value="#{orgPublicView.orgInfo.partnerPrograms}"
+			paginator="true" rows="5" columns="1" paginatorAlwaysVisible="false"
+			paginatorPosition="bottom"
+			styleClass="ui-datagrid-no-border"
+			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			rowsPerPageTemplate="5,10,15">
+		
+			<p:panel id="searchItemPanel" styleClass="buttomBorder">
+				 <h:panelGrid columns="2">
+				     <p:graphicImage id="partnerProgramLogoImage" value="/spring/assets#{partnerProgram.logoLocation}" 
+                                     width="40" height="40"/>
+					 <h:outputText value="#{partnerProgram.name}" style="margin-left:10px" />
+				 </h:panelGrid>
+				 <br />
+				 <h:outputText value="#{partnerProgram.description}" style="margin-top:10px"/>
+				 <br />
+				 <br />
+				 <h:outputLink id="partnerProgramViewPanelLink"  style="margin-top:10px" 
+				               value="#{root}/partner/partnerProgramView.xhtml">
+					<f:param name="pid" value="#{partnerProgram.id}" />
+					<f:param name="oid" value="#{orgPublicView.orgInfo.id}" />
+					<p:graphicImage id="partnerProgramDetailViewButton"
+							value="/images/monoicons/zoomIcon24.png" width="20" height="20" />
+				</h:outputLink>
+				<p:tooltip for="partnerProgramViewPanelLink" value="View details of partner program #{partnerProgram.name}" 
+	                       showEffect="fade" hideEffect="fade" /> 
+			   </p:panel>
+			 </p:dataGrid>
+			</p:panel>
+	  </p:outputPanel>
+	
+</ui:composition>

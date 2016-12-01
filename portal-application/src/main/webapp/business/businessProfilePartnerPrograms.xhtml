@@ -1,0 +1,39 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<c:if test="#{not empty orgPublicView.orgInfo.partnerPrograms}">
+		<br></br>
+		<div class="thumbnail" style="padding: 0">
+			<div class="modal-footer" style="text-align: left">
+				<h3>Partner Program</h3>
+			</div>
+			<table class="table table-striped">
+				<ui:repeat var="partnerProgram"
+					value="#{orgPublicView.partnerPrograms}">
+					<tr>
+						<td class="span1"><p:graphicImage
+								value="/spring/assets#{orgPublicView.getWorkspaceLogo(partnerProgram.logoLocation)}"
+								width="60px" height="60px"
+								styleClass="img-rounded img-responsive" /></td>
+						<td><b>#{partnerProgram.name}</b> <!-- view facility  -->
+							<div class="btn-toolbar">
+								<div class="btn-group">
+									<a
+										href="#{root}/partner/partnerProgramView.xhtml?pid=#{partnerProgram.id}"
+										class="btn btn-primary btn-small" rel="tooltip"
+										title="View Partner Program"> View </a>
+								</div>
+							</div> <!-- view --></td>
+						<td><span class="badge badge-info">#{partnerProgram.totalActiveMembers}</span>
+						</td>
+					</tr>
+				</ui:repeat>
+			</table>
+		</div>
+	</c:if>
+
+</ui:composition>

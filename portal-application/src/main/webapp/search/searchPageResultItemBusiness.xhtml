@@ -1,0 +1,72 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+    
+    <c:if test="#{searchItemView.embedded eq 'true'}">
+       <ui:include src="/utility/leadWizardContactOrgDialog.xhtml"/>
+    </c:if>
+    
+	<h:panelGrid id="businessPanel" style="width:100%;" columns="1"
+		rendered="#{searchResultItem.organizationType == 'true'}"
+		onclick="showSearchResultInfoWindow(googleMap.getMap(), '#{searchResultItem.orgInfo.primarySearchVisibleLocation.latitude}', '#{searchResultItem.orgInfo.primarySearchVisibleLocation.longitude}', '#{searchResultItem.orgInfo.businessName}', '','#{searchResultItem.orgInfo.primarySearchVisibleLocation.street}', '#{searchResultItem.orgInfo.primarySearchVisibleLocation.city}', '#{searchResultItem.orgInfo.primarySearchVisibleLocation.state}', '#{searchResultItem.orgInfo.primarySearchVisibleLocation.zipCode}', '#{searchResultItem.orgInfo.primarySearchVisibleLocation.country}', '#{searchResultItem.orgInfo.businessPhone}', '', '', '#{searchResultItem.orgInfo.homePageUrl}');">
+		<h:panelGroup>
+			<h:panelGrid columns="1" columnclasses="leftAligned">
+			    <h:panelGroup>
+	                <h:outputLink id="businessImageLink"
+						value="#{root}/business/businessPublicProfile.xhtml?oid=#{searchResultItem.orgInfo.id}" style="margin-right:3px" 
+						rendered="#{searchItemView.embedded eq 'false'}">
+						<p:graphicImage id="businesslogo" value="/spring/assets#{searchResultItem.orgInfo.logoLocation}" 
+		                        width="40" height="40"/>
+					</h:outputLink>
+					<h:outputLink id="businessNameLink"
+						value="#{root}/business/businessPublicProfile.xhtml?oid=#{searchResultItem.orgInfo.id}" 
+						rendered="#{searchItemView.embedded eq 'false'}">
+						<h:outputText value="#{searchResultItem.orgInfo.businessName}"
+							style="font-size:10pt;font-weight:bold" />
+					</h:outputLink>
+					<p:graphicImage id="businesslogoEmbedded" rendered="#{searchItemView.embedded eq 'true'}" 
+						        value="/spring/assets#{searchResultItem.orgInfo.logoLocation}" 
+		                        width="30" height="30"/>
+		            <h:outputText value="#{searchResultItem.orgInfo.businessName}"
+		                    rendered="#{searchItemView.embedded eq 'true'}"
+							style="font-size:10pt;font-weight:bold"/>
+				</h:panelGroup>
+				
+				<h:outputText
+					value="#{searchResultItem.orgInfo.primarySearchVisibleLocation.street}" />
+				<p:outputPanel style="text-align:left;border:hidden;">
+					<h:outputText
+						value="#{searchResultItem.orgInfo.primarySearchVisibleLocation.city}" />
+					<h:outputText style="padding-right:5px;"
+						rendered="#{searchResultItem.orgInfo.primarySearchVisibleLocation.city != null}"
+						value="," />
+					<h:outputText style="padding-right:5px;"
+						value="#{searchResultItem.orgInfo.primarySearchVisibleLocation.state}" />
+					<h:outputText
+						value="#{searchResultItem.orgInfo.primarySearchVisibleLocation.zipCode}" />
+				</p:outputPanel>
+				<h:outputText
+					value="#{searchResultItem.orgInfo.primarySearchVisibleLocation.country}" />
+			</h:panelGrid>
+		</h:panelGroup>
+		<h:panelGroup>
+			<p:toolbar style="border:hidden; background:none; ">
+				<p:toolbarGroup align="left">
+					<h:commandLink id="orgLeadWizardBtn" onclick="leadWizardContactOrgDialog.show();return false"         
+                       rendered="#{searchItemView.embedded eq 'true'}">
+                         <p:graphicImage id="orgLeadWizardIcon"
+                            value="/images/monoicons/mailIcon24.png" />
+                    </h:commandLink>
+					<p:tooltip for="orgLeadWizardBtn"
+						value="Contact #{searchResultItem.orgInfo.businessName}"
+						showEffect="fade" hideEffect="fade"  
+						rendered="#{searchItemView.embedded eq 'true'}"/>
+				</p:toolbarGroup>
+			</p:toolbar>
+		</h:panelGroup>
+	</h:panelGrid>
+
+</ui:composition>

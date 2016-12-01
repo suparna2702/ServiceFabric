@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui">
+
+
+	<div class="row-fluid">
+		<div class="span12">
+			<div class="old-content">
+
+				<h:form id="fileUploadForm" prependId="false"
+					enctype="multipart/form-data">
+
+					<p:dialog id="localFileUploader" width="550" height="300"
+						resizable="false" modal="true" showEffect="explode"
+						header="Upload Files" widgetVar="localFileUploaderDlg">
+
+						<p:outputPanel id="localFileUploadPanel">
+							<p:fileUpload
+								fileUploadListener="#{localDriveFileImportView.handleFileUpload}"
+								mode="advanced" dragDropSupport="false" multiple="true"
+								update="uploadCountLabel :fileListForm:upLoadFileList"
+								sizeLimit="10000000" />
+						</p:outputPanel>
+
+						<h:outputText id="uploadCountLabel"
+							value="#{localDriveFileImportView.localUploadedCount} file(s) uploaded from your computer." />
+						<br />
+						<p:commandButton id="localFileUploadDone" value="Close"
+							process="@this" style="margin-top:10px"
+							update=":fileListForm:upLoadFileList"
+							onclick="localFileUploaderDlg.hide();return false;" />
+
+					</p:dialog>
+				</h:form>
+
+			</div>
+		</div>
+	</div>
+
+</ui:composition>

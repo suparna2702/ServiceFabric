@@ -1,0 +1,34 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:composite="http://java.sun.com/jsf/composite/composites"
+	xmlns:p="http://primefaces.org/ui">
+
+
+	<div class="span3 documentWallIconBorder">
+		<h:outputLink value="#{root}/docspace/viewDocumentDetails.xhtml">
+			<f:param name="msowner"
+				value="#{wallElement.document.key.workspace.owner.name}" />
+			<f:param name="msname"
+				value="#{wallElement.document.key.workspace.name}" />
+			<f:param name="dname" value="#{wallElement.document.key.name}" />
+			<p:graphicImage
+				value="#{authenticatedMemberInfoView.getDocumentService().getDocumentIcon(wallElement.document.key)}"
+				width="60" height="60" />
+		</h:outputLink>
+	</div>
+
+	<div class="span7">
+		<div class="popover right">
+			<div class="arrow"></div>
+			<div class="popover-content">
+				#{wallElementContent} <b><font color="#333399"> Version :
+						#{wallElement.documentVersion}</font></b>
+			</div>
+		</div>
+
+	</div>
+
+</ui:composition>

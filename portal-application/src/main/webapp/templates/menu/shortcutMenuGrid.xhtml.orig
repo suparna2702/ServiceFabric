@@ -1,0 +1,65 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+
+<li class="dropdown">
+	<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+	    <span class="fui-list-large-thumbnails"></span><span class="hidden-desktop">Tools</span>
+	</a>
+	<ul class="dropdown-menu">
+	  	<li>
+	  		<div class="row-fluid">
+	  			<div class="span6">
+					<td>
+					   <a href="#{root}/member/memberHome.xhtml" class="thumbnail">
+						  <h:graphicImage library="img" name="home32.png" width="32"
+								  height="32" title="My Network" styleClass="toolBarElement"/>
+					   </a>
+					</td>
+					<td>
+					   <a href="#{root}/business/businessAnalyticDashboard.xhtml" class="thumbnail">
+						  <h:graphicImage library="img" name="bargraph32.png" width="32"
+								  height="32" title="My Dashboard" styleClass="toolBarElement"/>
+					   </a>
+					</td>
+				  </tr>
+				  <tr>
+	  				<a href="#{root}/business/businessContacts.xhtml" class="thumbnail">
+						  <h:graphicImage library="img" name="contactcard32.png" width="32"
+								  height="32" title="Partners" styleClass="toolBarElement"/>
+					</a>
+	  			</div>
+	  			<div class="span6">
+	  				<a href="#{root}/member/invite.xhtml" class="thumbnail">
+						  <h:graphicImage library="img" name="userplus32.png" width="32"
+								  height="32" title="Invite" styleClass="toolBarElement"/>
+					</a>
+	  			</div>
+	  		</div>
+	  	</li>
+	  	
+	  	<li>
+	  		<div class="row-fluid">
+	  			<div class="span6">
+	  				<a href="#{root}/docspace/myWorkspace.xhtml" class="thumbnail">
+						  <h:graphicImage library="img" name="contentRepository.png" width="32"
+								  height="32" title="Contents" styleClass="toolBarElement"/>
+					</a>
+	  			</div>
+	  			<div class="span6">
+	  				<a href="#{root}/collabspace/workspaceMain.xhtml" class="thumbnail">
+						  <h:graphicImage library="img" name="collabSpace32.png" width="32"
+								  height="32" title="Workspaces" styleClass="toolBarElement"/>
+					</a>
+	  			</div>
+	  		</div>
+	  	</li>
+	</ul>
+</li>
+				
+</ui:composition>

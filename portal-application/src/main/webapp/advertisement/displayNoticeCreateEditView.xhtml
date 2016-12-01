@@ -1,0 +1,229 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/basemenulayout.xhtml">
+
+	<ui:param name="newContent" value="true" />
+	<ui:param name="skipToolbar" value="true" />
+
+
+	<ui:define name="centerContent">
+
+		<div class="row-fluid">
+			<div class="span12">
+				<div class="iconbar iconbar-horizontal">
+					<ul>
+						<li><a href="#{root}/member/memberHome.xhtml"
+							class="fui-home" rel="tooltip" data-placement="bottom"
+							title="My Network"></a></li>
+
+						<li><a
+							href="#{root}/advertisement/displayNoticeCreateEditView.xhtml"
+							class="fui-plus" rel="tooltip" data-placement="bottom"
+							title="Create new Banner Notice"></a></li>
+					</ul>
+
+				</div>
+			</div>
+		</div>
+
+		<div class="row-fluid">
+			<div class="span12">
+
+				<div class="old-content">
+					<div class="span8">
+						<h:form id="formDisplayNotice" prependId="false"
+							enctype="multipart/form-data">
+
+							<p:outputPanel id="displayNoticeCreatePanel" layout="block">
+								<h:panelGrid columns="1">
+
+									<h:panelGroup id="assetIconPanel" styleClass="image-thumb"
+										layout="block">
+
+										<p:graphicImage id="assetIcon"
+											value="/spring/assets#{displayNoticeCreateEditView.iconAsset}" />
+
+										<p:commandButton id="imageAddButton"
+											styleClass="imageAddButtonOverlay"
+											onclick="assetIconUpload.show();"
+											title="Add display notice image" value="">
+											<f:param name="productId" value="20" />
+										</p:commandButton>
+
+									</h:panelGroup>
+
+									<h:panelGroup>
+
+										<p:dialog id="assetIconUploadDialog" resizable="true"
+											modal="true" showEffect="explode" header="Upload Logo"
+											widgetVar="assetIconUpload">
+											<p:fileUpload
+												fileUploadListener="#{displayNoticeCreateEditView.handleAssetIconload}"
+												auto="true" mode="advanced"
+												oncomplete="assetIconUpload.hide()" id="fileUpload"
+												sizeLimit="1048576" update="assetIconPanel"
+												render="assetIconPanel"
+												allowTypes="/(\.|\/)(gif|jpe?g|png)$/">
+											</p:fileUpload>
+										</p:dialog>
+
+									</h:panelGroup>
+
+								</h:panelGrid>
+
+								<h:panelGrid columns="1">
+
+									<h:inputText id="displayNoticeName"
+										styleClass="input-block-level"
+										style="margin-bottom:5px;margin-top:10px"
+										value="#{displayNoticeCreateEditView.name}" size="60" />
+									<p:watermark for="displayNoticeName"
+										value="Display Notice Name" />
+
+									<h:panelGroup>
+										<b>External Link</b>
+										<p:selectBooleanCheckbox
+											value="#{displayNoticeCreateEditView.externalUrl}"
+											style="margin-left:5px">
+											<p:ajax update="displayNoticeCreatePanel" />
+										</p:selectBooleanCheckbox>
+
+									</h:panelGroup>
+
+									<h:inputText id="displayNoticeExternalUrl"
+										rendered="#{displayNoticeCreateEditView.externalUrl eq 'true'}"
+										styleClass="input-block-level"
+										style="margin-bottom:15px;margin-top:10px"
+										value="#{displayNoticeCreateEditView.url}" size="60" />
+									<p:watermark for="displayNoticeExternalUrl"
+										value="Display Notice External Url" />
+
+									<p:editor id="displayNoticeLandingPage"
+										rendered="#{displayNoticeCreateEditView.externalUrl eq 'false'}"
+										styleClass="input-block-level"
+										value="#{displayNoticeCreateEditView.content}" width="600"
+										height="600" style="margin-bottom:5px;margin-top:10px" />
+
+
+								</h:panelGrid>
+
+								<ui:fragment
+									rendered="#{displayNoticeCreateEditView.tobeEdited eq null}">
+									<p:commandButton id="displayNoticeCreateBtn" value="Create"
+										action="#{displayNoticeCreateEditView.create}"
+										process="@this displayNoticeCreatePanel"
+										styleClass="btn btn-info btn-small"
+										update="displayNoticeCreatePanel :displayNoticeList"
+										style="margin-top:10px" />
+
+								</ui:fragment>
+
+								<ui:fragment
+									rendered="#{displayNoticeCreateEditView.tobeEdited ne null}">
+									<p:commandButton id="displayNoticeEditBtn" value="Update"
+										action="#{displayNoticeCreateEditView.update}"
+										process="@this displayNoticeCreatePanel"
+										styleClass="btn btn-inverse btn-small"
+										update="displayNoticeCreatePanel :displayNoticeList"
+										style="margin-top:10px" />
+
+								</ui:fragment>
+
+
+							</p:outputPanel>
+
+						</h:form>
+					</div>
+				</div>
+
+				<div class="span4">
+					<h3>Banner Notice List</h3>
+					<h:panelGrid id="displayNoticeList">
+
+						<ui:repeat var="displayNotice"
+							value="#{displayNoticeCreateEditView.displayNoticeList}">
+
+							<div class="panel panel-info voffset2">
+
+								<ui:fragment rendered="#{displayNotice.active eq 'true'}">
+									<div class="panel-heading">
+
+										<h3 class="panel-title">
+											<i class="fa fa-sign-in fa-lg mrm" rel="tooltip"
+												title="Active"></i>#{displayNotice.name}
+										</h3>
+									</div>
+								</ui:fragment>
+
+								<ui:fragment rendered="#{displayNotice.active eq 'false'}">
+									<div class="panel-heading">
+
+										<h3 class="panel-title">
+											<i class="fa fa-sign-in fa-lg muted mrm" rel="tooltip"
+												title="Not Active"></i>#{displayNotice.name}
+										</h3>
+									</div>
+								</ui:fragment>
+
+								<div class="panel-body">
+
+									<div
+										style="width: 220px; margin-right: 2px; margin-bottom: 2px;">
+										<p:graphicImage
+											value="/spring/assets#{displayNotice.iconAsset}" />
+
+									</div>
+
+									<small>#{orgPublicView.ago(displayNotice.createDate)}</small>
+
+									<h:form>
+
+										<p:commandButton id="displayNoticeActivateBtn"
+											value="Activate"
+											action="#{displayNoticeCreateEditView.activate(displayNotice.key)}"
+											styleClass="btn btn-inverse btn-small"
+											update=":displayNoticeList"
+											style="margin-top:10px; margin-right:15px" />
+
+										<p:commandButton id="displayLandingPageBtn" value="View"
+											action="#{displayNoticeCreateEditView.viewLandingPage(displayNotice.key)}"
+											styleClass="btn btn-info btn-small"
+											style="margin-top:10px; margin-right:15px" />
+
+										<p:commandButton id="displayNoticeEditBtn" value="Edit"
+											action="#{displayNoticeCreateEditView.editDisplayNotice(displayNotice.key)}"
+											styleClass="btn btn-warning btn-small"
+											style="margin-top:10px" update=":formDisplayNotice" />
+
+									</h:form>
+								</div>
+							</div>
+
+
+						</ui:repeat>
+					</h:panelGrid>
+
+				</div>
+			</div>
+		</div>
+
+		<script language="javascript">
+			$(document).ready(function() {
+				$("[rel='tooltip']").tooltip();
+				$("[rel='popover']").popover({
+					'trigger' : 'hover',
+					'html' : true
+				});
+			})
+		</script>
+
+	</ui:define>
+
+
+</ui:composition>

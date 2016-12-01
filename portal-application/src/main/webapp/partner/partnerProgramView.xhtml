@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/basemenulayout.xhtml">
+
+	<ui:param name="newContent" value="true" />
+	<ui:param name="skipToolbar" value="true" />
+
+	<ui:define name="title">Partner Program Details</ui:define>
+	<ui:define name="centerContent">
+
+		<!-- The basic Profile Info -->
+		<div class="row-fluid">
+			<div class="span12">
+
+				<div class="span3">
+					<!-- Partner Profile Info -->
+					<div class="thumbnail" style="padding: 0">
+						<div style="padding: 4px">
+							<p:graphicImage id="partnerlogo"
+								value="/spring/assets#{partnerProgramDetailView.partnerProgram.logoLocation}" />
+						</div>
+						<div class="caption">
+							<h2>#{partnerProgramDetailView.partnerProgram.name}</h2>
+							<c:if
+								test="#{partnerProgramDetailView.partnerProgram.totalActiveMembers > 0}">
+								<p>
+									Active Members <span class="badge badge-info">#{partnerProgramDetailView.partnerProgram.totalActiveMembers}</span>
+								</p>
+							</c:if>
+
+						</div>
+					</div>
+
+					<br></br>
+				</div>
+
+				<!-- The other information Tab -->
+				<div class="span9">
+					<ul class="nav nav-tabs nav-append-content">
+						<li class="active"><a href="#tabProfile"><i
+								class="fui-tag mrm"></i>About</a></li>
+
+						<c:if
+							test="#{partnerProgramDetailView.orgInfo.showPartners eq 'true'}">
+							<li><a href="#tabMembers"><i class="fui-user mrm"></i>Members</a></li>
+						</c:if>
+
+					</ul>
+
+					<div class="tab-content">
+						<div class="tab-pane active" id="tabProfile">
+							<ui:include src="/partner/partnerProgramProfile.xhtml" />
+						</div>
+
+						<c:if
+							test="#{partnerProgramDetailView.orgInfo.showPartners eq 'true'}">
+							<div class="tab-pane" id="tabMembers">
+								<ui:include src="/partner/partnerProgramMembers.xhtml" />
+							</div>
+						</c:if>
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+	</ui:define>
+</ui:composition>

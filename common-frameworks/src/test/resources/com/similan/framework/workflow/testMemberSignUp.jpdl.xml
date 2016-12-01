@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process name="testMemberSignUp" xmlns="http://jbpm.org/4.4/jpdl">
+   <start g="246,30,48,48" name="start1">
+      <transition g="-92,-9" name="to Validate Input" to="Validate Input"/>
+   </start>
+   <java g="204,120,131,52" name="Validate Input">
+      <transition g="-72,-2" name="to exclusive1" to="exclusive1"/>
+   </java>
+   <java g="60,322,92,52" name="Send Email">
+      <transition g="-55,-11" name="to Wait For response" to="Wait For response"/>
+   </java>
+   <end g="86,541,48,48" name="end1"/>
+   <state g="42,442,131,52" name="Wait For response">
+      <transition g="10,-10" name="to end1" to="end1"/>
+   </state>
+   <decision g="245,230,48,48" name="exclusive1">
+      <transition g="-47,-4" name="Email" to="Send Email"/>
+      <transition g="-31,-4" name="Error" to="Error Logging"/>
+   </decision>
+   <java g="372,317,120,52" name="Error Logging">
+      <transition g="-47,-8" name="to end2" to="end2"/>
+   </java>
+   <end g="409,426,48,48" name="end2"/>
+</process>

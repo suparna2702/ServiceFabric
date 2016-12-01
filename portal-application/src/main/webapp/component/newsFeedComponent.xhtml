@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui">
+
+   <p:panel rendered="#{not empty newsFeedView.newsList}">
+	  <p:dataGrid id="newsFeedList" var="newsFeed" paginator="true" paginatorPosition="bottom" 
+   	                paginatorAlwaysVisible="false" rows="10" columns="1"
+	                value="#{newsFeedView.newsList}" 	                
+	                styleClass="ui-datagrid-no-border">
+	                
+	        <p:panel id="newsFeedItemPanel" styleClass="buttomBorder">
+	           <h:panelGrid>
+	               <h:panelGroup>
+		               <h:outputText value="#{newsFeed.newsItem.header}" 
+		                             style="margin-bottom:10px;margin-right:5px;font-weight:bold; color:gray"/>
+		               <h:outputText value="#{newsFeed.newsItem.categoryTag}" 
+		                             style="margin-bottom:10px; margin-right:5px; color:gray"/>
+		               <h:outputText value="#{newsFeed.newsItem.timePosted}" 
+		                             style="margin-bottom:10px; margin-right:5px; color:gray">
+		                  <f:convertDateTime pattern="MM/dd/yyyy" />
+		               </h:outputText>
+	               </h:panelGroup>
+	               
+	               <h:outputText value="#{newsFeed.newsItem.newsDescription}" 
+	                             escape="false" style="margin-bottom:10px"/>
+	                            	               
+	           </h:panelGrid>
+	           <p:toolbar style="border:hidden; margin-left:10px; margin-bottom:10px; margin-top:5px; background:none; width:100px">  
+	             <p:toolbarGroup align="left">
+	             
+		            <h:commandLink id="newsItemLikeBtn" 
+		                           actionListener="#{newsFeedView.likeNewsItem(newsFeed.id)}" 
+					               style="margin-right:15px">
+							<f:ajax execute="@this" />
+							<p:graphicImage id="likeBtnImage"
+								value="/images/monoicons/likeIcon16.png" styleClass="toolBarElement"/>
+				    </h:commandLink>
+						
+		            <h:commandLink id="newsItemDislikeBtn" style="margin-right:15px" 
+					                actionListener="#{newsFeedView.disikeNewsItem(newsFeed.id)}">
+							<f:ajax execute="@this" />
+							<p:graphicImage id="dislikeBtnImage"
+								value="/images/monoicons/dislikeIcon16.png" styleClass="toolBarElement"/>
+				    </h:commandLink>
+					                    
+		            <h:commandLink id="newsItemCommentButton" 
+		                           style="margin-right:10px; float: right">
+							<f:ajax execute="@this" />
+							<p:graphicImage id="noteImageBtn"
+								value="/images/monoicons/noteIcon16.png" styleClass="toolBarElement"/>
+				    </h:commandLink>
+				    
+	             </p:toolbarGroup>
+		    </p:toolbar>
+	           
+	        </p:panel>
+	        
+	  </p:dataGrid>           
+   </p:panel>	  
+
+</ui:composition>

@@ -1,0 +1,283 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:composite="http://java.sun.com/jsf/composite/composites"
+	xmlns:similan="http://www.businessreach.com/similan"
+	template="/templates/basemenulayout.xhtml">
+
+	<ui:param name="newContent" value="true" />
+	<ui:param name="skipToolbar" value="true" />
+	<ui:define name="centerContent">
+
+		<div class="old-content">
+			<div class="row-fluid">
+				<div class="span12">
+
+					<h:form id="form" prependId="false" enctype="multipart/form-data">
+
+						<ui:include src="/docspace/contentShareDialog.xhtml" />
+
+						<p:confirmDialog id="downloadDialog"
+							message="Are you sure you want to download the document?"
+							header="Document document" severity="alert"
+							widgetVar="downloadDialogDlg">
+							<p:commandButton id="downloadOk" value="OK" ajax="false"
+								onclick="downloadDialogDlg.hide();PrimeFaces.monitorDownload(start, stop)">
+								<p:fileDownload
+									value="#{docWorkspaceDocumentDetailView.downloadDocument}" />
+							</p:commandButton>
+						</p:confirmDialog>
+
+
+						<p:confirmDialog id="bookmarkDialog"
+							message="Are you sure you want to bookmark the document?"
+							header="Bookmark Document" severity="alert"
+							widgetVar="bookmarkDlg">
+
+							<p:commandButton id="bookmarkOk" value="OK" update="@all"
+								ajax="false"
+								actionListener="#{docWorkspaceDocumentDetailView.bookmark()}"
+								onclick="bookmarkDlg.hide()">
+
+							</p:commandButton>
+
+						</p:confirmDialog>
+
+						<p:confirmDialog id="checkOutConfirmDialog"
+							message="Are you sure you want to checkout the document?"
+							header="Checkout Document" severity="alert"
+							widgetVar="checkOutConfirmDialogDlg">
+
+							<p:commandButton id="checkoutOk" value="OK" ajax="false"
+								actionListener="#{docWorkspaceDocumentDetailView.checkOutDocument()}"
+								onclick="checkOutConfirmDialogDlg.hide();PrimeFaces.monitorDownload(start, stop)">
+
+								<p:fileDownload
+									value="#{docWorkspaceDocumentDetailView.downloadDocument}" />
+
+							</p:commandButton>
+
+						</p:confirmDialog>
+
+					</h:form>
+				</div>
+			</div>
+		</div>
+
+		<div class="row-fluid">
+			<div class="span12">
+				<div class="iconbar iconbar-horizontal">
+					<ul>
+						<li><a href="#{root}/member/memberHome.xhtml"
+							class="fui-home" rel="tooltip" data-placement="bottom"
+							title="My Network"></a></li>
+
+						<li><a
+							href="#{root}/docspace/documentWorkspaceListView.xhtml"
+							class="fui-list-large-thumbnails" rel="tooltip"
+							data-placement="bottom" title="Content Workspace"></a></li>
+
+						<li><a href="#" onclick="shareContentDlg.show();return false"
+							class="fa fa-share-alt-square fa-lg" rel="tooltip"
+							data-placement="bottom" title="Share with connections"></a></li>
+
+
+						<li><a href="#"
+							onclick="downloadDialogDlg.show();return false"
+							class="fa fa-cloud-download fa-lg" rel="tooltip"
+							data-placement="bottom"
+							title="Download Document #{docWorkspaceDocumentDetailView.document.data.document.key.name}"></a></li>
+
+						<li><a href="#"
+							onclick="documentInfoEditDialogDlg.show();return false"
+							class="fui-new" rel="tooltip" data-placement="bottom"
+							title="Edit Document name and description of #{docWorkspaceDocumentDetailView.document.data.document.key.name}"></a></li>
+
+						<c:if
+							test="#{docWorkspaceDocumentDetailView.document.checkedOut eq 'false'}">
+							<li><a href="#"
+								onclick="checkOutConfirmDialogDlg.show();return false"
+								class="fa fa-level-down" rel="tooltip" data-placement="bottom"
+								title="Checkout Document #{docWorkspaceDocumentDetailView.document.data.document.key.name}"></a></li>
+						</c:if>
+
+						<c:if
+							test="#{(docWorkspaceDocumentDetailView.document.checkedOut eq 'true') and (docWorkspaceDocumentDetailView.document.checkedOutByUser eq 'true')}">
+							<li><a href="#"
+								onclick="checkInConfirmDialogDlg.show();return true"
+								class="fa fa-level-up" rel="tooltip" data-placement="bottom"
+								title="Checkin Document #{docWorkspaceDocumentDetailView.document.data.document.key.name}"></a></li>
+						</c:if>
+
+						<c:if
+							test="#{docWorkspaceDocumentDetailView.bookmarked eq 'false'}">
+							<li><a href="#fakeLink"
+								onclick="bookmarkDlg.show();return true" class="fa fa-star"
+								rel="tooltip" data-placement="bottom"
+								title="Add to favorite #{docWorkspaceDocumentDetailView.document.data.document.key.name}"></a></li>
+						</c:if>
+
+						<li><a href="#docHistory" class="fa fa-calendar fa-lg"
+							rel="tooltip" data-placement="bottom" title="Document History"></a></li>
+
+
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="row-fluid">
+			<div class="span12 well">
+				<div class="span4">
+
+					<c:if
+						test="#{docWorkspaceDocumentDetailView.document.checkedOut eq 'true'}">
+						<p>
+							<i class="fa fa-lock fa-2x mrm" rel="tooltip" title="Locked"></i><b>#{docWorkspaceDocumentDetailView.document.data.document.key.name}</b>
+						</p>
+					</c:if>
+
+					<c:if
+						test="#{docWorkspaceDocumentDetailView.document.checkedOut eq 'false'}">
+						<p>
+							<i class="fa fa-unlock fa-2x mrm" rel="tooltip" title="Unlocked"></i><b>#{docWorkspaceDocumentDetailView.document.data.document.key.name}</b>
+						</p>
+					</c:if>
+
+					<p>
+						#{docWorkspaceDocumentDetailView.document.data.document.description}
+					</p>
+
+					<p>
+						<i><font color="blue">Version
+								#{docWorkspaceDocumentDetailView.document.data.key.version}</font></i>
+					</p>
+				</div>
+
+				<div class="span4">
+					<blockquote>
+						<p>
+
+							<!-- Document Comment -->
+							<i class="fui-chat muted mrm" rel="tooltip" title="Comment Count"></i>
+							#{docWorkspaceDocumentDetailView.docStatistics.commentCount}
+
+
+							<!-- Document Downloaded -->
+							<i class="fui-alert muted mrm" rel="tooltip"
+								title="Download Count"></i>
+							#{docWorkspaceDocumentDetailView.docStatistics.downloadCount}
+
+
+							<!-- Total View Download -->
+							<i class="fui-eye muted mrm" rel="tooltip" title="View Count"></i>
+							#{docWorkspaceDocumentDetailView.docStatistics.vieweCount}
+
+						</p>
+					</blockquote>
+
+				</div>
+			</div>
+		</div>
+
+		<div class="row-fluid">
+			<div class="span12">
+				<div class="span7">
+					<ui:include src="/docspace/documentViewer.xhtml" />
+				</div>
+
+				<div class="span4 offset1">
+					<ui:include src="/docspace/documentComment.xhtml" />
+				</div>
+			</div>
+		</div>
+
+		<div id="docHistory" class="row-fluid">
+			<div class="span12 voffset4">
+				<h2>Document History</h2>
+			</div>
+		</div>
+
+		<div class="row-fluid">
+			<div class="span12 voffset4">
+
+				<!-- History -->
+				<div id="hero">
+
+					<div
+						class="filters button-group js-radio-button-group btn-group mrl"
+						data-type="horizontal">
+
+						<label class="button btn btn-primary" rel="tooltip"
+							data-placement="bottom" title="All History"> <input type="radio"
+							name="filter" value="*" checked="checked" /> <i
+							class="fa fa-cog mrm"></i>
+
+						</label> <label class="button btn btn-info" rel="tooltip"
+							data-placement="bottom" title="Document View History"> <input
+							type="radio" name="filter" value=".viewed" /> <i
+							class="fa fa-eye mrm"></i>
+
+						</label> <label class="button btn btn-primary" rel="tooltip"
+							data-placement="bottom" title="Document Download History"> <input
+							type="radio" name="filter" value=".downloaded" /> <i
+							class="fa fa-cloud-download mrm"></i>
+
+						</label> <label class="button btn btn-info" rel="tooltip"
+							data-placement="bottom" title="Document Comment History"> <input
+							type="radio" name="filter" value=".comment" /> <i
+							class="fa fa-comment mrm"></i>
+
+						</label> <label class="button btn btn-primary" rel="tooltip"
+							data-placement="bottom" title="Document Shared History"> <input
+							type="radio" name="filter" value=".shared" /> <i
+							class="fa fa-share-alt mrm"></i>
+
+						</label>
+
+					</div>
+
+					<br></br>
+
+					<div class="isotope rainbowed span4 voffset4">
+						<ui:include src="/history/document/documentHistory.xhtml">
+							<ui:param name="docWallEntryList"
+								value="#{docWorkspaceDocumentDetailView.docWallEntryList}" />
+						</ui:include>
+
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			function start() {
+				console.log('Download started!');
+			}
+
+			function stop() {
+				console.log('Download finished!');
+				location.reload(true);
+			}
+		</script>
+
+
+		<script language="javascript">
+			$(document).ready(function() {
+				$("[rel='tooltip']").tooltip();
+				$("[rel='popover']").popover({
+					'trigger' : 'hover',
+					'html' : true
+				});
+			})
+		</script>
+
+	</ui:define>
+</ui:composition>

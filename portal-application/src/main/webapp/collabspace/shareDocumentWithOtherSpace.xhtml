@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<p:dialog id="shareFileWithOtherSpaceDialog" resizable="false" modal="true" showEffect="explode" 
+	                     header="Share Document" widgetVar="shareFileWithOtherSpaceDlg">
+	 <p:outputPanel id="shareFileWithOtherSpacePanel">
+       <p:panel styleClass="noBorder">
+       
+          <p:dataTable id="shareWorkspaceList" var="workspace" paginator="true" paginatorPosition="bottom" 
+   	               paginatorAlwaysVisible="false" rows="10" 
+   	               value="#{workspaceDocumentDetailView.sharableSpaces}"
+   	               selection="#{workspaceDocumentDetailView.selectedWorkspaces}" 
+				   styleClass="ui-datatable-no-border">
+   	               
+   	              <p:column selectionMode="multiple" style="width:18px" styleClass="buttomBorder" />
+   	              <p:column styleClass="buttomBorder">  
+                       <h:outputText value="#{workspace.key.name}" style="margin-right:5px"/>  
+                  </p:column>  
+   	               
+   	      </p:dataTable>
+          
+       </p:panel>          
+       <p:commandButton id="shareFileWithOtherSpaceBtn" oncomplete="shareFileWithOtherSpaceDlg.hide();" 
+                                 actionListener="#{workspaceDocumentDetailView.shareDocumentWithOtherSpace}" 
+                                 value="Share" icon="ui-icon-check" 
+                                 process="@this shareFileWithOtherSpacePanel" 
+			                     style="margin-right:5px;margin-top:5px">
+		</p:commandButton>
+       </p:outputPanel>
+     </p:dialog>
+	
+</ui:composition>

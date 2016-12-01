@@ -1,0 +1,19 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:submenu label="Network Entity" style="margin-right:40px">
+		<p:menuitem value="All Members" url="/adminui/member/memberAll.xhtml"
+			ajax="false" immediate="true" />
+		<p:menuitem value="All Business"
+			url="/adminui/business/businessAll.xhtml" ajax="false"
+			immediate="true" />
+		<p:menuitem value="Wall Entry"
+			url="/adminui/member/wallEventStatistics.xhtml" ajax="false"
+			immediate="true" />
+	</p:submenu>
+
+</ui:composition>

@@ -1,0 +1,48 @@
+.old-content .commentButton {
+  background-image: url("../../../../images/commentIcon.png");
+}
+
+.old-content .bookmarkButton {
+  background-image: url("../../../../images/bookMarktIcon.png");
+}
+
+.old-content .likeButton {
+  background-image: url("../../../../images/likeIcon.png");
+}
+
+.old-content .shareButton {
+  background-image: url("../../../../images/shareIcon.png");
+}
+
+.old-content .image-thumb,
+.old-content .image-thumb img {
+  position: relative;
+  width: 120px;
+  height: 120px;
+}
+
+.old-content .imageAddButtonOverlay {
+  border: none !important;
+  display: block !important;
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  width: 16px;
+  height: 16px;
+  background: url("../../../../javax.faces.resource/add.png.xhtml?ln=img") !important;
+}
+
+.old-content .imageRemoveButtonOverlay {
+  border: none !important;
+  display: block !important;
+  position: absolute !important;
+  bottom: 0 !important;
+  right: 0 !important;
+  width: 16px;
+  height: 16px;
+  background: url("../../../../javax.faces.resource/delete.png.xhtml?ln=img") !important;
+}
+
+.old-content .linkedInButton {
+  background-image: url("../../../../javax.faces.resource/LinkedIn.png.xhtml?ln=img") !important;
+}

@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/basemenulayout.xhtml">
+
+	<ui:define name="title">Business Reach Home</ui:define>
+	<ui:define name="centerContent">
+	<style>
+	  .hide-column-names table thead tr {
+         display: none;
+      }
+	 </style>
+	 
+	<c:if test="${partnerParticipateView.partnerPrograms != 'null'}">
+	<h3>Choose a partner program you like to participate</h3>
+	<p:outputPanel id="partnerProgramParticipatePanel" layout="block">
+  	   <p:panel style="border-style: hidden;">
+  	   
+  	      <p:dataTable id="partnerProgramTable" var="partnerProgram" value="#{partnerParticipateView.partnerPrograms}" 
+	                rowKey="#{partnerProgram.id}" selection="#{partnerParticipateView.selectedProgram}" 
+	                styleClass="hide-column-names">
+	                
+	          <p:column id="partnerProgramLogo">
+	               <p:graphicImage id="partnerProgramLogoImage" value="/spring/assets#{partnerProgram.logoLocation}" 
+                        width="50" height="50"/>
+	          </p:column>
+	          <p:column id="partnerProgramName">
+	              <h:outputText value="#{partnerProgram.name}" />
+	          </p:column>
+	          <p:column id="partnerProgramDescription">
+	              <h:outputText value="#{partnerProgram.description}" />
+	          </p:column>
+	        
+	          <p:column id="partnerProgramSelectCheck" selectionMode="single"/>
+	          
+	          <f:facet name="footer">
+                 <p:toolbar style="border:hidden; width:100px">  
+                     <p:toolbarGroup align="left">
+				           <p:commandButton id="partnerProgramParticipatePanelBtn" icon="ui-icon-link" 
+				                                 action="#{partnerParticipateView.participatePartnerProgram}" style="margin-left:2px;margin-top:5px;"/>
+			               <p:tooltip for="partnerProgramParticipatePanelBtn" value="Participate in this partner program" 
+				                    showEffect="fade" hideEffect="fade" />
+				                    
+				           <p:commandButton id="partnerProgramViewPanelBtn" icon="ui-icon-search" 
+				                             action="#{partnerParticipateView.viewPartnerProgram}" style="margin-left:2px;margin-top:5px;"/>
+			               <p:tooltip for="partnerProgramViewPanelBtn" value="View details of the partner program" 
+				                    showEffect="fade" hideEffect="fade" />
+	                  </p:toolbarGroup>
+	             </p:toolbar>
+              </f:facet>
+	          
+	     </p:dataTable>
+  	   </p:panel>
+  	</p:outputPanel>
+	</c:if>
+	
+	<c:if test="${partnerParticipateView.partnerPrograms == 'null'}">
+	   <h3>No partner program exists</h3>
+	</c:if>
+	
+    </ui:define>
+	<ui:define name="leftNavigationBar">
+		<ui:include src="/component/leftNavigationBar.xhtml" />
+	</ui:define>
+</ui:composition>

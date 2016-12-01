@@ -1,0 +1,74 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:composite="http://java.sun.com/jsf/composite/composites"
+	xmlns:p="http://primefaces.org/ui">
+	
+     <p:panel id="affiliateLeadSearchPanel" style="border:hidden; text-align:center;"> 
+      
+          <h:panelGrid columns="2" style="text-align:left">
+          
+             <h:outputLabel for="affiliateLeadSearchIndustry" value="Industry: "/>
+             <p:pickList id="affiliateLeadSearchIndustry" 
+                value="#{leadViewSettingsView.industryList}" var="industryType"   
+                itemLabel="#{industryType}" itemValue="#{industryType}"/>
+                                          
+             <h:outputLabel for="affiliateLeadSearchTitle" value="Title: "/>
+             <p:pickList id="affiliateLeadSearchTitle" value="#{leadViewSettingsView.titleList}" var="title"   
+                      itemLabel="#{title}" itemValue="#{title}" style="margin-top:10px;margin-bottom:10px"/>
+                      
+             <ui:include src="/lead/leadAddKeywordsFilter.xhtml" /> 
+                      
+             <h:outputLabel for="affiliateLeadCountrySelectSearch" value="Country: "/>
+             <p:selectOneMenu id="affiliateLeadCountrySelectSearch" 
+                  style="margin-bottom:10px;margin-top:10px;witdh:105%" 
+                  effect="fade" filter="true" filterMatchMode="startsWith"
+                  value="#{leadViewSettingsView.leadSetting.country}">
+                     <f:selectItems value="#{countryBean.countryList}" var="countryType"
+   			              itemLabel="#{countryType.countryName}" itemValue="#{countryType.countryName}" />
+                     <p:ajax update="affiliateLeadStateSelectSearch" execute="@this"
+                         listener="#{leadViewSettingsView.loadSelectedStates}"/>
+             </p:selectOneMenu>
+    
+             <h:outputLabel for="affiliateLeadStateSelectSearch" value="State: "/>
+             <p:selectOneMenu style="margin-bottom:10px;witdh:105%" 
+                   effect="fade" filter="true" filterMatchMode="startsWith"
+                  id="affiliateLeadStateSelectSearch" value="#{leadViewSettingsView.leadSetting.state}">
+                  <f:selectItems value="#{leadViewSettingsView.selectedStateList}" var="stateType"
+ 			          itemLabel="#{stateType.stateName}" itemValue="#{stateType.stateName}" />
+             </p:selectOneMenu>
+             
+             <h:outputLabel for="affiliateLeadSearchStreet" value="Street: "/>
+             <p:inputText id="affiliateLeadSearchStreet" value="#{leadViewSettingsView.leadSetting.street}" 
+                                          style="margin-bottom:10px;" size="35"/>
+          
+             <h:outputLabel for="affiliateLeadSearchCity" value="City: "/>
+             <p:inputText id="affiliateLeadSearchCity" value="#{leadViewSettingsView.leadSetting.city}" 
+                                          style="margin-bottom:10px;" size="35"/>
+          
+             <h:outputLabel for="affiliateLeadZipCodeSearch" value="Zip Code: "/>
+             <p:inputText id="affiliateLeadZipCodeSearch" value="#{leadViewSettingsView.leadSetting.zipCode}" 
+                              style="margin-top:10px;margin-bottom:10px;" size="10"/>
+                              
+             <h:outputLabel for="affiliateLeadSearchRadius" value="Within a Radius (mi): "/>
+             <h:panelGroup style="width:100%">
+	             <p:selectOneMenu id="affiliateLeadSearchRadius" style="margin-bottom:10px;witdh:105%" 
+	                              value="#{leadViewSettingsView.leadSetting.radius}">  
+		            <f:selectItem itemLabel="25" itemValue="25" />  
+		            <f:selectItem itemLabel="50" itemValue="50" />  
+		            <f:selectItem itemLabel="75" itemValue="75" />  
+		            <f:selectItem itemLabel="100" itemValue="100" />
+	             </p:selectOneMenu>
+             </h:panelGroup>
+              
+          </h:panelGrid>
+                            
+          <p:commandButton  id="affiliateLeadSearchFilterBtn" value="Search" 
+                            action="#{leadViewSettingsView.searchAffiliateByFilter}" 
+                            process="@this affiliateLeadSearchPanel"
+                            style="margin-top:10px;float:left"/>  
+     </p:panel>
+     
+</ui:composition>

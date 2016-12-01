@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<solr persistent="true">
+  <cores defaultCoreName="similan_test" adminPath="/admin/cores" zkClientTimeout="${zkClientTimeout:15000}" hostPort="8983" hostContext="solr">
+    <core instanceDir="similan_test\" name="similan_test"/>
+    <core instanceDir="similan_itest\" name="similan_itest"/>
+    <core instanceDir="similan_deploy\" name="similan_deploy"/>
+  </cores>
+</solr>

@@ -1,0 +1,26 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:composite="http://java.sun.com/jsf/composite/composites"
+	xmlns:p="http://primefaces.org/ui"
+	template="/wall/wallEntryLayout.xhtml">
+
+	<ui:define name="wallEntryTitle">
+       #{wallEntry.partner.displayName} joined partner program 
+  </ui:define>
+
+	<ui:define name="wallEntryBody">
+		<div class="span3">
+			<img src="#{root}/spring/assets/#{wallEntry.partner.displayImage}"
+				class="imgMember caption" />
+		</div>
+		<div class="span7">
+			<p style="background-color: #FFFFCC">
+				<b>#{wallEntry.partner.displayName}</b> is now the new member of the
+				partner program <b>#{wallEntry.programName}</b>
+			</p>
+		</div>
+	</ui:define>
+</ui:composition>

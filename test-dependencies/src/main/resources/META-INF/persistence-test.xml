@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="1.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+	<persistence-unit name="similan">
+
+		<!-- Audit Event -->
+		<class>com.similan.domain.entity.audit.AuditEvent</class>
+		<class>com.similan.domain.entity.audit.AuditEventAttribute</class>
+		
+		<!-- Advertisement -->
+		<class>com.similan.domain.entity.advertisement.DisplayNotice</class>
+		<class>com.similan.domain.entity.advertisement.DisplayNoticeLandingPage</class>
+
+		<!-- Notification Configuration -->
+		<class>com.similan.domain.entity.settings.NotificationConfiguration</class>
+
+		<!-- Neo4J to JPA Migrated Entities -->
+		<class>com.similan.domain.entity.community.SocialEmployee</class>
+		<class>com.similan.domain.entity.community.SocialContact</class>
+		<class>com.similan.domain.entity.community.SocialContactGroup</class>
+		<class>com.similan.domain.entity.community.SocialContact</class>
+
+		<!-- Product -->
+		<class>com.similan.domain.entity.product.Product</class>
+		<class>com.similan.domain.entity.product.ProductFeature</class>
+		<class>com.similan.domain.entity.product.ProductTag</class>
+
+		<class>com.similan.domain.entity.search.SearchStatisticsEvent</class>
+		<class>com.similan.domain.entity.document.Document</class>
+		<class>com.similan.domain.entity.document.DocumentCategory</class>
+		<class>com.similan.domain.entity.document.DocumentInstance</class>
+		<class>com.similan.domain.entity.document.DocumentLabel</class>
+		<class>com.similan.domain.entity.document.DocumentPage</class>
+		<class>com.similan.domain.entity.document.DocumentViewerAsset</class>
+		<class>com.similan.domain.entity.document.DocumentViewerAttribute</class>
+		<class>com.similan.domain.entity.document.DocumentViewerItem</class>
+
+		<class>com.similan.domain.entity.asset.Asset</class>
+		<class>com.similan.domain.entity.asset.AssetAdditionalMetadata</class>
+		<class>com.similan.domain.entity.asset.AssetInfo</class>
+		<class>com.similan.domain.entity.asset.AssetMetadata</class>
+
+		<class>com.similan.domain.entity.bookmark.Bookmark</class>
+
+		<class>com.similan.domain.entity.leadcapture.LeadCaptureResponse</class>
+		<class>com.similan.domain.entity.leadcapture.LeadCaptureQuestionResponse</class>
+		<class>com.similan.domain.entity.leadcapture.LeadCaptureQuestionChoiceResponse</class>
+		<class>com.similan.domain.entity.leadcapture.LeadCaptureQuestion</class>
+		<class>com.similan.domain.entity.leadcapture.LeadCaptureQuestionChoice</class>
+		<class>com.similan.domain.entity.leadcapture.LeadCaptureWizzardTemplate</class>
+		<class>com.similan.domain.entity.acccount.OrganizationAccount</class>
+		<class>com.similan.domain.entity.acccount.AccountRecord</class>
+		<class>com.similan.domain.entity.acccount.LeadPurchaseRecord</class>
+		<class>com.similan.domain.entity.acccount.BusinessAccountType</class>
+		<class>com.similan.domain.entity.admin.AdminAccount</class>
+
+		<class>com.similan.domain.entity.collaborationworkspace.CollaborationWorkspace</class>
+		<class>com.similan.domain.entity.collaborationworkspace.CollaborationWorkspaceElement</class>
+		<class>com.similan.domain.entity.collaborationworkspace.CollaborationWorkspaceInvite</class>
+		<class>com.similan.domain.entity.collaborationworkspace.SharedDocument</class>
+		<class>com.similan.domain.entity.collaborationworkspace.Task</class>
+		<class>com.similan.domain.entity.collaborationworkspace.CollaborationWorkspaceParticipation</class>
+		<class>com.similan.domain.entity.collaborationworkspace.CollaborationWorkspaceSurvey</class>
+
+		<class>com.similan.domain.entity.comment.Comment</class>
+		<class>com.similan.domain.entity.comment.CommentReply</class>
+
+		<class>com.similan.domain.entity.common.Address</class>
+
+		<class>com.similan.domain.entity.community.activity.News</class>
+		<class>com.similan.domain.entity.community.activity.Review</class>
+		<class>com.similan.domain.entity.community.activity.ReviewTag</class>
+		<class>com.similan.domain.entity.community.activity.ReviewThread</class>
+		<class>com.similan.domain.entity.community.Location</class>
+		<class>com.similan.domain.entity.community.Location</class>
+		<class>com.similan.domain.entity.community.MemberJoinValidation</class>
+		<class>com.similan.domain.entity.community.MemberSearchInfo</class>
+		<class>com.similan.domain.entity.community.MemberTransactionInfo</class>
+		<class>com.similan.domain.entity.community.OrganizationSearchPreference</class>
+		<class>com.similan.domain.entity.community.PartnerSettingsConfiguration</class>
+		<class>com.similan.domain.entity.community.SocialActor</class>
+		<class>com.similan.domain.entity.community.ExternalSocialPerson</class>
+		<class>com.similan.domain.entity.community.SocialEmbeddedIdentity</class>
+
+		<class>com.similan.domain.share.Shared</class>
+		<class>com.similan.domain.share.ExternalShared</class>
+		<class>com.similan.domain.share.InNetworkShared</class>
+
+		<class>com.similan.domain.entity.community.SocialOrganization</class>
+		<class>com.similan.domain.entity.community.SocialPerson</class>
+		<class>com.similan.domain.entity.community.SocialPersonExpertise</class>
+		<class>com.similan.domain.entity.community.SocialPersonInterest</class>
+		<class>com.similan.domain.entity.community.Suggestion</class>
+		<class>com.similan.domain.entity.community.Suggestion</class>
+		<class>com.similan.domain.entity.community.ExternalBusinessPortal</class>
+
+		<class>com.similan.domain.entity.event.CommunityEvent</class>
+		<class>com.similan.domain.entity.event.MemberLoginEvent</class>
+		<class>com.similan.domain.entity.event.SearchEvent</class>
+
+		<class>com.similan.domain.entity.feed.Feed</class>
+		<class>com.similan.domain.entity.feed.FeedEntry</class>
+		<class>com.similan.domain.entity.feed.WallFeedEntry</class>
+		<class>com.similan.domain.entity.feed.SurveyRequestFeedEntry</class>
+		<class>com.similan.domain.entity.feed.ExternalSharedViewFeedEntry</class>
+
+		<class>com.similan.domain.entity.lead.ClickThroughLead</class>
+		<class>com.similan.domain.entity.lead.CrmLeadSettings</class>
+		<class>com.similan.domain.entity.lead.CrmLeadSyncRecord</class>
+		<class>com.similan.domain.entity.lead.ContactLead</class>
+		<class>com.similan.domain.entity.lead.Lead</class>
+		<class>com.similan.domain.entity.lead.AffiliateLead</class>
+		<class>com.similan.domain.entity.lead.AffiliateLeadList</class>
+		<class>com.similan.domain.entity.lead.FilteredAvailableLeadList</class>
+		<class>com.similan.domain.entity.lead.LeadMessage</class>
+		<class>com.similan.domain.entity.lead.AcquiredLead</class>
+		<class>com.similan.domain.entity.lead.LeadAutoDistributeRule</class>
+		<class>com.similan.domain.entity.lead.LeadComment</class>
+		<class>com.similan.domain.entity.lead.LeadActivity</class>
+		<class>com.similan.domain.entity.lead.LeadActivityComment</class>
+		<class>com.similan.domain.entity.lead.LeadAssignment</class>
+		<class>com.similan.domain.entity.lead.LeadAssignmentHistory</class>
+		<class>com.similan.domain.entity.lead.LeadAssignmentStatus</class>
+		<class>com.similan.domain.entity.lead.SearchLead</class>
+		<class>com.similan.domain.entity.lead.LeadSearchFilterSetting</class>
+		<class>com.similan.domain.entity.lead.LeadAlertSettings</class>
+		<class>com.similan.domain.entity.lead.TransferLead</class>
+		<class>com.similan.domain.entity.lead.TransferLeadRequest</class>
+		<class>com.similan.domain.entity.lead.LeadTransferredEvent</class>
+		<class>com.similan.domain.entity.lead.LeadImportedEvent</class>
+		<class>com.similan.domain.entity.lead.LeadDeletedEvent</class>
+		<class>com.similan.domain.entity.lead.LeadCrmSynchronizationEvent</class>
+		<class>com.similan.domain.entity.lead.LeadLifeCycleEvent</class>
+		<class>com.similan.domain.entity.lead.CrmRecordId</class>
+
+		<class>com.similan.domain.entity.management.ConfigurationParameter</class>
+
+		<class>com.similan.domain.entity.managementworkspace.ManagementWorkspace</class>
+		<class>com.similan.domain.entity.managementworkspace.ManagementWorkspaceParticipation</class>
+
+		<class>com.similan.domain.entity.metadata.CountryType</class>
+		<class>com.similan.domain.entity.metadata.IndustryType</class>
+		<class>com.similan.domain.entity.metadata.StateType</class>
+
+		<class>com.similan.domain.entity.partner.PartnerPreQualificationQuestion</class>
+		<class>com.similan.domain.entity.partner.PartnerProgramDefinition</class>
+		<class>com.similan.domain.entity.partner.PartnerProgramRequiredAttribute</class>
+		<class>com.similan.domain.entity.partner.PartnerSearchSettingsConfiguration</class>
+		<class>com.similan.domain.entity.partner.Partnership</class>
+		<class>com.similan.domain.entity.partner.PartnerProgramResponse</class>
+		<class>com.similan.domain.entity.partner.PartnerPreQualificationAnswer</class>
+		<class>com.similan.domain.entity.partner.PartnerPreQualificationAnswerChoice</class>
+		<class>com.similan.domain.entity.partner.PartnerPreQualificationQuestionResponse</class>
+		<class>com.similan.domain.entity.partner.PartnerProgramBenifit</class>
+		<class>com.similan.domain.entity.partner.PartnerRelationshipCategory</class>
+		<class>com.similan.domain.entity.partner.PartnerProgramCommunicationAttribute</class>
+		<class>com.similan.domain.entity.partner.PartnerProgramTypeInfo</class>
+
+		<class>com.similan.domain.entity.poll.PollTemplate</class>
+		<class>com.similan.domain.entity.poll.PollAnswer</class>
+		<class>com.similan.domain.entity.poll.PollAnswerChoice</class>
+		<class>com.similan.domain.entity.poll.PollSubmission</class>
+		<class>com.similan.domain.entity.poll.PollTemplate</class>
+		<class>com.similan.domain.entity.poll.PollTemplateAnswerChoice</class>
+		<class>com.similan.domain.entity.poll.PollTemplateQuestion</class>
+		<class>com.similan.domain.entity.poll.PollEvent</class>
+
+		<class>com.similan.domain.entity.process.BusinessProcess</class>
+
+		<class>com.similan.domain.entity.template.VelocityDocumentTemplate</class>
+		<class>com.similan.domain.entity.template.VelocityTemplateAttribute</class>
+
+		<class>com.similan.domain.entity.script.CodeSnippet</class>
+
+		<class>com.similan.domain.entity.util.MemberFeedback</class>
+		<class>com.similan.domain.entity.util.WorkflowTransientState</class>
+		<class>com.similan.domain.entity.util.WorkflowTransientStateAttribute</class>
+		<class>com.similan.domain.entity.util.NonmemberContactMessage</class>
+		<class>com.similan.domain.entity.util.SlideShowImage</class>
+
+		<class>com.similan.domain.entity.wall.Wall</class>
+		<class>com.similan.domain.entity.wall.WallEntry</class>
+
+		<class>com.similan.domain.entity.wall.collaborationworkspace.CollaborationWorkspaceInNetworkSharedWallEntry</class>
+		<class>com.similan.domain.entity.wall.collaborationworkspace.CollaborationWorkspaceExternalSharedWallEntry</class>
+		<class>com.similan.domain.entity.wall.collaborationworkspace.CollaborationWorkspaceAccessedWallEntry</class>
+		<class>com.similan.domain.entity.wall.collaborationworkspace.CollaborationWorkspaceWallEntry</class>
+		<class>com.similan.domain.entity.wall.collaborationworkspace.CollaborationWorkspaceDocumentWallEntry</class>
+		<class>com.similan.domain.entity.wall.collaborationworkspace.DocumentSharedWallEntry</class>
+		<class>com.similan.domain.entity.wall.collaborationworkspace.ParticipantJoinedWallEntry</class>
+		<class>com.similan.domain.entity.wall.collaborationworkspace.TaskCreatedWallEntry</class>
+		<class>com.similan.domain.entity.wall.collaborationworkspace.DocumentViewedWallEntry</class>
+		<class>com.similan.domain.entity.wall.collaborationworkspace.DocumentDownloadedWallEntry</class>
+		<class>com.similan.domain.entity.wall.collaborationworkspace.DocumentCommentWallEntry</class>
+		<class>com.similan.domain.entity.wall.collaborationworkspace.DocumentUpdateWallEntry</class>
+		<class>com.similan.domain.entity.wall.collaborationworkspace.DocumentSharedWithOtherWorkspaceWallEntry</class>
+
+		<class>com.similan.domain.entity.wall.contentworkspace.ContentWorkspaceWallEntry</class>
+		<class>com.similan.domain.entity.wall.contentworkspace.ContentWorkspaceDocumentWallEntry</class>
+		<class>com.similan.domain.entity.wall.contentworkspace.ContentWorkspaceDocumentViewedWallEntry</class>
+		<class>com.similan.domain.entity.wall.contentworkspace.ContentWorkspaceDocumentDownloadedWallEntry</class>
+		<class>com.similan.domain.entity.wall.contentworkspace.ContentWorkspaceDocumentUploadedWallEntry</class>
+		<class>com.similan.domain.entity.wall.contentworkspace.ContentWorkspaceDocumentCommentWallEntry</class>
+		<class>com.similan.domain.entity.wall.contentworkspace.ContentWorkspaceDocumentCheckOutWallEntry</class>
+		<class>com.similan.domain.entity.wall.contentworkspace.ContentWorkspaceDocumentCheckInWallEntry</class>
+		<class>com.similan.domain.entity.wall.contentworkspace.ContentWorkspaceDocumentExternalSharedWallEntry</class>
+		<class>com.similan.domain.entity.wall.contentworkspace.ContentWorkspaceDocumentInNetworkSharedWallEntry</class>
+		<class>com.similan.domain.entity.wall.contentworkspace.ContentWorkspaceDocumentUpdateWallEntry</class>
+
+		<class>com.similan.domain.entity.wall.comment.CommentPostedWallEntry</class>
+		<class>com.similan.domain.entity.wall.comment.CommentReplyPostedWallEntry</class>
+		<class>com.similan.domain.entity.wall.wall.WallPost</class>
+		<class>com.similan.domain.entity.wall.wall.LinkReference</class>
+
+		<class>com.similan.domain.entity.wall.network.BusinessProfileUpdateWallEntry</class>
+		<class>com.similan.domain.entity.wall.network.BusinessProfileViewWallEntry</class>
+		<class>com.similan.domain.entity.wall.network.MemberProfileUpdateWallEntry</class>
+		<class>com.similan.domain.entity.wall.network.MemberProfileViewWallEntry</class>
+		<class>com.similan.domain.entity.wall.advertisement.DisplayNoticeViewedWallEntry</class>
+
+		<class>com.similan.domain.job.JobTrigger</class>
+		<class>com.similan.domain.job.JobTriggerParameter</class>
+    
+        <class>com.similan.domain.entity.process.BusinessProcess</class>
+        <class>com.similan.domain.entity.process.signup.BaseSignUpProcess</class>
+        <class>com.similan.domain.entity.process.signup.BasicMemberSignUpProcess</class>
+
+		<exclude-unlisted-classes>false</exclude-unlisted-classes>
+
+		<properties>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
+			<property name="hibernate.id.new_generator_mappings" value="true" />
+			<property name="hibernate.ejb.naming_strategy"
+				value="org.hibernate.cfg.DefaultComponentSafeNamingStrategy" />
+		</properties>
+
+	</persistence-unit>
+</persistence>

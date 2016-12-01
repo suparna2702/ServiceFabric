@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:dialog id="shareDocumentExternalDialog" resizable="false"
+		modal="true" showEffect="explode" header="Share Document"
+		widgetVar="shareDocumentExternalDlg">
+		<p:outputPanel id="shareDocumentExternalPanel">
+
+			<h:panelGrid columns="1" style="margin-top:10px;">
+
+				<h:inputText id="firstName" styleClass="input-block-level"
+					value="#{workspaceDocumentDetailView.firstName}"
+					style="margin-bottom:5px" size="45" required="false" />
+				<p:watermark for="firstName" value="First Name" />
+				<p:tooltip for="firstName" value="Enter First Name"
+					showEffect="fade" hideEffect="fade" />
+
+				<h:inputText id="lastName" styleClass="input-block-level"
+					value="#{workspaceDocumentDetailView.lastName}"
+					style="margin-bottom:5px" size="45" required="false" />
+				<p:watermark for="lastName" value="Last Name" />
+				<p:tooltip for="lastName" value="Enter Last Name" showEffect="fade"
+					hideEffect="fade" />
+
+				<h:inputText id="email" styleClass="input-block-level"
+					value="#{workspaceDocumentDetailView.email}"
+					style="margin-bottom:5px" size="45" required="false" />
+				<p:watermark for="email" value="Enter Email Address" />
+				<p:tooltip for="email" value="Enter Email Address" showEffect="fade"
+					hideEffect="fade" />
+
+				<h:inputText id="phome" styleClass="input-block-level"
+					value="#{workspaceDocumentDetailView.mobilePhone}"
+					style="margin-bottom:5px" size="45" />
+				<p:watermark for="phome" value="Enter Phone Number" />
+				<p:tooltip for="phome" value="Phone Number" showEffect="fade"
+					hideEffect="fade" />
+
+				<h:inputText id="header" styleClass="input-block-level"
+					value="#{workspaceDocumentDetailView.header}"
+					style="margin-bottom:5px" size="45" required="false" />
+				<p:watermark for="header" value="Header" />
+				<p:tooltip for="header" value="Header" showEffect="fade"
+					hideEffect="fade" />
+
+				<h:inputTextarea id="message" styleClass="input-block-level"
+					value="#{workspaceDocumentDetailView.message}"
+					style="margin-bottom:5px;margin-top:5px" rows="6" cols="43" />
+				<p:watermark for="message" value="Message" />
+
+			</h:panelGrid>
+
+			<p:commandButton id="shareDocumentExternalBtn"
+				oncomplete="shareDocumentExternalDlg.hide();"
+				actionListener="#{workspaceDocumentDetailView.shareDocumentExternal}"
+				value="Share" icon="ui-icon-check"
+				process="@this shareDocumentExternalPanel"
+				styleClass="btn btn-info btn-small">
+			</p:commandButton>
+		</p:outputPanel>
+	</p:dialog>
+
+</ui:composition>

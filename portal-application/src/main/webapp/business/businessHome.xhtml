@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/basemenulayout.xhtml">
+
+	<ui:define name="title">Business Reach Home</ui:define>
+	<ui:define name="centerContent">
+	
+	<p:outputPanel id="businessHome" style="margin-bottom:15px;" layout="block">
+	   <p:panel style="background:rgb(252,244,254)">
+	     <h:panelGrid columns="2" style="border: 1px blue">
+	     
+	       <p:graphicImage id="businessLogoPhoto" value="/spring/assets#{orgView.businessLogo}" 
+                        width="80" height="80"/>
+                        
+           <h:panelGroup>
+               <h:outputText id="businessName" value="#{orgPublicView.orgInfo.businessName}" 
+	                  style="margin-left:30px;margin-bottom:10px;font-size:15pt;font-weight:bold" />
+	           <br></br>
+	           <p:inputTextarea id="shareComment" style="margin-bottom:5px; margin-left:30px;margin-top:20px;margin-bottom:15px" 
+	                            widgetVar="textShareComment" rows="5" cols="75" value="#{orgView.shareComment}" /> 
+	           <br></br>
+	           <p:menuButton value="Share" style="margin-left:30px">
+	              <p:menuitem value="Everyone" action="#{orgView.shareCommentEveryOne}" update="shareComment updateWall"/>
+	              <!-- 
+	              	<p:menuitem value="Connections" action="#{orgView.shareCommentConnection}" update="shareComment"/>
+	              	<p:menuitem value="Tweet" action="#{orgView.shareCommentTweet}" update="shareComment"/>
+	              -->
+	           </p:menuButton>
+           </h:panelGroup>
+           
+	     </h:panelGrid>
+	  </p:panel>
+	  
+	  <p:spacer height="10"/>
+	  
+	  <p:panel>  
+            <ui:include src="businessUdatePanelView.xhtml" />	         
+	  </p:panel>
+	</p:outputPanel>
+	
+	</ui:define>
+	<ui:define name="leftNavigationBar">
+		<ui:include src="/component/leftNavigationBar.xhtml" />
+	</ui:define>
+	
+</ui:composition>

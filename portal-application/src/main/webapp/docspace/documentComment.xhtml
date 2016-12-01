@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui">
+
+
+	<div class="row">
+		<h:form id="documentPostForm">
+
+			<div class="control-group">
+				<div class="span2">
+					<p:graphicImage height="60" width="60"
+						value="/spring/assets/#{docWorkspaceDocumentDetailView.member.photoLocation}"
+						styleClass="img-rounded img-responsive" />
+				</div>
+
+				<div class="span8">
+					<fieldset>
+						<div class="control-group">
+							<p:inputTextarea id="documentCommentShare"
+								value="#{docWorkspaceDocumentDetailView.comment}"
+								styleClass="comment input-block-level" />
+							<p:watermark for="documentCommentShare"
+								value="Share your comment" />
+						</div>
+
+						<div class="control-group">
+							<p:commandButton value="Share"
+								styleClass="btnShare btn btn-sm btn-info btn-small"
+								actionListener="#{docWorkspaceDocumentDetailView.postWallComment}"
+								update="@this :commentThread" ajax="true" />
+						</div>
+					</fieldset>
+				</div>
+
+			</div>
+
+		</h:form>
+
+	</div>
+
+	<div class="row">
+
+		<h:panelGrid id="commentThread">
+			<ui:repeat var="documentComment"
+				value="#{docWorkspaceDocumentDetailView.wallComments}">
+				<ul class="media-list">
+					<li class="media"><a class="pull-left" href="#"> <img
+							height="40" width="40"
+							src="#{root}/spring/assets/#{docWorkspaceDocumentDetailView.getCommentAuthorPhotoLocation(documentComment.comment.author.key)}"
+							class="img-rounded img-responsive media-object pull-left" />
+					</a>
+						<div class="media-body">
+							<h4 class="media-heading">#{docWorkspaceDocumentDetailView.getCommentAuthorFullName(documentComment.comment.author.key)}</h4>
+							<p>
+								<small>#{docWorkspaceDocumentDetailView.ago(documentComment.comment.date)}</small>
+							</p>
+							<p>#{documentComment.comment.content}</p>
+						</div></li>
+				</ul>
+			</ui:repeat>
+		</h:panelGrid>
+
+	</div>
+
+</ui:composition>

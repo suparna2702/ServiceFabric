@@ -1,0 +1,38 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<div class="row-fluid">
+		<div class="span12">
+			<c:if test="#{not empty orgPublicView.orgInfo.teamMembers}">
+				<ui:repeat var="teamMember"
+					value="#{orgPublicView.orgInfo.teamMembers}">
+
+					<div class="thumbnail span3" style="padding: 0">
+						<div style="padding: 4px">
+							<p:graphicImage id="businesslogo"
+								value="/spring/assets#{teamMember.photoLocation}" />
+						</div>
+						<div class="caption">
+							<c:if test="#{teamMember.firstName != 'null'}">
+								<h4>#{teamMember.firstName} #{teamMember.lastName}</h4>
+							</c:if>
+							<c:if test="#{teamMember.title != 'null'}">
+								<p>
+									<small>#{teamMember.title}</small>
+								</p>
+							</c:if>
+
+						</div>
+					</div>
+					<!-- end panel -->
+
+				</ui:repeat>
+			</c:if>
+		</div>
+	</div>
+
+</ui:composition>

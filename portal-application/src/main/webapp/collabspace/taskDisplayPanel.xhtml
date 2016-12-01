@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui">
+
+              <p:panel styleClass="buttomBorder">
+				<h:panelGrid>
+					<h:outputText value="#{task.taskData.key.name}" style="font-weight:bold"/>
+					<h:outputText value="#{task.taskData.description}" />
+					<h:panelGrid columns="2">
+		                 <p:commandLink style="margin-top:5px" action="#{workspaceTaskView.completeTask(task)}">
+			                 <h:graphicImage library="img" name="checkIcon48.png" width="15"
+				                height="15" title="Completed" 
+				                styleClass="toolBarElement"/>
+		                 </p:commandLink>
+		
+		                 <p:commandLink style="margin-right:5px" action="#{workspaceTaskView.cancelTask(task)}">
+			                 <h:graphicImage library="img" name="cancel48.png" width="15"
+				                height="15" title="Cancel the task" styleClass="toolBarElement"/>
+		                 </p:commandLink>
+	                 </h:panelGrid>
+				</h:panelGrid>
+				
+				<h:panelGrid columns="1" id="selectedCommentGrid" style="width:100%;">
+				   <hr style="height:1px;background-color:#D4D4D4;clear:both"></hr>
+				   
+				   <p:dataGrid var="comment"
+						value="#{task.comments.commentsAndReplies}" paginator="true" rows="5"
+						columns="1" paginatorAlwaysVisible="false"
+						paginatorPosition="bottom" styleClass="ui-datagrid-no-border">
+						
+					<p:panel styleClass="buttomBorder">					    
+						<h:outputText value="#{comment.comment.content}"/>									
+					</p:panel>
+					
+				   </p:dataGrid>
+				 <hr style="height:1px;background-color:#D4D4D4;clear:both"></hr>
+				 <h:panelGroup style="width:100%;">
+				      <p:inputText value="#{workspaceTaskView.taskComment}" 
+				                   style="margin-top:5px;margin-bottom:5px;width:100%;" size="30"/>
+				      <p:commandButton value="Post" actionListener="#{workspaceTaskView.postTaskComment}"  
+				                       update="selectedCommentGrid" style="float:right;"/> 
+				 </h:panelGroup>
+			 </h:panelGrid>
+
+			</p:panel>
+			
+</ui:composition>

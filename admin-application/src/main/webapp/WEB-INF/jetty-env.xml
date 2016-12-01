@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure//EN" "http://www.eclipse.org/jetty/configure.dtd">
+<Configure class="org.eclipse.jetty.webapp.WebAppContext">
+  <New id="similan_jetty_dataSource_jndi" class="org.eclipse.jetty.plus.jndi.Resource">
+    <Arg></Arg>
+    <Arg>java:jboss/datasources/similan/deploy</Arg>
+    <Arg>
+      <New class="com.mysql.jdbc.jdbc2.optional.MysqlXADataSource">
+        <Set name="url">jdbc:mysql://localhost:3306/similan_deploy</Set>
+        <Set name="user">super</Set>
+        <Set name="password">realroot</Set>
+      </New>
+    </Arg>
+  </New>
+  <Call name="getConfiguration" class="bitronix.tm.TransactionManagerServices">
+    <Set name="serverId">jetty-btm-node0</Set>
+    <Set name="logPart1Filename">
+      target/btm/btm1.tlog
+    </Set>
+    <Set name="logPart2Filename">
+      target/btm/btm2.tlog
+    </Set>
+  </Call>
+  <New id="similan_jetty_transactionManagerLifeCycle" class="bitronix.tm.integration.jetty7.BTMLifeCycle" />
+  <New id="similan_jetty_transactionManager_jndi" class="org.eclipse.jetty.plus.jndi.Resource">
+    <Arg></Arg>
+    <Arg>java:jboss/TransactionManager</Arg>
+    <Arg>
+      <Call id="similan_jetty_transactionManager" name="getTransactionManager" class="bitronix.tm.TransactionManagerServices" />
+    </Arg>
+  </New>
+  <New id="similan_jetty_userTransaction_jndi" class="org.eclipse.jetty.plus.jndi.Resource">
+    <Arg></Arg>
+    <Arg>java:jboss/UserTransaction</Arg>
+    <Arg><Ref refid="similan_jetty_transactionManager"/></Arg>
+  </New>
+  <New id="similan_jetty_entityManagerFactory_jndi" class="org.eclipse.jetty.plus.jndi.Resource">
+    <Arg></Arg>
+    <Arg>java:module/EntityManagerFactory</Arg>
+    <Arg>
+      <Call name="createEntityManagerFactory" class="javax.persistence.Persistence">
+        <Arg>similan.admin</Arg>
+        <Arg>
+          <Map>
+            <Entry>
+              <Item>hibernate.ejb.resource_scanner</Item>
+              <Item>org.hibernate.ejb.packaging.NativeScanner</Item>
+            </Entry>
+            <Entry>
+              <Item>hibernate.transaction.manager_lookup_class</Item>
+              <Item>org.hibernate.transaction.BTMTransactionManagerLookup</Item>
+            </Entry>
+          </Map>
+        </Arg>
+      </Call>
+    </Arg>
+  </New>
+</Configure>

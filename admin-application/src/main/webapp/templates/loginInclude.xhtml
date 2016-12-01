@@ -1,0 +1,25 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<p:outputPanel id="loginPanel">
+		<h:panelGrid id="panelGridAdminLogin" styleClass="ui-widget"
+			columns="6">
+			<h:outputLabel for="loginAdminName" value="Email: *"  style="white-space: nowrap;"/>
+			<p:inputText id="loginAdminName" value="#{adminView.loginEmail}"
+				required="true" size="20" />
+			<p:tooltip for="loginAdminName"
+				value=" Userid entry for existing members" showEffect="fade"
+				hideEffect="fade" />
+			
+			<h:outputLabel for="loginPassword" value="Password: *" style="white-space: nowrap;"/>
+			<p:password id="loginPassword" value="#{adminView.loginPassword}"
+				   feedback="false" required="true" size="20" />
+			<p:commandButton value="Login" update="loginPanel" process="loginPanel"
+				action="#{adminView.login}" style="margin-left: 5px;"/>
+		</h:panelGrid>
+ 	</p:outputPanel>
+	
+</ui:composition>

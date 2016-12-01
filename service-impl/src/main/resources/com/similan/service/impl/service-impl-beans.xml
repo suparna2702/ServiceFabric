@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:task="http://www.springframework.org/schema/task"
+  xmlns:util="http://www.springframework.org/schema/util" xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/util
+		http://www.springframework.org/schema/util/spring-util-3.1.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+		http://www.springframework.org/schema/task
+		http://www.springframework.org/schema/task/spring-task-3.1.xsd">
+
+  <context:component-scan base-package="com.similan.service.impl.config" />
+
+  <import resource="classpath:/com/similan/service/impl/service-impl-document-viewers.xml" />
+  <import resource="classpath:/com/similan/service/impl/service-impl-event-processors.xml" />
+
+  <util:map id="wallEntryMarshallers" key-type="com.similan.service.api.wall.dto.basic.WallEntryType" value-type="com.similan.service.impl.wall.WallEntryMarshaller">
+    <entry key="COMMENT_POSTED" value-ref="commentPostedEntryMarshaller" />
+    <entry key="COMMENT_REPLY_POSTED" value-ref="commentReplyPostedEntryMarshaller" />
+    <entry key="WALL_POST" value-ref="wallPostMarshaller" />
+    <entry key="COLLABORATION_WORKSPACE_DOCUMENT_EXTERNAL_SHARED" value-ref="collaborationWorkspaceExternalSharedWallEntryMarshaller" />
+    <entry key="COLLABORATION_WORKSPACE_DOCUMENT_SHARED" value-ref="documentSharedWallEntryMarshaller" />
+    <entry key="COLLABORATION_WORKSPACE_DOCUMENT_UNSHARED" value-ref="documentUnsharedWallEntryMarshaller" />
+    <entry key="COLLABORATION_WORKSPACE_DOCUMENT_DOWNLOADED" value-ref="documentDownloadedWallEntryMarshaller" />
+    <entry key="COLLABORATION_WORKSPACE_DOCUMENT_VIEWED" value-ref="documentViewedWallEntryMarshaller" />
+    <entry key="COLLABORATION_WORKSPACE_DOCUMENT_COMMENT" value-ref="documentCommentWallEntryMarshaller" />
+    <entry key="COLLABORATION_WORKSPACE_DOCUMENT_UPDATED" value-ref="documentUpdateWallEntryMarshaller" />
+    <entry key="COLLABORATION_WORKSPACE_DOCUMENT_SHARED_ANOTHER_WORKSPACE" value-ref="documentSharedWithOtherWorkspaceWallEntryMarshaller" />
+    <entry key="COLLABORATION_WORKSPACE_PARTICIPANT_JOINED" value-ref="participantJoinedWallEntryMarshaller" />
+    <entry key="COLLABORATION_WORKSPACE_TASK_CREATED" value-ref="taskCreatedWallEntryMarshaller" />
+    <entry key="COLLABORATION_WORKSPACE_ACCESSED" value-ref="collaborationWorkspaceAccessedWallEntryMarshaller" />
+    <entry key="NEWS_POST_WALL_ENTRY" value-ref="newsPostWallEntryMarshaller" />
+    <entry key="CONTENT_WORKSPACE_DOCUMENT_UPDATED" value-ref="contentWorkspaceDocumentUpdateWallEntryMarshaller" />
+    <entry key="CONTENT_WORKSPACE_DOCUMENT_INNETWORK_SHARED" value-ref="contentWorkspaceDocumentInNetworkSharedWallEntryMarshaller" />
+    <entry key="CONTENT_WORKSPACE_DOCUMENT_CHECKOUT" value-ref="contentWorkspaceDocumentCheckOutWallEntryMarshaller" />
+    <entry key="CONTENT_WORKSPACE_DOCUMENT_CHECKIN" value-ref="contentWorkspaceDocumentCheckInWallEntryMarshaller" />
+    <entry key="CONTENT_WORKSPACE_DOCUMENT_DOWNLOADED" value-ref="contentWorkspaceDocumentDownloadedWallEntryMarshaller" />
+    <entry key="CONTENT_WORKSPACE_DOCUMENT_UPLOADED" value-ref="contentWorkspaceDocumentUploadedWallEntryMarshaller" />
+    <entry key="CONTENT_WORKSPACE_DOCUMENT_VIEWED" value-ref="contentWorkspaceDocumentViewedWallEntryMarshaller" />
+    <entry key="CONTENT_WORKSPACE_DOCUMENT_COMMENT" value-ref="contentWorkspaceDocumentCommentWallEntryMarshaller" />
+    <entry key="MEMBER_PROFILE_VIEWED" value-ref="socialActorProfileWallEntryMarshaller" />
+    <entry key="MEMBER_PROFILE_UPDATED" value-ref="socialActorProfileWallEntryMarshaller" />
+    <entry key="BUSINESS_PROFILE_VIEWED" value-ref="socialActorProfileWallEntryMarshaller" />
+    <entry key="BUSINESS_PROFILE_UPDATED" value-ref="socialActorProfileWallEntryMarshaller" />
+    <entry key="PARTNER_JOINED" value-ref="partnerProgramJoinWallEntryMarshaller" />
+    <entry key="DISPLAY_NOTICE_VIEWED" value-ref="displayNoticeViewedWallEntryMarshaller" />
+  </util:map>
+
+  <util:map id="documentTextExtractors" key-type="com.similan.service.api.asset.dto.basic.AssetType" value-type="com.similan.service.impl.document.extractor.DocumentTextExtractor">
+    <entry key="UNKNOWN" value-ref="tikaDocumentTextExtractor" />
+  </util:map>
+
+  <util:map id="documentIconGenerators" key-type="com.similan.service.api.asset.dto.basic.AssetType" value-type="com.similan.service.impl.document.icon.DocumentIconGenerator">
+    <entry key="UNKNOWN" value-ref="awtIconExtractor" />
+  </util:map>
+
+  <util:map id="wallRetrievers" key-type="com.similan.service.api.base.dto.key.EntityType" value-type="com.similan.service.internal.impl.wall.WallRetriever">
+    <entry key="WALL_ENTRY" value-ref="wallEntryWallContainerRetriever" />
+    <entry key="SHARED_DOCUMENT" value-ref="collaborationWorkspaceElementWallContainerRetriever" />
+    <entry key="TASK" value-ref="collaborationWorkspaceElementWallContainerRetriever" />
+  </util:map>
+
+  <util:map id="wallConsumerEvaluators" key-type="com.similan.service.api.base.dto.key.EntityType" value-type="com.similan.service.internal.impl.wall.ConsumerEvaluator">
+    <entry key="SOCIAL_ACTOR" value-ref="actorConsumerEvaluator" />
+    <entry key="COLLABORATION_WORKSPACE" value-ref="collaborationWorkspaceConsumerEvaluator" />
+    <entry key="MANAGEMENT_WORKSPACE" value-ref="contentWorkspaceConsumerEvaluator" />
+  </util:map>
+</beans>

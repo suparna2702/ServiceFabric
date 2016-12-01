@@ -1,0 +1,151 @@
+@CHARSET "UTF-8";
+
+.old-content .subGroupList .ui-widget-content {
+  border: none;
+}
+
+.old-content .subGroupList ul,
+.old-content ol {
+  list-style: none outside none;
+  font-weight: normal;
+  overflow-y: auto;
+  padding: 0;
+}
+
+.old-content .contactListTableRepeater {
+  width: 100%;
+  top: 26px;
+  position: relative;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 423px;
+}
+
+.old-content .contactListTable table thead tr th {
+  background: transparent;
+  border: 1px solid transparent;
+}
+
+.old-content .contactListTable table tbody tr td {
+  background: transparent;
+  border: 1px solid transparent;
+}
+
+.old-content .groupsPanel {
+  width: 199px;
+  float: left;
+  border-right: 1px solid #6666FF;
+  height: 100%;
+}
+
+.old-content .contactListPanel {
+  width: 300px;
+  min-width: 300px;
+  max-width: 300px;
+  height: 450px;
+  float: left;
+}
+
+.old-content .detailPanel {
+  width: 290px;
+  min-width: 290px;
+  max-width: 290px;
+  float: left;
+}
+
+.old-content .subGroupTitle {
+  background: transparent !important;
+}
+
+.old-content .groupPanel .ui-state-hover {
+  box-shadow: 0 1px 0 #FFFFFF inset;
+}
+
+.old-content .charGroupRow {
+  background: transparent !important;
+}
+
+.old-content .contactCount {
+  font-size: 10px;
+  color: #FA8258;
+  position: relative;
+  top: -9px;
+}
+
+.old-content .contactInfo {
+  font-size: 13px;
+}
+
+.old-content .contactPanel {
+  border: 1px solid #BED6F8;
+  border-collapse: collapse;
+  height: 450px;
+  width: 790px;
+  max-height: 450px;
+}
+
+.old-content .contactDetailPanelGrid {
+  width: 100%;
+  border: 0 none;
+  border-collapse: separate !important;
+}
+
+.old-content .contactDetailPanelGrid tbody tr td {
+  border: 0 none;
+}
+
+.old-content .contactPhotoColumn {
+  v-align: middle;
+  text-align: center;
+}
+
+.old-content .charListPanel {
+  position: absolute;
+  text-align: right;
+  width: 280px;
+  min-width: 280px;
+  max-width: 280px;
+}
+
+.old-content .allTagsPanel {
+  border: 1px solid #BED6F8;
+  padding: 10px 0 0 15px;
+}
+
+.old-content .allTags div.ui-datalist-content {
+  border: 0;
+}
+
+.old-content .allTags div.ui-datalist-content ul {
+  list-style: none outside none;
+  height: 200px;
+  line-height: 1.5;
+  margin: 5px 0 0 0;
+  overflow-y: auto;
+  padding-left: 25px;
+}
+
+.old-content .allTags div.ui-datalist-content ul li {
+  float: left;
+  margin-right: 5px;
+  overflow: hidden;
+  padding-left: 1px;
+  width: 150px;
+  vertical-align: baseline;
+}
+
+.old-content a.lnkDeleteTag {
+  text-decoration: none;
+}
+
+.old-content a.lnkDeleteTag:hover {
+  text-decoration: line-through;
+}
+
+.old-content .lnkTagManage {
+  text-align: right;
+}
+
+.old-content .tagsAccordionHeader {
+  position: absolute;
+}

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+                           http://www.springframework.org/schema/util 
+                           http://www.springframework.org/schema/util/spring-util-3.1.xsd">
+
+  <bean id="sendSuccessfullPasswordChangeNotificationAction" class="com.similan.process.action.SendEmailAction">
+    <property name="templateName" value="passwordChangeNotificationConfirmation.vm" />
+  </bean>
+
+  <bean id="validatePasswordChangeDecision" class="com.similan.process.action.DecisionStateAction">
+    <property name="decisionMap">
+      <map>
+        <entry key="valid" value="to_Send_PasswordChange_Notification_Email" />
+        <entry key="inValid" value="to_PasswordChange_ValidationError" />
+      </map>
+    </property>
+  </bean>
+
+  <bean id="sendValidationEmailToNewAddressAction" class="com.similan.process.action.SendEmailAction">
+    <property name="templateName" value="sendValidationEmailToNewAddress.vm" />
+    <property name="toEmailContextVar" value="memberChangeNewEmail" />
+  </bean>
+
+  <bean id="emailValidationErrorToOldAddressAction" class="com.similan.process.action.SendEmailAction">
+    <property name="templateName" value="emailValidationErrorToOldAddressTemplate.vm" />
+  </bean>
+
+  <bean id="emailChangeNotificationToOldAddressAction" class="com.similan.process.action.SendEmailAction">
+    <property name="templateName" value="emailChangeNotificationToOldAddressEmailTemplate.vm" />
+    <property name="toEmailContextVar" value="memberOldEmail" />
+  </bean>
+
+  <bean id="emailValidationSuccessToNewEmailAction" class="com.similan.process.action.SendEmailAction">
+    <property name="templateName" value="emailValidationSuccessToNewEmailTemplate.vm" />
+    <property name="toEmailContextVar" value="memberChangeNewEmail" />
+  </bean>
+
+  <bean id="decisionValidateEmailChange" class="com.similan.process.action.DecisionStateAction">
+    <property name="decisionMap">
+      <map>
+        <entry key="valid" value="to_Send_Validation_Email_To_New_Address" />
+        <entry key="inValid" value="to_Send_Error_To_Old_EmailAddress" />
+      </map>
+    </property>
+  </bean>
+
+  <bean id="decisionNewEmailUrlValidationDecision" class="com.similan.process.action.DecisionStateAction">
+    <property name="decisionMap">
+      <map>
+        <entry key="valid" value="to_Send_Validation_Success_Email_To_NewEmail" />
+        <entry key="inValid" value="to_Email_Change_Notification_Validation_Err" />
+      </map>
+    </property>
+  </bean>
+
+  <bean id="newChangeEmailUrlValidationAction" class="com.similan.process.action.ChangeEmailUrlValidationAction">
+  </bean>
+
+  <bean id="emailChangeInputValidationAction" class="com.similan.process.action.EmailChangeInputValidationAction">
+  </bean>
+
+  <!-- Forgot Password work flow -->
+
+  <bean id="forgotPasswordInitiateAction" class="com.similan.process.action.ForgotPasswordInitiateAction">
+  </bean>
+
+  <bean id="sendForgotPasswordEmailAction" class="com.similan.process.action.SendEmailAction">
+    <property name="templateName" value="forgotPassword.vm" />
+  </bean>
+
+  <bean id="forgottenPasswordChangeInputValidationAction" class="com.similan.process.action.ForgottenPasswordChangeInputValidationAction">
+  </bean>
+
+  <bean id="sendForgotPasswordChangedAction" class="com.similan.process.action.SendEmailAction">
+    <property name="templateName" value="passwordChangeNotificationConfirmation.vm" />
+  </bean>
+</beans>                           

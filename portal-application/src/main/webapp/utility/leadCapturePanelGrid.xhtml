@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<h:panelGrid columns="2">
+	       <h:outputLabel for="leadCaptureName" 
+		                  style="margin-bottom:10px; margin-right:5px"  value="Name "/>
+		   <p:inputText id="leadCaptureName" 
+		                value="#{leadCaptureContactView.captureWizzard.leadName}" 
+		                style="margin-bottom:10px; margin-right:5px" size="30"/>
+		                
+		   <h:outputLabel for="leadCaptureEmail" 
+		                  style="margin-bottom:10px; margin-right:5px"  value="Email "/>
+		   <p:inputText id="leadCaptureEmail" 
+		                value="#{leadCaptureContactView.captureWizzard.leadEmailAddress}" 
+		                style="margin-bottom:10px; margin-right:5px" size="30"/>
+		                
+		   <h:outputLabel for="leadCapturePhone" 
+		                  style="margin-bottom:10px; margin-right:5px"  value="Phone "/>
+		   <p:inputText id="leadCapturePhone" 
+		                value="#{leadCaptureContactView.captureWizzard.phoneNumber}" 
+		                style="margin-bottom:10px; margin-right:5px" size="30"/>
+		                
+		   <h:outputLabel for="leadCaptureCompany" 
+		                  style="margin-bottom:10px; margin-right:5px"  value="Company "/>
+		   <p:inputText id="leadCaptureCompany" 
+		                value="#{leadCaptureContactView.captureWizzard.company}" 
+		                style="margin-bottom:10px; margin-right:5px" size="30"/>
+		                
+		   <h:outputLabel for="leadCaptureAddComments" 
+		                  style="margin-bottom:10px; margin-right:5px"  value="Comment "/>
+		   <p:inputTextarea id="leadCaptureAddComments" 
+		                value="#{leadCaptureContactView.captureWizzard.additionalComments}" 
+		                style="margin-bottom:10px; margin-right:5px" rows="3" cols="30"/>
+	    </h:panelGrid>
+	    <p:separator />
+	    
+		<p:dataGrid id="leadCaptureQuestionDataTable" var="question"
+						value="#{leadCaptureContactView.captureWizzard.questions}"
+						columns="1"	styleClass="ui-datagrid-no-border">
+	
+	         <p:panel id="leadWizzardQuestionItemPanel" styleClass="buttomBorder">
+			    <ui:include src="/utility/leadWizzardQuestionResponseMultiChoice.xhtml" />
+			    <ui:include src="/utility/leadWizzardQuestionResponseSingleChoice.xhtml" />
+			    <ui:include src="/utility/leadWizzardQuestionResponseTextInput.xhtml" />
+	         </p:panel>
+				
+	     </p:dataGrid>
+	
+</ui:composition>

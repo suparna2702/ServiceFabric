@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:composite="http://java.sun.com/jsf/composite/composites"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/basemenulayout.xhtml">
+
+	<ui:define name="title">News Feed</ui:define>
+	<ui:define name="centerContent">
+	
+	<p:outputPanel id="newsFeedOutputPanel" layout="block">
+	   
+	   <p:panel id="newsFeedPanel" style="background:rgb(252,244,254)">
+	   
+	      <h:panelGrid columns="2">
+		      <h:outputLabel for="subject" value="Header "/>
+		      <h:outputText id="subject" style="margin-bottom:5px" 
+		                                value="#{newsFeedLikeDislikeView.newsFeed.newsItem.header}" size="43"/>
+		      
+		      <h:outputLabel for="category" value="Category "/>
+		      <h:outputText id="category" style="margin-bottom:5px" 
+		                                value="#{newsFeedLikeDislikeView.newsFeed.newsItem.categoryTag}" size="43"/>
+		      
+		      <h:outputLabel for="content" value="Content "/>
+		      <h:outputText id="content" escape="false" style="margin-bottom:5px;margin-top:5px"  
+		                             value="#{newsFeedLikeDislikeView.newsFeed.newsItem.newsDescription}" /> 
+	      </h:panelGrid>
+	   </p:panel>
+	   <p:spacer height="10" />	   				   
+       
+       <h4>Like</h4>	   
+       <p:dataTable id="newsItemLikeTable" rendered="#{!empty newsFeedLikeDislikeView.likeActors}" var="likeActorItem" 
+                         value="#{newsFeedLikeDislikeView.likeActors}" 
+                                     rows="10" paginator="true" paginatorAlwaysVisible="false" 
+                                     paginatorPosition="bottom" styleClass="hide-column-names">
+                                       
+           <p:column headerText="Image" styleClass="buttomBorder">  
+               <p:graphicImage value="/spring/assets#{likeActorItem.photoLocation}" width="50" height="50"/>  
+           </p:column>  
+
+           <p:column headerText="Name" styleClass="buttomBorder">  
+              <h:outputText value="#{likeActorItem.firstName}   #{likeActorItem.lastName}" />  
+           </p:column>  
+
+       </p:dataTable>
+	   <p:spacer height="10" />	   				   
+       <h4>Dislike</h4>
+       <p:dataTable id="newsItemDisLikeTable" rendered="#{!empty newsFeedLikeDislikeView.dislikeActors}" var="disLikeActorItem" 
+                         value="#{newsFeedLikeDislikeView.dislikeActors}" 
+                            rows="10" paginator="true" paginatorAlwaysVisible="false" 
+                            paginatorPosition="bottom" styleClass="hide-column-names">
+                                       
+          <p:column headerText="Image" styleClass="buttomBorder">  
+              <p:graphicImage value="/spring/assets#{likeActorItem.photoLocation}" width="50" height="50"/>  
+          </p:column>  
+
+          <p:column headerText="Name" styleClass="buttomBorder">  
+             <h:outputText value="#{likeActorItem.firstName}   #{likeActorItem.lastName}" />  
+          </p:column>  
+
+       </p:dataTable>
+	   
+       </p:outputPanel>
+    </ui:define>
+    
+    <ui:define name="leftNavigationBar">
+		<ui:include src="/component/leftNavigationBar.xhtml" />
+	</ui:define>
+</ui:composition>

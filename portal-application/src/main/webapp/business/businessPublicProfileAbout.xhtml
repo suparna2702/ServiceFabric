@@ -1,0 +1,91 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<!-- Description -->
+	<c:if test="#{orgPublicView.orgInfo.businessDescription != 'null'}">
+		<p>#{orgPublicView.orgInfo.businessDescription}</p>
+	</c:if>
+
+	<!-- Map -->
+	<div class="divider"></div>
+	<div class="row-fluid">
+		<div class="span9">
+
+			<!-- List of addresses -->
+			<div class="span3">
+				<table class="table table-striped">
+					<ui:repeat var="location"
+						value="#{orgPublicView.orgInfo.locations}">
+
+						<tr>
+							<h:panelGrid id="orgLocationsPanelGrid" style="width:100%;"
+								onmouseover="showSearchResultInfoWindowReduced(googleMap.getMap(), '#{location.latitude}', '#{location.longitude}', '#{orgPublicView.orgInfo.businessName}', '#{location.name}','#{location.street}', '#{location.city}', '#{location.state}', '#{location.zipCode}', '#{location.country}', '#{location.contactNumber}', '', '', '#{orgPublicView.orgInfo.homePageUrl}');">
+
+								<c:if test="#{location.name != 'null'}">
+									<p>
+										<b>#{location.name}</b>
+									</p>
+								</c:if>
+
+								<p>
+									<small>#{location.street}</small>
+								</p>
+								<p>
+									<small>#{location.city}, #{location.state},
+										#{location.zipCode}, #{location.country}</small>
+								</p>
+
+							</h:panelGrid>
+						</tr>
+
+					</ui:repeat>
+				</table>
+			</div>
+			<!-- List of addresses -->
+
+			<!-- Google Map -->
+			<div class="span6">
+				<p:gmap zoom="12" type="ROADMAP"
+					center="#{orgPublicView.mapCenterLat}, #{orgPublicView.mapCenterLong}"
+					style="width:500px;height:350px" mapTypeControl="true"
+					navigationControl="true" model="#{orgPublicView.simpleModel}"
+					widgetVar="googleMap"
+					rendered="#{orgPublicView.orgInfo.locations.size() eq 1}">
+					<p:ajax event="overlaySelect"
+						listener="#{orgPublicView.onMarkerSelect}" />
+					<p:gmapInfoWindow>
+						<p:outputPanel style="text-align:left;display:block;margin:auto">
+							<h:outputText value="#{orgPublicView.orgInfo.businessName}"
+								styleClass="h2" />
+							<br />
+							<h:outputText value="#{orgPublicView.selectMarker.data.name}" />
+						</p:outputPanel>
+					</p:gmapInfoWindow>
+				</p:gmap>
+
+				<p:gmap type="ROADMAP" style="width:600px;height:400px"
+					fitBounds="true" mapTypeControl="true" navigationControl="true"
+					model="#{orgPublicView.simpleModel}" widgetVar="googleMap"
+					rendered="#{orgPublicView.orgInfo.locations.size() > 1}">
+					<p:ajax event="overlaySelect"
+						listener="#{orgPublicView.onMarkerSelect}" />
+					<p:gmapInfoWindow>
+						<p:outputPanel style="text-align:left;display:block;margin:auto">
+							<h:outputText value="#{orgPublicView.orgInfo.businessName}"
+								styleClass="h2" />
+							<br />
+							<h:outputText value="#{orgPublicView.selectMarker.data.name}" />
+						</p:outputPanel>
+					</p:gmapInfoWindow>
+				</p:gmap>
+			</div>
+			<!-- End of Google Map -->
+
+		</div>
+		<!-- end span9 -->
+	</div>
+</ui:composition>

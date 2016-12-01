@@ -1,0 +1,86 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<p:outputPanel>
+		<p:panel id="businessCommentWall" style="border-style: hidden;">
+		    <p:panel id="businessCommentInput" style="border-style: hidden;">
+	           <p:inputTextarea rows="6" cols="50" value="#{orgPublicView.commentShare.comment}" 
+	                                            style="margin-bottom:20px;margin-top:20px"/>
+	           <br></br>
+	           <p:rating value="#{orgPublicView.commentShare.rating}" />
+	           <p:spacer width="10" height="30" />
+	           <br></br>
+	           <p:commandButton value="Submit" id="commentSubmit" action="#{orgPublicView.commentSubmit}" 
+	                            process="@this businessCommentInput" 
+	                            update="businessCommentPanel"
+	                            style="margin-top:10px;margin-bottom:10px"/>
+	        </p:panel>
+	        <p:separator />
+   
+	        <p:spacer height="10" />
+		    <p:dataGrid id="businessCommentPanel" var="reviewComment" value="#{orgPublicView.commentThread.commentStream}" columns="1"
+				paginator="false" styleClass="ui-datagrid-no-border" >
+							
+					  <p:panel id="businessCommentPanel" header="#{reviewComment.reviewer.reviewerName}" toggleable="true" style="border-style: hidden">
+					     <h:panelGrid cellpadding="10" columns="2" styleClass="ui-datagrid-no-border">
+					         <h:outputLink value="#{root}/member/memberPublicProfile.xhtml?mid=#{reviewComment.reviewer.reviewerId}">
+					 		     <p:graphicImage id="commentMemberId" 
+								               value="/spring/assets#{reviewComment.reviewer.reviewerIcon}" 
+								               width="40" height="40"/>
+		                     </h:outputLink>					         
+					         <h:panelGroup>
+					            <h:outputText value="#{reviewComment.commentInfo.comment}" />
+					            <p:spacer height="20" />
+							    <br></br>
+					            <h:outputText value="Date: #{reviewComment.commentInfo.reviewDate}"/>
+					            <p:spacer height="30" />
+					            <br></br>
+					            <p:rating value="#{reviewComment.commentInfo.rating}" readonly="true" />
+					         </h:panelGroup>
+					     </h:panelGrid>
+					     <p:spacer width="10" height="10" />
+					     <p:toolbar style="border:hidden; background: none; width:110px">
+					        <p:toolbarGroup align="left" style="border:hidden;">
+					        
+					           <h:commandLink id="commentLike" actionListener="#{orgPublicView.reviewLike(reviewComment.reviewId)}" 
+					               style="margin-right:15px">
+									<f:ajax execute="@this" />
+									<p:graphicImage id="commentLikeImg"
+										value="/images/monoicons/likeIcon16.png" styleClass="toolBarElement"/>
+				               </h:commandLink>
+					           <p:tooltip for="commentLike" value="Like this comment" 
+		                                  showEffect="fade" hideEffect="fade" />
+				               
+					           <h:commandLink id="shareComment" style="margin-right:15px">
+									<f:ajax execute="@this" />
+									<p:graphicImage id="shareCommentImg"
+										value="/images/monoicons/shareIcon16.png" styleClass="toolBarElement"/>
+				               </h:commandLink>
+					           <p:tooltip for="shareComment" value="Share this comment" 
+		                                  showEffect="fade" hideEffect="fade" />
+		                                  
+					           <h:commandLink id="flagComment" style="margin-right:10px">
+									<f:ajax execute="@this" />
+									<p:graphicImage id="flagCommentImg"
+										value="/images/monoicons/flagIcon16.png" styleClass="toolBarElement"/>
+				               </h:commandLink>
+					           <p:tooltip for="flagComment" value="Flag this comment" 
+		                                  showEffect="fade" hideEffect="fade" />
+		                                  
+					        </p:toolbarGroup>
+					     </p:toolbar>
+	                     <ui:include src="commentReplySubmit.xhtml" />
+					 </p:panel>
+			</p:dataGrid>
+	    </p:panel>
+	    
+	    <p:commandButton id="moreComments" value="More"
+		                 action="#{orgView.moreComments}" process="@this businessCommentWall" 
+		                              update="businessCommentWall" style="margin-top:10px"/>
+	</p:outputPanel>
+	
+</ui:composition>

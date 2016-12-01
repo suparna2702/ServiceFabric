@@ -1,0 +1,208 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/basemenulayout.xhtml">
+
+	<ui:param name="newContent" value="true" />
+	<ui:param name="skipToolbar" value="true" />
+	<ui:define name="title">Content Workspaces</ui:define>
+	<ui:define name="centerContent">
+
+		<div class="old-content">
+			<div class="row-fluid">
+				<div class="span12">
+					<h:form id="form" prependId="false" enctype="multipart/form-data">
+						<p:dialog id="contentWorkspaceCreateDialog"
+							header="Create new content workspace"
+							widgetVar="contentWorkspaceCreateDlg" modal="false"
+							resizable="true" showEffect="fade" hideEffect="fade">
+
+							<p:panel id="workspaceCreatePanel" styleClass="workspacePanel"
+								style="border:none !important; font-size:9pt;">
+
+								<h:panelGrid style="border:hidden;" columns="1">
+
+									<h:inputText id="name"
+										value="#{documentWorkspaceListView.newWorkspaceName}"
+										size="45" styleClass="input-block-level span4" />
+									<p:watermark for="name" value="Name of content work space" />
+
+									<h:inputTextarea
+										value="#{documentWorkspaceListView.newWorkspaceDescription}"
+										id="description" styleClass="input-block-level span4"
+										size="45" />
+									<p:watermark for="description"
+										value="Description of content work space" />
+								</h:panelGrid>
+
+								<hr style="height: 1px; background-color: #D4D4D4; clear: both"></hr>
+								<p:commandButton id="createWorkspaceButton" value="Create"
+									oncomplete="contentWorkspaceCreateDlg.hide();"
+									action="#{documentWorkspaceListView.create}"
+									process="@this workspaceCreatePanel" update="@all" />
+
+
+							</p:panel>
+
+						</p:dialog>
+
+					</h:form>
+				</div>
+			</div>
+		</div>
+
+		<div class="row-fluid">
+			<div class="span12">
+				<div class="iconbar iconbar-horizontal">
+					<ul>
+						<li><a href="#{root}/member/memberHome.xhtml"
+							class="fui-home" rel="tooltip" data-placement="bottom"
+							title="My Network"></a></li>
+
+						<c:if
+							test="#{sec:areAnyGranted('ROLE_BUSINESS') and sec:areAnyGranted('MANAGEMENT_WORKSPACE_ADMIN')}">
+							<li><a href="#"
+								onclick="contentWorkspaceCreateDlg.show();return false;"
+								class="fui-plus" rel="tooltip" data-placement="bottom"
+								title="Create Content Workspace"></a></li>
+
+						</c:if>
+
+						<li><a
+							href="#{root}/help/contentspace/contentSpaceDetailHelp.xhtml"
+							class="fui-question" rel="tooltip" data-placement="bottom"
+							title="Content Workspace Help"></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<c:if test="#{empty documentWorkspaceListView.workspaceList}">
+			<div class="row-fluid well">
+				<div class="span12">
+					<p>No Content Workspace Defined</p>
+				</div>
+			</div>
+		</c:if>
+
+		<div class="row-fluid control-group">
+			<div class="span12">
+				<ui:repeat var="workspace"
+					value="#{documentWorkspaceListView.workspaceList}">
+
+					<div class="row-fluid well">
+						<div class="span12">
+							<div class="row-fluid control-group">
+
+								<div class="span2">
+									<h:outputLink
+										value="#{root}/docspace/contentWorkspaceDetails.xhtml">
+										<f:param name="msname" value="#{workspace.key.name}" />
+										<h3>#{workspace.key.name}</h3>
+									</h:outputLink>
+								</div>
+
+								<div class="span5">
+									<p>#{workspace.description}</p>
+									<br></br> <br></br>
+									<h:outputText value="#{workspace.creationDate}">
+										<f:convertDateTime pattern="MM/dd/yyyy" />
+									</h:outputText>
+									<div class="btn-toolbar">
+										<div class="btn-group">
+
+											<!-- View -->
+											<a
+												href="#{documentWorkspaceListView.managementWorkspaceView('docspace/contentWorkspaceDetails.xhtml',workspace.key)}"
+												class="btn btn-small btn-info" rel="tooltip"
+												title="View Workspace"> <i class="fui-eye"></i> View
+											</a>
+
+											<!-- Upload Local Drive -->
+											<a
+												href="#{documentWorkspaceListView.managementWorkspaceView('docspace/upload/localDriveFileImportView.xhtml', workspace.key)}"
+												class="btn btn-small btn-inverse" rel="tooltip"
+												title="Upload Content from Local Drive"> <i
+												class="fa fa-cloud-upload fa-lg"></i> Local File
+											</a>
+
+											<!-- Upload from YouTube -->
+											<a
+												href="#{documentWorkspaceListView.managementWorkspaceView('docspace/upload/youTubeContentImportView.xhtml', workspace.key)}"
+												class="btn btn-small btn-info" rel="tooltip"
+												title="Upload Content from YouTube"> <i
+												class="fa fa-youtube fa-lg"></i> YouTube Video
+											</a>
+
+											<!-- Upload from Google Drive -->
+											<a
+												href="#{documentWorkspaceListView.managementWorkspaceView('docspace/upload/googleDriveFileImportView.xhtml', workspace.key)}"
+												class="btn btn-small btn-inverse" rel="tooltip"
+												title="Upload Content from Google Drive"> <i
+												class="fa fa-google fa-lg"></i> Google Drive
+											</a>
+
+											<!-- Upload from Drop Box Drive 
+											<a
+												href="#{documentWorkspaceListView.managementWorkspaceView('docspace/upload/dropBoxFileImportView.xhtml', workspace.key)}"
+												class="btn btn-small btn-info" rel="tooltip"
+												title="Upload Content from Drop Box"> <i
+												class="fa fa-dropbox fa-lg"></i> Drop Box
+											</a>
+                                            -->
+
+										</div>
+									</div>
+								</div>
+
+								<div class="span5">
+									<blockquote>
+										<p>
+											<i class="fui-eye muted" rel="tooltip"
+												title="Document View Count"></i>
+											#{documentWorkspaceListView.getManagementSpaceService().getStatistics(workspace.key).getDocumentViewedCount()}<br></br>
+
+											<!-- Document Viewed -->
+											<i class="fa fa-cloud-download muted" rel="tooltip"
+												title="Document Download Count"></i>
+											#{documentWorkspaceListView.getManagementSpaceService().getStatistics(workspace.key).getDocumentDownloadCount()}
+											<br></br> <i class="fui-document muted" rel="tooltip"
+												title="Document Count"></i>
+											#{documentWorkspaceListView.getManagementSpaceService().getStatistics(workspace.key).getDocumentCount()}
+											<br></br>
+
+											<!-- Workspace Accessed -->
+											<i class="fui-user muted" rel="tooltip"
+												title="Participant Count"></i>
+											#{documentWorkspaceListView.getManagementSpaceService().getStatistics(workspace.key).getParticipantCount()}
+											<!-- Share count -->
+										</p>
+									</blockquote>
+								</div>
+
+							</div>
+						</div>
+					</div>
+
+				</ui:repeat>
+			</div>
+		</div>
+
+		<script language="javascript">
+			$(document).ready(function() {
+				$("[rel='tooltip']").tooltip();
+				$("[rel='popover']").popover({
+					'trigger' : 'hover',
+					'html' : true
+				});
+			})
+		</script>
+
+
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+                           http://www.springframework.org/schema/util 
+                             http://www.springframework.org/schema/util/spring-util-3.1.xsd">
+
+  <bean id="partnerInfoValidateDecision" class="com.similan.process.action.DecisionStateAction">
+    <property name="decisionMap">
+      <map>
+        <entry key="newPartner" value="to_Send_New_Partner_Info_Complete_Email" />
+        <entry key="inValid" value="to_Partner_Info_Validation_Err" />
+      </map>
+    </property>
+  </bean>
+
+  <bean id="sendPartnerInfoCompleteEmailAction" class="com.similan.process.action.SendEmailAction">
+    <property name="templateName" value="emailNewPartnerInfoInputEmailTemplate.vm" />
+  </bean>
+
+  <bean id="sendPartnerConnectionApprovalStatusEmail" class="com.similan.process.action.SendEmailAction">
+    <property name="templateName" value="emailPartnerConnectionApprovalStatusEmailTemplate.vm" />
+  </bean>
+
+  <bean id="sendPartnerWelcomeEmailAction" class="com.similan.process.action.SendEmailAction">
+    <property name="templateName" value="sendPartnerWelcomeEmailTemplate.vm" />
+  </bean>
+
+  <bean id="newPartnerInfoValidateDecision" class="com.similan.process.action.DecisionStateAction">
+    <property name="decisionMap">
+      <map>
+        <entry key="valid" value="to_Send_Partner_Connection_Approval_Status_Email" />
+        <entry key="inValid" value="to_New_Partner_Info_Validation_Error" />
+      </map>
+    </property>
+  </bean>
+</beans>

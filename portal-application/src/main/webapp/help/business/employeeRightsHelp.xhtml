@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/basemenulayout.xhtml">
+
+	<ui:param name="newContent" value="true" />
+	<ui:param name="skipToolbar" value="true" />
+
+	<ui:define name="title">Employee Rights Management</ui:define>
+	<ui:define name="centerContent">
+
+		<div class="row-fluid">
+			<div class="span12">
+				<div class="iconbar iconbar-horizontal">
+					<ul>
+						<li><a href="#{root}/member/memberHome.xhtml"
+							class="fui-home" rel="tooltip" data-placement="bottom"
+							title="My Network"></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<!-- Actual Help Content -->
+		<div class="row-fluid">
+			<div class="span12 well">
+				<p class="lead">
+					Employee Rights grants permission to perform the activities defined
+					a specific right or role. The rights and associated permissions are
+					described below. <font color="red"><i>The employee who
+							creates the Business Profile is the defacto Business
+							Administrator (BA). The BA has the authority to assign
+							administrators specific each function allowed by the Business
+							membership level shown previously.</i></font>
+				</p>
+
+				<p>
+					<i class="fui-radio-unchecked mrm"></i><b><font color="red"><i>Rights
+								Administration Menu </i></font> Members who have been invited as employees
+						will also be listed so the BA may choose alternative
+						administrators for each function.</b>
+				</p>
+
+			</div>
+		</div>
+
+		<div class="row-fluid">
+			<div class="span12">
+				<img src="#{root}/images/help/account/RightsAdminPage.png" />
+			</div>
+		</div>
+
+		<script language="javascript">
+			$(document).ready(function() {
+				$("[rel='tooltip']").tooltip();
+				$("[rel='popover']").popover({
+					'trigger' : 'hover',
+					'html' : true
+				});
+			})
+		</script>
+	</ui:define>
+</ui:composition>

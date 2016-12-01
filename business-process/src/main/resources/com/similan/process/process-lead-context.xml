@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/util 
+                           http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+
+  <bean id="sendTransferApprovalEmailAction" class="com.similan.process.action.SendEmailAction">
+    <property name="templateName" value="transferApprovalRequestEmail.vm" />
+  </bean>
+
+  <bean id="leadTransferPartnerActionDecision" class="com.similan.process.action.DecisionStateAction">
+    <property name="decisionMap">
+      <map>
+        <entry key="approved" value="to_Lead_Transfer_Change_State_To_Approved" />
+        <entry key="rejected" value="to_Lead_Transfer_Change_State_To_Rejected" />
+      </map>
+    </property>
+  </bean>
+
+  <bean id="leadTransferChangeStateToApprovedAction" class="com.similan.process.action.lead.LeadTransferChangeStateAction">
+    <property name="transferState" value="Accepted" />
+  </bean>
+
+  <bean id="sendApprovedEmailToInitiatorAction" class="com.similan.process.action.SendEmailAction">
+    <property name="templateName" value="transferApprovedEmailToInitiatorEmail.vm" />
+  </bean>
+
+  <bean id="leadTransferChangeStateToRejectedAction" class="com.similan.process.action.lead.LeadTransferChangeStateAction">
+    <property name="transferState" value="Rejected" />
+  </bean>
+
+  <bean id="sendRejectionEmailToInitiatorAction" class="com.similan.process.action.SendEmailAction">
+    <property name="templateName" value="transferRejectedEmailToInitiatorEmail.vm" />
+  </bean>
+
+  <bean id="leadTransferBatchCompleteDecision" class="com.similan.process.action.DecisionStateAction">
+    <property name="decisionMap">
+      <map>
+        <entry key="complete" value="to_Group_End" />
+        <entry key="not_complete" value="to_Loop_Wait_For_Partner_Action" />
+      </map>
+    </property>
+  </bean>
+
+  <bean id="leadTransferProcessedDecision" class="com.similan.process.action.DecisionStateAction">
+    <property name="decisionMap">
+      <map>
+        <entry key="remind" value="to_Send_Lead_Transfer_Reminder_Email" />
+        <entry key="expired" value="to_Lead_Transfer_Expired" />
+        <entry key="complete" value="to_End_Complete" />
+      </map>
+    </property>
+  </bean>
+
+  <bean id="sendLeadTransferReminderEmailAction" class="com.similan.process.action.SendEmailAction">
+    <property name="templateName" value="transferApprovalReminderEmail.vm" />
+  </bean>
+</beans>

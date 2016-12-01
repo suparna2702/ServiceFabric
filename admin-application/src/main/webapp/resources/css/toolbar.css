@@ -1,0 +1,41 @@
+@CHARSET "UTF-8";
+
+.highlightableWrapper {
+	padding: 3px 6px;
+	width: auto;
+}
+
+.highlightableWrapperBorder {
+	
+}
+
+.highlightableElement {
+	margin: 0px 1px;
+}
+
+.borderSpaces {
+	padding: 1px;
+}
+
+.wrapperBorderRadius {
+	-webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+}
+
+.higlightedBorderRadius {
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
+.highlightedBorder {
+	border: 1px #CFC6C6 dotted;
+}
+
+.strongerHighlightedBorder {
+	-webkit-box-shadow: 0 1px 2px 1px #96817B !important;
+	-moz-box-shadow: 0 1px 2px 1px #96817B !important;
+	box-shadow: 0 1px 2px 1px #96817B !important;
+	border: 1px solid gray;
+}

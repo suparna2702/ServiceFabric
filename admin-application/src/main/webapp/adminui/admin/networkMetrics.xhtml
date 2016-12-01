@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<div class="row" style="margin-top: 5px">
+		<div class="span10">
+				<div class="row">
+				
+					<div class="span5">
+						<p:panel id="business" header="Business" style="background:rgb(251,251,231); margin-bottom: 10px">  
+						  <h:panelGrid columns="2">
+							  <h:outputText value="Total Businesses"/>
+							  <h:outputText value="#{adminView.totalBusinessCount}" style="margin-left:15px"/>
+							  <h:outputText value="Total Partner Programs"/>
+							  <h:outputText value="#{adminView.totalPartnerProgramCount}" style="margin-left:15px"/>
+							  <h:outputText value="Total Partnerships"/>
+							  <h:outputText value="#{adminView.totalPartnershipCount}" style="margin-left:15px"/>
+						  </h:panelGrid>  
+	                   </p:panel>
+					</div>
+					
+					<div class="span5">
+						<p:panel id="member" header="Member" style="background:rgb(251,251,231); margin-bottom: 10px">  
+						  <h:panelGrid columns="2">
+							  <h:outputText value="Total Members"/>
+							  <h:outputText value="#{adminView.totalMemberCount}" style="margin-left:15px"/>
+							  <h:outputText value="Active Members"/>
+							  <h:outputText value="#{adminView.totalActiveMemberCount}" style="margin-left:15px"/>
+							  <h:outputText value="Pending Members"/>
+							  <h:outputText value="#{adminView.totalPendingMemberCount}" style="margin-left:15px"/>
+							  <h:outputText value="Suspended Members"/>
+							  <h:outputText value="#{adminView.totalSuspendedMemberCount}" style="margin-left:15px"/>
+						  </h:panelGrid> 
+	                    </p:panel>  
+					</div>
+										
+				</div>
+			</div>
+		</div>
+	
+	
+</ui:composition>

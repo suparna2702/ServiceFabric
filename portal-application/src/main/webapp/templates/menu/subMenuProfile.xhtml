@@ -1,0 +1,40 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<li class="dropdown"><a href="#" class="dropdown-toggle"
+		data-toggle="dropdown">Profile <b class="caret"></b></a>
+		<ul class="dropdown-menu">
+			<li><a href="#{root}/member/memberPersonalProfileEdit.xhtml"><i
+					class="fa fa-pencil-square-o mrm"></i>Edit My Profile</a></li>
+			<li><a href="#{root}/member/memberPublicProfile.xhtml"><i
+					class="fui-user mrm"></i>My Public Profile</a></li>
+			<li class="divider"></li>
+
+			<c:if test="#{sec:areAnyGranted('BUSINESS_ADMIN')}">
+				<li><a href="#{root}/business/businessProfileEdit.xhtml"><i
+						class="fa fa-pencil-square-o mrm"></i>Edit Business Profile</a></li>
+			</c:if>
+
+			<c:if
+				test="#{sec:areAnyGranted('BUSINESS_ADMIN') and !sec:areAnyGranted('BUSINESS_STANDARD')}">
+				<li><a
+					href="#{root}/business/businessBrandingProfileEdit.xhtml"><i
+						class="fa fa-pencil-square-o mrm"></i>Edit Business Brand Profile</a></li>
+			</c:if>
+
+			<li><a href="#{root}/business/businessPublicProfile.xhtml"><i
+					class="fa fa-globe mrm"></i>Business Public Profile</a></li>
+			<li class="divider"></li>
+
+			<c:if test="#{sec:areAnyGranted('BUSINESS_ADMIN')}">
+				<li><a href="#{root}/product/productManagement.xhtml"><i
+						class="fa fa-cube mrm"></i>Product Profile</a></li>
+			</c:if>
+
+		</ul></li>
+
+</ui:composition>

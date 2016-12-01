@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/basemenulayout.xhtml">
+
+	<ui:define name="title">Wall Events</ui:define>
+	<ui:define name="centerContent">
+
+		<h3>Total Wall Events :
+			#{wallEventStatisticsView.wallStatistics.totalEntry}</h3>
+		<p:spacer height="10" />
+
+		<p:outputPanel id="wallEventOutputPanel" layout="block">
+			<p:panel style="border:hidden">
+				<p:dataTable id="wallEntryTable" var="entryCount"
+					paginator="true" rows="20"
+					value="#{wallEventStatisticsView.wallStatistics.wallEntryCount}">
+
+					<p:column id="wallEntryType" style="width:60px"
+						headerText="Wall Entry Type">
+						<h:outputText value="#{entryCount.entryType}" />
+					</p:column>
+
+					<p:column id="wallEntryCount" style="width:60px"
+						headerText="Wall Entry Count">
+						<h:outputText value="#{entryCount.count}" />
+					</p:column>
+
+
+				</p:dataTable>
+			</p:panel>
+
+		</p:outputPanel>
+
+
+	</ui:define>
+</ui:composition>

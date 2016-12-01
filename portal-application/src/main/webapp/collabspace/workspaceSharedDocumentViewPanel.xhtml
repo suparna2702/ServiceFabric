@@ -1,0 +1,200 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui">
+
+	<div class="row-fluid">
+		<div class="span12">
+			<div class="iconbar iconbar-horizontal">
+				<ul>
+
+					<li><a href="#{root}/collabspace/workspaceMain.xhtml"
+						class="fui-list-columned" rel="tooltip" data-placement="bottom"
+						title="Workspace list"></a></li>
+
+					<li><a
+						href="#{root}/collabspace/workspaceDetail.xhtml?wsname=#{workspaceDocumentDetailView.workspace.key.name}&amp;owsname=#{workspaceDocumentDetailView.workspace.key.owner.name}"
+						class="fui-radio-checked" rel="tooltip" data-placement="bottom"
+						title="Workspace details"></a></li>
+
+					<li><a href="#"
+						onclick="downloadDialogDlg.show();return false"
+						class="fa fa-cloud-download fa-lg" rel="tooltip"
+						data-placement="bottom" title="Download document"></a></li>
+
+					<li><a href="#"
+						onclick="shareFileWithOtherSpaceDlg.show();return false"
+						class="fa fa-share-alt fa-lg" rel="tooltip"
+						data-placement="bottom" title="Share with another workspace"></a></li>
+
+					<li><a href="#"
+						onclick="shareDocumentExternalDlg.show();return false"
+						class="fa fa-share-square-o fa-lg" rel="tooltip"
+						data-placement="bottom" title="Share with non member"></a></li>
+
+					<c:if test="#{sec:areAnyGranted('COLLABORATION_WORKSPACE_ADMIN')}">
+						<li><a href="#"
+							onclick="unshareDocumentDlg.show();return false"
+							class="fui-cross-inverted" rel="tooltip" data-placement="bottom"
+							title="Unshare Document"></a></li>
+
+					</c:if>
+
+					<li><a href="#docHistory" class="fa fa-calendar fa-lg"
+						rel="tooltip" data-placement="bottom" title="Document History"></a></li>
+
+					<li><a href="#" class="fui-user"> <span
+							class="iconbar-unread">#{workspaceDocumentDetailView.numberParticipants}</span>
+					</a></li>
+
+					<c:if test="#{workspaceDocumentDetailView.bookmarked eq 'false'}">
+						<li><a href="#fakeLink"
+							onclick="bookmarkDlg.show();return true" class="fa fa-star"
+							rel="tooltip" data-placement="bottom"
+							title="Add to favorite #{workspaceDocumentDetailView.sharedDoc.documentInstance.document.key.name}"></a></li>
+					</c:if>
+
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div class="row-fluid">
+		<div class="span12 well">
+			<div class="span1">
+				<p:graphicImage
+					value="/spring/assets/#{workspaceDocumentDetailView.getCommentAuthorPhotoLocation(workspaceDocumentDetailView.sharedDoc.sharer)}"
+					width="70" height="70" styleClass="img-rounded img-responsive" />
+			</div>
+			<div class="span3">
+				<h3>#{workspaceDocumentDetailView.sharedDoc.documentInstance.document.key.name}</h3>
+				<h4 class="muted">Version
+					#{workspaceDocumentDetailView.sharedDoc.documentInstance.key.version}</h4>
+				<h4>
+					<span class="muted">Workspace</span>
+					#{workspaceDocumentDetailView.workspace.key.name}
+				</h4>
+				<h4 class="muted">Shared by
+					#{workspaceDocumentDetailView.getCommentAuthorFullName(workspaceDocumentDetailView.sharedDoc.sharer)}</h4>
+				<br></br> <small>#{workspaceDocumentDetailView.sharedDoc.documentInstance.document.description}</small>
+				<br></br>
+				<h:outputText
+					value="#{workspaceDocumentDetailView.sharedDoc.shareDate}">
+					<f:convertDateTime pattern="MM/dd/yyyy" />
+				</h:outputText>
+			</div>
+			<div class="span4">
+				<h4>Categories</h4>
+				<span class="visible-desktop"> <ui:repeat var="category"
+						value="#{workspaceDocumentDetailView.documentCategory}">
+						<span class="label label-large label-primary">#{category.name}</span>
+					</ui:repeat>
+				</span>
+			</div>
+			<div class="span2">
+				<blockquote>
+					<p>
+						<i class="fui-chat muted" rel="tooltip" title="Comment Count"></i>
+						#{workspaceDocumentDetailView.sharedDocStatistics.documentStatistics.commentCount}
+						<br></br>
+						<!-- num comment -->
+						<i class="fa fa-cloud-download muted" rel="tooltip"
+							title="Download Count"></i>
+						#{workspaceDocumentDetailView.sharedDocStatistics.documentStatistics.downloadCount}
+						<br></br>
+						<!-- num download -->
+						<i class="fui-eye muted" rel="tooltip" title="View Count"></i>
+						#{workspaceDocumentDetailView.sharedDocStatistics.documentStatistics.vieweCount}
+						<!-- num viewed -->
+					</p>
+				</blockquote>
+			</div>
+		</div>
+	</div>
+
+	<div class="row-fluid">
+		<div class="span12">
+
+			<!-- Pages and comments -->
+			<div class="span7">
+				<ui:include src="documentViewer.xhtml" />
+			</div>
+
+			<div class="span4 offset1">
+				<ui:include src="sharedDocumentComment.xhtml" />
+			</div>
+		</div>
+	</div>
+
+	<div id="docHistory" class="row-fluid">
+		<div class="span12 voffset4">
+			<h2>Document History</h2>
+		</div>
+	</div>
+
+	<!-- History (only shown when activity feed turned on) -->
+	<ui:fragment
+		rendered="#{workspaceDocumentDetailView.workspace.showActivity eq 'true' or workspaceDocumentDetailView.isCreator(workspaceDocumentDetailView.workspace, workspaceDocumentDetailView.viewerKey) eq 'true'}">
+		<div class="row-fluid">
+			<div class="span12 voffset2">
+
+				<div id="hero">
+
+					<div
+						class="filters button-group js-radio-button-group btn-group mrl"
+						data-type="horizontal">
+
+						<label class="button btn btn-primary" rel="tooltip"
+							data-placement="bottom" title="All History"> <input
+							type="radio" name="filter" value="*" checked="checked" /> <i
+							class="fa fa-cog mrm"></i>
+
+						</label> <label class="button btn btn-info" rel="tooltip"
+							data-placement="bottom" title="Document Viewed History">
+							<input type="radio" name="filter" value=".viewed" /> <i
+							class="fa fa-eye mrm"></i>
+
+						</label> <label class="button btn btn-primary" rel="tooltip"
+							data-placement="bottom" title="Document Downloaded History">
+							<input type="radio" name="filter" value=".downloaded" /> <i
+							class="fa fa-cloud-download mrm"></i>
+
+						</label> <label class="button btn btn-info" rel="tooltip"
+							data-placement="bottom" title="Document Comment History">
+							<input type="radio" name="filter" value=".comment" /> <i
+							class="fa fa-comment mrm"></i>
+
+						</label> <label class="button btn btn-primary" rel="tooltip"
+							data-placement="bottom" title="Document Shared History">
+							<input type="radio" name="filter" value=".shared" /> <i
+							class="fa fa-share-alt mrm"></i>
+
+						</label>
+
+					</div>
+
+					<br></br>
+
+					<div class="isotope rainbowed span4 voffset4">
+						<ui:include src="/history/document/documentHistory.xhtml">
+							<ui:param name="docWallEntryList"
+								value="#{workspaceDocumentDetailView.docWallEntryList}" />
+						</ui:include>
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+		<!-- History -->
+
+	</ui:fragment>
+
+
+
+</ui:composition>

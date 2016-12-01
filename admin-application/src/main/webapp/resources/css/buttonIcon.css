@@ -1,0 +1,15 @@
+.commentButton {
+   background-image: url("images/commentIcon.png");
+}
+
+.bookmarkButton {
+   background-image: url("images/bookMarktIcon.png");
+}
+
+.likeButton {
+   background-image: url("images/likeIcon.png");
+}
+
+.shareButton {
+   background-image: url("images/shareIcon.png");
+}

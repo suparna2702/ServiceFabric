@@ -1,0 +1,53 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	 <p:dialog id="leadSubmissionDialog" resizable="false" modal="true" showEffect="explode" 
+	                     header="Assign Leads" widgetVar="dlgLeadSubmit">
+       <p:outputPanel id="leadSubmissionPanel" layout="block">
+           
+           <p:dataTable id="leadContactDataTable" var="leadContact" paginator="true" paginatorPosition="bottom" 
+   	                paginatorAlwaysVisible="false" rows="10"
+	                value="#{organizationLeadView.leadContacts}" 
+	                rowKey="#{leadContact.id}" 
+	                selection="#{organizationLeadView.selectedContacts}">
+	                
+	            <p:column selectionMode="multiple" style="width:18px" styleClass="buttomBorder" />
+	            
+	            <p:column id="leadContactImage" style="width:50px" styleClass="buttomBorder">
+	                 <p:graphicImage  value="/spring/assets#{leadContact.imagePath}" 
+	   	                     width="40" height="40" />
+   	            </p:column>
+   	            
+	            <p:column id="leadContactInfo" style="width:50px" styleClass="buttomBorder"
+	                    filterBy="#{leadContact.fullName}" filterMatchMode="startsWith" sortBy="#{leadContact.fullName}">
+	                 <h:outputText value="#{leadContact.fullName}" />
+	            </p:column>
+	            
+	            <p:column id="leadContactEmail" style="width:50px" styleClass="buttomBorder"
+	                    filterBy="#{leadContact.email}" filterMatchMode="startsWith" sortBy="#{leadContact.email}">
+	   	             <h:outputText value="#{leadContact.email}" /> 
+	            </p:column>	
+	                        
+	        </p:dataTable>	
+	       
+            <p:commandButton id="leadAssignBtn" oncomplete="dlgLeadSubmit.hide();leadSubmissionConfirmationDialogVar.show()" value="Assign" icon="ui-icon-check" 
+			                     action="#{organizationLeadView.assignLead}" 
+			                     style="margin-right:5px;margin-top:5px">
+			</p:commandButton>
+			<p:tooltip for="leadAssignBtn" value="Click to assign lead to the selected contacts" 
+			                               showEffect="fade" hideEffect="fade" />
+       </p:outputPanel>
+     </p:dialog>
+
+	<p:confirmDialog id="leadSubmissionConfirmationDialog"
+		message="An email has been sent to the selected partners to approval of transfer."
+		header="Assign Leads" severity="alert" widgetVar="leadSubmissionConfirmationDialogVar">
+		<p:commandButton id="assignConfirm" value="OK"
+			oncomplete="leadSubmissionConfirmationDialogVar.hide()" />
+	</p:confirmDialog>
+
+</ui:composition>

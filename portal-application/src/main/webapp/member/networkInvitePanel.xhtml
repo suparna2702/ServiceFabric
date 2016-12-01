@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui">
+	
+	   <p:outputPanel id="networkInvitePanel" layout="block"
+			rendered="#{empty memberInviteView.networkConnections}">
+			<p:panel style="border-style:hidden">
+				<h:panelGrid columns="1">
+					<p:commandButton value="Invite LinkedIn Contacts"
+						actionListener="#{memberInviteView.inviteLinkedInContacts}"
+						id="inviteFromLinkedIn" image="linkedInButton" />
+				</h:panelGrid>												
+			</p:panel>
+		</p:outputPanel>
+
+		<p:outputPanel id="networkInviteListPanel" layout="block" 
+		       rendered="#{not empty memberInviteView.networkConnections}">
+
+			<p:dataTable id="connectionDataTable" var="connection" paginator="true"
+				paginatorPosition="bottom" paginatorAlwaysVisible="false" rows="5"
+				value="#{memberInviteView.networkConnections}" rowKey="#{connection.linkedInId}"
+				styleClass="hide-column-names"
+				selection="#{memberInviteView.selectedNetworkConnections}">
+
+				<p:column selectionMode="multiple" style="width:18px"
+					styleClass="buttomBorder" />
+
+				<p:column id="contactImage" style="width:50px"
+					styleClass="buttomBorder">
+					<p:graphicImage value="#{connection.photoLocation}"
+						width="40" height="40" cache="false" />
+				</p:column>
+
+				<p:column id="contactInfo" 
+					styleClass="buttomBorder">
+					<h:outputText value="#{connection.firstName} #{connection.lastName}" />
+				</p:column>
+
+			</p:dataTable>
+			<p:commandButton value="Invite"
+				actionListener="#{memberInviteView.inviteNetworkConnections}"
+				process="@this connectionDataTable"
+				style="margin-top:10px" />
+		</p:outputPanel>
+	
+</ui:composition>

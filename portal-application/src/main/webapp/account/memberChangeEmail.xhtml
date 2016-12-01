@@ -1,0 +1,30 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:dialog id="emailChangeSubmitDialog" resizable="false" modal="true"
+		showEffect="explode" header="Change Email" widgetVar="dlgEmailChange">
+		<p:outputPanel id="emailChangeSubmitPanel" layout="block">
+			<p>Current Email : #{memberView.member.email}</p>
+			<h:panelGrid columns="2" style="margin-top:10px;">
+
+				<h:outputLabel for="newEmail" value="New Email: *" />
+				<h:inputText id="newEmail" style="margin-bottom:5px"
+					value="#{memberView.member.newEmail}"
+					styleClass="input-block-level" size="30" required="true" />
+				<h:outputLabel for="confirmEmail" value="Confirm New Email: *" />
+				<h:inputText id="confirmEmail" styleClass="input-block-level"
+					style="margin-bottom:5px" value="#{memberView.member.confirmEmail}"
+					size="30" required="true" />
+			</h:panelGrid>
+			<p:commandButton value="Submit" id="emailChangeSubmit"
+				process="@this emailChangeSubmitPanel"
+				style="margin-left:10px;margin-top:10px"
+				action="#{memberView.changeEmail}"
+				oncomplete="dlgEmailChange.hide()" />
+		</p:outputPanel>
+	</p:dialog>
+</ui:composition>

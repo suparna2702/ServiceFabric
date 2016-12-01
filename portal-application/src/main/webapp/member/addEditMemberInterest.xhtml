@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:outputPanel id="memberInterestOutputPanel" autoUpdate="true">
+		<p:panel style="margin-bottom:20px;margin-top:20px;">
+			<p:panel id="addInterestTextPanel"
+				style="margin-bottom:2px;border:hidden">
+				<h:inputText id="addInterestText" styleClass="input-block-level"
+					value="#{memberView.interestToAdd}" size="30" />
+				<p:commandButton id="addInterestBtn" value="Add"
+					action="#{memberView.addInterest}" style="margin-left:10px;"
+					process="@this memberInterestOutputPanel"
+					update="memberInterestOutputPanel" />
+				<p:tooltip for="addInterestBtn" value="Add a new interest"
+					showEffect="fade" hideEffect="fade" />
+			</p:panel>
+
+			<p:panel id="memberInterestPanel" style="border-style:hidden">
+
+				<p:dataTable id="memberInterestDataTable"
+					styleClass="hide-column-names" var="memberInterest"
+					rowKey="#{memberInterest.id}" selectionMode="single"
+					selection="#{memberView.member.selectedMemberInterest}"
+					value="#{memberView.member.interest}">
+
+					<p:column style="border:hidden">
+						<p:inplace editor="true">
+							<h:inputText value="#{memberInterest.interest}" size="40" />
+						</p:inplace>
+					</p:column>
+
+					<p:column style="border:hidden">
+						<p:commandButton id="deleteInterestBtn" value="Delete"
+							style="margin-left:10px;" action="#{memberView.deleteInterest}"
+							update="memberInterestDataTable"
+							onclick="ttDeleteInterestBtn.hide();" process="@this">
+							<f:setPropertyActionListener
+								target="#{memberView.member.selectedMemberInterest}"
+								value="#{memberInterest}" />
+						</p:commandButton>
+						<p:tooltip widgetVar="ttDeleteInterestBtn" for="deleteInterestBtn"
+							value="Delete this interest" showEffect="fade" hideEffect="fade" />
+					</p:column>
+				</p:dataTable>
+
+			</p:panel>
+		</p:panel>
+	</p:outputPanel>
+
+</ui:composition>

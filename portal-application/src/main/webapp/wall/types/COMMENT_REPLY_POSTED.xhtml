@@ -1,0 +1,17 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:c="http://java.sun.com/jsp/jstl/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  xmlns:composite="http://java.sun.com/jsf/composite/composites"
+  xmlns:p="http://primefaces.org/ui" template="/wall/wallEntryLayout.xhtml">
+
+  <ui:define name="wallEntryTitle">
+    replied to #{wallEntry.comment.author.displayName}'s comment
+  </ui:define>
+  
+  <ui:define name="wallEntryBody">
+    <ui:include src="/wall/wallElement.xhtml">
+      <ui:param name="wallElement" value="#{wallEntry.commentable}" />
+    </ui:include>
+  </ui:define>
+</ui:composition>

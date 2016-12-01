@@ -1,0 +1,31 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+    <c:if test="#{not empty orgPublicView.orgInfo.participatingPartnerPrograms}">
+	<br></br>
+	<div class="thumbnail" style="padding: 0">
+	    <div class="modal-footer" style="text-align: left">
+		   <h3>Partners</h3>
+		</div>
+		<table class="table table-striped">
+		   <ui:repeat var="participatingartnerProgram" value="#{orgPublicView.orgInfo.participatingPartnerPrograms}">
+		       <tr>
+		           <td class="span1">
+		             <p:graphicImage value="/spring/assets#{participatingartnerProgram.logoLocation}" 
+		                             width="60px" height="60px" 
+									 styleClass="img-rounded img-responsive" />
+		           </td>
+		           <td>
+		             <p>#{participatingartnerProgram.name}</p>
+		           </td>
+	           </tr>	      
+		   </ui:repeat>
+		</table>
+	</div>
+	</c:if>	
+	
+</ui:composition>

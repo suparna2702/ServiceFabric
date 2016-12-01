@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process name="transferLead" xmlns="http://jbpm.org/4.4/jpdl">
+	<start name="start1">
+		<transition name="to_Lead_Transfer_Initiate_Action" to="Lead_Transfer_Initiate_Action" />
+	</start>
+	<custom expr="#{leadTransferInitiateAction}" name="Lead_Transfer_Initiate_Action">
+		<transition name="to_Send_Transfer_Approval_Email" to="Send_Transfer_Approval_Email" />
+	</custom>
+	<custom expr="#{sendTransferApprovalEmailAction}" name="Send_Transfer_Approval_Email">
+		<transition name="to_Transfer_Lead_Partner_Action_Group"
+			to="Transfer_Lead_Partner_Action_Group" />
+	</custom>
+
+	<group name="Transfer_Lead_Partner_Action_Group">
+		<start>
+			<transition name="to_Lead_Transfer_Update_Process_Id" to="Lead_Transfer_Update_Process_Id" />
+		</start>
+
+		<custom expr="#{leadTransferUpdateProcessIdAction}" name="Lead_Transfer_Update_Process_Id">
+			<transition name="to_Wait_For_Partner_Action" to="Wait_For_Partner_Action" />
+		</custom>
+
+		<state name="Wait_For_Partner_Action">
+			<transition name="to_Lead_Transfer_Partner_Action_Decision"
+				to="Lead_Transfer_Partner_Action_Decision" />
+		</state>
+		<decision name="Lead_Transfer_Partner_Action_Decision">
+			<handler expr="#{leadTransferPartnerActionDecision}" />
+			<transition name="to_Lead_Transfer_Change_State_To_Rejected"
+				to="Lead_Transfer_Change_State_To_Rejected" />
+			<transition name="to_Lead_Transfer_Change_State_To_Approved"
+				to="Lead_Transfer_Change_State_To_Approved" />
+		</decision>
+
+		<custom expr="#{leadTransferChangeStateToApprovedAction}" name="Lead_Transfer_Change_State_To_Approved">
+			<transition name="to_Send_Approved_Email_To_Initiator" to="Send_Approved_Email_To_Initiator" />
+		</custom>
+
+		<custom expr="#{sendApprovedEmailToInitiatorAction}" name="Send_Approved_Email_To_Initiator">
+			<transition name="to_Create_Lead_Transfer_Event" to="Create_Lead_Transfer_Event" />
+		</custom>
+
+		<custom expr="#{createLeadTransferEventAction}" name="Create_Lead_Transfer_Event">
+			<transition name="to_Lead_Transfer_Complete_Validation1"
+				to="Lead_Transfer_Complete_Validation" />
+		</custom>
+
+
+		<custom expr="#{leadTransferChangeStateToRejectedAction}" name="Lead_Transfer_Change_State_To_Rejected">
+			<transition name="to_Send_Rejection_Email_To_Initiator"
+				to="Send_Rejection_Email_To_Initiator" />
+		</custom>
+
+		<custom expr="#{sendRejectionEmailToInitiatorAction}" name="Send_Rejection_Email_To_Initiator">
+			<transition name="to_Create_Lead_Transfer_Event2" to="Create_Lead_Transfer_Event" />
+		</custom>
+
+		<custom expr="#{leadTransferCompleteValidationAction}" name="Lead_Transfer_Complete_Validation">
+			<transition name="to_Lead_Transfer_Batch_Complete_Decision"
+				to="Lead_Transfer_Batch_Complete_Decision" />
+		</custom>
+		
+		<decision name="Lead_Transfer_Batch_Complete_Decision">
+			<handler expr="#{leadTransferBatchCompleteDecision}" />
+			<transition name="to_Loop_Wait_For_Partner_Action" to="Wait_For_Partner_Action" />
+			<transition name="to_Group_End" to="Group_End" />
+		</decision>
+
+		<end name="Group_End" />
+
+		<!-- Should be this but this triggers a null pointer exception from JBPM for some reason. 
+			<transition name="to_End_Complete" to="End_Complete" />
+ 		-->
+		<transition name="timeout_To_Lead_Transfer_Timeout" to="Lead_Transfer_Processed">
+			<timer duedate="5 days" />
+		</transition>
+
+	</group>
+	
+	<custom expr="#{leadTransferProcessedAction}" name="Lead_Transfer_Processed">
+		<transition name="to_Lead_Transfer_Processed_Decision" to="Lead_Transfer_Processed_Decision" />
+	</custom>
+
+	<decision name="Lead_Transfer_Processed_Decision">
+		<handler expr="#{leadTransferProcessedDecision}" />
+		<transition name="to_Send_Lead_Transfer_Reminder_Email" to="Send_Lead_Transfer_Reminder_Email" />
+		<transition name="to_Lead_Transfer_Expired" to="Lead_Transfer_Expired" />
+		<transition name="to_End_Complete" to="End_Complete" />
+	</decision>
+
+	<custom expr="#{sendLeadTransferReminderEmailAction}" name="Send_Lead_Transfer_Reminder_Email">
+		<transition name="to_Transfer_Lead_Partner_Action_Group2"
+			to="Transfer_Lead_Partner_Action_Group" />
+	</custom>
+
+	<custom expr="#{leadTransferExpiredAction}" name="Lead_Transfer_Expired">
+		<transition name="to_End_Expired" to="End_Expired" />
+	</custom>
+
+
+	<end name="End_Expired" />
+
+	<end name="End_Complete" />
+</process>

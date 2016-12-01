@@ -1,0 +1,535 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
+	version="2.0">
+	<application>
+		<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+
+		<locale-config>
+			<default-locale>en</default-locale>
+		</locale-config>
+		
+		<system-event-listener>
+			<system-event-listener-class>
+				com.similan.framework.util.LabelProvider
+			</system-event-listener-class>
+			<system-event-class>javax.faces.event.PreRenderComponentEvent</system-event-class>
+			<source-class>javax.faces.component.html.HtmlOutputLabel</source-class>
+		</system-event-listener>
+    
+	</application>
+	
+	<factory>
+      <exception-handler-factory>
+        com.similan.portal.exception.SimilanExceptionHandlerFactory
+      </exception-handler-factory>
+    </factory>
+    
+    <navigation-rule>
+       <from-view-id>/collabspace/workspaceDocumentDetail.xhtml</from-view-id>
+       <navigation-case>
+          <from-action>#{workspaceDocumentDetailView.unshare}</from-action>
+          <from-outcome>result</from-outcome>
+          <to-view-id>/collabspace/workspaceMain.xhtml</to-view-id>
+          <redirect />                  
+       </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+       <from-view-id>/business/existingPartnerInfoEntry.xhtml</from-view-id>
+       <navigation-case>
+          <from-action>#{existingPartnerInviteInputView.inviteComplete}</from-action>
+          <from-outcome>result</from-outcome>
+          <to-view-id>/partner/partnerBrandedLogin.xhtml</to-view-id>
+          <redirect include-view-params="true">
+          <view-param>
+            <name>oid</name>
+            <value>#{existingPartnerInviteInputView.businessId}</value>
+          </view-param>
+          </redirect>
+       </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+       <from-view-id>/business/businessBrandingProfileEdit.xhtml</from-view-id>
+       <navigation-case>
+          <from-action>#{businessBrandingView.updateBusinessBrandingProfile}</from-action>
+          <from-outcome>result</from-outcome>
+          <to-view-id>/member/memberHome.xhtml</to-view-id>
+          <redirect />
+       </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+       <from-view-id>/lead/leadSearchSettings.xhtml</from-view-id>
+       <navigation-case>
+          <from-action>#{leadViewSettingsView.saveFilter}</from-action>
+          <from-outcome>result</from-outcome>
+          <to-view-id>/lead/leadSearchFilterView.xhtml</to-view-id>
+          <redirect />
+       </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+       <from-view-id>/collabspace/workspaceEdit.xhtml</from-view-id>
+       <navigation-case>
+          <from-action>#{workspaceEditView.save}</from-action>
+          <from-outcome>result</from-outcome>
+          <to-view-id>/collabspace/workspaceMain.xhtml</to-view-id>
+          <redirect />
+       </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+       <from-view-id>/product/addProduct.xhtml</from-view-id>
+       <navigation-case>
+          <from-action>#{productView.updateProduct}</from-action>
+          <from-outcome>result</from-outcome>
+          <to-view-id>/product/productManagement.xhtml</to-view-id>
+          <redirect />
+       </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+       <from-view-id>/product/addProduct.xhtml</from-view-id>
+       <navigation-case>
+          <from-action>#{productView.saveProduct}</from-action>
+          <from-outcome>result</from-outcome>
+          <to-view-id>/product/productManagement.xhtml</to-view-id>
+          <redirect />
+       </navigation-case>
+    </navigation-rule>
+	
+	<navigation-rule>
+       <from-view-id>/lead/viewLeadDetail.xhtml</from-view-id>
+       <navigation-case>
+          <from-action>#{leadDetailView.deleteLead}</from-action>
+          <from-outcome>result</from-outcome>
+          <to-view-id>/lead/organizationLeadManagement.xhtml</to-view-id>
+          <redirect />
+       </navigation-case>
+    </navigation-rule>
+    
+	<navigation-rule>
+       <from-view-id>/survey/addEditSurvey.xhtml</from-view-id>
+       <navigation-case>
+          <from-action>#{pollTemplateCreateEditView.saveSurveyTemplate}</from-action>
+          <from-outcome>result</from-outcome>
+          <to-view-id>/survey/manageSurveys.xhtml</to-view-id>
+          <redirect />
+       </navigation-case>
+    </navigation-rule>
+	
+	<navigation-rule>
+       <from-view-id>/member/memberSignup.xhtml</from-view-id>
+       <navigation-case>
+          <from-action>#{homeView.join}</from-action>
+          <from-outcome>result</from-outcome>
+          <to-view-id>/member/emailConfirm.xhtml</to-view-id>
+          <redirect include-view-params="true">
+	          <view-param>
+	            <name>name</name>
+	            <value>#{homeView.memberInfo.firstName}</value>
+	          </view-param>
+	          <view-param>
+	            <name>email</name>
+	            <value>#{homeView.memberInfo.email}</value>
+	          </view-param>
+	          <view-param>
+	            <name>errorMsg</name>
+	            <value>#{homeView.errorMsg}</value>
+	          </view-param>
+          </redirect>
+       </navigation-case>
+    </navigation-rule>
+    
+	<navigation-rule>
+       <from-view-id>/member/memberEmployerProfile.xhtml</from-view-id>
+       <navigation-case>
+          <from-action>#{memberView.createOrg}</from-action>
+          <from-outcome>result</from-outcome>
+          <to-view-id>/member/memberHome.xhtml</to-view-id>
+          <redirect />
+       </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+       <from-view-id>/partner/partnerProgramApprovalInputForm.xhtml</from-view-id>
+       <navigation-case>
+          <from-action>#{partnerProgramFormInputView.submitPartnerProgramApprovalFormInput}</from-action>
+          <from-outcome>result</from-outcome>
+          <to-view-id>/member/home.xhtml</to-view-id>
+          <redirect />
+       </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+       <from-view-id>/partner/partnerProgramCreateEdit.xhtml</from-view-id>
+       <navigation-case>
+          <from-action>#{partnerView.savePartnerProgram}</from-action>
+          <from-outcome>result</from-outcome>
+          <to-view-id>/partner/partnerProgramManagement.xhtml</to-view-id>
+          <redirect />
+       </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+       <from-view-id>/lead/leadSearchFilteredAffiliateLeads.xhtml</from-view-id>
+       <navigation-case>
+          <from-action>#{organizationSearchLeadView.purchaseAvailableLead(availablelead)}</from-action>
+          <from-outcome>result</from-outcome>
+          <to-view-id>/lead/organizationLeadManagement.xhtml</to-view-id>
+          <redirect include-view-params="true">
+             <view-param>
+                 <name>showFlag</name>
+                 <value>true</value>
+             </view-param>
+           </redirect>
+       </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+       <from-view-id>/lead/organizationLeadUpload.xhtml</from-view-id>
+       <navigation-case>
+          <from-action>#{orgLeadUploadView.uploadLead}</from-action>
+          <from-outcome>result</from-outcome>
+          <to-view-id>/lead/organizationLeadManagement.xhtml</to-view-id>
+          <redirect />
+       </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+       <from-view-id>/collabspace/workspaceMain.xhtml</from-view-id>
+       <navigation-case>
+          <from-outcome>detail</from-outcome>
+          <to-view-id>/collabspace/workspaceDetail.xhtml</to-view-id>
+          <redirect include-view-params="true">
+          </redirect>
+       </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+       <from-view-id>/lead/organizationLeadManagement.xhtml</from-view-id>
+       <navigation-case>
+          <from-action>#{leadViewSettingsView.searchAffiliateByFilter}</from-action>
+          <from-outcome>result</from-outcome>
+          <to-view-id>/lead/leadSearchFilteredAffiliateLeads.xhtml</to-view-id>
+          <redirect include-view-params="true">
+	          <view-param>
+	            <name>fid</name>
+	            <value>#{leadViewSettingsView.leadSetting.id}</value>
+	          </view-param>
+          </redirect>
+       </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+       <from-view-id>/member/memberPersonalProfileEdit.xhtml</from-view-id>
+       <navigation-case>
+          <from-action>#{memberView.updateMemberProfile}</from-action>
+          <from-outcome>result</from-outcome>
+          <to-view-id>/member/memberPublicProfile.xhtml</to-view-id>
+          <redirect include-view-params="true"/>
+       </navigation-case>
+       <navigation-case>
+          <from-action>#{memberView.updateMemberProfile}</from-action>
+          <from-outcome>error</from-outcome>
+          <to-view-id>/member/memberPersonalProfileEdit.xhtml</to-view-id>
+       </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+       <from-view-id>/business/businessProfileEdit.xhtml</from-view-id>
+       <navigation-case>
+          <from-action>#{orgView.updateBusinessProfile}</from-action>
+          <from-outcome>result</from-outcome>
+          <to-view-id>/business/businessPublicProfile.xhtml</to-view-id>
+          <redirect include-view-params="true"/>
+       </navigation-case>
+       <navigation-case>
+          <from-action>#{orgView.updateBusinessProfile}</from-action>
+          <from-outcome>error</from-outcome>
+          <to-view-id>/business/businessProfileEdit.xhtml</to-view-id>
+       </navigation-case>
+    </navigation-rule>
+    
+	<navigation-rule>
+       <from-view-id>/survey/surveyResponse.xhtml</from-view-id>
+       <navigation-case>
+          <from-action>#{pollSubmissionView.submitSurvey}</from-action>
+          <from-outcome>result</from-outcome>
+          <to-view-id>/survey/surveyResponseComplete.xhtml</to-view-id>
+          <redirect />
+       </navigation-case>      
+    </navigation-rule>
+    
+	<navigation-rule>
+       <from-view-id>/partner/partnerProgramApprovalInputForm.xhtml</from-view-id>
+       <navigation-case>
+          <from-action>#{partnerProgramFormInputView.submitPartnerProgramApprovalFormInput}</from-action>
+          <from-outcome>submissionComplete</from-outcome>
+          <to-view-id>/member/memberHome.xhtml</to-view-id>
+          <redirect />
+       </navigation-case>      
+    </navigation-rule>
+    
+	<navigation-rule>
+       <from-view-id>/partner/partnerProgramApproval.xhtml</from-view-id>
+       <navigation-case>
+          <from-action>#{partnerProgramApprovalView.approvePartnership('true')}</from-action>
+          <from-outcome>partnerApproved</from-outcome>
+          <to-view-id>/member/memberHome.xhtml</to-view-id>
+          <redirect />
+       </navigation-case>      
+    </navigation-rule>
+    
+	<navigation-rule>
+       <from-view-id>/partner/partnerProgramApproval.xhtml</from-view-id>
+       <navigation-case>
+          <from-action>#{partnerProgramApprovalView.approvePartnership('false')}</from-action>
+          <from-outcome>partnerRejected</from-outcome>
+          <to-view-id>/member/memberHome.xhtml</to-view-id>
+          <redirect />
+       </navigation-case>      
+    </navigation-rule>    
+    
+    <navigation-rule>
+      <from-view-id>/embedded/search.xhtml</from-view-id>
+      <navigation-case>
+        <from-action>#{searchItemView.businessAssociateSearch}</from-action>
+        <from-outcome>result</from-outcome>
+        <to-view-id>/embedded/result.xhtml</to-view-id>
+        <redirect include-view-params="true">
+          <view-param>
+            <name>mid</name>
+            <value>#{searchItemView.mid}</value>
+          </view-param>
+          <view-param>
+            <name>vflag</name>
+            <value>#{searchItemView.embeddedPartnerVisibility}</value>
+          </view-param>
+          <view-param>
+            <name>country</name>
+            <value>#{searchItemView.advSearchInput.country}</value>
+          </view-param>
+          <view-param>
+            <name>state</name>
+            <value>#{searchItemView.advSearchInput.state}</value>
+          </view-param>
+          <view-param>
+            <name>street</name>
+            <value>#{searchItemView.advSearchInput.street}</value>
+          </view-param>
+          <view-param>
+            <name>city</name>
+            <value>#{searchItemView.advSearchInput.city}</value>
+          </view-param>
+          <view-param>
+            <name>zip</name>
+            <value>#{searchItemView.advSearchInput.zipCode}</value>
+          </view-param>
+          <view-param>
+            <name>radius</name>
+            <value>#{searchItemView.advSearchInput.radius}</value>
+          </view-param>
+          <view-param>
+            <name>type</name>
+            <value>#{searchItemView.advSearchInput.selectedSearchType}</value>
+          </view-param>
+          <view-param>
+            <name>keyword</name>
+            <value>#{searchItemView.advSearchInput.keyWord}</value>
+          </view-param>
+          <view-param>
+            <name>embedded</name>
+            <value>#{searchItemView.embedded}</value>
+          </view-param>
+          <view-param>
+            <name>oeid</name>
+            <value>#{searchItemView.orgEmbeddedIdentity}</value>
+          </view-param>
+          <view-param>
+            <name>oid</name>
+            <value>#{searchItemView.orgId}</value>
+          </view-param>
+          <view-param>
+            <name>s</name>
+            <value>#{searchItemView.searchType}</value>
+          </view-param>
+        </redirect>
+      </navigation-case>
+    </navigation-rule>	
+
+    <navigation-rule>
+      <!-- Matches all the seaches from the embedded search page -->
+      <from-view-id>/*</from-view-id>
+      <navigation-case>
+        <from-action>#{searchItemView.search}</from-action>
+        <from-outcome>result</from-outcome>
+        <to-view-id>/search/searchResult.xhtml</to-view-id>
+        <redirect include-view-params="true">
+          <view-param>
+            <name>s</name>
+            <value>#{searchItemView.searchType}</value>
+          </view-param>
+          <view-param>
+            <name>q</name>
+            <value>#{searchItemView.searchText}</value>
+          </view-param>
+        </redirect>
+      </navigation-case>
+      
+      <navigation-case>
+        <from-action>#{searchItemView.businessAssociateSearch}</from-action>
+        <from-outcome>result</from-outcome>
+        <if>#{!searchItemView.embedded}</if>
+        <to-view-id>/search/searchResult.xhtml</to-view-id>
+        <redirect include-view-params="true">
+          <view-param>
+            <name>vflag</name>
+            <value>#{searchItemView.inCommunityPartnerVisibility}</value>
+          </view-param>
+          <view-param>
+            <name>country</name>
+            <value>#{searchItemView.advSearchInput.country}</value>
+          </view-param>
+          <view-param>
+            <name>state</name>
+            <value>#{searchItemView.advSearchInput.state}</value>
+          </view-param>
+          <view-param>
+            <name>street</name>
+            <value>#{searchItemView.advSearchInput.street}</value>
+          </view-param>
+          <view-param>
+            <name>city</name>
+            <value>#{searchItemView.advSearchInput.city}</value>
+          </view-param>
+          <view-param>
+            <name>zip</name>
+            <value>#{searchItemView.advSearchInput.zipCode}</value>
+          </view-param>
+          <view-param>
+            <name>radius</name>
+            <value>#{searchItemView.advSearchInput.radius}</value>
+          </view-param>
+          <view-param>
+            <name>type</name>
+            <value>#{searchItemView.advSearchInput.selectedSearchType}</value>
+          </view-param>
+          <view-param>
+            <name>keyword</name>
+            <value>#{searchItemView.advSearchInput.keyWord}</value>
+          </view-param>
+          <view-param>
+            <name>embedded</name>
+            <value>#{searchItemView.embedded}</value>
+          </view-param>
+          <view-param>
+            <name>oid</name>
+            <value>#{searchItemView.orgId}</value>
+          </view-param>
+          <view-param>
+            <name>s</name>
+            <value>#{searchItemView.searchType}</value>
+          </view-param>
+        </redirect>
+      </navigation-case>
+      
+      <navigation-case>
+        <from-action>#{searchItemView.advancedSearch}</from-action>
+        <from-outcome>result</from-outcome>
+        <if>#{!searchItemView.embedded}</if>
+        <to-view-id>/search/searchResult.xhtml</to-view-id>
+        <redirect include-view-params="true">
+          <view-param>
+            <name>country</name>
+            <value>#{searchItemView.advSearchInput.country}</value>
+          </view-param>
+          <view-param>
+            <name>state</name>
+            <value>#{searchItemView.advSearchInput.state}</value>
+          </view-param>
+          <view-param>
+            <name>street</name>
+            <value>#{searchItemView.advSearchInput.street}</value>
+          </view-param>
+          <view-param>
+            <name>city</name>
+            <value>#{searchItemView.advSearchInput.city}</value>
+          </view-param>
+          <view-param>
+            <name>zip</name>
+            <value>#{searchItemView.advSearchInput.zipCode}</value>
+          </view-param>
+          <view-param>
+            <name>radius</name>
+            <value>#{searchItemView.advSearchInput.radius}</value>
+          </view-param>
+          <view-param>
+            <name>type</name>
+            <value>#{searchItemView.advSearchInput.selectedSearchType}</value>
+          </view-param>
+          <view-param>
+            <name>keyword</name>
+            <value>#{searchItemView.advSearchInput.keyWord}</value>
+          </view-param>
+          <view-param>
+            <name>s</name>
+            <value>#{searchItemView.searchType}</value>
+          </view-param>
+          <view-param>
+            <name>embedded</name>
+            <value>#{searchItemView.embedded}</value>
+          </view-param>
+          <view-param>
+            <name>oid</name>
+            <value>#{searchItemView.orgId}</value>
+          </view-param>
+        </redirect>
+      </navigation-case>
+    </navigation-rule>
+    
+    <converter>
+          <converter-id>selectableContactModelConverter</converter-id>
+          <converter-class>com.similan.portal.ui.converter.SelectableContactModelConverter</converter-class>
+    </converter>
+    
+<!--     <converter> -->
+<!--           <converter-id>documentConverter</converter-id> -->
+<!--           <converter-class>com.similan.service.api.dto.document.DocumentConverter</converter-class> -->
+<!--     </converter> -->
+
+	<converter>
+          <converter-id>partnerProgramConverter</converter-id>
+          <converter-class>com.similan.framework.dto.PartnerProgramConverter</converter-class>
+    </converter>
+	
+	<converter>
+          <converter-id>orgLocationConverter</converter-id>
+          <converter-class>com.similan.framework.dto.OrganizationLocationConverter</converter-class>
+    </converter>
+    
+    <converter>
+          <converter-id>partnerRequiredInfoAttributeConverter</converter-id>
+          <converter-class>com.similan.framework.dto.OrganizationLocationConverter</converter-class>
+    </converter>
+    
+    <converter>
+          <converter-id>distributorConverter</converter-id>
+          <converter-class>com.similan.framework.dto.DistributorConverter</converter-class>
+    </converter>
+    
+    
+    <converter>
+          <converter-id>orgTagConverter</converter-id>
+          <converter-class>com.similan.portal.ui.converter.OrganizationAutoCompleteTagConverter</converter-class>
+    </converter>
+
+    <converter>
+          <converter-for-class>java.util.List</converter-for-class>
+          <converter-class>com.similan.portal.ui.converter.GenericListConverter</converter-class>
+    </converter>
+    
+</faces-config>

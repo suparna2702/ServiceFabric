@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:composite="http://java.sun.com/jsf/composite/composites"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/basemenulayout.xhtml">
+
+	<ui:define name="title">Lead Upload</ui:define>
+	<ui:define name="centerContent">
+	
+	<p:spacer height="10"/>
+	<ui:include src="/templates/menu/leadManagementMenu.xhtml" />
+	<p:spacer height="10"/>
+	
+	<p:fileUpload fileUploadListener="#{orgLeadUploadView.handleFileUpload}"
+		auto="true" mode="advanced" id="bulkLeadFileUpload" sizeLimit="100000"
+		update="bulkLeadUploadPanel" allowTypes="/(\.|\/)(csv)$/"/>
+
+	
+	 <p:outputPanel id="bulkLeadUploadPanel" layout="block" style="margin-top:15px;">
+		<p:outputPanel
+			rendered="#{not empty orgLeadUploadView.leadList}">
+            
+            <p:sheet var="lead" value="#{orgLeadUploadView.leadList}" 
+                         id="leadUploadList" >
+                         
+                <p:column headerText="First Name" width="70">
+					 <h:inputText value="#{lead.firstName}" />
+				</p:column>
+				
+				<p:column headerText="Last Name" width="70">
+					 <h:inputText value="#{lead.lastName}" />
+				</p:column>
+				
+				<p:column headerText="Company" width="70">
+					 <h:inputText value="#{lead.company}" />
+				</p:column>
+
+				<p:column headerText="Email" width="80">
+					 <h:inputText value="#{lead.contactEmail}" />
+				</p:column>
+
+				<p:column headerText="Phone" width="80">
+					 <h:inputText value="#{lead.contactPhone}" />
+				</p:column>
+				
+				<p:column headerText="Keywords" width="130">
+					 <h:inputText value="#{lead.keyword}" />
+				</p:column>
+            </p:sheet>
+            
+            <h:panelGrid columns="2">
+               <h:outputText value="Lead Source "/>
+	           <h:inputText value="#{orgLeadUploadView.leadSource}" />
+            </h:panelGrid>
+            
+			<p:commandButton value="Submit" process="@this bulkLeadUploadPanel" 
+			                 update="bulkLeadUploadPanel bulkLeadFileUpload"
+				             id="leadUploadSubmitButton" action="#{orgLeadUploadView.uploadLead}"  
+				             style="margin-top:15px;float:left"/>
+				
+		</p:outputPanel>
+	 </p:outputPanel>
+	
+	</ui:define>	
+	<ui:define name="leftNavigationBar">
+		<ui:include src="/component/leftNavigationBar.xhtml" />
+	</ui:define>
+	
+</ui:composition>

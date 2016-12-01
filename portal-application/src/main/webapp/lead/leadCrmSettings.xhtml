@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:composite="http://java.sun.com/jsf/composite/composites"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/basemenulayout.xhtml">
+
+	<ui:define name="title">Lead CRM Settings</ui:define>
+	<ui:define name="centerContent">
+
+		<p:spacer height="10" />
+		<ui:include src="/templates/menu/leadManagementMenu.xhtml" />
+		<p:spacer height="10" />
+
+		<h:panelGrid id="crmFeedSettingOptions" columns="2"
+			style="margin-bottom:10px" cellpadding="5">
+			
+			<h:outputText value="Select CRM System " />
+			<p:selectOneMenu 
+				value="#{crmLeadSettingView.crmLeadSettings.crmSystemType}">
+				<f:selectItem itemLabel="SalesForce" itemValue="SalesForce" />
+				<f:selectItem itemLabel="SugerCrm" itemValue="SugerCrm" />
+				<f:selectItem itemLabel="Zoho" itemValue="Zoho" />
+			</p:selectOneMenu>
+
+			<h:outputText value="CRM API key "/>
+			<p:inputText id="crmApiKey"
+				value="#{crmLeadSettingView.crmLeadSettings.parameters['crm.parameters.zoho.apikey']}"
+				size="50"/>
+				
+            <h:outputText value="Sync. Notification to Org " />
+			<p:selectBooleanCheckbox
+				value="#{crmLeadSettingView.crmLeadSettings.notificationEmailToOrg}" />
+			<h:outputText value="Enable Transfer to CRM " />
+			<p:selectBooleanCheckbox
+				value="#{crmLeadSettingView.crmLeadSettings.enableTransferToCrm}" />
+			<h:outputText value="Enable Transfer from CRM " />
+			<p:selectBooleanCheckbox
+				value="#{crmLeadSettingView.crmLeadSettings.enableTransferFromCrm}" />
+			<h:outputText value="Enable Query from CRM " />
+			<p:selectBooleanCheckbox
+				value="#{crmLeadSettingView.crmLeadSettings.enableQueryFromCrm}" />
+			<h:outputText value="Export Lead Fields " />
+			<p:pickList id="leadExportFields"
+				value="#{crmLeadSettingView.leadExportFieldList}"
+				var="exportLeadField" itemLabel="#{exportLeadField}"
+				itemValue="#{exportLeadField}" />
+			<h:outputText value="Import Lead Fields " />
+			<p:pickList id="leadImportFields"
+				value="#{crmLeadSettingView.leadImportFieldList}"
+				var="importLeadField" itemLabel="#{importLeadField}"
+				itemValue="#{importLeadField}" />
+
+		</h:panelGrid>
+		<p:commandButton id="crmFeedSettingSaveBtn" value="Save"
+			action="#{crmLeadSettingView.save}"
+			process="@this crmFeedSettingOptions" style="margin-top:10px;" />
+	</ui:define>
+	<ui:define name="leftNavigationBar">
+		<ui:include src="/component/leftNavigationBar.xhtml" />
+	</ui:define>
+
+</ui:composition>

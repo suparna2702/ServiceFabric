@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:outputPanel id="productFeatureOutputPanel" autoUpdate="true">
+		<p:panel style="margin-bottom:20px;margin-top:20px;">
+
+			<p:panel id="addProductFeatureTextPanel"
+				style="margin-bottom:2px;border:hidden">
+				<h:inputText id="addProductFeatureText"
+					value="#{productView.productFeatureToAdd}"
+					styleClass="input-block-level" size="45" />
+				<p:inputTextarea id="addProductFeatureDescription"
+					value="#{productView.productFeatureDescriptionToAdd}"
+					style="margin-bottom:5px;margin-top:5px" rows="6" cols="43" />
+
+				<p:commandButton id="addProductFeatureBtn" value="Add"
+					action="#{productView.addProductFeature}" style="margin-left:10px;"
+					process="@this productFeatureOutputPanel"
+					update="productFeatureOutputPanel" />
+				<p:tooltip for="addProductFeatureBtn" value="Add a product feature"
+					showEffect="fade" hideEffect="fade" />
+			</p:panel>
+
+			<p:panel id="productFeaturePanel" style="border-style:hidden">
+
+				<p:dataTable id="productFeatureDataTable"
+					rendered="#{not empty productView.features}"
+					styleClass="hide-column-names" rowKey="#{productFeature.id}"
+					var="productFeature" value="#{productView.features}">
+
+					<p:column style="width:80px;border:hidden">
+						<h4>#{productFeature.name}</h4>
+					</p:column>
+
+					<p:column style="border:hidden">
+						<p>#{productFeature.description}</p>
+					</p:column>
+
+					<p:column style="border:hidden">
+						<p:commandButton id="deleteProductFeatureBtn"
+							action="#{productView.deleteProductFeature(productFeature.key)}"
+							value="Delete" style="margin-left:10px;"
+							update="productFeatureDataTable"
+							process="@this productFeatureDataTable">
+						</p:commandButton>
+						<p:tooltip for="deleteProductFeatureBtn"
+							value="Delete this feature" showEffect="fade" hideEffect="fade" />
+					</p:column>
+				</p:dataTable>
+
+			</p:panel>
+		</p:panel>
+	</p:outputPanel>
+</ui:composition>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd"
+  logicalFilePath="00007-config-bean-renames.db.xml">
+
+  <changeSet id="ConfigurationParameter-crocodocClient-beanName" author="enrique">
+    <preConditions onFail="MARK_RAN">
+      <sqlCheck expectedResult="1">
+        select count(*) from ConfigurationParameter
+        where beanName = 'service_crocodoc'
+        and propertyName = 'token'
+      </sqlCheck>
+    </preConditions>
+    <update tableName="ConfigurationParameter">
+      <column name="beanName" value="crocodocClient" />
+      <where>
+        beanName = 'service_crocodoc'
+        and propertyName = 'token'
+      </where>
+    </update>
+  </changeSet>
+  <changeSet id="ConfigurationParameter-boxClient-beanName" author="enrique">
+    <preConditions onFail="MARK_RAN">
+      <sqlCheck expectedResult="1">
+        select count(*) from ConfigurationParameter
+        where beanName = 'service_boxClient'
+        and propertyName = 'token'
+      </sqlCheck>
+    </preConditions>
+    <update tableName="ConfigurationParameter">
+      <column name="beanName" value="boxClient" />
+      <where>
+        beanName = 'service_boxClient'
+        and propertyName = 'token'
+      </where>
+    </update>
+  </changeSet>
+  <changeSet id="ConfigurationParameter-gooseConfiguration-beanName" author="enrique">
+    <preConditions onFail="MARK_RAN">
+      <sqlCheck expectedResult="1">
+        select count(*) from ConfigurationParameter
+        where beanName = 'service_gooseConfiguration'
+        and propertyName = 'imagemagickIdentifyPath'
+      </sqlCheck>
+    </preConditions>
+    <update tableName="ConfigurationParameter">
+      <column name="beanName" value="gooseConfiguration" />
+      <where>
+        beanName = 'service_gooseConfiguration'
+        and propertyName = 'imagemagickIdentifyPath'
+      </where>
+    </update>
+  </changeSet>
+  <changeSet id="ConfigurationParameter-alchemyClient-beanName" author="enrique">
+    <preConditions onFail="MARK_RAN">
+      <sqlCheck expectedResult="1">
+        select count(*) from ConfigurationParameter
+        where beanName = 'service_alchemyClient'
+        and propertyName = 'apiKey'
+      </sqlCheck>
+    </preConditions>
+    <update tableName="ConfigurationParameter">
+      <column name="beanName" value="alchemyClient" />
+      <where>
+        beanName = 'service_alchemyClient'
+        and propertyName = 'apiKey'
+      </where>
+    </update>
+  </changeSet>
+</databaseChangeLog>

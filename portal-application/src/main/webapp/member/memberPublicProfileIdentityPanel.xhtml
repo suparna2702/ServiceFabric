@@ -1,0 +1,112 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:similan="http://www.businessreach.com/similan"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+    <div class="row-fluid">
+      <div class="span12">
+	  
+          <div class="span3"> <!-- Basic Profile Info -->
+             <div class="thumbnail" style="padding: 0">
+                <div style="padding:4px">
+                   <p:graphicImage id="memberPhoto" value="/spring/assets#{memberPublicView.publicPhoto}"/>
+                </div>
+                <div class="caption">
+                   <h2>#{memberPublicView.member.firstName}  #{memberPublicView.member.lastName}</h2>
+                   <c:if test="#{memberPublicView.member.title != 'null'}">
+			          <h4>#{memberPublicView.member.title}</h4>
+			       </c:if>
+                </div>
+                <div class="modal-footer" style="text-align: left">
+                   <c:if test="#{memberPublicView.member.email != 'null'}">
+			          <p><i class="fui-mail mrm"></i>#{memberPublicView.member.email}</p><br></br>
+			       </c:if>
+                   <c:if test="#{memberPublicView.member.businessPhone != 'null'}">
+			          <p><i class="fa fa-phone mrm"></i>#{memberPublicView.member.businessPhone}</p><br></br>
+			       </c:if>
+                   <c:if test="#{memberPublicView.member.mobilePhone != 'null'}">
+			          <p><i class="fa fa-mobile mrm"></i>#{memberPublicView.member.mobilePhone}</p><br></br>
+			       </c:if>
+			       <c:if test="#{memberPublicView.member.employer != 'null'}">
+				      <p><i class="fa fa-globe mrm"></i>#{memberPublicView.member.employer.name}</p><br></br>
+			       </c:if>       
+               </div>
+          </div>          
+         </div> <!-- End of Basic Profile Info -->
+		 
+		 <div class="span5" style="padding:4px"> <!-- Expertise and Interests -->
+            <!-- Description -->		 
+		    <c:if test="#{memberPublicView.member.aboutMe != 'null'}">
+			  <div class="divider"></div>
+			  <p>#{memberPublicView.member.aboutMe}</p>
+			  <br></br>
+		    </c:if>
+			
+		    <!-- Expertise -->
+		    <c:if test="#{not empty memberPublicView.member.expertise}">
+	            <h3 class="muted">Expertise</h3>
+				<ui:repeat var="expertiseInfo" value="#{memberPublicView.member.expertise}">
+					<p><i class="fa fa-shield fa-rotate-270 mrm"></i>#{expertiseInfo.expertise}</p>
+				</ui:repeat>
+			</c:if>
+			
+            <br></br>
+			
+			<!-- Interest -->
+			<c:if test="#{not empty memberPublicView.member.interest}">
+	            <h3 class="muted">Interest</h3>
+				<ui:repeat var="interestInfo" value="#{memberPublicView.member.interest}">
+					<p><i class="fa fa-shield fa-rotate-270 mrm"></i>#{interestInfo.interest}</p>
+				</ui:repeat>
+			</c:if>
+			
+        </div> <!-- Expertise and Interests -->
+
+		<div class="span4">
+		
+			  <p:gmap zoom="8" type="ROADMAP"   
+				   style="width:300px;height:200px;margin-bottom:4px"
+				   center="#{memberPublicView.mapCenterLat}, #{memberPublicView.mapCenterLong}"
+				   mapTypeControl="false" navigationControl="false"  
+				   model="#{memberPublicView.simpleModel}" widgetVar="googleMap" />
+			    
+				<c:if test="#{memberPublicView.member.street != 'null'}">
+					<p>#{memberPublicView.member.street}</p><br></br>
+				</c:if>
+				<c:if test="#{memberPublicView.member.city != 'null'}">
+					<p>#{memberPublicView.member.city}</p><br></br>
+				</c:if>
+				<c:if test="#{memberPublicView.member.state != 'null'}">
+					<p>#{memberPublicView.member.state}</p><br></br>
+				</c:if>
+				<c:if test="#{memberPublicView.member.country != 'null'}">
+					<p>#{memberPublicView.member.country}</p><br></br>
+				</c:if>
+				<c:if test="#{memberPublicView.member.zipCode != 'null'}">
+					<p>#{memberPublicView.member.zipCode}</p>
+				</c:if>
+        </div>
+
+       </div>
+	</div> <!-- Profile Panel -->
+    
+	<div class="row-fluid">
+      <div class="span12">
+	     <br></br>
+	  </div>
+    </div>
+	
+   <!-- Member Update -->
+   <div class="row-fluid">
+      <div class="span12">
+         <c:if test="#{memberPublicView.wallEntries != 'null'}">
+	         <ui:include src="../wall/wall.xhtml">
+	              <ui:param name="wallView" value="#{memberPublicView}" />
+	         </ui:include>
+		 </c:if>
+      </div>
+   </div>    
+</ui:composition>

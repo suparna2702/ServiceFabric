@@ -1,0 +1,285 @@
+//Reusing bootstrap 3 panel CSS
+.new-content .panel {
+  margin-bottom: 20px;
+  background-color: #fff;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+          box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+}  
+
+.new-content .panel:hover { box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4), 0 1px 5px rgba(130, 130, 130, 0.35); } 
+
+.new-content .panel-primary {
+  border-color: #428bca;
+}
+
+.new-content .panel-primary > .panel-heading {
+  color: #fff;
+  background-color: #428bca;
+  border-color: #428bca;
+}
+
+.new-content .panel-success {
+  border-color: #d6e9c6;
+}
+
+.new-content .panel-success > .panel-heading + .panel-collapse .panel-body {
+  border-top-color: #d6e9c6;
+}
+.new-content .panel-success > .panel-footer + .panel-collapse .panel-body {
+  border-bottom-color: #d6e9c6;
+}
+
+.new-content .panel-info {
+  border-color: #bce8f1;
+}
+
+.new-content .panel-info > .panel-heading + .panel-collapse .panel-body {
+  border-top-color: #bce8f1;
+}
+
+.new-content .panel-info > .panel-footer + .panel-collapse .panel-body {
+  border-bottom-color: #bce8f1;
+}
+
+.new-content .panel-warning {
+  border-color: #faebcc;
+}
+
+.new-content .panel-warning > .panel-heading {
+  color: #8a6d3b;
+  background-color: #fcf8e3;
+  border-color: #faebcc;
+}
+
+.new-content .panel-warning > .panel-heading + .panel-collapse .panel-body {
+  border-top-color: #faebcc;
+}
+.new-content .panel-warning > .panel-footer + .panel-collapse .panel-body {
+  border-bottom-color: #faebcc;
+}
+
+.new-content .new-content .panel-danger {
+  border-color: #ebccd1;
+}
+
+.new-content .panel-danger > .panel-heading {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+}
+
+.new-content .panel-danger > .panel-heading + .panel-collapse .panel-body {
+  border-top-color: #ebccd1;
+}
+.new-content .panel-danger > .panel-footer + .panel-collapse .panel-body {
+  border-bottom-color: #ebccd1;
+}
+
+
+.new-content .panel-info > .panel-heading {
+  color: #31708f;
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+}
+
+.new-content .panel-success > .panel-heading {
+  color: #3c763d;
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+}   
+
+.new-content .panel-heading {
+  padding: 10px 15px;
+  border-bottom: 1px solid transparent;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}   
+
+.new-content .panel-title {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 16px;
+  color: inherit;
+}
+
+.new-content .panel-title > a {
+  color: inherit;
+}   
+
+.new-content .panel-body:before, .panel-body:after {
+    content: " ";
+    display: table;
+}   
+
+.new-content .panel-body:before, .panel-body:after {
+    content: " ";
+    display: table;
+}   
+
+.new-content .panel-body:after {
+    clear: both;
+}   
+
+.new-content .panel-body {
+  padding: 15px;
+}   
+
+.new-content .panel-footer {
+    background-color: #F5F5F5;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-top: 1px solid #DDDDDD;
+    padding: 10px 15px;
+}
+
+//CSS from v3 snipp
+.new-content .product-row {
+    margin-bottom: 14px;
+}
+
+.new-content .product-row:last-child {
+    margin-bottom: 0;
+}
+
+.new-content .dropdown-product {
+    margin: 13px 0;
+    padding: 5px;
+    height: 100%;
+}
+
+.new-content .dropdown-product:hover {
+    cursor: pointer;
+}
+
+.new-content .table-product-information > tbody > tr {
+    border-top: 1px solid rgb(221, 221, 221);
+}
+
+.new-content .table-product-information > tbody > tr:first-child {
+    border-top: 0;
+}
+
+
+.new-content .table-product-information > tbody > tr > td {
+    border-top: 0;
+}
+
+.new-content .error-template  {
+	padding: 40px 15px;text-align: center;
+}
+.new-content .error-actions { 
+	 margin-top:15px;margin-bottom:15px;
+}
+.new-content .error-actions .btn { 
+	margin-right:10px; 
+}
+
+.new-content .row{
+    margin-top:40px;
+    padding: 0 10px;
+}
+
+.new-content .clickable{
+    cursor: pointer;   
+}
+
+.new-content .panel-heading span {
+	margin-top: -20px;
+	font-size: 15px;
+}
+
+.new-content .the-price
+{
+    background-color: rgba(220,220,220,.17);
+    box-shadow: 0 1px 0 #dcdcdc, inset 0 1px 0 #fff;
+    padding: 20px;
+    margin: 0;
+}
+
+.new-content .the-price h1
+{
+    line-height: 1em;
+    padding: 0;
+    margin: 0;
+}
+
+.new-content .subscript
+{
+    font-size: 25px;
+}
+
+/* CSS-only ribbon styles    */
+.new-content .cnrflash
+{
+    /*Position correctly within container*/
+    position: absolute;
+    top: -9px;
+    right: 4px;
+    z-index: 1; /*Set overflow to hidden, to mask inner square*/
+    overflow: hidden; /*Set size and add subtle rounding  		to soften edges*/
+    width: 100px;
+    height: 100px;
+    border-radius: 3px 5px 3px 0;
+}
+.new-content .cnrflash-inner
+{
+    /*Set position, make larger then 			container and rotate 45 degrees*/
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 145px;
+    height: 145px;
+    -ms-transform: rotate(45deg); /* IE 9 */
+    -o-transform: rotate(45deg); /* Opera */
+    -moz-transform: rotate(45deg); /* Firefox */
+    -webkit-transform: rotate(45deg); /* Safari and Chrome */
+    -webkit-transform-origin: 100% 100%; /*Purely decorative effects to add texture and stuff*/ /* Safari and Chrome */
+    -ms-transform-origin: 100% 100%;  /* IE 9 */
+    -o-transform-origin: 100% 100%; /* Opera */
+    -moz-transform-origin: 100% 100%; /* Firefox */
+    background-image: linear-gradient(90deg, transparent 50%, rgba(255,255,255,.1) 50%), linear-gradient(0deg, transparent 0%, rgba(1,1,1,.2) 50%);
+    background-size: 4px,auto, auto,auto;
+    background-color: #aa0101;
+    box-shadow: 0 3px 3px 0 rgba(1,1,1,.5), 0 1px 0 0 rgba(1,1,1,.5), inset 0 -1px 8px 0 rgba(255,255,255,.3), inset 0 -1px 0 0 rgba(255,255,255,.2);
+}
+.new-content .cnrflash-inner:before, .cnrflash-inner:after
+{
+    /*Use the border triangle trick to make  				it look like the ribbon wraps round it's 				container*/
+    content: " ";
+    display: block;
+    position: absolute;
+    bottom: -16px;
+    width: 0;
+    height: 0;
+    border: 8px solid #800000;
+}
+.new-content .cnrflash-inner:before
+{
+    left: 1px;
+    border-bottom-color: transparent;
+    border-right-color: transparent;
+}
+.new-content .cnrflash-inner:after
+{
+    right: 0;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+}
+.new-content .cnrflash-label
+{
+    /*Make the label look nice*/
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    padding-bottom: 5px;
+    color: #fff;
+    text-shadow: 0 1px 1px rgba(1,1,1,.8);
+    font-size: 0.95em;
+    font-weight: bold;
+    text-align: center;
+}
+

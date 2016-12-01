@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+                           http://www.springframework.org/schema/util 
+                           http://www.springframework.org/schema/util/spring-util-3.1.xsd">
+
+  <!-- All emails -->
+  <bean id="sendBusinessInfoCompleteEmailAction" class="com.similan.process.action.SendEmailAction">
+    <property name="templateName" value="businessInfoCompleteEmail.vm" />
+  </bean>
+
+  <bean id="sendBusinessInviteBusinessInfoValidationEmailAction" class="com.similan.process.action.SendEmailAction">
+    <property name="templateName" value="sendBusinessCreateValidationToAdmin.vm" />
+  </bean>
+
+  <bean id="sendBusinessWelcomeEmailToBusinessAdminAction" class="com.similan.process.action.SendEmailAction">
+    <property name="templateName" value="sendBusinessCreateValidationToAdmin.vm" />
+    <property name="toEmailContextVar" value="adminEmail" />
+  </bean>
+
+  <bean id="sendInvitationSuccessEmailToInviterAction" class="com.similan.process.action.SendEmailAction">
+    <property name="templateName" value="sendInvitationSuccessEmailToInviter.vm" />
+  </bean>
+
+  <bean id="sendBusinessContactApprovalEmail" class="com.similan.process.action.SendEmailAction">
+    <property name="templateName" value="sendBusinessContactApprovalEmail.vm" />
+  </bean>
+
+  <bean id="sendBusinessConnectionApprovalStatusEmail" class="com.similan.process.action.SendEmailAction">
+    <property name="templateName" value="sendBusinessConnectionApprovalStatusEmail.vm" />
+  </bean>
+
+  <!-- All decisions -->
+  <bean id="businessInfoValidateDecision" class="com.similan.process.action.DecisionStateAction">
+    <property name="decisionMap">
+      <map>
+        <entry key="validNewBusiness" value="to_Send_Business_Invitation_Email" />
+        <entry key="validExistingBusiness" value="to_Send_Business_Contact_Approval_Email" />
+        <entry key="inValid" value="to_Business_Info_Validation_Err" />
+      </map>
+    </property>
+  </bean>
+
+  <bean id="businessAttributeValidateDecision" class="com.similan.process.action.DecisionStateAction">
+    <property name="decisionMap">
+      <map>
+        <entry key="valid" value="to_Send_Welcome_Email" />
+        <entry key="inValid" value="to_Decision_Business_Attribute_Validation_Err" />
+      </map>
+    </property>
+  </bean>
+
+  <bean id="businessAdminEmailValidateDecision" class="com.similan.process.action.DecisionStateAction">
+    <property name="decisionMap">
+      <map>
+        <entry key="valid" value="to_Send_Business_Welcome_Email" />
+        <entry key="inValid" value="to_error3" />
+      </map>
+    </property>
+  </bean>
+</beans>

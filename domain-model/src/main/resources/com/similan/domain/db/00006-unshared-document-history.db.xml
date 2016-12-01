@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd"
+	logicalFilePath="00006-unshared-document-history.db.xml">
+
+	<changeSet id="VelocityDocumentTemplate-collabSpaceDocumentUnshare"
+		author="suparna">
+		<preConditions onFail="MARK_RAN">
+			<sqlCheck expectedResult="0">
+				select count(*) from
+				VelocityDocumentTemplate
+				where name =
+				'collabSpaceDocumentUnshare.vm'
+			</sqlCheck>
+		</preConditions>
+		<insert tableName="VelocityDocumentTemplate">
+			<column name="name" value="collabSpaceDocumentUnshare.vm" />
+			<column name="templatetype" value="Email" />
+			<column name="templatecontent">
+<![CDATA[
+Document unshared from workspace ${workspaceName}!
+<html>
+#parse("emailTemplateStyle.vm")
+<body>
+#parse("emailHeader.vm")
+<h4 class="h4">
+Hi,
+</h4>
+<p>
+${documentName} <b><font color="red">unshared by ${participantName}</font></b> from workspace ${workspaceName}.
+</p>
+#parse("emailFooter.vm")
+</body>
+</html>
+]]>
+			</column>
+		</insert>
+		<insert tableName="VelocityTemplateAttribute">
+			<column name="attributes_id"
+				valueComputed="(select id from VelocityDocumentTemplate where name = 'managementSpaceDocumentInfoUpdate.vm')" />
+			<column name="name" value="workspaceName" />
+			<column name="sourcetype" value="Dynamic" />
+		</insert>
+		<insert tableName="VelocityTemplateAttribute">
+			<column name="attributes_id"
+				valueComputed="(select id from VelocityDocumentTemplate where name = 'managementSpaceDocumentInfoUpdate.vm')" />
+			<column name="name" value="documentName" />
+			<column name="sourcetype" value="Dynamic" />
+		</insert>
+		<insert tableName="VelocityTemplateAttribute">
+			<column name="attributes_id"
+				valueComputed="(select id from VelocityDocumentTemplate where name = 'managementSpaceDocumentInfoUpdate.vm')" />
+			<column name="name" value="participantName" />
+			<column name="sourcetype" value="Dynamic" />
+		</insert>
+	</changeSet>
+</databaseChangeLog>

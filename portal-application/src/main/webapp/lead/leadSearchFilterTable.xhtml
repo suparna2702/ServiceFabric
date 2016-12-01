@@ -1,0 +1,70 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:composite="http://java.sun.com/jsf/composite/composites"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<p:spacer height="10"/>
+	<p:dataTable id="leadSearchFilterTable" var="leadSearchFilter" 
+	                  value="#{leadSearchFiltersView.searchFilters}" 
+	                  styleClass="hide-column-names">
+	                
+	        <f:facet name="footer">
+                 <p:toolbar style="border:hidden; width:100px">  
+                     <p:toolbarGroup align="left">
+				           <p:commandButton id="searchFilterAddPanelBtn" value="New" icon="ui-icon-plus" 
+				                                 action="#{leadSearchFiltersView.createSearchFilter}" style="margin-left:2px;margin-top:5px;"/>
+			               <p:tooltip for="searchFilterAddPanelBtn" value="Create new search filter" 
+				                    showEffect="fade" hideEffect="fade" />
+				                    
+	                  </p:toolbarGroup>
+	             </p:toolbar>
+            </f:facet>
+            
+	        <p:column id="searchFilterName" styleClass="buttomBorder">
+	            <h:outputText value="Name : "/>
+	            <h:outputText rendered="#{!empty leadSearchFilter.name}" value="#{leadSearchFilter.name}" 
+	                          style="font-weight:bold"/>
+	            <br/>
+	            <br/>
+	            <h:outputText value="Active Since : "/>
+	            <h:outputText rendered="#{!empty leadSearchFilter.activeSince}" value="#{leadSearchFilter.activeSince}" 
+	                          style="font-weight:bold">
+	               <f:convertDateTime pattern="MM/dd/yyyy" />
+	            </h:outputText>
+	            <br/>
+	            <br/>
+	            <h:outputText value="Results : "/>
+	            <h:outputLink value="#{root}/lead/leadSearchFilteredAffiliateLeads.xhtml?fid=#{leadSearchFilter.id}">
+                     <h:outputText value="#{leadSearchFilter.lastResultCount}" 
+                                   style="font-weight:bold;text-decoration: underline"/>
+                </h:outputLink>
+	        </p:column>
+	        
+	        <p:column id="searchFilterDetails" styleClass="buttomBorder">
+               <h:outputLink value="#{root}/lead/leadSearchSettings.xhtml?fid=#{leadSearchFilter.id}">
+                     <p:graphicImage value="/images/monoicons/zoomIcon24.png" 
+								width="15" height="15" />
+               </h:outputLink>
+	        </p:column>
+	        
+	        <p:column id="searchFilterDelete" styleClass="buttomBorder">
+	           <h:commandLink actionListener="#{leadSearchFiltersView.deleteFilter(leadSearchFilter.id)}">
+				   <f:ajax execute="@this" render="leadSearchFilterTable" />
+				   <p:graphicImage value="/images/monoicons/deleteIcon24.png" width="15"
+					   height="15" />
+			   </h:commandLink>
+ 	        </p:column>
+	        
+	        <p:column id="searchFilterRefreshSearch" styleClass="buttomBorder">
+	           <h:outputLink value="#{root}/lead/leadSearchFilteredAffiliateLeads.xhtml?fid=#{leadSearchFilter.id}">
+                     <p:graphicImage value="/images/monoicons/refreshIcon24.png" 
+                                     width="15" height="15" />
+               </h:outputLink>
+	        </p:column>
+	        
+	 </p:dataTable>
+	
+</ui:composition>

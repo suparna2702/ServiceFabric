@@ -1,0 +1,20 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:fragment rendered="#{answerItem.rating eq 'true'}">
+		<h2>
+			<i class="fa fa-star-half-o fa-lg mrm"></i>#{answerItem.questionText}
+		</h2>
+
+		<h:form prependId="false" enctype="multipart/form-data">
+			<ui:repeat var="answerChoice" value="#{answerItem.answerChoices}">
+				<p:rating value="#{answerChoice.answerRating}" readonly="true" />
+			</ui:repeat>
+		</h:form>
+	</ui:fragment>
+
+</ui:composition>

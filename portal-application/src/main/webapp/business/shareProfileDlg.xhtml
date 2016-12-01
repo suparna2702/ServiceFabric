@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<p:dialog id="profileShareDialog" resizable="false" modal="true"
+		showEffect="explode" header="Share Profile"
+		widgetVar="dlgProfileShare">
+		<p:outputPanel id="profileSharePanel" layout="block">
+
+			<p:dataTable id="contactDataTable" var="contact" paginator="true"
+				paginatorPosition="bottom" paginatorAlwaysVisible="false" rows="5"
+				value="#{orgPublicView.contacts}" rowKey="#{contact.id}"
+				styleClass="hide-column-names"
+				selection="#{orgPublicView.selectedContacts}">
+
+				<p:column selectionMode="multiple" style="width:18px"
+					styleClass="buttomBorder" />
+
+				<p:column id="contactImage" style="width:50px"
+					styleClass="buttomBorder">
+					<p:graphicImage value="/spring/assets#{contact.imagePath}"
+						width="40" height="40" />
+				</p:column>
+
+				<p:column id="contactInfo" style="width:50px"
+					styleClass="buttomBorder">
+					<h:outputText value="#{contact.fullName}" />
+				</p:column>
+
+			</p:dataTable>
+          	  <p:commandButton value="Share" actionListener="#{orgPublicView.share()}" 
+          	                      onclick="dlgProfileShare.hide()" 
+          	                      process="@this profileSharePanel" 
+          	                      style="margin-top:10px"/>
+		</p:outputPanel>
+	</p:dialog>
+</ui:composition>

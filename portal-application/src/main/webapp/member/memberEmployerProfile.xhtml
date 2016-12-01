@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/basemenulayout.xhtml">
+
+	<ui:param name="newContent" value="true" />
+	<ui:param name="skipToolbar" value="true" />
+	<ui:define name="centerContent">
+
+		<div class="old-content">
+			<div class="row-fluid">
+				<div class="span12">
+					<h:form id="form" prependId="false" enctype="multipart/form-data">
+
+						<p:outputPanel id="memberCompanyProfilePanel" layout="block">
+							<p:panel style="border-style:hidden">
+								<h:panelGrid columns="2" style="margin-top:10px;">
+
+									<p:watermark for="company" value="You are a Business Member of" />
+									<p:tooltip for="company" value="You are a Business Member of"
+										showEffect="fade" hideEffect="fade" />
+									<h:outputLabel for="company" value="Company: " />
+									<h:inputText id="company" styleClass="input-block-level"
+										value="#{memberEmployerProfileDefineView.business.businessName}"
+										style="margin-left:5px;margin-bottom:10px" size="30"
+										disabled="#{memberEmployerProfileDefineView.showOrgCreateButton == 'true'}" required="true" />
+
+
+									<h:outputLabel for="memberRoleAssociation"
+										value="Employee Role: *" />
+									<p:selectOneMenu id="memberRoleAssociation"
+										value="#{memberEmployerProfileDefineView.business.memberOrgAssociationRoleType}"
+										style="margin-left:5px;margin-bottom:10px" size="30"
+										disabled="#{memberEmployerProfileDefineView.showOrgCreateButton == 'true'}">
+										<f:selectItem itemLabel="Admin" itemValue="Admin" />
+										<f:selectItem itemLabel="Sales" itemValue="Sales" />
+										<f:selectItem itemLabel="Marketing" itemValue="Marketing" />
+										<f:selectItem itemLabel="Unspecified" itemValue="Unspecified" />
+									</p:selectOneMenu>
+
+									<h:outputLabel
+										rendered="#{memberEmployerProfileDefineView.showOrgCreateButton == 'true'}"
+										for="businessPrimaryEmail" value="Primary Email: *" />
+									<h:inputText
+									    rendered="#{memberEmployerProfileDefineView.showOrgCreateButton == 'true'}"
+										id="businessPrimaryEmail" styleClass="input-block-level"
+										value="#{memberEmployerProfileDefineView.business.businessPrimaryEmail}"
+										style="margin-left:5px;margin-bottom:10px" size="30" />
+
+									<h:outputLabel
+										rendered="#{memberEmployerProfileDefineView.showOrgCreateButton == 'true'}"
+										for="businessPhoneNumber" value="Primary Number: *" />
+									<h:inputText styleClass="input-block-level"
+										rendered="#{memberEmployerProfileDefineView.showOrgCreateButton == 'true'}"
+										id="businessPhoneNumber"
+										value="#{memberEmployerProfileDefineView.business.businessPhone}"
+										style="margin-left:5px;margin-bottom:10px" size="30" />
+
+									<h:outputLabel
+										rendered="#{memberEmployerProfileDefineView.showOrgCreateButton == 'true'}"
+										for="businessAddrStreet" value="Street: *" />
+									<h:inputText styleClass="input-block-level"
+										rendered="#{memberEmployerProfileDefineView.showOrgCreateButton == 'true'}"
+										id="businessAddrStreet"
+										value="#{memberEmployerProfileDefineView.business.street}"
+										style="margin-left:5px;margin-bottom:10px" size="30" />
+
+									<h:outputLabel
+										rendered="#{memberEmployerProfileDefineView.showOrgCreateButton == 'true'}"
+										for="businessAddrCity" value="City: *" />
+									<h:inputText styleClass="input-block-level"
+										rendered="#{memberEmployerProfileDefineView.showOrgCreateButton == 'true'}"
+										id="businessAddrCity"
+										value="#{memberEmployerProfileDefineView.business.city}"
+										style="margin-left:5px;margin-bottom:10px" size="30" />
+
+									<h:outputLabel
+										rendered="#{memberEmployerProfileDefineView.showOrgCreateButton == 'true'}"
+										for="businessAddrCountrySelect" value="Country: " />
+									<p:selectOneMenu
+										rendered="#{memberEmployerProfileDefineView.showOrgCreateButton == 'true'}"
+										id="businessAddrCountrySelect"
+										style="margin-bottom:10px;margin-top:10px" effect="fade"
+										filter="true" filterMatchMode="startsWith"
+										styleClass="profile-input"
+										value="#{memberEmployerProfileDefineView.business.country}">
+										<f:selectItem itemLabel="Select One..." itemValue="#{null}" />
+										<f:selectItems value="#{countryBean.countryList}"
+											var="countryType" itemLabel="#{countryType.countryName}"
+											itemValue="#{countryType.countryName}" />
+										<p:ajax event="change" update="businessAddrStateSelectList"
+											execute="@this"
+											listener="#{memberEmployerProfileDefineView.getStatesForSelectedCountry}" />
+									</p:selectOneMenu>
+
+									<h:outputLabel
+										rendered="#{memberEmployerProfileDefineView.showOrgCreateButton == 'true'}"
+										for="businessAddrStateSelectList" value="State: " />
+									<p:selectOneMenu
+										rendered="#{memberEmployerProfileDefineView.showOrgCreateButton == 'true'}"
+										style="margin-bottom:10px;margin-top:10px"
+										styleClass="profile-input" effect="fade" filter="true"
+										filterMatchMode="startsWith" id="businessAddrStateSelectList"
+										value="#{memberEmployerProfileDefineView.business.state}">
+										<f:selectItem itemLabel="Select One..." itemValue="#{null}" />
+										<f:selectItems
+											value="#{memberEmployerProfileDefineView.selectedStateList}"
+											var="stateType" itemLabel="#{stateType.stateName}"
+											itemValue="#{stateType.stateName}" />
+									</p:selectOneMenu>
+
+									<h:outputLabel
+										rendered="#{memberEmployerProfileDefineView.showOrgCreateButton == 'true'}"
+										for="businessAddrZipCode" value="Zip Code: *" />
+									<h:inputText styleClass="input-block-level"
+										rendered="#{memberEmployerProfileDefineView.showOrgCreateButton == 'true'}"
+										id="businessAddrZipCode"
+										value="#{memberEmployerProfileDefineView.business.zipCode}"
+										style="margin-left:5px;margin-bottom:10px" size="30" />
+
+								</h:panelGrid>
+							</p:panel>
+
+							<p:commandButton id="orgAssociateBtn"
+								styleClass="btn btn-info btn-small"
+								rendered="#{memberEmployerProfileDefineView.showOrgCreateButton eq 'false'}"
+								value="Associate"
+								action="#{memberEmployerProfileDefineView.evaluateBusinessAssociation}"
+								style="margin-top:10px"
+								process="@this memberCompanyProfilePanel"
+								update="memberCompanyProfilePanel">
+								<p:ajax event="click"
+									listener="#{memberEmployerProfileDefineView.evaluateBusinessAssociation}"
+									update="memberCompanyProfilePanel" />
+							</p:commandButton>
+
+
+							<p:commandButton value="Create" id="orgCreateBtn"
+								styleClass="btn btn-info btn-small"
+								rendered="#{memberEmployerProfileDefineView.showOrgCreateButton eq 'true'}"
+								process="@this memberCompanyProfilePanel"
+								style="margin-left:10px;margin-top:10px"
+								actionListener="#{memberEmployerProfileDefineView.createBusinessForEmploee}">
+							</p:commandButton>
+
+						</p:outputPanel>
+
+					</h:form>
+				</div>
+			</div>
+		</div>
+
+	</ui:define>
+
+</ui:composition>

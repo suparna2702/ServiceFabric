@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui">
+
+	<div class="row-fluid">
+		<div class="span12">
+			<div class="old-content">
+
+				<h:form id="fileListForm" prependId="false"
+					enctype="multipart/form-data">
+
+					<p:progressBar widgetVar="pbAjax" ajax="true"
+						value="#{driveView.progress}" labelTemplate="{value}%"
+						styleClass="animated" global="false">
+						<p:ajax event="complete" oncomplete="uploadBtn.enable()" />
+					</p:progressBar>
+
+					<h:panelGrid id="upLoadFileList">
+						<p:dataGrid id="uploadTable" var="uploadFile"
+							value="#{driveView.uploadFileList}"
+							rendered="#{not empty driveView.uploadFileList}" paginator="true"
+							rows="5" columns="1" paginatorAlwaysVisible="false"
+							paginatorPosition="bottom" styleClass="ui-datagrid-no-border">
+
+							<p:panel id="uploadFileListItemPanel" styleClass="buttomBorder">
+								<h:panelGrid columns="3">
+									<p:panel styleClass="noBorder">
+										<p:selectBooleanCheckbox value="#{uploadFile.selected}" />
+									</p:panel>
+									<p:panel styleClass="noBorder">
+										<h:panelGrid columns="1">
+											<h:outputText value="#{uploadFile.fileName} "
+												style="font-weight:bold" />
+											<h:outputText
+												value="#{driveView.formatDate(uploadFile.lastModified)} " />
+										</h:panelGrid>
+									</p:panel>
+									<p:panel styleClass="noBorder">
+										<h:panelGrid>
+											<p:commandLink id="cancelFileUpload"
+												style="margin-right:5px; margin-top:10px"
+												action="#{driveView.deleteFile(uploadFile)}"
+												update=":fileListForm:upLoadFileList">
+												<p:graphicImage id="cancelFileUploadButton" library="img"
+													name="deleteFile.png" width="50"
+													styleClass="toolBarElement" height="50" />
+											</p:commandLink>
+
+											<p:tooltip for="cancelFileUpload" value="Delete File"
+												showEffect="fade" hideEffect="fade" />
+										</h:panelGrid>
+									</p:panel>
+								</h:panelGrid>
+							</p:panel>
+
+						</p:dataGrid>
+
+						<h:panelGroup>
+							<p:commandButton id="uploadSelectedFilesButton"
+								widgetVar="uploadBtn"
+								onclick="pbAjax.start();uploadBtn.disable();cancelFileBtn.disable()"
+								disabled="#{empty driveView.uploadFileList}" value="Save"
+								action="#{driveView.uploadSelectedFiles()}" process="@this"
+								style="margin-top:10px; margin-right:10px" />
+
+							<p:commandButton id="clearSelectedFilesButton"
+								widgetVar="cancelFileBtn" onclick="cancelFileBtn.disable()"
+								disabled="#{empty driveView.uploadFileList}" value="Clear"
+								action="#{driveView.cancelUpload()}" process="@this"
+								style="margin-top:10px" />
+
+						</h:panelGroup>
+					</h:panelGrid>
+				</h:form>
+			</div>
+		</div>
+	</div>
+
+</ui:composition>

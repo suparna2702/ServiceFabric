@@ -1,0 +1,503 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:composite="http://java.sun.com/jsf/composite/composites"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/basemenulayout.xhtml">
+    
+	<ui:define name="title">Lead Details</ui:define>
+	<ui:define name="centerContent">
+    <ui:include src="/lead/editLeadDialog.xhtml" />
+    
+     <p:confirmDialog id="deleteLeadDialog" message="Are you sure to delete leads?"  
+                header="Delete Lead" severity="alert" widgetVar="dlgDeleteLead">  
+                  
+        <p:commandButton id="deleteConfirm" value="Yes" 
+                         action="#{leadDetailView.deleteLead}"
+                         oncomplete="dlgDeleteLead.hide()"/>  
+        <p:commandButton id="deleteCancel" value="No" 
+                         onclick="dlgDeleteLead.hide()" type="button" />   
+                  
+    </p:confirmDialog>
+    <ui:include src="/lead/leadSubmissionDialog.xhtml" />
+	
+	  <p:spacer height="10"/>
+	  <ui:include src="/templates/menu/leadManagementMenu.xhtml" />
+	  <p:spacer height="20"/>
+	  
+      <p:panel id="leadDetailsPanel" style="background:rgb(252,244,254)">
+			<h:panelGrid columns="5" >
+				<h:outputLink value="#{root}/member/memberPublicProfile.xhtml"
+					rendered="#{!(leadDetailView.lead.fromSocialActorId eq null)}">
+					<f:param name="mid"
+						value="#{leadDetailView.lead.fromSocialActorId}" />
+					<p:graphicImage id="memberLeadPhoto"
+						value="/spring/assets#{leadDetailView.lead.leadPhoto}" width="80"
+						height="80" />
+				</h:outputLink>
+
+				<p:graphicImage id="leadPhoto"
+					rendered="#{leadDetailView.lead.fromSocialActorId eq null}"
+					value="/spring/assets#{leadDetailView.lead.leadPhoto}" width="80"
+					height="80" />
+
+				<h:panelGroup
+					rendered="#{!(leadDetailView.lead.fromSocialActorId eq null)}">
+					<h:outputLink value="#{root}/member/memberPublicProfile.xhtml"
+						rendered="#{!(leadDetailView.lead.fromSocialActorId eq null)}">
+						<f:param name="mid"
+							value="#{leadDetailView.lead.fromSocialActorId}" />
+						<h:outputText id="memberLeadName"
+							value="#{leadDetailView.lead.firstName} #{leadDetailView.lead.lastName}"
+							style="margin-left:10px;margin-bottom:10px;font-size:12pt;font-weight:bold;text-decoration:underline;" />
+					</h:outputLink>
+					<br />
+					<h:outputText id="memberLeadCompany"
+						rendered="#{!empty leadDetailView.lead.company}"
+						value="#{leadDetailView.lead.company}"
+						style="margin-left:10px;margin-bottom:10px;font-size:10pt;" />
+					<br></br>
+					<h:panelGrid
+						style="margin-left:10px;margin-bottom:10px;margin-top:5px;">
+						<h:outputLink value="#{root}/member/memberPublicProfile.xhtml"
+							rendered="#{!(leadDetailView.lead.fromSocialActorId eq null)}">
+							<f:param name="mid"
+								value="#{leadDetailView.lead.fromSocialActorId}" />
+							<h:outputText id="memberLeadEmail"
+								styleClass="similanPublicProfileTopTexts"
+								style="text-decoration:underline;"
+								value="#{leadDetailView.lead.contactEmail}" />
+						</h:outputLink>
+						<h:outputText id="memberLeadPhone"
+							styleClass="similanPublicProfileTopTexts"
+							value="#{leadDetailView.lead.contactPhone}" />
+					</h:panelGrid>
+				</h:panelGroup>
+
+
+				<h:panelGroup
+					rendered="#{leadDetailView.lead.fromSocialActorId eq null}">
+					<h:outputText id="leadName"
+						value="#{leadDetailView.lead.firstName} #{leadDetailView.lead.lastName}"
+						style="margin-left:10px;margin-bottom:10px;font-size:12pt;font-weight:bold" />
+					<br />
+					<h:outputText id="leadCompany"
+						rendered="#{!empty leadDetailView.lead.company}"
+						value="#{leadDetailView.lead.company}"
+						style="margin-left:10px;margin-bottom:10px;font-size:10pt;" />
+					<br></br>
+					<h:panelGrid
+						style="margin-left:10px;margin-bottom:10px;margin-top:5px;">
+						<h:outputText id="leadEmail"
+							styleClass="similanPublicProfileTopTexts"
+							value="#{leadDetailView.lead.contactEmail}" />
+						<h:outputText id="leadPhone"
+							styleClass="similanPublicProfileTopTexts"
+							value="#{leadDetailView.lead.contactPhone}" />
+					</h:panelGrid>
+				</h:panelGroup>
+				<p:panel
+					style="margin-left:20px;border:hidden;background:rgb(252,244,254)"
+					rendered="#{!empty leadDetailView.lead.location.country}">
+					<h:panelGrid>
+						<h:commandLink id="viewMapLink"
+							onclick="dlgLeadMapDialog.show();return false;">
+							<h:outputText id="leadLocation0"
+								styleClass="similanPublicProfileTopTexts"
+								value="#{leadDetailView.lead.location.number} " />
+							<h:outputText id="leadLocation1"
+								styleClass="similanPublicProfileTopTexts"
+								value="#{leadDetailView.lead.location.street} " />
+						</h:commandLink>
+						<h:outputText id="leadLocation2"
+							styleClass="similanPublicProfileTopTexts"
+							value="#{leadDetailView.lead.location.city} #{leadDetailView.lead.location.state}" />
+						<h:outputText id="leadLocation3"
+							styleClass="similanPublicProfileTopTexts"
+							value="#{leadDetailView.lead.location.country}  #{leadDetailView.lead.location.zipCode}" />
+					</h:panelGrid>
+				</p:panel>
+				<h:panelGroup>
+					<p:panel
+						rendered="#{leadDetailView.lead.leadTypeStr eq 'AcquiredLead'}"
+						style="margin-left:20px;border:hidden;background:rgb(252,244,254)">
+						<h:outputText id="enteredDate"
+							value="Entered: #{leadDetailView.convertDateToString(leadDetailView.lead.dateCreated)}"
+							styleClass="similanPublicProfileTopTexts">
+							    <f:convertDateTime pattern="MM/dd/yyyy" />
+						</h:outputText>
+						<br />
+						<h:outputText id="enteredBy"
+							value="By: #{leadDetailView.createdByName}"
+							styleClass="similanPublicProfileTopTexts" />
+						<br />
+						<h:outputText id="lastViewedDate"
+							value="Last viewed: #{leadDetailView.convertDateToString(leadDetailView.lead.dateLastViewed)}"
+							styleClass="similanPublicProfileTopTexts">
+							    <f:convertDateTime pattern="MM--dd-yyyy" />
+						</h:outputText>
+					</p:panel>
+				</h:panelGroup>
+			</h:panelGrid>
+
+			<p:toolbar style="border:hidden; margin-bottom:5px; margin-top:10px; background:none; width:200px">  
+			<p:toolbarGroup align="left">
+					<p:commandButton id="editLeadBtn" oncomplete="dlgEditLead.show()"
+						rendered="#{leadDetailView.lead.fromSocialActorId eq null}"
+						icon="ui-icon-plus" style="margin-left:2px;" />
+
+					<p:tooltip for="editLeadBtn" value="Edit a lead" 
+					                    showEffect="fade" hideEffect="fade" /> 			
+				 <p:commandButton id="leadSemdMsgBtn" oncomplete="dlgMessageLead.show()" icon="ui-icon-mail-closed">
+				 </p:commandButton>
+				 <p:tooltip for="leadSemdMsgBtn" value="Send message to #{leadDetailView.lead.name}" 
+						 showEffect="fade" hideEffect="fade" />
+				 
+				 <p:commandButton id="leadCreateNote" icon="ui-icon-comment" 
+									 oncomplete="dlgAddLeadNote.show()" style="margin-left:2px;">
+				 </p:commandButton>
+				 <p:tooltip for="leadCreateNote" value="Create a note" 
+						 showEffect="fade" hideEffect="fade" />
+						 
+				 <p:commandButton id="leadCreateActivity" oncomplete="dlgAddLeadActivity.show()" 
+								  icon="ui-icon-newwin" style="margin-left:2px;">
+				 </p:commandButton>
+				 <p:tooltip for="leadCreateActivity" value="Create an activity (phone, meeting)" 
+						 showEffect="fade" hideEffect="fade" />
+				 <p:commandButton id="leadSendPartnerBtn" oncomplete="dlgLeadSubmit.show()" 
+								 icon="ui-icon-person" 
+								 style="margin-left:2px;"/> 
+				 <p:tooltip for="leadSendPartnerBtn" value="Assign to partner" 
+										showEffect="fade" hideEffect="fade" />
+
+				 <p:commandButton id="leadDeleteBtn" 
+								 icon="ui-icon-close" onclick="dlgDeleteLead.show()"
+								 style="margin-left:2px;"/> 
+				 <p:tooltip for="leadDeleteBtn" value="Delete this lead" 
+										showEffect="fade" hideEffect="fade" />										
+			</p:toolbarGroup>
+        </p:toolbar>
+
+    </p:panel>
+   <p:panel 
+             style="border:hidden;margin-top:10px;margin-bottom:10px">
+    </p:panel>
+    <p:dialog id="leadActivityAddDialog" resizable="false" modal="false" showEffect="explode" 
+	                     header="Add Activity" widgetVar="dlgAddLeadActivity">
+       <p:outputPanel id="leadActivityAddDialogPanel" layout="block">
+	         
+           <h:panelGrid columns="2">
+                
+                <h3>Subject</h3> 
+	            <p:inputText id="subjectActivity" style="margin-bottom:10px; margin-top:10px" 
+	                                       value="#{leadDetailView.currentLeadActivity.subjectActivity}" size="45"/> 
+                <h3>Start Date</h3>  
+                <p:calendar value="#{leadDetailView.currentLeadActivity.startDate}" 
+                                   pattern="MM/dd/yyyy HH:mm" />
+
+                <h3>End Date</h3>  
+                <p:calendar value="#{leadDetailView.currentLeadActivity.endDate}" 
+                                   pattern="MM/dd/yyyy HH:mm" />
+
+                <h3>Due Date</h3>  
+                <p:calendar value="#{leadDetailView.currentLeadActivity.dueDate}" 
+                                   pattern="MM/dd/yyyy HH:mm" />
+                                   
+                <h3>Venue</h3> 
+	            <p:inputText  style="margin-bottom:10px; margin-top:10px" 
+	                                       value="#{leadDetailView.currentLeadActivity.venue}" size="45"/> 
+
+                <h3>Activity Type</h3>           
+                <p:selectOneRadio value="#{leadDetailView.currentLeadActivity.leadActivityType}"
+	                                style="margin-top:10px; margin-bottom:10px">
+	                 <f:selectItem itemLabel="Phone" itemValue="Phone" />
+	                 <f:selectItem itemLabel="Meeting" itemValue="Meeting" />
+	            </p:selectOneRadio>
+	            
+	            <h3>Priority</h3>           
+                <p:selectOneMenu value="#{leadDetailView.currentLeadActivity.leadActivityPriority}"
+	                                style="margin-top:10px; margin-bottom:10px">
+	                 <f:selectItem itemLabel="High" itemValue="High" />
+	                 <f:selectItem itemLabel="Medium" itemValue="Medium" />
+	                 <f:selectItem itemLabel="Low" itemValue="Low" />
+	            </p:selectOneMenu>
+	            
+	            <h3>Description</h3>
+	            <p:inputTextarea rows="6" cols="45"  id="activityDescription" style="margin-bottom:10px" 
+	                                   value="#{leadDetailView.currentLeadActivity.activityDescription}" /> 
+             </h:panelGrid>
+          	 <p:commandButton value="Add" action="#{leadDetailView.addLeadActivity}" oncomplete="dlgAddLeadActivity.hide()" 
+          	                      process="@this leadActivityAddDialogPanel" update="leadActivityTable"
+          	                      style="margin-top:10px"/>
+          
+       </p:outputPanel>
+    </p:dialog>
+    
+    <p:dialog id="leadNoteAddDialog" resizable="false" modal="false" showEffect="explode" 
+	                     header="Add Note" widgetVar="dlgAddLeadNote">
+       <p:outputPanel id="leadNoteAddPanel" layout="block">
+	         
+           <h:panelGrid columns="2">
+                
+                 <h:outputLabel for="subjectNote" value="Subject  "/>
+	             <p:inputText id="subjectNote" style="margin-bottom:10px; margin-top:10px;" 
+	                                       value="#{leadDetailView.currentLeadNote.leadNote.subject}" size="45"/> 
+	            
+	             <h:outputLabel for="messageNote" value="Message "/>
+	             <p:inputTextarea rows="6" cols="45"  id="messageNote" style="margin-bottom:10px" 
+	                                   value="#{leadDetailView.currentLeadNote.leadNote.message}" /> 
+	             
+             </h:panelGrid>
+          	 <p:commandButton value="Add" action="#{leadDetailView.addLeadNote}" oncomplete="dlgAddLeadNote.hide()" 
+          	                      process="@this leadNoteAddPanel" update="leadNoteTable"
+          	                      style="margin-top:10px"/>
+          
+       </p:outputPanel>
+    </p:dialog>
+    
+    <p:dialog id="leadMessageDialog" resizable="false" modal="false" showEffect="explode" 
+	                     header="Send Message" widgetVar="dlgMessageLead">
+       <p:outputPanel id="leadMessageDialogPanel" layout="block">
+	         
+           <h:panelGrid columns="2">
+                
+                 <h:outputLabel for="subjectMessage" value="Subject  "/>
+	             <p:inputText id="subjectMessage" style="margin-bottom:10px; margin-top:10px;" 
+	                                       value="#{leadDetailView.currentLeadMessage.leadNote.subject}" size="45"/> 
+	            
+	             <h:outputLabel for="messageContent" value="Message "/>
+	             <p:inputTextarea rows="6" cols="45"  id="messageContent" style="margin-bottom:10px" 
+	                                   value="#{leadDetailView.currentLeadMessage.leadNote.message}" /> 
+	             
+             </h:panelGrid>
+          	 <p:commandButton value="Send" action="#{leadDetailView.sendMessageToLead}" oncomplete="dlgMessageLead.hide()" 
+          	                      process="@this leadMessageDialogPanel" update="leadMessageTable"
+          	                      style="margin-top:10px"/>
+          
+       </p:outputPanel>
+    </p:dialog>
+	<p:separator
+		rendered="#{!empty leadDetailView.lead.leadTransferStatusList}" />
+
+	<p:panel
+		rendered="#{!empty leadDetailView.lead.leadTransferStatusList}">
+
+		<p:accordionPanel activeIndex="-1">
+			<p:tab title="Transfers">
+				<p:dataGrid id="leadTransferTable" var="leadTransferStatus"
+					value="#{leadDetailView.lead.leadTransferStatusList}"
+					paginator="true" rows="5" columns="1"
+					paginatorAlwaysVisible="false" paginatorPosition="bottom"
+					styleClass="ui-datagrid-no-border"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="5,10,15">
+
+					<p:panel id="leadTransferPanel" styleClass="buttomBorder">
+						<p:panel id="pendingTransferPanel"
+							style="border:hidden;margin-top:10px;margin-bottom:10px"
+							rendered="#{leadTransferStatus.transferState eq 'Pending'}">
+							<h:panelGrid columns="2">
+								<p:graphicImage value="/images/monoicons/attentionIcon24.png"
+									style="margin-right:10px; margin-bottom:5px" />
+								<h:outputText
+									value="A transfer is in progress to #{leadTransferStatus.transfereeName}"
+									style="font-size:8pt;" />
+							</h:panelGrid>
+
+						</p:panel>
+						<p:panel id="acceptedTransferPanel"
+							style="border:hidden;margin-top:10px;margin-bottom:10px"
+							rendered="#{leadTransferStatus.transferState eq 'Accepted'}">
+							<h:panelGrid columns="2">
+								<p:graphicImage value="/images/monoicons/checkMarkIcon24.png"
+									style="margin-right:10px; margin-bottom:5px" />
+								<h:outputText
+									value="Lead is transferred to #{leadTransferStatus.transfereeName}"
+									style="font-size:8pt;" />
+								<h:outputText value="#{leadTransferStatus.dateCreated}">
+									<f:convertDateTime pattern="MM/dd/yyyy" />
+								</h:outputText>
+							</h:panelGrid>
+						</p:panel>
+					</p:panel>
+				</p:dataGrid>
+			</p:tab>
+		</p:accordionPanel>
+	</p:panel>
+	<p:separator rendered="#{!empty leadDetailView.lead.response}"/>
+    <p:panel rendered="#{!empty leadDetailView.lead.response}">
+       <p:accordionPanel activeIndex="-1">
+		 <p:tab title="Lead Contact Respose">  
+		    <p:dataGrid id="leadCaptureSubmissionResponseDataTable" var="responseItem"
+		        value="#{leadDetailView.lead.response.questionResponse}"
+		        columns="1" styleClass="ui-datagrid-no-border">
+		
+			  <p:panel id="questionResponsePanel" styleClass="buttomBorder">
+				   <ui:include src="/utility/leadCaptureResponse.xhtml"/>
+			  </p:panel>
+	    
+	      </p:dataGrid>
+	    </p:tab>  
+	  </p:accordionPanel>
+    </p:panel>
+    
+    <h4>Notes</h4>
+    <p:separator />
+    <p:dataGrid id="leadNoteTable" var="leadNoteItem"
+		value="#{leadDetailView.lead.noteList}"
+		paginator="true" rows="5" columns="1" paginatorAlwaysVisible="false"
+		paginatorPosition="bottom"
+		styleClass="ui-datagrid-no-border"
+		paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+		rowsPerPageTemplate="5,10,15">
+		
+	  <p:panel id="leadNotePanel" styleClass="buttomBorder">
+ 		 <h:panelGrid id="leadNoteGridPanel" columns="2">
+ 		     <h:panelGrid>
+ 		         <h:outputLink value="#{root}/member/memberPublicProfile.xhtml?mid=#{leadNoteItem.commenterId}">
+		 		     <p:graphicImage id="leadNoteIcon" 
+	                    value="/spring/assets#{leadNoteItem.commenterPhoto}" 
+                        width="40" height="40" style="margin-right:10px; margin-bottom:10px"/>
+		         </h:outputLink>
+		 		 <h:outputLink rendered="#{leadNoteItem.commenterFirstName != 'null'}" 
+		                       value="#{root}/member/memberPublicProfile.xhtml?mid=#{leadNoteItem.commenterId}">
+		 		     <h:outputText value="#{leadNoteItem.commenterFirstName}  #{leadNoteItem.commenterLastName}" 
+								         style="margin-bottom:5px; margin-left:5px; font-size:8pt;color: gray;"/>
+		         </h:outputLink>
+ 		     </h:panelGrid>
+ 		     
+             <h:panelGroup>
+                    <p:inplace id="noteTitleEditor" editor="true" rendered="#{leadNoteItem.childNote eq 'false'}"
+	             	style="margin-bottom:5px; margin-right:10px; font-size:10pt;color: gray; font-weight:bold;">  
+ 					<p:ajax event="save" listener="#{leadDetailView.updateLeadNote(leadNoteItem)}" />
+                               	             	
+	                <p:inputText value="#{leadNoteItem.leadNote.subject}"  
+	                            label="text" style="margin-bottom:5px; margin-right:10px; font-size:10pt;color: gray; font-weight:bold;"/>  
+	             </p:inplace>  				 
+             
+	 		     <h:outputText value="#{leadNoteItem.leadNote.subject}" rendered="#{leadNoteItem.childNote eq 'true'}"
+						       style="margin-bottom:5px; margin-right:10px; font-size:10pt;color: gray; font-weight:bold;"/>
+			     <h:outputText value="#{leadNoteItem.leadNote.timeStamp}" 
+							                     style="margin-right:5px; font-size:10pt; color: gray">
+					  <f:convertDateTime pattern="MM/dd/yyyy" />
+			     </h:outputText>
+				 <br></br>
+				 <br></br>
+	             <p:inplace id="noteEditor" editor="true" rendered="#{leadNoteItem.childNote eq 'false'}"
+	             	style="font-size:8pt;">  
+ 					<p:ajax event="save" listener="#{leadDetailView.updateLeadNote(leadNoteItem)}" />
+	             	
+	                <p:inputText value="#{leadNoteItem.leadNote.message}"  
+	                            label="text" style="font-size:8pt;"/>  
+	             </p:inplace>  				 
+			     <h:outputText value="#{leadNoteItem.leadNote.message}" 
+			     	style="font-size:8pt;" rendered="#{leadNoteItem.childNote eq 'true'}"/>
+			 </h:panelGroup>
+ 		 </h:panelGrid>
+ 		 <p:commandButton icon="ui-icon-close" id="noteDeleteBtn"
+					update="leadNoteTable"
+					style="margin-top:10px"
+					action="#{leadDetailView.deleteLeadNote(leadNoteItem.uuId)}" 
+					rendered="#{leadNoteItem.childNote eq 'false'}"/>
+	  </p:panel>	    
+	</p:dataGrid>
+	
+	<p:spacer height="5" />
+	
+	<h4>Messages</h4>
+	<p:separator />
+	<p:dataGrid id="leadMessageTable" var="leadMessageItem"
+		value="#{leadDetailView.lead.messageList}"
+		paginator="true" rows="5" columns="1" paginatorAlwaysVisible="false"
+		paginatorPosition="bottom"
+		styleClass="ui-datagrid-no-border"
+		paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+		rowsPerPageTemplate="5,10,15">
+		
+	  <p:panel id="leadMessagePanel" styleClass="buttomBorder">
+ 		 <h:panelGrid id="leadMessageGridPanel" columns="2">
+ 		     <h:panelGrid>
+ 		         <h:outputLink value="#{root}/member/memberPublicProfile.xhtml?mid=#{leadMessageItem.commenterId}">
+		 		     <p:graphicImage id="leadNoteIcon" 
+	                    value="/spring/assets#{leadMessageItem.commenterPhoto}" 
+                        width="40" height="40" style="margin-right:10px; margin-bottom:10px"/>
+		         </h:outputLink>
+		 		 <h:outputLink rendered="#{leadMessageItem.commenterFirstName != 'null'}" 
+		                       value="#{root}/member/memberPublicProfile.xhtml?mid=#{leadMessageItem.commenterId}">
+		 		     <h:outputText value="#{leadMessageItem.commenterFirstName}  #{leadMessageItem.commenterLastName}" 
+								         style="margin-bottom:5px; margin-left:5px; font-size:8pt;color: gray;"/>
+		         </h:outputLink>
+ 		     </h:panelGrid>
+                        
+             <h:panelGroup>
+	 		     <h:outputText value="#{leadMessageItem.leadNote.subject}" 
+						                     style="margin-bottom:5px; margin-right:10px; font-size:10pt;color: gray; font-weight:bold;"/>
+				 <h:outputText value="#{leadMessageItem.leadNote.timeStamp}" style="margin-right:5px; font-size:10pt; color: gray">
+				     <f:convertDateTime pattern="MM/dd/yyyy" />
+				 </h:outputText>
+				 <br></br>
+				 <br></br>
+			     <h:outputText value="#{leadMessageItem.leadNote.message}" 
+						                     style="font-size:8pt;"/>
+			 </h:panelGroup>
+ 		 </h:panelGrid>
+	  </p:panel>	    
+	</p:dataGrid>
+	
+	<h4>Activities</h4>
+	<p:separator />
+	<p:dataGrid id="leadActivityTable" var="leadActivityItem"
+		value="#{leadDetailView.lead.activityList}"
+		paginator="true" rows="5" columns="1" paginatorAlwaysVisible="false"
+		paginatorPosition="bottom"
+		styleClass="ui-datagrid-no-border"
+		paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+		rowsPerPageTemplate="5,10,15">
+		
+	  <p:panel id="leadActivityPanel" styleClass="buttomBorder">
+ 		 <h:panelGrid id="leadAcivityGridPanel" columns="2">
+ 		     <p:graphicImage id="leadAcivityIcon" 
+	                    value="#{leadActivityItem.activityIcon}" style="margin-right:5px" />
+             <h:panelGroup>
+	 		     <h:outputText value="#{leadActivityItem.subjectActivity}" 
+						                     style="margin-bottom:10px; font-size:10pt;color: gray; font-weight:bold"/>
+				 <br></br>
+			     <h:outputText value="#{leadActivityItem.leadActivityPriority}" 
+						                     style="font-size:8pt;"/>
+			     <br></br>
+			     <h:outputText value="#{leadActivityItem.leadActivityType}" 
+						                     style="font-size:8pt;"/>
+				 <br></br>
+			     <h:outputText value="#{leadActivityItem.activityDescription}" 
+						                     style="font-size:8pt;"/>
+				 <br></br>
+				 <h:outputText value="#{leadActivityItem.dueDate}" style="font-size:8pt;">
+					<f:convertDateTime pattern="MM/dd/yyyy" />
+				 </h:outputText>
+			 </h:panelGroup>
+ 		 </h:panelGrid>
+	  </p:panel>	    
+	</p:dataGrid>
+			<p:dialog id="leadMapDialog" resizable="false" modal="true"
+			showEffect="explode" header="Add New Lead"
+			widgetVar="dlgLeadMapDialog">
+			<p:outputPanel id="leadMapDialogPanel" layout="block">
+				<p:gmap zoom="8" type="ROADMAP" style="width:300px;height:150px"
+					center="#{leadDetailView.mapCenterLat}, #{leadDetailView.mapCenterLong}"
+					mapTypeControl="false" navigationControl="false"
+					model="#{leadDetailView.simpleModel}" widgetVar="googleMap" />
+				<p:commandButton value="Close" id="closeLeadMapDialog"
+					onclick="dlgLeadMapDialog.hide()"
+					style="margin-left:10px;margin-top:10px" />
+			</p:outputPanel>
+		</p:dialog>
+	</ui:define>
+	<ui:define name="leftNavigationBar">
+		<ui:include src="/component/leftNavigationBar.xhtml" />
+	</ui:define>
+	
+</ui:composition>

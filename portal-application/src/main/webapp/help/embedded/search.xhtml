@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/basemenulayout.xhtml">
+
+	<ui:define name="title">Business Reach Home</ui:define>
+	<ui:define name="centerContent">
+	
+	<p:outputPanel id="businessEmbeddedPortalSettingsPanel" layout="block">
+	  <p:panel>
+	  
+	   <h1><p:graphicImage id="embeddedPortalHelp" value="/images/monoicons/helpMessageIcon32.jpg" style="float: left; margin-right: 10px;"/>
+        Embedding BusinessReach Partner Search into a web site</h1>
+      <p>BusinessReach Partner Search enable BusinessReach members who have signed up for Business 
+      profiles to embed two powerful features into their own web sites. These features enable businesses to setup partner
+      search pages simply by adding several lines of HTML into their web site. All information on the 
+      web site is then dynamically updated from the partner network set up on Business Reach.</p>
+
+      <p>Follow the simple steps below to set up Partner Search:</p>
+      <ol>
+        <li>Find your search wizards URLs under
+          Account &rrar; Embedded Portal Settings. Note that these
+          URLs are unique to each Business Profile set up on
+          BusinessReach.
+
+        </li>
+        <li>Select the Embedded Search URL and copy it onto
+          your clipboard.</li>
+        <li>Validate your URL by pasteing it into your browser
+          URL box. You should see a form similar to below:
+          <p style="text-align: center; background-color: #bed6f8; padding: 10px">
+          <p:graphicImage id="example" value="/images/embedded/help/search-example.png"/>
+          </p>
+          </li>
+        <li>If you do not see this page, go back to copy the
+          URL again or contact BusinessReach support at <a
+          href="support@businessreach-inc.com">support@businessreach-inc.com</a>
+          and provide your business email address as registered in
+          BusinessReach.
+
+        </li>
+        <li>Copy the HTML below, and replace the text YOUR URL
+          HERE with your copied URL. You may modify the <b>width</b>
+          and <b>height</b> fields to match the page on your site. 
+            <p style="background-color: #bed6f8; padding: 10px"><b><code>
+              &lt;iframe width="950" height="700" src="YOUR URL HERE"
+                frameborder="0" scrolling="auto"&gt;&lt;/iframe&gt;
+            </code></b></p>
+
+        </li>
+        <li>Embed the updated HTML from above into your web
+          site, to an area where there is a large open space.</li>
+        <li>Update your web site with the new HTML.</li>
+        <li>Test the embedded page. You should see the image
+          above again.</li>
+      </ol>
+    </p:panel>
+	</p:outputPanel>
+	
+	</ui:define>
+	
+	<ui:define name="leftNavigationBar">
+		<ui:include src="/component/leftNavigationBar.xhtml" />
+	</ui:define>
+	
+</ui:composition>

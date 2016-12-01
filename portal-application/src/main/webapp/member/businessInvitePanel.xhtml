@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui">
+
+
+		<p:outputPanel id="businessInvitePanel" layout="block"
+			rendered="#{memberInviteView.businessInviteCheckBox eq 'true'}">
+			<p:panel style="border-style:hidden">
+				<h:panelGrid columns="2">
+
+					<h:outputLabel for="business" value="Business: " />
+					<p:selectOneMenu id="business" value="#{memberInviteView.memberInvite.orgTag}" 
+					               converter="orgTagConverter" panelStyle="width:150px"  
+                                   effect="fade" var="orgTag" style="width:160px"  >
+                                   
+                        <p:ajax event="change" process="@this"
+							listener="#{memberInviteView.onBusinessNameChanged}"
+							update="businessEmailField confirmEmailLabel confirmEmailField" />
+                                     
+                        <f:selectItem itemLabel="Select One" itemValue="" />  
+                        <f:selectItems value="#{memberInviteView.orgList.orgList}" var="org" 
+                                         itemLabel="#{org.name}" itemValue="#{org.name}"/>  
+  
+                        <p:column>  
+                            <p:graphicImage id="orgBusinessPartnerPhoto"
+										value="/spring/assets#{memberInviteView.getOrganizationLogo(orgTag.logoLocation)}" width="35"
+										height="35" />
+                        </p:column>  
+  
+                        <p:column>  
+                           #{orgTag.name}"
+                        </p:column>
+                          
+                   </p:selectOneMenu>
+                   
+
+					<h:outputLabel for="businessEmailField" value="Email *: " />
+					<p:outputPanel id="businessEmailField">
+						<p:inputText id="disabledBusinessEmail"
+							value="#{memberInviteView.memberInvite.businessEmail}" size="45"
+							style="margin-top:10px;margin-bottom:10px" disabled="true"
+							rendered="#{memberInviteView.disableBusinessEmailField eq 'true'}" />
+						<p:inputText id="enabledBusinessEmail"
+							value="#{memberInviteView.memberInvite.businessEmail}"
+							match="confirmBusinessEmail" required="true" size="45"
+							style="margin-top:10px;margin-bottom:10px"
+							rendered="#{memberInviteView.disableBusinessEmailField eq 'false'}" />
+					</p:outputPanel>
+					<p:outputPanel id='confirmEmailLabel'>
+						<h:outputLabel for="confirmBusinessEmail"
+							value="Confirm Email *: "
+							rendered="#{memberInviteView.disableBusinessEmailField eq 'false'}" />
+					</p:outputPanel>
+					<p:outputPanel id='confirmEmailField'>
+						<p:inputText id="confirmBusinessEmail"
+							value="#{memberInviteView.memberInvite.confirmBusinessEmail}"
+							required="true" size="45"
+							style="margin-top:10px;margin-bottom:10px"
+							rendered="#{memberInviteView.disableBusinessEmailField eq 'false'}" />
+					</p:outputPanel>
+					<h:outputLabel for="businessAssociationType"
+						value="Association Type: " />
+					<p:selectOneRadio id="businessAssociationType"
+						value="#{memberInviteView.memberInvite.businessType}"
+						layout="pageDirection" style="margin-bottom:10px">
+						<f:selectItem itemLabel="Technology Partner"
+							itemValue="TECHNOLOGY_PARTNER" />
+						<f:selectItem itemLabel="Marketing Partner"
+							itemValue="MARKETING_PARTNER" />
+						<f:selectItem itemLabel="Other" itemValue="UNSPECIFIED" />
+					</p:selectOneRadio>
+				</h:panelGrid>
+			</p:panel>
+			<p:commandButton value="Invite" icon="ui-icon-extlink"
+				action="#{memberInviteView.businessInvite}"
+				process="@this businessInvitePanel" style="margin-top:10px"
+				update="businessInvitePanel" />
+
+		</p:outputPanel>
+		
+		 <p:outputPanel layout="block"
+			rendered="#{memberInviteView.businessInviteCheckBox eq 'false'}">
+			<h:outputText value="No Businesses are available to invite" /> 
+		</p:outputPanel>
+		
+</ui:composition>

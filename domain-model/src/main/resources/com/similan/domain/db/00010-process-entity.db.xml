@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd"
+  logicalFilePath="00010-process-entity.db.xml">
+
+  <changeSet id="BusinessProcessDefinition" author="enrique">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <tableExists tableName="BusinessProcessDefinition" />
+      </not>
+    </preConditions>
+    <renameTable newTableName="BusinessProcessDefinition" oldTableName="BusinessProcess"/>
+    <addColumn tableName="BusinessProcessDefinition">
+      <column name="type" type="varchar(63)">
+        <constraints nullable="false"/>
+      </column>
+    </addColumn>
+    <update tableName="BusinessProcessDefinition">  
+      <column name="name" value="signup.BasicMemberSignup" />
+      <where>name = 'basicMemberSignup'</where>
+    </update>
+    <dropColumn tableName="BusinessProcessDefinition" columnName="processtype"/>
+  </changeSet>
+  <changeSet id="BusinessProcessDefinition-fix" author="enrique">
+    <preConditions onFail="MARK_RAN">
+       <columnExists tableName="BusinessProcessDefinition" columnName="type" />
+    </preConditions>
+    <dropColumn tableName="BusinessProcessDefinition" columnName="type" />
+  </changeSet>
+  <changeSet id="BusinessProcess-table" author="enrique">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <tableExists tableName="BusinessProcess" />
+      </not>
+    </preConditions>
+    <createTable tableName="BusinessProcess">
+      <column name="id" type="bigint(20)" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false" />
+      </column>
+      <column name="uuid" type="varchar(36)">
+        <constraints nullable="false" unique="true" uniqueConstraintName="uuid"/>
+      </column>
+      <column name="businesslogo" type="varchar(255)" />
+    </createTable>
+  </changeSet>
+  <changeSet id="BaseSignUpProcess-table" author="enrique">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <tableExists tableName="BaseSignUpProcess" />
+      </not>
+    </preConditions>
+    <createTable tableName="BaseSignUpProcess">
+      <column name="id" type="bigint(20)">
+        <constraints primaryKey="true" nullable="false"
+          referencedTableName="BusinessProcess" referencedColumnNames="id"
+          foreignKeyName="BaseSignUpProcess_super_id" />
+      </column>
+      <column name="firstName" type="varchar(255)" />
+      <column name="lastName" type="varchar(255)" />
+      <column name="username" type="varchar(255)" />
+      <column name="email" type="varchar(255)" />
+    </createTable>
+  </changeSet>
+  <changeSet id="BasicMemberSignUpProcess-table" author="enrique">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <tableExists tableName="BasicMemberSignUpProcess" />
+      </not>
+    </preConditions>
+    <createTable tableName="BasicMemberSignUpProcess">
+      <column name="id" type="bigint(20)">
+        <constraints primaryKey="true" nullable="false"
+          referencedTableName="BaseSignUpProcess" referencedColumnNames="id"
+          foreignKeyName="BasicMemberSignUpProcess_super_id" />
+      </column>
+      <column name="password" type="varchar(255)" />
+      <column name="validationUrl" type="varchar(255)" />
+      <column name="member_memberId" type="bigint(20)" />
+    </createTable>
+  </changeSet>
+  <changeSet id="MockEmailSender" author="enrique">
+    <preConditions onFail="MARK_RAN">
+      <sqlCheck expectedResult="1">
+        select count(*) from ConfigurationParameter
+          where beanName = 'platformCommonSettings'
+          and propertyName = 'rootDataFileDirectory'
+          and value like '%/test/%';
+      </sqlCheck>
+    </preConditions>
+    <update tableName="ConfigurationParameter">
+      <column name="value" value='"mock"' />
+      <where>
+        beanName = 'emailInternalService' and propertyName = 'emailSenderId'
+      </where>
+    </update>
+  </changeSet>
+</databaseChangeLog>

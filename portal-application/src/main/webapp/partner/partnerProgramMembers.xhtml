@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:sec="http://www.springframework.org/security/tags"
+	xmlns:p="http://primefaces.org/ui">
+
+
+	<c:if test="#{not empty partnerProgramDetailView.partners}">
+		<ui:repeat var="partner" value="#{partnerProgramDetailView.partners}">
+
+			<div class="thumbnail span3" style="padding: 0">
+				<div style="padding: 4px">
+					<h:outputLink value="#{root}/business/businessPublicProfile.xhtml">
+						<f:param name="oid" value="#{partner.orgPartner.id}" />
+						<p:graphicImage id="businesslogo"
+							value="/spring/assets#{partner.orgPartner.logoLocation}"
+							styleClass="img-rounded img-responsive" />
+
+					</h:outputLink>
+
+				</div>
+				<div class="caption">
+					<c:if test="#{partner.orgPartner.name != 'null'}">
+						<h3>#{partner.orgPartner.name}</h3>
+					</c:if>
+					<c:if test="#{partner.orgPartner.description != 'null'}">
+						<p>#{partner.orgPartner.description}</p>
+					</c:if>
+
+				</div>
+			</div>
+			<!-- end panel -->
+
+		</ui:repeat>
+	</c:if>
+
+
+</ui:composition>

@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:dialog id="shareFileDialog" resizable="false" modal="true"
+		showEffect="explode" header="Share Content" widgetVar="shareFileDlg">
+
+		<p:outputPanel id="shareFilePanel"
+			rendered="#{not empty workspaceDetailView.selectableDocuments}">
+			<p:panel styleClass="noBorder">
+
+				<p:dataTable id="shareFileList" var="doc" paginator="true"
+					paginatorPosition="bottom" paginatorAlwaysVisible="false" rows="5"
+					value="#{workspaceDetailView.selectableDocuments}"
+					selection="#{workspaceDetailView.selectedDocs}"
+					styleClass="ui-datatable-no-border">
+
+					<p:column selectionMode="multiple" style="width:18px"
+						styleClass="buttomBorder" />
+
+
+					<p:column styleClass="buttomBorder">
+						<p:graphicImage
+							value="#{authenticatedMemberInfoView.getDocumentService().getDocumentIcon(doc.data.document.key)}"
+							width="60" height="60" />
+					</p:column>
+
+					<p:column styleClass="buttomBorder">
+						<h3>#{doc.data.document.key.name}</h3>
+					</p:column>
+
+				</p:dataTable>
+			</p:panel>
+
+			<p:commandButton id="shareFileBtn" oncomplete="shareFileDlg.hide();"
+				actionListener="#{workspaceDetailView.shareDocument}" value="Share"
+				icon="ui-icon-check" process="@this shareFilePanel" update="@all"
+				style="margin-right:5px;margin-top:5px">
+			</p:commandButton>
+		</p:outputPanel>
+
+		<p:outputPanel id="shareFilePanelEmpty"
+			rendered="#{empty workspaceDetailView.selectableDocuments}">
+			<p>No sharable content found in your Content Spaces. Please
+				upload content in your Content Spaces first</p>
+		</p:outputPanel>
+
+
+	</p:dialog>
+
+</ui:composition>

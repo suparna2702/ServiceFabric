@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:util="http://www.springframework.org/schema/util" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+  xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:jee="http://www.springframework.org/schema/jee"
+  xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/util
+		http://www.springframework.org/schema/util/spring-util-3.1.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+        http://www.springframework.org/schema/jdbc
+        http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd
+        http://www.springframework.org/schema/data/jpa
+        http://www.springframework.org/schema/data/jpa/spring-jpa-1.2.xsd
+        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd">
+
+  <context:component-scan base-package="com.similan.domain.config" />
+
+  <bean id="domain_propertyConfigurer" class="org.springframework.beans.factory.config.PropertyOverrideConfigurer">
+    <property name="ignoreResourceNotFound" value="true" />
+    <property name="location">
+      <value>classpath:/similan.properties</value>
+    </property>
+  </bean>
+
+  <bean id="liquibase" class="liquibase.integration.spring.SpringLiquibase">
+    <property name="dataSource" ref="domain_dataSource" />
+    <property name="changeLog" value="classpath:com/similan/domain/db-changelog.xml" />
+  </bean>
+
+  <bean id="managementtool_configurationManager" class="com.similan.framework.manager.management.ConfigurationManagerImpl" depends-on="liquibase">
+    <constructor-arg ref="domain_dataSource" />
+  </bean>
+
+  <context:spring-configured />
+  <context:annotation-config />
+
+  <!-- tx -->
+
+  <tx:annotation-driven transaction-manager="transactionManager" mode="proxy" proxy-target-class="true" />
+
+  <!-- source repositories -->
+
+  <jpa:repositories base-package="com.similan.domain.repository.*" entity-manager-factory-ref="domain_entityManagerFactory" />
+
+  <!-- Couple of List and Map Values -->
+  <util:list id="leadSearchTitles">
+    <value>Buyer</value>
+    <value>Manager</value>
+    <value>Director</value>
+    <value>VP</value>
+  </util:list>
+
+  <util:map id="leadSearchLeadColumnsMap" map-class="java.util.HashMap">
+    <!-- Map between String key and List -->
+    <entry key="Active" value-ref="leadSearchActiveLeadColumns" />
+    <entry key="Available" value-ref="leadSearchAvailableLeadColumns" />
+    <entry key="New" value-ref="leadSearchNewLeadColumns" />
+  </util:map>
+
+  <util:list id="leadSearchActiveLeadColumns">
+    <value>Name</value>
+    <value>Location</value>
+    <value>Last Activity</value>
+    <value>Age</value>
+    <value>Assigned</value>
+  </util:list>
+
+  <util:list id="leadSearchAvailableLeadColumns">
+    <value>Source</value>
+    <value>Title</value>
+    <value>Zip</value>
+    <value>Keyword</value>
+    <value>Qualification</value>
+    <value>Match</value>
+    <value>Date</value>
+  </util:list>
+
+  <util:list id="leadSearchNewLeadColumns">
+    <value>Source</value>
+    <value>Business Name</value>
+    <value>Name</value>
+    <value>Title</value>
+    <value>Location</value>
+    <value>Transfer Info</value>
+    <value>Keyword</value>
+    <value>Date</value>
+  </util:list>
+
+  <util:list id="crmleadImportExportFields">
+    <value>LastName</value>
+    <value>FirstName</value>
+    <value>Title</value>
+    <value>WorkCompany</value>
+    <value>AddressStreet</value>
+    <value>AddressCity</value>
+    <value>AddressState</value>
+    <value>AddressCountry</value>
+    <value>AddressZipcode</value>
+    <value>Email</value>
+    <value>WorkPhone</value>
+    <value>IndustryCategory</value>
+    <value>Status</value>
+    <value>Comments</value>
+    <value>PurchaseValue</value>
+    <value>InfoLastVerifiedBySource</value>
+    <value>InfoLastVerifiedByBR</value>
+    <value>Interests</value>
+    <value>LeadOrigin</value>
+    <value>Opportunity</value>
+    <value>ClosePeriod</value>
+  </util:list>
+</beans>

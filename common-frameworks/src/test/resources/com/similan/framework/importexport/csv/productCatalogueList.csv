@@ -1,0 +1,3 @@
+Kids,Cat0,null,Contains all infant toddler products,Sup001
+Infant,Cat1,Cat0,Contains all infant products,Sup001
+Toddler,Cat2,Cat1,Contains all toddler products,Sup001

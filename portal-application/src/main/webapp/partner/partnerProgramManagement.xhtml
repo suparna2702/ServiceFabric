@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/basemenulayout.xhtml">
+
+	<ui:param name="newContent" value="true" />
+	<ui:param name="skipToolbar" value="true" />
+
+	<ui:define name="title">Partner Programs</ui:define>
+	<ui:define name="centerContent">
+
+		<ui:include src="/partner/partnerProgramToolBar.xhtml" />
+
+		<c:if test="#{empty partnerProgramMainView.partnerPrograms}">
+			<div class="row-fluid well">
+				<div class="span12">
+					<p>No partner program defined</p>
+				</div>
+			</div>
+		</c:if>
+
+		<div class="row-fluid control-group">
+			<div class="span12">
+
+				<!-- List of partner programs -->
+				<div class="span9">
+					<ui:repeat var="partnerProgram"
+						value="#{partnerProgramMainView.partnerPrograms}">
+						<div class="row-fluid">
+							<div class="span12 well">
+								<div class="row-fluid control-group">
+
+									<!-- Partner Program Logo -->
+									<div class="span2">
+										<h:outputLink value="#{root}/partner/partnerProgramView.xhtml">
+											<f:param name="pid" value="#{partnerProgram.id}" />
+											<p:graphicImage
+												value="/spring/assets#{partnerProgram.logoLocation}"
+												width="120px" height="120px"
+												styleClass="img-rounded img-responsive" />
+										</h:outputLink>
+									</div>
+									<!-- Partner Program Logo -->
+
+									<!-- Name and description -->
+									<div class="span5">
+										<b>#{partnerProgram.name}</b>
+										<p>#{partnerProgram.description}</p>
+
+										<br></br> <br></br>
+
+										<!-- edit facility  -->
+										<div class="btn-toolbar">
+											<div class="btn-group">
+												<a
+													href="#{root}/partner/partnerProgramView.xhtml?pid=#{partnerProgram.id}"
+													class="btn btn-small btn-info" rel="tooltip"
+													data-placement="top" title="View Partner Program"> <i
+													class="fui-eye"></i> View
+												</a> <a
+													href="#{root}/partner/partnerProgramCreateEdit.xhtml?pid=#{partnerProgram.id}"
+													class="btn btn-small" rel="tooltip" data-placement="top"
+													title="Edit Partner Program"> <i class="fui-new"></i>
+													Edit
+												</a>
+
+												<c:if test="#{partnerProgram.workspace != 'null'}">
+													<a
+														href="#{workspaceView.collaborationWorkspaceView('collabspace/workspaceDetail.xhtml', partnerProgram.workspace.key)}"
+														class="btn btn-small btn-info" rel="tooltip"
+														data-placement="top" title="View Partner Workspace"> <i
+														class="fui-radio-checked"></i> Workspace
+													</a>
+												</c:if>
+
+											</div>
+										</div>
+										<!-- Edit -->
+
+									</div>
+									<!-- Name and description -->
+
+									<!-- Other statistics -->
+									<div class="span2">
+										<blockquote>
+											<p>
+												<br></br> <a
+													href="#{root}/partner/partnerProgramPartnershipDetail.xhtml?pid=#{partnerProgram.id}">
+													<i class="fui-user" rel="tooltip" title="Active Members"></i>
+													#{partnerProgram.totalActiveMembers}
+												</a>
+											</p>
+										</blockquote>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</ui:repeat>
+				</div>
+				<!-- List of partner programs -->
+
+			</div>
+		</div>
+
+		<script language="javascript">
+			$(document).ready(function() {
+				$("[rel='tooltip']").tooltip();
+			})
+		</script>
+
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/basemenulayout.xhtml">
+
+	<ui:define name="title">Script Execution Page</ui:define>
+	<ui:define name="centerContent">
+
+		<script type="text/javascript">
+			//<![CDATA[
+			function insertAtCursor(el, text) {
+				if (typeof (el) == 'string') {
+					el = document.getElementById(el);
+				}
+				var val = el.value, endIndex, range;
+				if (typeof el.selectionStart != "undefined"
+						&& typeof el.selectionEnd != "undefined") {
+					endIndex = el.selectionEnd;
+					el.value = val.slice(0, endIndex) + text
+							+ val.slice(endIndex);
+					el.selectionStart = el.selectionEnd = endIndex
+							+ text.length;
+				} else if (typeof document.selection != "undefined"
+						&& typeof document.selection.createRange != "undefined") {
+					el.focus();
+					range = document.selection.createRange();
+					range.collapse(false);
+					range.text = text;
+					range.select();
+				}
+			}
+			//]]>
+		</script>
+
+		<h3>Script Execution</h3>
+		<p:spacer height="10" />
+
+		<p:panel id="scriptToolsPanel" style="border:hidden">
+			<h:panelGrid>
+				<h:selectOneMenu effect="fold"
+					style="margin-right:10px; margin-bottom:10px; font-family: Consolas,'Lucida Console','DejaVu Sans Mono', monospace;"
+					onchange="insertAtCursor('script', this.value);">
+					<f:selectItem itemLabel="[Insert bean reference]" itemValue="" />
+					<f:selectItem
+						itemLabel="applicationContext [org.springframework.context.ApplicationContext]"
+						itemValue="applicationContext" />
+					<f:selectItem
+						itemLabel="console [com.similan.service.impl.ScriptServiceImpl.Console]"
+						itemValue="console" />
+					<f:selectItem
+						itemLabel="entityManager [javax.persistence.EntityManager]"
+						itemValue="entityManager" />
+					<f:selectItems value="#{scriptExecutionView.beanInfoList}"
+						var="beanInfo"
+						itemLabel="#{beanInfo.name}#{beanInfo.singleton ? '' : ' *'} [#{beanInfo.className}]"
+						itemValue="beans.#{beanInfo.name}" />
+				</h:selectOneMenu>
+				<h:selectOneMenu effect="fold"
+					style="margin-bottom:10px font-family: Consolas,'Lucida Console','DejaVu Sans Mono', monospace;"
+					onchange="insertAtCursor('script', this.value);">
+					<f:selectItem itemLabel="[Insert code snippet]" itemValue="" />
+					<f:selectItems value="#{scriptExecutionView.codeSnippetList}"
+						var="codeSnippet" itemLabel="#{codeSnippet.name}"
+						itemValue="#{codeSnippet.snippet}" />
+				</h:selectOneMenu>
+			</h:panelGrid>
+		</p:panel>
+		<p:panel id="scriptInputPanel" style="border:hidden">
+			<h:panelGrid>
+				<p:inputTextarea id="script"
+					value="#{scriptExecutionView.scriptText}"
+					style="margin-bottom:10px; font-family: Consolas,'Lucida Console','DejaVu Sans Mono', monospace;"
+					rows="24" cols="150" />
+			</h:panelGrid>
+		</p:panel>
+		<p:commandButton value="Execute"
+			action="#{scriptExecutionView.executeScript}"
+			process="@this scriptInputPanel"
+			update="scriptInputPanel scriptOutputPanel"
+			style="margin-top:10px;margin-bottom:10px" />
+		<p:panel id="scriptOutputPanel" style="border:hidden">
+			<p:inputTextarea id="output"
+				value="#{scriptExecutionView.scriptResult}"
+				style="margin-bottom:10px; font-family: Consolas,'Lucida Console','DejaVu Sans Mono', monospace;"
+				rows="24" cols="150" />
+		</p:panel>
+	</ui:define>
+</ui:composition>

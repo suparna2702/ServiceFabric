@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<p:dialog id="createTaskDialog" resizable="true" modal="true" showEffect="explode" 
+	                     header="Create Task" widgetVar="createTaskDlg">
+	                     
+	<p:outputPanel id="taskWindowPanel" style="noBorder">
+	
+	    <p:panel styleClass="noBorder">
+	       <h:panelGrid styleClass="span3,span2">
+		   
+	           <h:panelGrid columns="2" >
+	              <h:outputText value="Name " 
+			               style="font-weight:bold"/>
+	              <p:inputText value="#{workspaceTaskView.taskName}" 
+				                   style="margin-top:5px;margin-bottom:5px;margin-left:5px" size="20"/>
+				                   
+				  <h:outputText value="Description " 
+			               style="font-weight:bold"/>
+				  <p:inputTextarea value="#{workspaceTaskView.taskDescription}" 
+				                   style="margin-top:5px;margin-bottom:5px;margin-left:5px" columns="30"/>
+				                   
+				  <h:outputText value="Complete By " 
+			               style="font-weight:bold"/>
+				  <p:calendar value="#{workspaceTaskView.taskDuedate}" 
+				              style="margin-top:5px;margin-bottom:5px;margin-left:5px" showOn="button" />
+	           </h:panelGrid>
+	           
+	           <p:dataTable id="taskContactPanel" var="contact" paginator="true" paginatorPosition="bottom" 
+   	               paginatorAlwaysVisible="false" rows="10" 
+   	               value="#{workspaceTaskView.selectableParticipants}"
+   	               selection="#{workspaceTaskView.selectedParticipant}" 
+				   styleClass="ui-datatable-no-border">
+   	               
+   	              <p:column selectionMode="single" style="width:18px" styleClass="buttomBorder" />
+   	              <p:column styleClass="buttomBorder">  
+                       #{participant.fullName}  
+                  </p:column>  
+   	               
+   	           </p:dataTable>
+                
+	           </h:panelGrid>
+	    </p:panel>	 
+		<p:commandButton value="Create" style="margin-top:10px" 
+		                    actionListener="#{workspaceTaskView.createTask}" 
+		                    oncomplete="createTaskDlg.hide()"/>
+    </p:outputPanel>
+        
+    </p:dialog>
+</ui:composition>

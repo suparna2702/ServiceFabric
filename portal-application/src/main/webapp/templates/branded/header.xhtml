@@ -1,0 +1,18 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:sec="http://www.springframework.org/security/tags"
+  xmlns:p="http://primefaces.org/ui">
+
+  <ui:include src="/templates/branded/menu.xhtml" />
+
+  <p:outputPanel rendered="#{sec:areNotGranted('ROLE_MEMBER')}">
+    <div class="span5">
+      <h:graphicImage id="logo2" value="/spring/assets/#{workspaceDetailView.getWorkspaceOwnerLogo()}" width="200" height="60" style="margin-left:5px;margin-bottom:5px;" />
+    </div>
+
+    <div class="span5 offset2 thumbnail margin-top-large">
+      <ui:include src="/templates/loginInclude.xhtml" />
+    </div>
+
+  </p:outputPanel>
+
+</ui:composition>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process name="partnerProgramInvite" xmlns="http://jbpm.org/4.4/jpdl">
+   <start g="314,32,48,48" name="start1">
+      <transition g="-113,-10" name="to_Validate_Partner_Invite_Input" to="Validate_Partner_Invite_Input"/>
+   </start>
+   <custom expr="#{validatePartnerInviteInputAction}" g="218,147,240,73" name="Validate_Partner_Invite_Input">
+      <transition g="-127,-6" name="to_Validate_Partner_Program_Input_Decision" to="Validate_Partner_Program_Input_Decision"/>
+   </custom>
+   <custom g="178,429,320,72" expr="#{sendPartnerProgramInputFormEmailAction}" name="Send_Partner_Program_Input_Form">
+      <transition g="-147,-10" name="to_Wait_For_Partner_Program_Form_Input" to="Wait_For_Partner_Program_Form_Input"/>
+   </custom>
+   <state g="165,573,341,68" name="Wait_For_Partner_Program_Form_Input">
+      <transition g="-140,1" name="to Validate_Partner_Program_Response" to="Validate_Partner_Program_Response"/>
+   </state>
+   <decision g="314,295,48,48" name="Validate_Partner_Program_Input_Decision"> 
+      <handler expr="#{validatePartnerProgramInputDecision}"/> 
+      <transition g="-137,-10" name="to_Send_Partner_Program_Input_Form" to="Send_Partner_Program_Input_Form"/>
+      <transition g="-30,-25" name="to_cancel1" to="cancel1"/>
+   </decision>
+   <end-cancel g="558,294,48,48" name="cancel1"/>
+   <custom expr="#{sendPartnerProgramEvaluationEmailAction}" g="133,903,400,84" name="Send_Partner_Promgarm_Response_Evaluation_Email">
+      <transition g="-111,-9" name="to_Wait_For_Partnership_Approval" to="Wait_For_Partnership_Approval"/>
+   </custom>
+   <state g="196,1092,278,91" name="Wait_For_Partnership_Approval">
+      <transition g="-117,-37" name="to Evaluate_Partnership_Approval" to="Evaluate_Partnership_Approval"/>
+   </state>
+   <custom expr="#{partnerProgramApprovalResponseEvaluationAction}" g="751,1097,288,76" name="Evaluate_Partnership_Approval">
+      <transition g="-149,-15" name="to_Partnership_Approval_Response_Decision" to="Partnership_Approval_Response_Decision"/>
+   </custom>
+   <decision g="875,1265,48,48" name="Partnership_Approval_Response_Decision"> 
+      <handler expr="#{partnershipApprovalResponseDecision}"/> 
+      <transition g="-156,-3" name="to_Send_Partnership_Approval_Email" to="Send_Partnership_Approval_Email"/>
+      <transition g="-102,-3" name="to_Send_Partnership_Rejection_Email" to="Send_Partnership_Rejection_Email"/>
+   </decision>
+   <custom expr="#{sendPartnerProgramApprovalEmailAction}" g="499,1417,259,80" name="Send_Partnership_Approval_Email">
+      <transition g="-56,-25" name="to end1" to="end1"/>
+   </custom>
+   <custom expr="#{sendPartnerJoinRejectionEmailAction}" g="1010,1401,307,92" name="Send_Partnership_Rejection_Email">
+      <transition g="-27,-13" name="to end2" to="end2"/>
+   </custom>
+   <end g="604,1560,48,48" name="end1"/>
+   <end g="1150,1562,48,48" name="end2"/>
+   <custom expr="#{validatePartnerProgramResponseAction}" g="187,740,293,78" name="Validate_Partner_Program_Response">
+      <transition g="-127,-30" name="to_Partner_program_response_Decision" to="Partner_program_response_Decision"/>
+   </custom>
+   <decision g="749,750,48,48" name="Partner_program_response_Decision">
+      <handler expr="#{partnerProgramResponseDecision}"/> 
+      <transition g="-169,11" name="to_Send_Partner_Promgarm_Response_Evaluation_Email" to="Send_Partner_Promgarm_Response_Evaluation_Email"/>
+      <transition g="-38,-28" name="to_cancel2" to="cancel2"/>
+   </decision>
+   <end-cancel g="914,842,48,48" name="cancel2"/>
+</process>

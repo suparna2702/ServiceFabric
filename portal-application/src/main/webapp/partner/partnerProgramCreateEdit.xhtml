@@ -1,0 +1,241 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/basemenulayout.xhtml">
+
+	<ui:param name="newContent" value="true" />
+	<ui:param name="skipToolbar" value="true" />
+	<ui:define name="title">Create/ Edit Business Group</ui:define>
+	<ui:define name="centerContent">
+
+		<script>
+			function setConfirmUnload(on) {
+				window.onbeforeunload = on ? unloadMessage : null;
+			}
+
+			function unloadMessage() {
+				return ('You have entered new data on this page. '
+						+ 'If you navigate away from this page without '
+						+ 'first saving your data, the changes will be lost.');
+			}
+		</script>
+
+		<ui:include src="/partner/partnerProgramToolBar.xhtml" />
+
+		<div class="old-content">
+			<div class="row-fluid">
+				<div class="span12">
+					<h:form id="form" prependId="false" enctype="multipart/form-data">
+						<c:set var="addButton" scope="request" value="false" />
+
+						<p:outputPanel id="partnerProgramCreatePanel" layout="block">
+							<p:panel style="border-style:hidden">
+								<h:panelGroup id="programPhotoPanel" styleClass="image-thumb"
+									layout="block">
+
+									<p:graphicImage id="partnerLogo"
+										value="/spring/assets#{partnerView.logoLocation}" width="120"
+										height="120" />
+
+									<p:commandButton id="imageAddButton"
+										styleClass="imageAddButtonOverlay"
+										rendered="#{partnerView.partnerLogoExists == false}"
+										onclick="dlg.show();" title="Add parther program logo"
+										value="">
+										<f:param name="productId" value="20" />
+									</p:commandButton>
+									<p:commandButton id="imageUpdateButton"
+										styleClass="imageAddButtonOverlay"
+										rendered="#{partnerView.partnerLogoExists == true}"
+										onclick="confirmation.show();" value=""
+										title="Update partner program logo">
+										<f:param name="productId" value="20" />
+									</p:commandButton>
+									<p:commandButton id="imageDeleteButton"
+										onclick="deleteConfirmation.show();"
+										rendered="#{partnerView.partnerLogoExists == true}"
+										styleClass="imageRemoveButtonOverlay" value=""
+										title="Remove partner program logo">
+										<f:param name="productId" value="20" />
+									</p:commandButton>
+									<p:dialog id="photoUploadDialog" resizable="false" modal="true"
+										showEffect="explode" header="Upload Program Logo"
+										widgetVar="dlg">
+										<p:fileUpload
+											fileUploadListener="#{partnerView.handleFileUpload}"
+											auto="true" mode="advanced" oncomplete="dlg.hide();"
+											id="fileUpload" sizeLimit="1048576"
+											update="programPhotoPanel" render="programPhotoPanel"
+											allowTypes="/(\.|\/)(gif|jpe?g|png)$/">
+										</p:fileUpload>
+									</p:dialog>
+									<p:confirmDialog id="confirmDialog"
+										message="Are you sure you want to replace your existing picture"
+										header="Change Program Logo" severity="alert"
+										widgetVar="confirmation">
+										<p:commandButton id="confirm" value="Yes"
+											oncomplete="confirmation.hide(); dlg.show();" />
+										<p:commandButton id="decline" value="No"
+											onclick="confirmation.hide()" type="button" />
+									</p:confirmDialog>
+									<p:confirmDialog id="deleteConfirm"
+										message="Are you sure you want to delete your existing picture?"
+										header="Delete Program Logo" severity="alert"
+										widgetVar="deleteConfirmation">
+										<p:commandButton id="deletePhotoConfirm" immediate="true"
+											value="Yes" update="programPhotoPanel"
+											render="programPhotoPanel"
+											oncomplete="deleteConfirmation.hide();"
+											action="#{partnerView.deletePhoto}" />
+										<p:commandButton id="deleteLogoDecline" value="No"
+											onclick="deleteConfirmation.hide()" type="button" />
+									</p:confirmDialog>
+								</h:panelGroup>
+
+
+								<p:separator></p:separator>
+								<h:panelGrid columns="2" style="margin-top:30px;">
+									<h3>Program Name</h3>
+									<h:inputText id="partnerProgramName"
+										styleClass="input-block-level" style="margin-bottom:5px"
+										value="#{partnerView.newProgram.name}" size="45"
+										disabled="#{partnerView.existingProgram eq 'true'}" />
+
+									<h3>Program Description</h3>
+									<h:inputTextarea id="partnerProgramDescription"
+										styleClass="input-block-level" style="margin-bottom:5px"
+										rows="5" cols="45"
+										value="#{partnerView.newProgram.description}" />
+
+									<h3>Program Details</h3>
+									<p:editor id="partnerProgramDetails"
+										style="margin-bottom:5px;margin-top:5px"
+										styleClass="input-block-level"
+										value="#{partnerView.newProgram.programDetails}" width="400" />
+
+								</h:panelGrid>
+
+								<p:separator></p:separator>
+
+								<p:outputPanel id="partnerProgramBenifitPanel">
+									<h:panelGrid columns="2">
+										<h3>Benefit Name</h3>
+										<h:inputText id="partnerProgramBenifitName"
+											style="margin-bottom:5px" styleClass="input-block-level"
+											value="#{partnerView.newBenifit.benifitName}" size="45" />
+
+										<h3>Benefit Detail</h3>
+										<h:inputTextarea id="partnerProgramBenifitDetail"
+											styleClass="input-block-level" style="margin-bottom:5px"
+											rows="5" cols="45"
+											value="#{partnerView.newBenifit.benifitDetails}" />
+									</h:panelGrid>
+									<p:commandButton id="partnerProgramBenifitAddBtn"
+										style="margin-bottom:20px; margin-top:10px"
+										value="Add Benefit" icon="ui-icon-plus"
+										action="#{partnerView.addBenefit}"
+										update="partnerProgramBenifitPanel" />
+
+									<h4>Benefit List</h4>
+									<p:spacer height="5" />
+									<p:dataGrid id="partnerProgramBenefitDataTable" var="benefit"
+										rendered="#{not empty partnerView.newProgram.partnerProgramBenifits}"
+										value="#{partnerView.newProgram.partnerProgramBenifits}"
+										columns="1" styleClass="ui-datagrid-no-border">
+
+										<p:panel id="partnerProgramBenefitItemPanel"
+											styleClass="buttomBorder">
+											<h:panelGrid columns="2">
+												<h:outputLabel for="benefitName" value="Benefit Name: " />
+												<h:outputText id="benefitName"
+													value="#{benefit.benifitName}" />
+
+												<h:outputLabel for="benefitDetails"
+													value="Benefit Details: " />
+												<h:outputText id="benefitDetails"
+													value="#{benefit.benifitDetails}" />
+											</h:panelGrid>
+										</p:panel>
+
+									</p:dataGrid>
+								</p:outputPanel>
+
+								<p:separator></p:separator>
+								<h:panelGrid style="margin-bottom:10px;margin-top:30px;">
+
+									<p:outputPanel id="partnerProgramRelCategoryPanel">
+										<h:panelGrid columns="2">
+											<h3>Category Type</h3>
+											<p:selectOneRadio id="partnerProgramRelCategoryType"
+												value="#{partnerView.newCategory.partnerRelationshipCategoryType}"
+												layout="pageDirection" style="margin-bottom:10px">
+												<f:selectItem itemLabel="Gold" itemValue="Gold" />
+												<f:selectItem itemLabel="Silver" itemValue="Silver" />
+												<f:selectItem itemLabel="Bronze" itemValue="Bronze" />
+												<f:selectItem itemLabel="Custom" itemValue="Custom" />
+											</p:selectOneRadio>
+
+											<h3>Category Custom Name</h3>
+											<h:inputText id="partnerProgramRelCategoryCustomName"
+												styleClass="input-block-level" style="margin-bottom:5px"
+												value="#{partnerView.newCategory.customName}" size="45" />
+
+											<h3>Category Detail</h3>
+											<h:inputTextarea id="partnerProgramRelCategoryDetail"
+												styleClass="input-block-level" style="margin-bottom:5px"
+												rows="5" cols="45"
+												value="#{partnerView.newCategory.relationshipDetails}" />
+										</h:panelGrid>
+										<p:commandButton id="partnerProgramRelCategoryAddBtn"
+											style="margin-bottom:20px; margin-top:10px"
+											value="Add Category" icon="ui-icon-plus"
+											action="#{partnerView.addCategory}"
+											update="partnerProgramRelCategoryPanel" />
+
+										<h4>Category List</h4>
+										<p:spacer height="5" />
+										<p:dataGrid id="partnerProgramRelCategoryDataTable"
+											var="category"
+											rendered="#{not empty partnerView.newProgram.partnerRelationshipCategory}"
+											value="#{partnerView.newProgram.partnerRelationshipCategory}"
+											columns="1" styleClass="ui-datagrid-no-border">
+
+											<p:panel id="partnerProgramRelCategoryPanel"
+												styleClass="buttomBorder">
+												<h:panelGrid columns="2">
+													<h:outputLabel for="categoryType" value="Category Type: " />
+													<h:outputText id="categoryType"
+														value="#{category.partnerRelationshipCategoryType.name()}" />
+
+													<h:outputLabel for="categoryDetails"
+														value="Category Details: " />
+													<h:outputText id="categoryDetails"
+														value="#{category.relationshipDetails}" />
+												</h:panelGrid>
+											</p:panel>
+
+										</p:dataGrid>
+									</p:outputPanel>
+								</h:panelGrid>
+							</p:panel>
+
+							<p:commandButton id="partnerProgramSetupBtn" value="Submit"
+								action="#{partnerView.savePartnerProgram}"
+								styleClass="btn btn-info btn-small"
+								process="@this partnerProgramCreatePanel"
+								update="partnerProgramCreatePanel" />
+
+						</p:outputPanel>
+
+					</h:form>
+				</div>
+			</div>
+		</div>
+
+	</ui:define>
+</ui:composition>

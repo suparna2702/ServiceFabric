@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd"
+	logicalFilePath="com/similan/domain/db/00018-partner-admin-invitereminder-notification-emialtemplate-fix.db.xml">
+
+	<changeSet
+		id="VelocityDocumentTemplate-partnerAdminReminderNotification-TemaplateUpdate"
+		author="suparna">
+
+		<preConditions onFail="MARK_RAN">
+			<sqlCheck expectedResult="1">
+				select count(*) from
+				VelocityDocumentTemplate
+				where
+				name='partnerAdminReminderNotification.vm'
+			</sqlCheck>
+		</preConditions>
+
+		<update tableName="VelocityDocumentTemplate">
+			<column name="templatecontent">
+        
+       <![CDATA[
+Partner Program Invitation Reminder Notification!
+<html>
+#parse("emailTemplateStyle.vm")
+<body>
+
+#parse("emailHeader.vm")
+
+<h4 class="h4">
+  Hi
+</h4> 
+
+  <p>
+    A reminder notification email was sent to join <strong>Partner Portal</strong> to the following partners.
+  </p>
+  
+  <h3>Partner Reminder List</h3>
+  
+  <table style="border-style: solid;border-color: gray;">
+    <!-- Headers -->
+	<tr style="border-style: solid;border-color: gray;">
+		<th>Partner</th>
+		<th>Contact</th>
+		<th>Email</th>
+	</tr>
+	
+    #foreach( $reminder in $partnerReminderList )
+       <tr style="border-style: solid;border-color: gray;">
+         <td>$reminder.inviteeBusiness</td>
+         <td>$reminder.inviteeFirstName  $reminder.inviteeLastName</td>
+         <td>$reminder.inviteeEmail</td>
+       </tr>
+    #end
+  </table>
+ 
+#parse("emailFooter.vm")
+
+</body>
+</html>
+
+]]>
+
+			</column>
+			<where>name = 'partnerAdminReminderNotification.vm'</where>
+		</update>
+	</changeSet>
+
+</databaseChangeLog>

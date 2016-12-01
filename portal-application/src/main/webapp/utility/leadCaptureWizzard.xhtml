@@ -1,0 +1,156 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:composite="http://java.sun.com/jsf/composite/composites"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/basemenulayout.xhtml">
+
+	<ui:define name="title">Lead Capture Wizzard</ui:define>
+	<ui:define name="centerContent">
+	
+   <script>
+
+       function setConfirmUnload(on)
+       {
+           window.onbeforeunload = on ? unloadMessage : null;
+       }
+
+       function unloadMessage()
+       {
+           return ('You have entered new data on this page. ' +
+                   'If you navigate away from this page without ' +
+                   'first saving your data, the changes will be lost.');
+       }
+
+    </script>
+    	
+	   <ui:include src="/utility/leadCaptureWizzardPreview.xhtml"/>
+	   
+	   <p:outputPanel id="leadCaptureOutputPanel" layout="block">	       
+	       <p:panel id="leadCapturePanel">
+	       
+	          <p:graphicImage id="leadWizrdHelp" value="/images/monoicons/helpMessageIcon32.jpg" 
+	                          style="float: right"/>
+			  <p:overlayPanel id="leadWizrdHelpPanel" 
+		             for="leadWizrdHelp" showEffect="drop" hideEffect="fold" 
+		             showEvent="mouseover" hideEvent="mousedown"  
+                     styleClass="ui-helper-clearfix">
+                            
+                <p:panel style="border:hidden">
+                  <p>In future help on Lead Capture 
+				    Wizard will be shown</p>  
+                </p:panel>
+              </p:overlayPanel>
+              
+	          <h4>Enter Question</h4>
+              <p:spacer height="5" />
+	          
+	          <h:panelGrid columns="2">
+		           <h:outputLabel for="leadCaptureQuestion" 
+		                          style="margin-bottom:10px; margin-right:5px"  value="Question "/>
+		           <p:inputText id="leadCaptureQuestion" onkeypress="setConfirmUnload(true);"
+		                         value="#{leadCaptureWizzardCreateView.leadCaptureQuestion.questionText}" 
+		                         style="margin-bottom:10px; margin-right:5px" size="45"/>
+		                         
+		           <h:outputLabel for="leadCaptureQuestionType" 
+		                          style="margin-bottom:10px; margin-right:5px"  value="Question Type "/>
+		           <p:selectOneRadio id="leadCaptureQuestionType" onchange="setConfirmUnload(true);"
+		                             value="#{leadCaptureWizzardCreateView.leadCaptureQuestion.questionType}" 
+		                             layout="pageDirection">  
+	                   <f:selectItem itemLabel="Single Choice" itemValue="SingleChoice" />  
+	                   <f:selectItem itemLabel="Multi Choice" itemValue="MultiChoice" />  
+	                   <f:selectItem itemLabel="Text Input" itemValue="TextInput" /> 
+	                   
+	                   <p:ajax event="change" update="leadCaptureQuestionChoicePanel" execute="@this"
+	                         listener="#{leadCaptureWizzardCreateView.showHideChoice}"/>
+	                          
+	               </p:selectOneRadio>
+	           </h:panelGrid>
+               
+               <p:outputPanel id="leadCaptureQuestionChoicePanel">
+                   <p:separator rendered="#{leadCaptureWizzardCreateView.showChoice == 'true'}" />
+                   <p:spacer height="10" rendered="#{leadCaptureWizzardCreateView.showChoice == 'true'}" />
+	               <h:outputText rendered="#{leadCaptureWizzardCreateView.showChoice == 'true'}" 
+                               value="Enter Question Choice"
+			                   style="font-size:10pt;color:gray"/>
+	               <p:spacer rendered="#{leadCaptureWizzardCreateView.showChoice == 'true'}" height="5" />
+	               
+	               <h:panelGrid rendered="#{leadCaptureWizzardCreateView.showChoice == 'true'}">
+	               
+	                   <h:panelGroup>
+			               <h:outputLabel for="leadCaptureQuestionChoice" 
+				                          style="margin-top:15px; margin-bottom:10px; margin-right:5px"  value="Choice"/>
+				           <p:inputText id="leadCaptureQuestionChoice" onkeypress="setConfirmUnload(true);"
+			                         value="#{leadCaptureWizzardCreateView.questionChoice}" 
+			                         style="margin-bottom:10px; margin-right:5px" size="45"/>
+				           <p:commandButton id="leadCaptureQuestionChoiceAdd" icon="ui-icon-plus" style="margin-bottom:15px" 
+				                            title="Add choice" action="#{leadCaptureWizzardCreateView.addQuestionChoice}" 
+				                            process="@this leadCaptureQuestionChoicePanel" update="leadCaptureQuestionChoicePanel" />
+			           </h:panelGroup>
+			           
+			           <p:dataTable id="leadCaptureQuestionChoiceDataTable" 
+	                       styleClass="hide-column-names"
+	                       var="questionChoice"  
+	                       value="#{leadCaptureWizzardCreateView.leadCaptureQuestion.questionChoices}">
+	                       
+				        <p:column styleClass="buttomBorder">
+				         <p:inplace editor="true">
+				            <h:inputText value="#{questionChoice.questionChoiceText}" onkeypress="setConfirmUnload(true);" size="50"/>
+				         </p:inplace>
+				        </p:column>
+				        
+				        <p:column styleClass="buttomBorder">
+				           <p:commandButton id="deleteQuestionChoiceBtn" onclick="setConfirmUnload(true);"
+				                            action="#{leadCaptureWizzardCreateView.deleteQuestionChoice(questionChoice.serialId)}" 
+				                            icon="ui-icon-close" style="width:20px;height:20px;margin-left:10px;" update="leadCaptureQuestionChoiceDataTable" 
+				               process="@this leadCaptureQuestionChoiceDataTable"/> 
+				        </p:column>
+				        
+				      </p:dataTable>
+				      
+	               </h:panelGrid>
+               </p:outputPanel>
+               
+	           <p:commandButton id="leadCaptureQuestionAdd" style="margin-bottom:20px; margin-top:10px" value="Add Question" onclick="setConfirmUnload(true);"
+	                            icon="ui-icon-plus" action="#{leadCaptureWizzardCreateView.addQuestion}" update="leadCapturePanel"/>
+	                            
+	           <p:separator />
+	           <p:spacer height="10" />
+	           <h4>Question List</h4>
+	           <p:spacer height="5" />
+	           
+	           <p:dataGrid id="leadCaptureQuestionDataTable" var="question"
+					value="#{leadCaptureWizzardCreateView.captureWizzard.questions}"
+					columns="1"	styleClass="ui-datagrid-no-border">
+
+					<p:panel id="leadWizzardQuestionItemPanel" styleClass="buttomBorder">
+						<ui:include src="/utility/leadWizzardQuestionMultiChoice.xhtml" />
+						<ui:include src="/utility/leadWizzardQuestionSingleChoice.xhtml" />
+						<ui:include src="/utility/leadWizzardQuestionTextInput.xhtml" />
+						
+						<h:commandLink id="deleteQuestionBtn" onclick="setConfirmUnload(true);"
+								actionListener="#{leadCaptureWizzardCreateView.deleteQuestion(question.questionUUID)}">
+								<f:ajax execute="@this" render="leadCaptureQuestionDataTable" />
+								<p:graphicImage id="deleteQuestionButton"
+									value="/images/monoicons/deleteIcon24.png" width="15" height="15" />
+			            </h:commandLink>
+					</p:panel>
+
+		       </p:dataGrid>
+		       
+	       </p:panel>
+	   </p:outputPanel>
+	   
+	   <p:commandButton id="leadCaptureWizzardSave" icon="ui-icon-disk" onclick="setConfirmUnload(false);"
+	                    style="margin-top:10px; margin-right:20px" value="Save" 
+		                action="#{leadCaptureWizzardCreateView.saveWizzard}"/>
+	                            
+	</ui:define>
+	
+	<ui:define name="leftNavigationBar">
+		<ui:include src="/component/leftNavigationBar.xhtml" />
+	</ui:define>
+</ui:composition>

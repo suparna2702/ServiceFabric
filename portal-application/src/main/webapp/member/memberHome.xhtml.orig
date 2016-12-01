@@ -1,0 +1,205 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/basemenulayout.xhtml">
+	
+	<ui:param name="newContent" value="true" />
+	<ui:param name="skipToolbar" value="true" />
+
+	<ui:define name="title">Business Reach Home</ui:define>
+	<ui:define name="centerContent">
+		<p:outputPanel id="memberHome">
+			<h:form styleClass="caption">
+				<div class="row-fluid control-group">
+					<div class="span12">	
+						<div class="row-fluid">
+<<<<<<< HEAD
+							
+							<div class="span12">
+								<div id="formBig" class="row-fluid control-group">
+								</div>
+								
+								<div class="row-fluid control-group">
+								    <div class="span6">   
+								    
+								    	
+								        <div id="formSmall" class="row-fluid control-group">
+								            <div class="bodyForm span12 thumbnail control-group">
+								            
+								            	<div class="span3">
+													<p:graphicImage id="memberPhoto" 
+										                    value="/spring/assets#{memberView.memberPhoto}" styleClass="imgMember caption"/>
+										            <p class="text-info">
+														<h:outputText value="#{memberView.member.firstName}  #{memberView.member.lastName}" styleClass="memberName input-block-level"/>
+													</p>
+													
+													
+<!-- 													<c:if test="#{memberView.member.employer != 'null'}"> -->
+<!-- 											           <h:outputText id="memberCompany" value="#{memberView.member.employer.name}" styleClass="employerName input-block-level"/>											           	            -->
+<!-- 											        </c:if> 										          	 -->
+												</div>
+												
+												<div class="span9">
+									                <fieldset class="caption">									                	
+														<div class="control-group">															
+										           			<p:inputTextarea id="memberCommentShare" value="#{memberView.shareComment}" styleClass="coment input-block-level"/>
+										           			<p:watermark for="memberCommentShare" value="Share your comment" />	
+								           				</div>
+							
+														<div class="control-group">
+											           		<p class="counterCharacters text-info pull-right">320 characters remaining</p>
+											           		<p:commandButton value="Share" styleClass="btnShare btn btn-sm btn-info btn-small" 
+											           		action="#{memberView.shareCommentEveryOne}"/>										           		
+	                        								<input class="btnCancel btn btn-info btn-small" type="button" value="Cancel"/>
+	                        								<input class="btnClear btn btn-info btn-small" type="button" value="Clear"/>
+										           		</div>
+										           	</fieldset>
+									           	 </div> 
+								            </div>                   
+								        </div>
+								        
+							           <div class="row-fluid control-group">
+								            <div class="span12 thumbnail">								            
+								                <fieldset class="caption">
+								                    <legend>test box2</legend>
+								                    <div class="row-fluid control-group">
+								                        <div class="span12">
+								                            <p>Los ejemplos estan clasificados por temas y a su vez por los distintos elementos del lenguaje.</p>
+															<p>Si desea más ejemplos con diferentes variantes o valores puede dirigirse al enlace que se encuentra al final de cada sección.</p>
+								                        </div>
+								                    </div>
+								                </fieldset>
+								            </div>
+								        </div>
+								         
+								       <div class="row-fluid control-group">
+								            <div class="span12 thumbnail">
+								                <fieldset class="caption">
+								                    <legend>test box2</legend>
+								                    <div class="row-fluid control-group">
+								                        <div class="span12">
+								                            <p>Los ejemplos estan clasificados por temas y a su vez por los distintos elementos del lenguaje.</p>
+															<p>Si desea más ejemplos con diferentes variantes o valores puede dirigirse al enlace que se encuentra al final de cada sección.</p>
+								                        </div>
+								                    </div>
+								                </fieldset>
+								            </div>
+								        </div>
+								        
+								        <div class="row-fluid control-group">
+								            <div class="span12 thumbnail">
+								                <fieldset class="caption">
+								                    <legend>test box2</legend>
+								                    <div class="row-fluid control-group">
+								                        <div class="span12">
+								                            <p>Los ejemplos estan clasificados por temas y a su vez por los distintos elementos del lenguaje.</p>
+															<p>Si desea más ejemplos con diferentes variantes o valores puede dirigirse al enlace que se encuentra al final de cada sección.</p>
+								                        </div>
+								                    </div>
+								                </fieldset>
+								            </div>
+								        </div>
+								        
+								        <div class="row-fluid control-group">
+								            <div class="span12 thumbnail">
+								                <fieldset class="caption">
+								                    <legend>test box2</legend>
+								                    <div class="row-fluid control-group">
+								                        <div class="span12">
+								                            <p>Los ejemplos estan clasificados por temas y a su vez por los distintos elementos del lenguaje.</p>
+															<p>Si desea más ejemplos con diferentes variantes o valores puede dirigirse al enlace que se encuentra al final de cada sección.</p>
+								                        </div>
+								                    </div>
+								                </fieldset>
+								            </div>
+								        </div>										       
+									</div>
+									
+									<div class="span6">
+										 <div class="row-fluid control-group">
+								            <div class="span12 thumbnail">
+								                <fieldset class="caption">
+								                    <legend>test box3</legend>
+								                    <div class="row-fluid control-group">
+								                        <div class="span12">
+								                            <p>Los ejemplos estan clasificados por temas y a su vez por los distintos elementos del lenguaje.</p>
+															<p>Si desea más ejemplos con diferentes variantes o valores puede dirigirse al enlace que se encuentra al final de cada sección.</p>
+								                        	<p>Los ejemplos estan clasificados por temas y a su vez por los distintos elementos del lenguaje.</p>
+															<p>Si desea más ejemplos con diferentes variantes o valores puede dirigirse al enlace que se encuentra al final de cada sección.</p>
+								                        </div>
+								                    </div>
+								                </fieldset>
+								            </div>
+								        </div>
+								        
+								        <div class="row-fluid control-group">
+								            <div class="span12 thumbnail">
+								                <fieldset class="caption">
+								                    <legend>test box3</legend>
+								                    <div class="row-fluid control-group">
+								                        <div class="span12">
+								                            <p>Los ejemplos estan clasificados por temas y a su vez por los distintos elementos del lenguaje.</p>
+															<p>Si desea más ejemplos con diferentes variantes o valores puede dirigirse al enlace que se encuentra al final de cada sección.</p>
+								                        	<p>Los ejemplos estan clasificados por temas y a su vez por los distintos elementos del lenguaje.</p>
+															<p>Si desea más ejemplos con diferentes variantes o valores puede dirigirse al enlace que se encuentra al final de cada sección.</p>
+								                        </div>
+								                    </div>
+								                </fieldset>
+								            </div>
+								        </div>
+								    </div>	
+								</div>
+=======
+							<div class="span2">
+								<p:graphicImage id="memberPhoto" 
+					                    value="/spring/assets#{memberView.memberPhoto}" 
+										styleClass="media-object thumbnail" />
+							</div>
+							<div class="span10">
+								<fieldset class="caption">
+		
+									<div class="control-group">
+					           			<p:inputTextarea id="memberCommentShare" rows="2" cols="52" value="#{memberView.shareComment}" styleClass="input-block-level"/>
+			           				</div>
+		
+									<div class="control-group">
+						           		<p:commandButton value="Post" styleClass="btn btn-sm btn-primary" 
+						           		action="#{memberView.shareCommentEveryOne}" update="updateWallPanel memberCommentShare"/>
+					           		</div>
+					           	</fieldset>
+>>>>>>> 2e8f511ab9716e0c8e1124eb4ff25a57b120c652
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row-fluid ">
+					<div class="span12 thumbnail">
+						<fieldset class="caption">
+							<ui:include src="/network/myNetworkFeedPanel.xhtml" />
+						</fieldset>
+					</div>
+				</div>
+			</h:form>				
+		</p:outputPanel>
+	</ui:define>
+	
+<<<<<<< HEAD
+	<ui:define name="rightContent">
+		<div class="row-fluid">
+			<div class="span12 thumbnail">
+				<ui:include src="/component/memberSearchStatistics.xhtml" />
+		   </div>
+		</div>
+	</ui:define>
+	
+	
+	
+=======
+>>>>>>> 2e8f511ab9716e0c8e1124eb4ff25a57b120c652
+</ui:composition>

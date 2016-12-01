@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui">
+
+	<c:if test="#{empty pollDashboardView.pollRequests}">
+		<div class="row-fluid well">
+			<div class="span12">
+				<p>No Pending Poll Requests</p>
+			</div>
+		</div>
+	</c:if>
+
+	<ui:repeat var="pollRequest" value="#{pollDashboardView.pollRequests}">
+
+		<div class="row-fluid well">
+
+			<div class="row-fluid control-group">
+
+				<!-- company logo -->
+				<div class="span2">
+					<p:graphicImage
+						value="/spring/assets/#{pollDashboardView.getWorkspaceLogo(pollRequest.requester.displayImage)}"
+						width="120px" height="120px"
+						styleClass="img-rounded img-responsive" />
+					<h3 class="muted">#{pollRequest.requester.displayName}</h3>
+				</div>
+
+				<!-- Other Info -->
+				<div class="span7">
+					<h3 class="muted">#{pollRequest.pollEvent.pollRunHeader}</h3>
+					<p>#{pollRequest.pollEvent.pollRunDescription}</p>
+					<b>Due Date :
+						#{pollDashboardView.getFormattedDate(pollRequest.pollEvent.pollDueDate)}</b>
+
+					<!-- Poll Request -->
+					<br></br> <br></br> <a
+						href="#{root}/survey/surveyResponse.xhtml?rid=#{pollRequest.pollEvent.id}"
+						class="btn btn-info btn-small" rel="tooltip"
+						title="View Survey Request"> <i class="fui-eye"></i> View
+					</a>
+
+				</div>
+
+				<div class="span3">
+					<blockquote>
+						<p>
+							<i class="fui-chat muted"></i> 2 <br></br>
+							<!-- Number of responses to date -->
+						</p>
+					</blockquote>
+				</div>
+
+
+			</div>
+		</div>
+
+	</ui:repeat>
+
+
+</ui:composition>

@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+  <h:panelGrid style="margin-left:10px">
+      <ui:include src="/templates/businessLogoImage.xhtml" />
+   </h:panelGrid>
+</h:head>
+
+<h:body>
+<p:spacer width="20" height="20" />
+<p:outputPanel id="businessInviteBasicAttrEntryPanel" layout="block">
+    <h:form>
+     <p:wizard widgetVar="businessInviteWiz"
+			flowListener="#{businessInviteWizard.onFlowProcess}">
+	
+		<p:tab id="personal" title="Personal">
+
+			<p:panel >
+			
+				<h:messages errorClass="error"/>
+				
+				<h:panelGrid columns="2" columnClasses="label, value" styleClass="grid">
+					<h:outputLabel for="emailAddress" value="Email: *" />
+					<p:inputText id="emailAddress" style="margin-bottom:5px"
+						value="#{businessInviteWizard.member.email}"  disabled="true" size="30" />
+				
+					<h:outputText value="Firstname: *" />
+					<p:inputText required="true" style="margin-top:10px" label="Firstname"
+							value="#{businessInviteWizard.member.firstName}" />
+					
+					<h:outputText value="Lastname: *" />
+					<p:inputText required="true" style="margin-top:10px" label="Lastname"
+							value="#{businessInviteWizard.member.lastName}" />
+					
+					<h:outputText value="Mobile Phone: " />
+					<p:inputText style="margin-top:10px" value="#{businessInviteWizard.member.mobilePhone}" />
+
+					<h:outputLabel for="password"
+						value="Password: *" />
+					<p:password id="password"
+						value="#{businessInviteWizard.member.password}"
+						style="margin-left:5px;margin-bottom:10px" feedback="false"
+						match="confirmPassword" required="true" size="30" />
+
+					<h:outputLabel for="confirmPassword"
+						value="Confirm Password: *" />
+					<p:password id="confirmPassword"
+						value="#{businessInviteWizard.member.confirmPassword}"
+						style="margin-left:5px;margin-bottom:10px" feedback="false"
+						required="true" size="30" />
+				</h:panelGrid>
+			</p:panel>
+		</p:tab>
+			
+		<p:tab id="business" title="Business">
+			<p:panel >
+			
+				<h:messages errorClass="error"/>
+				
+				<h:panelGrid columns="2" columnClasses="label, value">
+					<h:outputText value="Business Phone: " />
+					<p:inputText styleClass="outputLabel"
+								value="#{businessInviteWizard.orgInfo.businessPhone}" />
+					
+					<h:outputText value="Business Email: " />
+					<p:inputText styleClass="outputLabel"
+								value="#{businessInviteWizard.orgInfo.businessPrimaryEmail}" />
+					
+					<h:outputText value="Street: " />
+					<p:inputText styleClass="outputLabel"
+								value="#{businessInviteWizard.orgInfo.selectedLocation.street}" />
+					
+					<h:outputText value="City: " />
+					<p:inputText styleClass="outputLabel"
+								value="#{businessInviteWizard.orgInfo.selectedLocation.city}" />
+								
+				    <h:outputText value="Country: " />
+				    <p:selectOneMenu style="margin-bottom:10px;margin-top:10px"
+                            effect="fade" filter="true" filterMatchMode="startsWith" styleClass="profile-input"
+                            value="#{businessInviteWizard.orgInfo.selectedLocation.country}">
+<f:selectItem itemLabel="Select One..." itemValue="#{null}"/>
+                            <f:selectItems value="#{countryBean.countryList}" var="countryType"
+   			                          itemLabel="#{countryType.countryName}" itemValue="#{countryType.countryName}" />
+                            <p:ajax event="change" update="businessAddrStateSelectList" execute="@this"
+                                      listener="#{businessInviteWizard.loadStatesForSelectedCountry}"/>
+                    </p:selectOneMenu>
+                    
+                    <h:outputText value="State: "/>
+                    <p:selectOneMenu id="businessAddrStateSelectList" style="margin-bottom:10px;margin-top:10px"  styleClass="profile-input"
+                                 effect="fade" filter="true" filterMatchMode="startsWith" 
+                                 value="#{businessInviteWizard.orgInfo.selectedLocation.state}">
+<f:selectItem itemLabel="Select One..." itemValue="#{null}"/>
+                      <f:selectItems value="#{businessInviteWizard.selectedStateList}" var="stateType"
+   			                 itemLabel="#{stateType.stateName}" itemValue="#{stateType.stateName}" />
+                    </p:selectOneMenu>
+                    
+                    <h:outputText value="Zipcode: " />
+					<p:inputText styleClass="outputLabel"
+								value="#{businessInviteWizard.orgInfo.selectedLocation.zipCode}" />
+					
+				</h:panelGrid>
+			</p:panel>
+		</p:tab>
+			
+		<p:tab id="confirmation" title="Confirmation">
+			<p:panel >
+				<h:messages errorClass="error"/>
+
+				<h:panelGrid columns="2">
+					<h:outputText value="Firstname: " />
+					<h:outputText styleClass="outputLabel"
+								value="#{businessInviteWizard.member.firstName}" />
+					
+					<h:outputText value="Lastname: " />
+					<h:outputText  styleClass="outputLabel"
+								value="#{businessInviteWizard.member.lastName}"/>
+					
+					<h:outputText value="Mobile Phone: " />
+					<h:outputText styleClass="outputLabel"
+								value="#{businessInviteWizard.member.mobilePhone}" />
+					
+					<h:outputText value="Business Phone: " />
+					<h:outputText styleClass="outputLabel"
+								value="#{businessInviteWizard.orgInfo.businessPhone}" />
+					
+					<h:outputText value="Business Email: " />
+					<h:outputText styleClass="outputLabel"
+								value="#{businessInviteWizard.orgInfo.businessPrimaryEmail}" />
+					
+					<h:outputText value="Street: " />
+					<h:outputText styleClass="outputLabel"
+								value="#{businessInviteWizard.orgInfo.selectedLocation.street}" />
+					
+					<h:outputText value="City: " />
+					<h:outputText styleClass="outputLabel"
+								value="#{businessInviteWizard.orgInfo.selectedLocation.city}" />
+								
+					<h:outputText value="State: " />
+					<h:outputText styleClass="outputLabel"
+								value="#{businessInviteWizard.orgInfo.selectedLocation.state}" />
+								
+				    <h:outputText value="Country: " />
+				    <h:outputText styleClass="outputLabel"
+								value="#{businessInviteWizard.orgInfo.selectedLocation.country}" />
+								
+					<h:outputText value="Zipcode: " />
+				    <h:outputText styleClass="outputLabel"
+								value="#{businessInviteWizard.orgInfo.selectedLocation.zipCode}" />
+					
+				</h:panelGrid>
+				
+				<p:commandButton value="Submit" style="margin-top:15px"
+							actionListener="#{businessInviteWizard.submitBusinessInfo}"/>
+			
+			</p:panel>
+		</p:tab>
+		
+	</p:wizard>
+	</h:form>
+</p:outputPanel>
+ 
+</h:body>
+</html>

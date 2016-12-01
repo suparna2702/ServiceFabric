@@ -1,0 +1,155 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                    http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+                    http://www.springframework.org/schema/util 
+                    http://www.springframework.org/schema/util/spring-util-3.1.xsd
+                    http://www.springframework.org/schema/security 
+                    http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+
+	<http use-expressions="true" disable-url-rewriting="false"
+		entry-point-ref="authenticationEntryPoint">
+
+		<intercept-url pattern="/collabspace/externalSharedDocumentView.xhtml"
+			access="permitAll" />
+		<intercept-url pattern="/member/memberOrgAssociationApprove.xhtml"
+			access="permitAll" />
+		<intercept-url pattern="/member/memberOrgAssociationReject.xhtml"
+			access="permitAll" />
+		<intercept-url pattern="/member/memberSignup.xhtml"
+			access="permitAll" />
+		<intercept-url pattern="/business/existingPartnerInfoEntry.xhtml"
+			access="permitAll" />
+		<intercept-url pattern="/partner/partnerBrandedLogin.xhtml"
+			access="permitAll" />
+		<intercept-url pattern="/collabspace/acceptWorkspaceInvitation.xhtml"
+			access="permitAll" />
+		<intercept-url pattern="/business/businessInviteBasicAttrEntry.xhtml"
+			access="permitAll" />
+		<intercept-url pattern="/business/businessInviteComplete.xhtml"
+			access="permitAll" />
+		<intercept-url pattern="/business/businessInviteInformationComplete.xhtml"
+			access="permitAll" />
+		<intercept-url pattern="/business/businessEntityApproval.xhtml"
+			access="permitAll" />
+		<intercept-url pattern="/business/businessEntityRejection.xhtml"
+			access="permitAll" />
+		<intercept-url pattern="/business/businessConnectionApprove.xhtml"
+			access="permitAll" />
+		<intercept-url pattern="/partner/partnerProgramApprovalInputForm.xhtml"
+			access="permitAll()" />
+		<intercept-url pattern="/partner/partnerProgramApproval.xhtml"
+			access="permitAll()" />
+		<intercept-url pattern="/partner/partnerProgramSubmissionMessage.xhtml"
+			access="permitAll" />
+		<intercept-url pattern="/member/home.xhtml" access="permitAll" />
+		<intercept-url pattern="/member/emailConfirm.xhtml"
+			access="permitAll()" />
+		<intercept-url pattern="/member/dologin" access="permitAll" />
+		<intercept-url pattern="/member/logout" access="permitAll" />
+		<intercept-url pattern="/member/memberSignupComplete.xhtml"
+			access="permitAll" />
+		<intercept-url pattern="/member/memberEmailChangeComplete.xhtml"
+			access="permitAll" />
+		<intercept-url pattern="/member/memberInviteSignupInput.xhtml"
+			access="permitAll" />
+		<intercept-url pattern="/member/memberInviteSignupComplete.xhtml"
+			access="permitAll" />
+		<intercept-url pattern="/about/**" access="permitAll" />
+		<intercept-url pattern="/images/**" access="permitAll" />
+		<intercept-url pattern="/spring/**" access="permitAll" />
+		<intercept-url pattern="/resources/css/**" access="permitAll" />
+		<intercept-url pattern="/resources/img/**" access="permitAll" />
+		<intercept-url pattern="/resources/js/**" access="permitAll" />
+		<intercept-url pattern="/resources/fonts/**" access="permitAll" />
+		<intercept-url pattern="/javax.faces.resource/**"
+			access="permitAll" />
+		<intercept-url pattern="/embedded/*" access="permitAll()" />
+		<intercept-url pattern="/favicon.ico" access="permitAll()" />
+		<intercept-url pattern="/sitemap.xml" access="permitAll()" />
+        <intercept-url pattern="/api/api-docs" access="permitAll()" />
+        <intercept-url pattern="/api/api-docs/**" access="permitAll()" />
+		<intercept-url pattern="/**" access="hasRole('ROLE_MEMBER')" />
+
+		<form-login authentication-success-handler-ref="loginSuccessHandler"
+			login-processing-url="/member/dologin" login-page="/member/home.xhtml"
+			username-parameter="loginForm:loginUserName"
+			always-use-default-target='true' password-parameter="loginForm:loginPassword" />
+
+		<form-login authentication-success-handler-ref="loginSuccessHandler"
+			login-processing-url="/member/dologin" login-page="/partner/partnerBrandedLogin.xhtml"
+			username-parameter="loginForm:loginUserName" password-parameter="loginForm:loginPassword" />
+
+		<custom-filter ref="logoutFilter" position="LOGOUT_FILTER" />
+	</http>
+
+	<beans:bean id="logoutFilter"
+		class="org.springframework.security.web.authentication.logout.LogoutFilter">
+		<beans:constructor-arg index="0" value="/" />
+		<beans:constructor-arg index="1">
+			<beans:list>
+				<beans:ref bean="logoutHandler" />
+				<beans:bean id="securityContextLogoutHandler"
+					class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler" />
+			</beans:list>
+		</beans:constructor-arg>
+		<beans:property name="filterProcessesUrl" value="/member/logout" />
+	</beans:bean>
+
+	<authentication-manager>
+		<authentication-provider user-service-ref="userDetailsService">
+			<password-encoder hash="plaintext" />
+		</authentication-provider>
+	</authentication-manager>
+	<beans:bean id="userDetailsService"
+		class="com.similan.portal.service.security.MemberUserDetailsService" />
+
+	<beans:bean class="com.similan.portal.integration.MemberInfoFactoryBean" />
+
+	<beans:bean
+		class="com.similan.portal.integration.OrganizationInfoFactoryBean" />
+
+	<beans:bean
+		class="org.springframework.beans.factory.config.CustomScopeConfigurer">
+		<beans:property name="scopes">
+			<beans:map>
+				<beans:entry key="view">
+					<beans:bean class="com.similan.portal.integration.ViewScope" />
+				</beans:entry>
+			</beans:map>
+		</beans:property>
+	</beans:bean>
+
+	<beans:bean id="authenticationEntryPoint"
+		class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+		<beans:property name="loginFormUrl" value="/member/home.xhtml" />
+	</beans:bean>
+
+	<beans:bean id="authenticationPartnerEntryPoint"
+		class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+		<beans:property name="loginFormUrl"
+			value="/partner/partnerBrandedLogin.xhtml" />
+	</beans:bean>
+
+	<beans:bean id="logoutHandler"
+		class="com.similan.portal.integration.DefaultLogoutHandler" />
+
+	<beans:bean id="loginSuccessHandler"
+		class="com.similan.portal.integration.EventPublishingAuthenticationSuccessHandler">
+		<beans:property name="defaultTargetUrl" value="/member/memberHome.xhtml" />
+	</beans:bean>
+
+	<!-- This can be used as a base for starting localization in the whole application. -->
+	<beans:bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<beans:property name="basenames">
+			<beans:list>
+				<beans:value>br-messages</beans:value>
+			</beans:list>
+		</beans:property>
+	</beans:bean>
+
+	<beans:bean id="currentUser"
+		class="com.similan.portal.integration.CurrentUserFactoryBean" />
+
+</beans:beans>

@@ -1,0 +1,173 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:composite="http://java.sun.com/jsf/composite/composites"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:param name="wallEntryType" value="#{wallEntry.getType().name()}" />
+
+	<ui:fragment rendered="#{wallEntryType == 'COMMENT_POSTED'}">
+		<div
+			class="span6 thumbnail control-group post-wall element-item network"
+			data-category="network">
+			<ui:include src="types/COMMENT_POSTED.xhtml" />
+		</div>
+	</ui:fragment>
+
+	<ui:fragment rendered="#{wallEntryType == 'COMMENT_REPLY_POSTED'}">
+		<div
+			class="span6 thumbnail control-group post-wall element-item network"
+			data-category="network">
+			<ui:include src="types/COMMENT_REPLY_POSTED.xhtml" />
+		</div>
+	</ui:fragment>
+
+	<ui:fragment rendered="#{wallEntryType == 'WALL_POST'}">
+		<div
+			class="span6 thumbnail control-group post-wall element-item network"
+			data-category="network">
+			<ui:include src="types/WALL_POST.xhtml" />
+		</div>
+	</ui:fragment>
+
+	<ui:fragment
+		rendered="#{wallEntryType == 'COLLABORATION_WORKSPACE_PARTICIPANT_JOINED'}">
+		<div
+			class="span6 thumbnail control-group post-wall element-item workspace"
+			data-category="workspace">
+			<ui:include
+				src="types/collabspace/COLLABORATION_WORKSPACE_PARTICIPANT_JOINED.xhtml" />
+		</div>
+	</ui:fragment>
+
+	<ui:fragment
+		rendered="#{wallEntryType == 'COLLABORATION_WORKSPACE_DOCUMENT_SHARED'}">
+		<div
+			class="span6 thumbnail control-group post-wall element-item workspace"
+			data-category="workspace">
+			<ui:include
+				src="types/collabspace/COLLABORATION_WORKSPACE_DOCUMENT_SHARED.xhtml" />
+		</div>
+	</ui:fragment>
+
+	<ui:fragment
+		rendered="#{wallEntryType == 'COLLABORATION_WORKSPACE_DOCUMENT_VIEWED'}">
+		<div
+			class="span6 thumbnail control-group post-wall element-item workspace"
+			data-category="workspace">
+			<ui:include
+				src="types/collabspace/COLLABORATION_WORKSPACE_DOCUMENT_VIEWED.xhtml" />
+		</div>
+	</ui:fragment>
+
+	<ui:fragment
+		rendered="#{wallEntryType == 'COLLABORATION_WORKSPACE_DOCUMENT_DOWNLOADED'}">
+		<div
+			class="span6 thumbnail control-group post-wall element-item workspace"
+			data-category="workspace">
+			<ui:include
+				src="types/collabspace/COLLABORATION_WORKSPACE_DOCUMENT_DOWNLOADED.xhtml" />
+		</div>
+	</ui:fragment>
+
+	<ui:fragment
+		rendered="#{wallEntryType == 'COLLABORATION_WORKSPACE_DOCUMENT_UNSHARED'}">
+		<div
+			class="span6 thumbnail control-group post-wall element-item workspace"
+			data-category="workspace">
+			<ui:include
+				src="types/collabspace/COLLABORATION_WORKSPACE_DOCUMENT_UNSHARED.xhtml" />
+		</div>
+	</ui:fragment>
+
+	<ui:fragment
+		rendered="#{wallEntryType == 'COLLABORATION_WORKSPACE_DOCUMENT_COMMENT'}">
+		<div
+			class="span6 thumbnail control-group post-wall element-item workspace"
+			data-category="workspace">
+			<ui:include
+				src="types/collabspace/COLLABORATION_WORKSPACE_DOCUMENT_COMMENT.xhtml" />
+		</div>
+	</ui:fragment>
+
+	<ui:fragment
+		rendered="#{wallEntryType == 'COLLABORATION_WORKSPACE_TASK_CREATED'}">
+		<div
+			class="span6 thumbnail control-group post-wall element-item workspace"
+			data-category="workspace">
+			<ui:include
+				src="types/collabspace/COLLABORATION_WORKSPACE_TASK_CREATED.xhtml" />
+		</div>
+	</ui:fragment>
+
+	<ui:fragment
+		rendered="#{wallEntryType == 'COLLABORATION_WORKSPACE_DOCUMENT_SHARED_ANOTHER_WORKSPACE'}">
+		<div
+			class="span6 thumbnail control-group post-wall element-item workspace"
+			data-category="workspace">
+			<ui:include
+				src="types/collabspace/COLLABORATION_WORKSPACE_DOCUMENT_SHARED_ANOTHER_WORKSPACE.xhtml" />
+		</div>
+	</ui:fragment>
+
+	<ui:fragment
+		rendered="#{wallEntryType == 'COLLABORATION_WORKSPACE_DOCUMENT_UPDATED'}">
+		<div
+			class="span6 thumbnail control-group post-wall element-item workspace"
+			data-category="workspace">
+			<ui:include
+				src="types/collabspace/COLLABORATION_WORKSPACE_DOCUMENT_UPDATED.xhtml" />
+		</div>
+	</ui:fragment>
+
+
+	<ui:fragment
+		rendered="#{wallEntryType == 'CONTENT_WORKSPACE_DOCUMENT_VIEWED'}">
+		<div
+			class="span6 thumbnail control-group post-wall element-item workspace"
+			data-category="workspace">
+			<ui:include
+				src="types/contentspace/CONTENT_WORKSPACE_DOCUMENT_VIEWED.xhtml" />
+		</div>
+	</ui:fragment>
+
+	<ui:fragment
+		rendered="#{wallEntryType == 'CONTENT_WORKSPACE_DOCUMENT_DOWNLOADED'}">
+		<div
+			class="span6 thumbnail control-group post-wall element-item workspace"
+			data-category="workspace">
+			<ui:include
+				src="types/contentspace/CONTENT_WORKSPACE_DOCUMENT_DOWNLOADED.xhtml" />
+		</div>
+	</ui:fragment>
+
+	<ui:fragment
+		rendered="#{wallEntryType == 'CONTENT_WORKSPACE_DOCUMENT_UPLOADED'}">
+		<div
+			class="span6 thumbnail control-group post-wall element-item workspace"
+			data-category="workspace">
+			<ui:include
+				src="types/contentspace/CONTENT_WORKSPACE_DOCUMENT_UPLOADED.xhtml" />
+		</div>
+	</ui:fragment>
+
+
+	<ui:fragment rendered="#{wallEntryType == 'PARTNER_JOINED'}">
+		<div
+			class="span6 thumbnail control-group post-wall element-item workspace"
+			data-category="workspace">
+			<ui:include src="types/partner/PARTNER_JOINED.xhtml" />
+		</div>
+	</ui:fragment>
+
+	<ui:fragment rendered="#{wallEntryType == 'DISPLAY_NOTICE_VIEWED'}">
+		<div
+			class="span6 thumbnail control-group post-wall element-item workspace"
+			data-category="workspace">
+			<ui:include src="types/advertisement/DISPLAY_NOTICE_VIEWED.xhtml" />
+		</div>
+	</ui:fragment>
+
+</ui:composition>

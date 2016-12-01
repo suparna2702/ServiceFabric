@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<p:messages showDetail="true" autoUpdate="true" closable="true" />  
+	<p:outputPanel layout="block">
+	      <h4>Partner Program Request for Program : #{partnerProgramFormInputView.partnerProgram.name}</h4>
+		  <h:form>
+			  <p:panel id="partnerProgInputFormPanel" style="border-style:hidden;margin-left:30px">
+			  
+          
+	           <p:dataGrid id="preQUalQuestionResponseDataTable" var="question"
+					value="#{partnerProgramFormInputView.partnerProgram.preQualificationQuestions}"
+					rendered="#{not empty partnerProgramFormInputView.partnerProgram.preQualificationQuestions}"
+					columns="1"	styleClass="ui-datagrid-no-border">
+
+					<p:panel id="preQualQuestionItemPanel" styleClass="buttomBorder">
+						<ui:include src="/partner/preQualQuestionMultiChoice.xhtml" />
+						<ui:include src="/partner/preQualQuestionSingleChoiceList.xhtml" />
+						<ui:include src="/partner/preQualQuestionSingleChoiceRadio.xhtml" />
+						<ui:include src="/partner/preQualQuestionSingleChoiceRating.xhtml" />
+						<ui:include src="/partner/preQualQuestionTextInput.xhtml" />
+					</p:panel>
+
+		       </p:dataGrid>
+		                        
+				<p:commandButton value="Submit" icon="ui-icon-check" 
+				        process="@this partnerProgInputFormPanel"
+						action="#{partnerProgramFormInputView.submitPartnerProgramApprovalFormInput}"
+						style="margin-top:10px"/>
+				
+			  </p:panel>
+	      </h:form>
+	</p:outputPanel>
+</ui:composition>

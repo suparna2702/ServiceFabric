@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:util="http://www.springframework.org/schema/util"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.1.xsd
+        http://www.springframework.org/schema/util 
+        http://www.springframework.org/schema/util/spring-util-3.1.xsd">
+
+  <context:component-scan base-package="com.similan.framework.config" />
+
+  <!-- For updating one bean with another -->
+
+  <!-- Lead object copy -->
+  <bean id="adressDtoToDomainAttributeUpdater" class="com.similan.framework.util.BeanPropertyUpdator">
+    <property name="fromBeanClass" value="com.similan.domain.entity.util.AddressDto" />
+    <property name="toBeanClass" value="com.similan.domain.entity.common.Address" />
+    <property name="propertyMap">
+      <map>
+        <entry key="latitude" value="latitude" />
+        <entry key="longitude" value="longitude" />
+        <entry key="number" value="number" />
+        <entry key="street" value="street" />
+        <entry key="city" value="city" />
+        <entry key="area" value="area" />
+        <entry key="county" value="county" />
+        <entry key="state" value="state" />
+        <entry key="zipCode" value="zipCode" />
+        <entry key="country" value="country" />
+        <entry key="formattedAddress" value="formattedAddress" />
+        <entry key="searchableAddress" value="searchableAddress" />
+        <entry key="locationEmail" value="locationEmail" />
+        <entry key="locationPhone" value="locationPhone" />
+        <entry key="locationFax" value="locationFax" />
+        <entry key="locationUrl" value="locationUrl" />
+      </map>
+    </property>
+  </bean>
+
+  <bean id="adressDomainToDtoAttributeUpdater" class="com.similan.framework.util.BeanPropertyUpdator">
+    <property name="fromBeanClass" value="com.similan.domain.entity.common.Address" />
+    <property name="toBeanClass" value="com.similan.domain.entity.util.AddressDto" />
+    <property name="propertyMap">
+      <map>
+        <entry key="id" value="id" />
+        <entry key="latitude" value="latitude" />
+        <entry key="longitude" value="longitude" />
+        <entry key="number" value="number" />
+        <entry key="street" value="street" />
+        <entry key="city" value="city" />
+        <entry key="area" value="area" />
+        <entry key="county" value="county" />
+        <entry key="state" value="state" />
+        <entry key="zipCode" value="zipCode" />
+        <entry key="country" value="country" />
+        <entry key="formattedAddress" value="formattedAddress" />
+        <entry key="searchableAddress" value="searchableAddress" />
+        <entry key="locationEmail" value="locationEmail" />
+        <entry key="locationPhone" value="locationPhone" />
+        <entry key="locationFax" value="locationFax" />
+        <entry key="locationUrl" value="locationUrl" />
+      </map>
+    </property>
+  </bean>
+
+  <bean id="affiliateLeadDtoToDomainAttributeUpdater" class="com.similan.framework.util.BeanPropertyUpdator">
+    <property name="fromBeanClass" value="com.similan.framework.dto.lead.LeadDto" />
+    <property name="toBeanClass" value="com.similan.domain.entity.lead.AffiliateLead" />
+    <property name="propertyMap">
+      <map>
+        <entry key="firstName" value="firstName" />
+        <entry key="lastName" value="lastName" />
+        <entry key="company" value="company" />
+        <entry key="contactEmail" value="contactEmail" />
+        <entry key="contactPhone" value="contactPhone" />
+        <entry key="industry" value="industry" />
+        <entry key="keyword" value="keyword" />
+      </map>
+    </property>
+  </bean>
+
+  <bean id="affiliateLeadDomainToDtoAttributeUpdater" class="com.similan.framework.util.BeanPropertyUpdator">
+    <property name="fromBeanClass" value=" com.similan.domain.entity.lead.AffiliateLead" />
+    <property name="toBeanClass" value="com.similan.framework.dto.lead.LeadDto" />
+    <property name="propertyMap">
+      <map>
+        <entry key="id" value="id" />
+        <entry key="timeStamp" value="timeStamp" />
+        <entry key="firstName" value="firstName" />
+        <entry key="lastName" value="lastName" />
+        <entry key="company" value="company" />
+        <entry key="contactEmail" value="contactEmail" />
+        <entry key="contactPhone" value="contactPhone" />
+        <entry key="industry" value="industry" />
+        <entry key="keyword" value="keyword" />
+        <entry key="title" value="title" />
+        <entry key="description" value="description" />
+      </map>
+    </property>
+  </bean>
+
+
+  <bean id="leadDtoToDomainAttributeUpdater" class="com.similan.framework.util.BeanPropertyUpdator">
+    <property name="fromBeanClass" value="com.similan.framework.dto.lead.LeadDto" />
+    <property name="toBeanClass" value="com.similan.domain.entity.lead.Lead" />
+    <property name="propertyMap">
+      <map>
+        <entry key="forSocialActorId" value="forSocialActorId" />
+        <entry key="timeStamp" value="timeStamp" />
+        <entry key="leadType" value="leadType" />
+        <entry key="leadStatus" value="leadStatus" />
+        <entry key="viewed" value="viewed" />
+        <entry key="firstName" value="firstName" />
+        <entry key="lastName" value="lastName" />
+        <entry key="name" value="name" />
+        <entry key="contactPhone" value="contactPhone" />
+        <entry key="contactEmail" value="contactEmail" />
+        <entry key="company" value="company" />
+        <entry key="keyword" value="keyword" />
+        <entry key="leadPhotoLocation" value="leadPhotoLocation" />
+        <entry key="leadSource" value="leadSource" />
+        <entry key="dateCreated" value="dateCreated" />
+        <entry key="dateLastViewed" value="dateLastViewed" />
+        <entry key="createdById" value="createdById" />
+        <entry key="fromSocialActorId" value="fromSocialActorId" />
+      </map>
+    </property>
+  </bean>
+
+  <bean id="leadDomainToDtoAttributeUpdater" class="com.similan.framework.util.BeanPropertyUpdator">
+    <property name="fromBeanClass" value="com.similan.domain.entity.lead.Lead" />
+    <property name="toBeanClass" value="com.similan.framework.dto.lead.LeadDto" />
+    <property name="propertyMap">
+      <map>
+        <entry key="id" value="id" />
+        <entry key="forSocialActorId" value="forSocialActorId" />
+        <entry key="timeStamp" value="timeStamp" />
+        <entry key="leadType" value="leadType" />
+        <entry key="leadStatus" value="leadStatus" />
+        <entry key="viewed" value="viewed" />
+        <entry key="firstName" value="firstName" />
+        <entry key="lastName" value="lastName" />
+        <entry key="name" value="name" />
+        <entry key="contactPhone" value="contactPhone" />
+        <entry key="contactEmail" value="contactEmail" />
+        <entry key="company" value="company" />
+        <entry key="keyword" value="keyword" />
+        <entry key="leadPhotoLocation" value="leadPhotoLocation" />
+        <entry key="leadSource" value="leadSource" />
+        <entry key="dateCreated" value="dateCreated" />
+        <entry key="dateLastViewed" value="dateLastViewed" />
+        <entry key="createdById" value="createdById" />
+        <entry key="fromSocialActorId" value="fromSocialActorId" />
+      </map>
+    </property>
+  </bean>
+
+  <!-- CRM LEAD SETTINGS -->
+  <bean id="crmSettingsDtoToDomainAttributeUpdater" class="com.similan.framework.util.BeanPropertyUpdator">
+    <property name="fromBeanClass" value="com.similan.framework.dto.lead.CrmLeadSettingsDto" />
+    <property name="toBeanClass" value="com.similan.domain.entity.lead.CrmLeadSettings" />
+    <property name="propertyMap">
+      <map>
+        <entry key="crmSystemType" value="crmSystemType" />
+        <entry key="enableTransferToCrm" value="enableTransferToCrm" />
+        <entry key="enableTransferFromCrm" value="enableTransferFromCrm" />
+        <entry key="enableQueryFromCrm" value="enableQueryFromCrm" />
+        <entry key="notificationEmailToOrg" value="notificationEmailToOrg" />
+      </map>
+    </property>
+  </bean>
+
+  <bean id="crmSettingsDomainToDtoAttributeUpdater" class="com.similan.framework.util.BeanPropertyUpdator">
+    <property name="fromBeanClass" value="com.similan.domain.entity.lead.CrmLeadSettings" />
+    <property name="toBeanClass" value="com.similan.framework.dto.lead.CrmLeadSettingsDto" />
+    <property name="propertyMap">
+      <map>
+        <entry key="crmSystemType" value="crmSystemType" />
+        <entry key="enableTransferToCrm" value="enableTransferToCrm" />
+        <entry key="enableTransferFromCrm" value="enableTransferFromCrm" />
+        <entry key="enableQueryFromCrm" value="enableQueryFromCrm" />
+        <entry key="notificationEmailToOrg" value="notificationEmailToOrg" />
+        <entry key="id" value="id" />
+      </map>
+    </property>
+  </bean>
+
+  <!-- Lead Filter Settings -->
+  <bean id="leadSearchFilterDtoToDomainAttributeUpdater" class="com.similan.framework.util.BeanPropertyUpdator">
+    <property name="fromBeanClass" value="com.similan.framework.dto.lead.LeadSearchFilterSettingDto" />
+    <property name="toBeanClass" value="com.similan.domain.entity.lead.LeadSearchFilterSetting" />
+    <property name="propertyMap">
+      <map>
+        <entry key="name" value="name" />
+        <entry key="frequency" value="frequency" />
+        <entry key="activeSince" value="activeSince" />
+        <entry key="radius" value="radius" />
+        <entry key="distanceUnitOption" value="distanceUnitOption" />
+        <entry key="street" value="street" />
+        <entry key="country" value="country" />
+        <entry key="state" value="state" />
+        <entry key="city" value="city" />
+        <entry key="zipCode" value="zipCode" />
+        <entry key="lastResultCount" value="lastResultCount" />
+      </map>
+    </property>
+  </bean>
+
+  <bean id="leadSearchFilterDomainToDtoAttributeUpdater" class="com.similan.framework.util.BeanPropertyUpdator">
+    <property name="fromBeanClass" value="com.similan.domain.entity.lead.LeadSearchFilterSetting" />
+    <property name="toBeanClass" value="com.similan.framework.dto.lead.LeadSearchFilterSettingDto" />
+    <property name="propertyMap">
+      <map>
+        <entry key="name" value="name" />
+        <entry key="frequency" value="frequency" />
+        <entry key="activeSince" value="activeSince" />
+        <entry key="radius" value="radius" />
+        <entry key="distanceUnitOption" value="distanceUnitOption" />
+        <entry key="street" value="street" />
+        <entry key="country" value="country" />
+        <entry key="state" value="state" />
+        <entry key="city" value="city" />
+        <entry key="zipCode" value="zipCode" />
+        <entry key="id" value="id" />
+        <entry key="lastResultCount" value="lastResultCount" />
+      </map>
+    </property>
+  </bean>
+
+  <bean id="organizationBasicAttributeUpdater" class="com.similan.framework.util.BeanPropertyUpdator">
+    <property name="fromBeanClass" value="com.similan.framework.dto.OrganizationDetailInfoDto" />
+    <property name="toBeanClass" value="com.similan.domain.entity.community.SocialOrganization" />
+    <property name="propertyMap">
+      <map>
+        <entry key="businessName" value="businessName" />
+        <entry key="businessPrimaryEmail" value="primaryEmail" />
+        <entry key="businessTaxId" value="businessTaxId" />
+        <entry key="businessStateTaxId" value="businessStateTaxId" />
+        <entry key="businessPhone" value="businessPhoneNumber" />
+        <entry key="businessDescription" value="businessDescription" />
+        <entry key="logoViewOptionType" value="logoViewOptionType" />
+        <entry key="industry" value="industry" />
+        <entry key="homePageUrl" value="websiteUrl" />
+        <entry key="landingPageUrl" value="communityLandingPageUrl" />
+        <entry key="businessType" value="organizationType" />
+        <entry key="associateShowPublicOpt" value="associateShowPublicOpt" />
+        <entry key="associateShowCommunityOpt" value="associateShowCommunityOpt" />
+        <entry key="logoLocation" value="logoUrl" />
+        <entry key="productPageUrl" value="productPageUrl" />
+      </map>
+    </property>
+  </bean>
+
+  <bean id="organizationBasicAttributeUpdaterInfo" class="com.similan.framework.util.BeanPropertyUpdator">
+    <property name="fromBeanClass" value="com.similan.domain.entity.community.SocialOrganization" />
+    <property name="toBeanClass" value="com.similan.framework.dto.OrganizationDetailInfoDto" />
+    <property name="propertyMap">
+      <map>
+        <entry key="businessName" value="businessName" />
+        <entry key="id" value="id" />
+        <entry key="primaryEmail" value="businessPrimaryEmail" />
+        <entry key="businessTaxId" value="businessTaxId" />
+        <entry key="businessStateTaxId" value="businessStateTaxId" />
+        <entry key="businessPhoneNumber" value="businessPhone" />
+        <entry key="industry" value="industry" />
+        <entry key="websiteUrl" value="homePageUrl" />
+        <entry key="communityLandingPageUrl" value="landingPageUrl" />
+        <entry key="businessDescription" value="businessDescription" />
+        <entry key="logoViewOptionType" value="logoViewOptionType" />
+        <entry key="organizationType" value="businessType" />
+        <entry key="associateShowPublicOpt" value="associateShowPublicOpt" />
+        <entry key="associateShowCommunityOpt" value="associateShowCommunityOpt" />
+        <entry key="logoUrl" value="logoLocation" />
+        <entry key="productPageUrl" value="productPageUrl" />
+      </map>
+    </property>
+  </bean>
+
+  <!-- Updating member from MemberInfo -->
+  <bean id="memberBasicAttributeUpdater" class="com.similan.framework.util.BeanPropertyUpdator">
+    <property name="fromBeanClass" value="com.similan.framework.dto.member.MemberInfoDto" />
+    <property name="toBeanClass" value="com.similan.domain.entity.community.SocialPerson" />
+    <property name="propertyMap">
+      <map>
+        <entry key="firstName" value="firstName" />
+        <entry key="lastName" value="lastName" />
+        <entry key="email" value="primaryEmail" />
+        <entry key="mobilePhone" value="mobilePhone" />
+        <entry key="businessPhone" value="businessPhone" />
+        <entry key="company" value="company" />
+        <entry key="industry" value="industry" />
+        <entry key="description" value="description" />
+        <entry key="title" value="role" />
+        <entry key="photoLocation" value="photoLocation" />
+        <entry key="memberPhotoViewOptionType" value="memberPhotoViewOptionType" />
+        <entry key="aboutMe" value="aboutMe" />
+      </map>
+    </property>
+  </bean>
+
+  <bean id="memberAccountAttributeUpdater" class="com.similan.framework.util.BeanPropertyUpdator">
+    <property name="fromBeanClass" value="com.similan.framework.dto.member.MemberInfoDto" />
+    <property name="toBeanClass" value="com.similan.domain.entity.community.Account" />
+    <property name="propertyMap">
+      <map>
+        <entry key="userName" value="userName" />
+        <entry key="password" value="password" />
+      </map>
+    </property>
+  </bean>
+
+  <!-- Updating MemberInfoDto from Member -->
+
+  <bean id="memberInfoBasicAttributeUpdater" class="com.similan.framework.util.BeanPropertyUpdator">
+    <property name="fromBeanClass" value="com.similan.domain.entity.community.SocialPerson" />
+    <property name="toBeanClass" value="com.similan.framework.dto.member.MemberInfoDto" />
+    <property name="propertyMap">
+      <map>
+        <entry key="firstName" value="firstName" />
+        <entry key="lastName" value="lastName" />
+        <entry key="primaryEmail" value="email" />
+        <entry key="mobilePhone" value="mobilePhone" />
+        <entry key="businessPhone" value="businessPhone" />
+        <entry key="company" value="company" />
+        <entry key="industry" value="industry" />
+        <entry key="description" value="description" />
+        <entry key="role" value="title" />
+        <entry key="id" value="id" />
+        <entry key="photoLocation" value="photoLocation" />
+        <entry key="memberPhotoViewOptionType" value="memberPhotoViewOptionType" />
+        <entry key="aboutMe" value="aboutMe" />
+        <entry key="state" value="status" />
+      </map>
+    </property>
+  </bean>
+
+  <bean id="memberInfoAccountAttributeUpdater" class="com.similan.framework.util.BeanPropertyUpdator">
+    <property name="fromBeanClass" value="com.similan.domain.entity.community.Account" />
+    <property name="toBeanClass" value="com.similan.framework.dto.member.MemberInfoDto" />
+    <property name="propertyMap">
+      <map>
+        <entry key="userName" value="userName" />
+        <entry key="password" value="password" />
+      </map>
+    </property>
+  </bean>
+
+  <!-- Import/ Export Utilities -->
+
+  <!-- CSV Impoters -->
+  <bean id="basicCsvMemberInviteImporterCreator" class="com.similan.framework.dto.MemberInviteDto" scope="prototype" />
+  <bean id="basicCsvLeadImporterCreator" class="com.similan.framework.dto.lead.LeadDto" scope="prototype" />
+  <bean id="basicCsvAffiliateLeadImporterCreator" class="com.similan.framework.dto.lead.LeadImport" scope="prototype" />
+
+  <bean id="basicCsvLeadImporter" class="com.similan.framework.importexport.csv.CsvJavaBeanImporter">
+    <lookup-method name="create" bean="basicCsvLeadImporterCreator" />
+    <property name="attributeMapping">
+      <list>
+        <value>firstName</value>
+        <value>lastName</value>
+        <value>company</value>
+        <value>contactEmail</value>
+        <value>contactPhone</value>
+        <value>keyword</value>
+      </list>
+    </property>
+  </bean>
+
+  <bean id="basicCsvAffiliateLeadImporter" class="com.similan.framework.importexport.csv.CsvJavaBeanImporter">
+    <lookup-method name="create" bean="basicCsvAffiliateLeadImporterCreator" />
+    <property name="attributeMapping">
+      <list>
+        <value>firstName</value>
+        <value>lastName</value>
+        <value>company</value>
+        <value>email</value>
+        <value>phone</value>
+        <value>industry</value>
+        <value>keyword</value>
+        <value>street</value>
+        <value>city</value>
+        <value>state</value>
+        <value>zip</value>
+        <value>country</value>
+        <value>title</value>
+        <value>description</value>
+      </list>
+    </property>
+  </bean>
+
+  <bean id="basicCsvMemberInviteImporter" class="com.similan.framework.importexport.csv.CsvJavaBeanImporter">
+    <lookup-method name="create" bean="basicCsvMemberInviteImporterCreator" />
+    <property name="attributeMapping">
+      <list>
+        <value>firstName</value>
+        <value>lastName</value>
+        <value>email</value>
+      </list>
+    </property>
+  </bean>
+
+  <bean id="defaultCsvMemberExporter" class="com.similan.framework.importexport.csv.CsvJavaBeanExporter">
+    <property name="attributeMapping">
+      <list>
+        <value>name</value>
+        <value>businessPhone</value>
+        <value>primaryEmail</value>
+        <value>industry</value>
+      </list>
+    </property>
+  </bean>
+
+  <util:map id="workflowList">
+    <entry key="signup.BasicMemberSignUp" value="com/similan/service/internal/impl/process/signup/BasicMemberSignUp.jpdl.xml" />
+    <entry key="memberInvite" value="com/similan/process/invite/memberInvite.jpdl.xml" />
+    <entry key="existingPartnerInvite" value="com/similan/process/invite/existingPartnerInvite.jpdl.xml" />
+    <entry key="primaryEmailChange" value="com/similan/process/account/primaryEmailChange.jpdl.xml" />
+    <entry key="passwordChange" value="com/similan/process/account/passwordChange.jpdl.xml" />
+    <entry key="businessCreationByMember" value="com/similan/process/business/businessCreationByMember.jpdl.xml" />
+    <entry key="memberBusinessAssociation" value="com/similan/process/business/memberBusinessAssociation.jpdl.xml" />
+    <entry key="businessInvite" value="com/similan/process/invite/businessInvite.jpdl.xml" />
+    <entry key="joinPartnerProgram" value="com/similan/process/partner/joinPartnerProgram.jpdl.xml" />
+    <entry key="partnerProgramInvite" value="com/similan/process/partner/partnerProgramInvite.jpdl.xml" />
+    <entry key="forgotPassword" value="com/similan/process/account/forgotPassword.jpdl.xml" />
+    <entry key="transferLead" value="com/similan/process/lead/transferLead.jpdl.xml" />
+    <entry key="linkedInMemberInvite" value="com/similan/process/invite/linkedInMemberInvite.jpdl.xml" />
+    <entry key="collaborationWorkspaceInvitation" value="com/similan/process/collaborationworkspace/collaborationWorkspaceInvitation.jpdl.xml" />
+  </util:map>
+</beans>

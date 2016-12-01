@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<p:dialog id="pageDetailViewDialog" resizable="false" modal="true" showEffect="explode" 
+	                     header="View" widgetVar="pageDetailViewDlg">
+        <p:outputPanel id="pageDetailViewPanel" layout="block">
+           <h:panelGrid columns="2">
+               <p:graphicImage
+					value="/spring/documentPages/#{workspaceDocumentDetailView.selectedPage.pageStorageKey}"
+					width="500" />
+			   
+			   <p:dataGrid id="commentGridListTable" var="comment"
+			            rendered="#{not empty workspaceDocumentDetailView.selectedPage.comments}"
+						value="#{workspaceDocumentDetailView.selectedPage.comments}"
+						paginator="true" rows="5" columns="1"
+						paginatorAlwaysVisible="false" paginatorPosition="bottom"
+						styleClass="documentPageBorder">
+
+						<h:panelGrid columns="2" styleClass="noBorder" style="margin-bottom:5px">
+							<p:panel styleClass="buttomBorder">
+								<p:graphicImage height="32" width="32" value="/spring/assets/#{comment.author.photoLocation}"/>
+							</p:panel>
+							<p:panel styleClass="buttomBorder">
+								<h:outputText value="#{comment.comment}"/>
+							</p:panel>
+						</h:panelGrid>
+
+				</p:dataGrid>
+           </h:panelGrid>
+		   <hr style="height:1px;background-color:#D4D4D4;clear:both"></hr>
+           <p:panel styleClass="noBorder" style="margin-top:10px">
+               <p:inputTextarea value="#{workspaceDocumentDetailView.pageComment}" />
+	           <p:commandButton actionListener="#{workspaceDocumentDetailView.postPageComment}" 
+	                         value="Post" icon="ui-icon-check" update=":form:pageDetailViewDialog"
+				             style="margin-left:5px">
+		   </p:commandButton>       
+           </p:panel>
+        </p:outputPanel>
+	</p:dialog>
+	
+	<p:panel id="documentDetailContentPanelGrid" styleClass="noBorder"
+			rendered="#{not empty workspaceDocumentDetailView.sharedDoc.document.docInstance.pageList}">
+			
+		<p:dataGrid id="pageGridTable" var="page"
+						value="#{workspaceDocumentDetailView.sharedDoc.document.docInstance.pageList}"
+						paginator="true" rows="4" columns="2"
+						paginatorAlwaysVisible="false" paginatorPosition="bottom"
+						styleClass="ui-datagrid-no-border">
+						
+			<p:panel id="documentDetailGridContentItemPanel"
+						styleClass="documentPageBorder">
+						
+				<h:outputText rendered="#{page.commentCount > 0 }"
+				        value="(#{page.commentCount})" 
+		                styleClass="textElementHilite"/>
+		                
+		        <p:commandLink  action="#{workspaceDocumentDetailView.setSelectedPage(page)}" 
+		                        onclick="pageDetailViewDlg.show();return false;">
+				<p:graphicImage
+					value="/spring/documentPages/#{page.pageStorageKey}" width="270" />
+			    </p:commandLink>
+			</p:panel>
+						
+		</p:dataGrid>
+	
+	</p:panel>
+	
+</ui:composition>

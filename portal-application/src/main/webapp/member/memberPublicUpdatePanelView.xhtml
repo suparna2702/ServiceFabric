@@ -1,0 +1,35 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:composite="http://java.sun.com/jsf/composite/composites"
+	xmlns:p="http://primefaces.org/ui">
+
+	
+	<p:panel style="margin-top:5px;border-style: hidden" >      
+     <p:outputPanel id="updateWallPanel">
+        
+		<p:spacer height="5" />
+		<p:dataGrid id="updateWall" 
+			var="wallEntry"
+			value="#{memberPublicView.wallUpdates}" columns="1" styleClass="ui-datagrid-no-border" 
+			rendered="#{not empty memberPublicView.wallUpdates}" paginator="true"
+            paginatorAlwaysVisible="false" paginatorPosition="bottom"			
+			rows="10"  
+            paginatorTemplate="{FirstPageLink} {PreviousPageLink} {NextPageLink}">
+			
+			<p:panel id="wallEntryPanel" styleClass="buttomBorder" 
+			    rendered="#{memberPublicView.getWallEntryType(wallEntry.type) eq 'WALL_POST'}">
+ 				<h:outputText value="#{wallEntry.content}" escape="false"/>
+ 				<h:outputText value="#{wallEntry.date}" 
+				                     style="margin-left:5px">
+				     <f:convertDateTime pattern="MM/dd/yyyy" />
+				</h:outputText>
+		    </p:panel>
+		    
+		</p:dataGrid>
+	  </p:outputPanel>
+    </p:panel>
+            	
+</ui:composition>

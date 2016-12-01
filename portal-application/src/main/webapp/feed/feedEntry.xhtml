@@ -1,0 +1,38 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:composite="http://java.sun.com/jsf/composite/composites"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:param name="feedEntryType" value="#{feedEntry.getType().name()}" />
+
+	<ui:fragment rendered="#{feedEntry.getType().name() == 'WALL_ENTRY'}">
+		<ui:include src="types/WALL_ENTRY.xhtml">
+			<ui:param name="feedEntry" value="#{feedEntry}" />
+		</ui:include>
+	</ui:fragment>
+
+	<ui:fragment
+		rendered="#{feedEntry.getType().name() == 'SURVEY_REQUEST_ENTRY'}">
+		<ui:include src="types/SURVEY_REQUEST_ENTRY.xhtml">
+			<ui:param name="feedEntry" value="#{feedEntry}" />
+		</ui:include>
+	</ui:fragment>
+
+	<ui:fragment
+		rendered="#{feedEntry.getType().name() == 'EXTERNAL_SHARED_VIEW_ENTRY'}">
+		<ui:include src="types/EXTERNAL_SHARED_VIEW_ENTRY.xhtml">
+			<ui:param name="feedEntry" value="#{feedEntry}" />
+		</ui:include>
+	</ui:fragment>
+
+	<ui:fragment
+		rendered="#{feedEntry.getType().name() == 'IN_NETWORK_SHARED_VIEW_ENTRY'}">
+		<ui:include src="types/IN_NETWORK_SHARED_VIEW_ENTRY.xhtml">
+			<ui:param name="feedEntry" value="#{feedEntry}" />
+		</ui:include>
+	</ui:fragment>
+
+</ui:composition>

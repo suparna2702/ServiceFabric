@@ -1,0 +1,232 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/basemenulayout.xhtml">
+
+	<ui:param name="newContent" value="true" />
+	<ui:param name="skipToolbar" value="true" />
+	<ui:define name="title">Collaboration Workspaces</ui:define>
+	<ui:define name="centerContent">
+
+		<div class="old-content">
+			<div class="row-fluid">
+				<div class="span12">
+					<h:form id="form" prependId="false" enctype="multipart/form-data">
+						<p:dialog id="workspaceCreateDialog" header="Create new workspace"
+							widgetVar="workspaceDialog" modal="false" resizable="true"
+							showEffect="fade" hideEffect="fade">
+
+							<p:panel id="workspaceCreatePanel" styleClass="workspacePanel"
+								style="border:none !important; font-size:9pt;">
+
+								<p:panelGrid style="border:hidden;" columns="1">
+
+									<h:inputText id="name" value="#{workspaceView.name}"
+										required="true" styleClass="input-block-level" size="45" />
+									<p:watermark for="name" value="Name of collaboration workspace" />
+
+									<h:inputTextarea value="#{workspaceView.description}"
+										id="description" styleClass="input-block-level" size="45" />
+									<p:watermark for="description"
+										value="Description of collaboration workspace" />
+
+								</p:panelGrid>
+
+								<hr style="height: 1px; background-color: #D4D4D4; clear: both"></hr>
+								<h3>Invitee List</h3>
+								<p:panelGrid style="border:hidden; margin-top:10px; width:100%"
+									columns="1">
+
+									<c:forEach var="contact" items="#{workspaceView.contacts}">
+										<p:outputPanel>
+											<p:selectBooleanCheckbox value="#{contact.selected}"
+												style="margin-right:5px" />
+											<p:graphicImage value="/spring/assets#{contact.imagePath}"
+												width="40" height="40" />
+											<h:outputText value="#{contact.fullName}"
+												style="margin-right:5px;font-weight:bold;" />
+											<h:outputText value="#{contact.company}"
+												style="margin-right:5px" />
+										</p:outputPanel>
+										<br></br>
+									</c:forEach>
+
+									<f:facet name="footer" style="text-align: center">
+										<p:row style="text-align: center">
+											<p:column colspan="2" style="text-align:center">
+												<p:commandButton id="createWorkspaceButton" value="Create"
+													oncomplete="workspaceDialog.hide();"
+													action="#{workspaceView.create}"
+													process="@this workspaceCreatePanel" update="@all" />
+											</p:column>
+										</p:row>
+									</f:facet>
+								</p:panelGrid>
+
+							</p:panel>
+						</p:dialog>
+
+					</h:form>
+				</div>
+			</div>
+		</div>
+
+		<div class="row-fluid">
+			<div class="span12">
+				<div class="iconbar iconbar-horizontal">
+					<ul>
+						<li><a href="#{root}/member/memberHome.xhtml"
+							class="fui-home" rel="tooltip" data-placement="bottom"
+							title="My Network"></a></li>
+
+						<c:if
+							test="#{not sec:areAnyGranted('BUSINESS_STANDARD') and sec:areAnyGranted('COLLABORATION_WORKSPACE_ADMIN')}">
+							<li><a href="#"
+								onclick="workspaceDialog.show();return false;" class="fui-plus"
+								rel="tooltip" data-placement="bottom" title="Create Workspace"></a></li>
+
+						</c:if>
+
+						<li><a
+							href="#{root}/help/collabspace/workspaceDetailHelp.xhtml"
+							class="fui-question" rel="tooltip" data-placement="bottom"
+							title="Workspace Help"></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<c:if test="#{empty workspaceView.workspaces}">
+			<div class="row-fluid well">
+				<div class="span12">
+					<p>No Workspace Defined</p>
+				</div>
+			</div>
+		</c:if>
+
+		<div class="row-fluid control-group">
+			<div class="span12">
+				<ui:repeat var="workspace" value="#{workspaceView.workspaces}">
+					<div class="row-fluid well">
+						<div class="span12">
+							<div class="row-fluid control-group">
+								<div class="span2">
+									<h:outputLink value="#{root}/collabspace/workspaceDetail.xhtml">
+										<f:param name="wsname" value="#{workspace.workspace.key.name}" />
+										<f:param name="owsname"
+											value="#{workspace.workspace.key.owner.name}" />
+										<p:graphicImage
+											value="/spring/assets/#{workspaceView.getWorkspaceLogo(workspace.workspace.logo)}"
+											width="120px" height="120px"
+											styleClass="img-rounded img-responsive" />
+									</h:outputLink>
+								</div>
+								<div class="span7">
+									<h4 class="muted">#{workspace.workspace.key.name}</h4>
+									<p>#{workspace.workspace.description}</p>
+									<h:outputText value="#{workspace.workspace.creationDate}">
+										<f:convertDateTime pattern="MM/dd/yyyy" />
+									</h:outputText>
+									<br></br> <br></br>
+
+									<div class="btn-toolbar">
+										<div class="btn-group">
+
+											<!-- View -->
+											<a
+												href="#{workspaceView.collaborationWorkspaceView('collabspace/workspaceDetail.xhtml', workspace.workspace.key)}"
+												class="btn btn-small btn-info" rel="tooltip"
+												title="View Workspace"> <i class="fui-eye"></i> View
+											</a>
+
+											<!-- Edit -->
+											<ui:fragment
+												rendered="#{workspaceView.isCreator(workspace.workspace, workspaceView.memberKey) eq 'true'}">
+												<a
+													href="#{workspaceView.collaborationWorkspaceView('collabspace/workspaceEdit.xhtml', workspace.workspace.key)}"
+													class="btn btn-small btn-primary" rel="tooltip"
+													title="Edit Workspace"> <i
+													class="fa fa-pencil-square-o"></i> Edit
+												</a>
+											</ui:fragment>
+
+											<!-- History (It is shown when activities are turned on) -->
+											<ui:fragment
+												rendered="#{workspace.workspace.showActivity eq 'true' or workspaceView.isCreator(workspace.workspace, workspaceView.memberKey) eq 'true'}">
+												<a
+													href="#{workspaceView.collaborationWorkspaceView('collabspace/workspaceHistory.xhtml', workspace.workspace.key)}"
+													class="btn btn-small btn-info" rel="tooltip"
+													title="View Workspace History"> <i
+													class="fa fa-history"></i> History
+												</a>
+
+											</ui:fragment>
+
+
+											<!-- Documents -->
+											<a
+												href="#{workspaceView.collaborationWorkspaceView('collabspace/workspaceDocument.xhtml', workspace.workspace.key)}"
+												class="btn btn-small btn-primary" rel="tooltip"
+												title="View shared documents"> <i class="fui-document"></i>
+												Documents
+											</a>
+										</div>
+									</div>
+
+								</div>
+
+								<div class="span3">
+									<blockquote>
+										<p>
+											<i class="fui-user muted" rel="tooltip"
+												title="Number of participants"></i>
+											#{workspace.workspace.numberOfParticipants}<br></br>
+
+											<!-- View Count -->
+											<i class="fui-document muted" rel="tooltip"
+												title="Document View Count"></i>
+											#{workspace.workspaceStatistics.documentViewCount}<br></br>
+
+											<!-- Download Count -->
+											<i class="fa fa-cloud-download muted" rel="tooltip"
+												title="Document Download Count"></i>
+											#{workspace.workspaceStatistics.documentDownloadCount} <br></br>
+
+											<i class="fui-eye muted" rel="tooltip"
+												title="Workspace View Count"></i>
+											#{workspace.workspaceStatistics.workspaceAccessCount} <br></br>
+
+											<!-- Workspace Accessed -->
+											<i class="fui-link muted" rel="tooltip"
+												title="Document Shared Count"></i>
+											#{workspace.workspaceStatistics.documentSharedCount}
+											<!-- Share count -->
+										</p>
+									</blockquote>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</ui:repeat>
+			</div>
+		</div>
+
+		<script language="javascript">
+			$(document).ready(function() {
+				$("[rel='tooltip']").tooltip();
+				$("[rel='popover']").popover({
+					'trigger' : 'hover',
+					'html' : true
+				});
+			})
+		</script>
+
+	</ui:define>
+
+</ui:composition>

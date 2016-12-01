@@ -1,0 +1,67 @@
+package com.similan.domain.repository.community;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.similan.domain.entity.community.EmployeeRole;
+import com.similan.domain.entity.community.SocialEmployee;
+import com.similan.domain.entity.community.SocialOrganization;
+import com.similan.domain.entity.community.SocialPerson;
+import com.similan.domain.repository.community.jpa.JpaSocialEmployeeRepository;
+import com.similan.service.api.community.dto.basic.SocialEmployeeType;
+
+public class SocialEmployeeRepository {
+  @Autowired
+  private JpaSocialEmployeeRepository repository;
+	
+	public List<SocialEmployee> findAll() {
+    return repository.findAll();
+  }
+	
+	public SocialEmployee findOne(Long id) {
+    return repository.findOne(id);
+  }
+	
+	public SocialEmployee save(SocialEmployee employement) {
+    return repository.save(employement);
+  }
+	
+	public void delete(SocialOrganization organization, SocialPerson employee) {
+    repository.delete(organization, employee);
+  }
+	
+	public List<SocialEmployee> findByContactFrom(SocialOrganization actor) {
+    return repository.findByContactFrom(actor);
+  }
+	
+	public SocialEmployee create(SocialEmployeeType emplyeeType,
+		      SocialOrganization org, SocialPerson person, Set<EmployeeRole> roles){
+		SocialEmployee employee = new SocialEmployee();
+		employee.setEmployeeType(emplyeeType);
+		employee.setContactFrom(org);
+		employee.setCreated(new Date());
+		employee.setContactTo(person);
+		employee.setRoles(roles);
+		return employee;
+	}
+
+  public SocialEmployee findByContactToAndContactFromAndRolesIn(
+      SocialPerson employee, SocialOrganization business,
+      Set<EmployeeRole> roles) {
+    return repository.findByContactToAndContactFromAndRolesIn(employee, business, roles);
+  }
+  
+<<<<<<< Updated upstream
+  public SocialEmployee findByContactFromAndContactTo(SocialOrganization business,
+      SocialPerson employee){
+    return repository.findByContactFromAndContactTo(business, employee);
+=======
+  public SocialEmployee findByContactToAndContactFrom(
+      SocialPerson employee, SocialOrganization business) {
+    return repository.findByContactToAndContactFrom(employee, business);
+>>>>>>> Stashed changes
+  }
+}

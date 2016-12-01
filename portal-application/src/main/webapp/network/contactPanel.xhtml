@@ -1,0 +1,59 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:composite="http://java.sun.com/jsf/composite/composites"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:param name="actorType"
+		value="#{contactEntry.contact.getType().name()}" />
+
+	<div class="thumbnail" style="padding: 0">
+
+		<div style="padding: 4px">
+			<ui:fragment rendered="#{actorType eq 'Member'}">
+
+				<h:outputLink value="#{root}/member/memberPublicProfile.xhtml">
+					<f:param name="mid" value="#{contactEntry.contact.id}" />
+					<img style="width: 100px; height: 100px"
+						src="#{root}/spring/assets/#{networkConnectionView.getWorkspaceLogo(contactEntry.contact.displayImage)}" />
+				</h:outputLink>
+			</ui:fragment>
+
+			<ui:fragment rendered="#{actorType eq 'Business'}">
+
+				<h:outputLink value="#{root}/business/businessPublicProfile.xhtml">
+					<f:param name="oid" value="#{contactEntry.contact.id}" />
+					<img style="width: 100px; height: 100px"
+						src="#{root}/spring/assets/#{networkConnectionView.getWorkspaceLogo(contactEntry.contact.displayImage)}" />
+				</h:outputLink>
+			</ui:fragment>
+
+		</div>
+
+		<div class="caption">
+			<p>
+				<small>#{contactEntry.contact.displayName}</small>
+			</p>
+			<span class="label label-inverse">#{contactEntryType}</span>
+			<p class="text-primary">#{contactEntry.contact.employer}</p>
+			<i class="fui-time mrm"></i> Contact from <b>#{networkConnectionView.ago(contactEntry.date)}</b>
+		</div>
+
+		<div class="modal-footer" style="text-align: left">
+
+			<div class="row-fluid">
+				<div class="span4">
+					<i class="fui-gear mrm"></i><b>10</b><br />
+				</div>
+				<div class="span4">
+					<i class="fui-user mrm"></i><b>10</b><br />
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+
+</ui:composition>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process name="memberBusinessAssociation" xmlns="http://jbpm.org/4.4/jpdl">
+   <start g="434,35,48,48" name="start1">
+      <transition g="-114,-16" name="to_Association_Input_Validation" to="Association_Input_Validation"/>
+   </start>
+   <custom g="325,143,264,60" expr="#{organizationAssociationInputValidation}" name="Association_Input_Validation">
+      <transition g="-96,-11" name="to_Association_Validation_Decision" to="Association_Validation_Decision"/>
+   </custom>
+   <decision g="433,272,61,48" name="Association_Validation_Decision">
+      <handler expr="#{businessAssociationInputValidationDecision}"/>
+      <transition g="237,295:-129,35" name="to_Send_Association_Validation_Error" to="Send_Association_Validation_Error"/>
+      <transition g="725,297:-180,45" name="to_Send_Association_Validation_Email_To_Business" to="Send_Association_Validation_Email_To_Business"/>
+   </decision>
+   <custom g="106,389,263,67" expr="#{sendAssociationValidationErrorAction}" name="Send_Association_Validation_Error">
+      <transition g="-68,-10" name="to_error1" to="error1"/>
+   </custom>
+   <end-error g="216,507,48,48" name="error1"/>
+   
+   <custom g="532,394,383,68" expr="#{sendAssociationValidationEmailToBusinessAction}" name="Send_Association_Validation_Email_To_Business">
+      <transition g="-163,-12" name="to_Send_Wait_Confirmation_Email_To_Member" to="Send_Wait_Confirmation_Email_To_Member"/>
+   </custom>
+   <custom g="537,530,367,65" expr="#{sendAssociationWaitConfirmationEmailToMemberAction}" name="Send_Wait_Confirmation_Email_To_Member">
+      <transition g="-173,-16" name="to_Wait_For_Confirmation_From_Business" to="Wait_For_Confirmation_From_Business"/>
+   </custom>
+   <state g="557,656,328,69" name="Wait_For_Confirmation_From_Business">
+      <transition g="-191,-10" name="to_Analyze_Business_Confirmation_Notification" to="Analyze_Business_Confirmation_Notification"/>
+   </state>
+   <custom g="530,796,386,73" expr="#{analyzeBusinessAssociationUrlValidationAction}" name="Analyze_Business_Confirmation_Notification">
+      <transition g="-43,-9" name="to_Business_Association_Confirmation_Decision" to="Business_Association_Confirmation_Decision"/>
+   </custom>
+   <decision g="701,926,48,48" name="Business_Association_Confirmation_Decision">
+      <handler expr="#{businessAssociationNotificationDecision}"/>
+      <transition g="454,951:-133,23" name="to_Send_Acceptance_Notification" to="Send_Acceptance_Notification_To_Member"/>
+      <transition g="978,951:-116,28" name="to_Send_Rejection_Notification" to="Send_Rejection_Notification_To_Member"/>
+   </decision>
+   <custom g="284,1033,342,71" expr="#{sendAssociationAcceptanceNotificationEmailToMemberAction}" name="Send_Acceptance_Notification_To_Member">
+      <transition g="-67,-8" name="to_end1" to="end1"/>
+   </custom>
+   <custom g="824,1044,306,74" expr="#{sendAssociationRejectionNotificationEmailToMemberAction}" name="Send_Rejection_Notification_To_Member">
+      <transition g="-63,-12" name="to_end2" to="end2"/>
+   </custom>
+   <end g="432,1152,48,48" name="end1"/>
+   <end g="955,1162,48,48" name="end2"/>
+</process>

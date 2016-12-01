@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd"
+  logicalFilePath="00005-asset-store-s3.db.xml">
+
+  <changeSet id="ConfigurationParameter-assetInternalService-storeId" author="enrique">
+    <preConditions onFail="MARK_RAN">
+      <sqlCheck expectedResult="0">
+        select count(*) from ConfigurationParameter
+        where beanName = 'assetInternalService'
+        and propertyName = 'storeId'
+      </sqlCheck>
+    </preConditions>
+    <insert tableName="ConfigurationParameter">
+      <column name="type" value="java.lang.String" />
+      <column name="beanName" value="assetInternalService" />
+      <column name="propertyName" value="storeId" />
+      <column name="value" value='"local"' />
+    </insert>
+  </changeSet>
+  <changeSet id="ConfigurationParameter-localAssetStore-beanName" author="enrique">
+    <preConditions onFail="MARK_RAN">
+      <sqlCheck expectedResult="1">
+        select count(*) from ConfigurationParameter
+        where beanName = 'service_localStore'
+        and propertyName = 'directory'
+      </sqlCheck>
+    </preConditions>
+    <update tableName="ConfigurationParameter">
+      <column name="beanName"  value="localAssetStore" />
+      <where>
+        beanName = 'service_localStore'
+        and propertyName = 'directory'
+      </where>
+    </update>
+  </changeSet>
+  <changeSet id="ConfigurationParameter-s3AssetStore-bucketName" author="enrique">
+    <preConditions onFail="MARK_RAN">
+      <sqlCheck expectedResult="0">
+        select count(*) from ConfigurationParameter
+        where beanName = 's3AssetStore'
+        and propertyName = 'bucketName'
+      </sqlCheck>
+    </preConditions>
+    <insert tableName="ConfigurationParameter">
+      <column name="type" value="java.lang.String" />
+      <column name="beanName" value="s3AssetStore" />
+      <column name="propertyName" value="bucketName" />
+      <column name="value" value='"--bucket-not-set--"' />
+    </insert>
+  </changeSet>
+  <changeSet id="Asset-attachment" author="enrique">
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <columnExists tableName="Asset" columnName="attachment" />
+      </not>
+    </preConditions>
+    <addColumn tableName="Asset">
+      <column name="attachment" type="bit(1)">
+        <constraints nullable="false" />
+      </column>
+    </addColumn>
+    <sql>
+      update Asset set
+        attachment = 1
+    </sql>
+    <sql>
+      update Asset set
+        attachment = 0,
+        detectionpolicy = 'TRUSTED'
+      where detectionpolicy = 'NONE'
+    </sql>
+  </changeSet>
+</databaseChangeLog>

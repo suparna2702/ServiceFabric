@@ -1,0 +1,24 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<p:confirmDialog id="confirmDialog" message="Thanks for contacting us. Some one will contact you shortly"  
+                header="Thanks" severity="alert" widgetVar="confirmationContact">  
+        <p:commandButton id="confirm" value="Ok" oncomplete="confirmationContact.hide()" />  
+    </p:confirmDialog>
+	
+	<p:panel id="leadCaptureContactPanel">
+	
+        <ui:include src="/utility/leadCapturePanelGrid.xhtml"/>    
+		<p:commandButton id="leadCaptureContact"  
+		                    icon="ui-icon-mail-closed" 
+		                    style="margin-top:10px; margin-right:20px" value="Contact" 
+			                action="#{leadCaptureContactView.contact}" 
+			                process="@this leadCaptureContactPanel" 
+			                onclick="confirmationContact.show()" />
+	</p:panel>
+</ui:composition>

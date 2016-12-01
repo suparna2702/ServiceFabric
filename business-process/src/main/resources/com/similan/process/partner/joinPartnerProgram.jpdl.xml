@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process name="joinPartnerProgram" xmlns="http://jbpm.org/4.4/jpdl">
+   <start name="start1" g="330,18,48,48">
+      <transition name="to_Validate_Partner_Program_Join_Input" to="Validate_Partner_Program_Join_Input" g="-124,-7"/>
+   </start>
+   <custom name="Validate_Partner_Program_Join_Input" expr="#{validatePartnerProgramJoinInputAction}" g="185,156,340,81">
+      <transition name="to_Partner_Program_Join_Input_Validate_Decision" to="Partner_Program_Join_Input_Validate_Decision" g="-167,-13"/>
+   </custom>
+   <decision name="Partner_Program_Join_Input_Validate_Decision" g="331,308,48,48">
+      <handler expr="#{partnerProgramInputValidateDecision}"/>
+      <transition name="to_Send_Validation_Error_Email" to="Send_Validation_Error_Email" g="159,333:-131,35"/>
+      <transition name="to_Send_Partner_Program_Evaluation_Email" to="Send_Partner_Program_Evaluation_Email" g="633,331:-194,38"/>
+   </decision>
+   <custom name="Send_Validation_Error_Email" expr="#{sendPartnerJoinValidationErrorEmailAction}" g="48,428,218,74">
+      <transition name="to_error1" to="error1" g="-63,-25"/>
+   </custom>
+   <end-error name="error1" g="136,565,48,48"/>
+   <custom name="Send_Partner_Program_Evaluation_Email" expr="#{sendPartnerProgramEvaluationEmailAction}" g="471,429,328,80">
+      <transition name="to_Wait_For_Response" to="Wait_For_Response" g="-83,-6"/>
+   </custom>
+   <state name="Wait_For_Response" g="553,599,168,67">
+      <transition name="to_Evaluate_Response" to="Evaluate_Response" g="-76,-26"/>
+   </state>
+   <decision name="Response_Evaluation_Decision" g="976,743,48,48">
+      <handler expr="#{partnerProgramResponseEvaluateDecision}"/>
+      <transition name="to_Send_Approval_Email" to="Send_Approval_Email" g="705,765:-86,22"/>
+      <transition name="to_Send_Rejection_Email" to="Send_Rejection_Email" g="1208,765:-84,29"/>
+   </decision>
+   <custom name="Evaluate_Response" expr="#{partnerProgramApprovalResponseEvaluationAction}" g="892,595,203,72">
+      <transition name="to_Response_Evaluation_Decision" to="Response_Evaluation_Decision" g="-118,-18"/>
+   </custom>
+   <custom name="Send_Approval_Email" expr="#{sendPartnerProgramApprovalEmailAction}" g="617,828,183,66">
+      <transition name="to_end1" to="end1" g="-63,-6"/>
+   </custom>
+   <custom name="Send_Rejection_Email" expr="#{sendPartnerJoinRejectionEmailAction}" g="1104,831,214,67">
+      <transition name="to_error2" to="error2" g="-38,-10"/>
+   </custom>
+   <end name="end1" g="689,941,48,48"/>
+   <end-error name="error2" g="1189,958,48,48"/>
+</process>

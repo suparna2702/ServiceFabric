@@ -1,0 +1,43 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<p:dialog id="businessSettings" resizable="false" modal="true" showEffect="explode" 
+	                     header="Settings" widgetVar="dlgSettings">
+       <p:outputPanel id="businessSettingsPanel" layout="block">
+          <p:panel>
+             <h:panelGrid columns="2">
+                <h:outputLabel for="businessSearchSettingOption" value="Show In: "/>
+                <p:selectManyCheckbox id="businessSearchSettingOption" value="#{orgView.selectedOptions}">
+                   <f:selectItem itemLabel="Public Search" itemValue="PublicSearch" />
+                   <f:selectItem itemLabel="Business Reach Search" itemValue="BusinessReachSearch" />
+                   <f:selectItem itemLabel="Partner Page Search" itemValue="PartnerPageSearch" />
+                 </p:selectManyCheckbox>
+                 
+                 <h:outputLabel for="businessLocationSettings" value="Show Locations: "/>
+                 <p:selectOneMenu id="businessLocationSettings" value="#{orgView.orgInfo.locationSettings}" >
+				    <f:selectItem itemLabel="All" itemValue="All" />
+				    <f:selectItem itemLabel="None" itemValue="None" />
+				    <f:selectItem itemLabel="Headquarters" itemValue="HeadQuarters" />
+				    <f:selectItem itemLabel="HQ and Sales Office" itemValue="HQ_StateOffices" />
+	             </p:selectOneMenu> 
+	             
+	             <h:outputLabel for="businessLocationGroupSettings" value="Group Locations As: "/>
+	             <p:selectOneMenu id="businessLocationGroupSettings" value="#{orgView.orgInfo.locationGroupSettings}" >
+				    <f:selectItem itemLabel="HQ Countries, Countries/State Provinces" itemValue="1" />
+				    <f:selectItem itemLabel="Countries, State/Provinces" itemValue="2" />
+				    <f:selectItem itemLabel="Functional HQ, Sales Offices" itemValue="3" />
+	             </p:selectOneMenu> 
+             </h:panelGrid>
+          </p:panel>
+          	  <p:commandButton value="Update" icon="ui-icon-check" 
+	                 action="#{orView.editSettings}" process="@this businessSettingsPanel" 
+	                              update="businessSettingsPanel" style="margin-top:10px"/>
+          
+       </p:outputPanel>
+    </p:dialog>
+	
+</ui:composition>

@@ -1,0 +1,232 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/basemenulayout.xhtml">
+
+	<ui:param name="newContent" value="true" />
+	<ui:param name="skipToolbar" value="true" />
+	<ui:define name="title">Add/ Edit Member Profile</ui:define>
+
+	<ui:define name="centerContent">
+
+		<div class="old-content">
+			<div class="row-fluid">
+				<div class="span12">
+					<h:form id="form" prependId="false" enctype="multipart/form-data">
+
+						<f:metadata>
+							<f:viewParam name="oauth_verifier"
+								value="#{memberView.oauthVerifier}" />
+							<f:event type="preRenderView"
+								listener="#{memberView.handleReturnFromLinkedIn}" />
+						</f:metadata>
+
+						<p:messages id="messages" showDetail="true" autoUpdate="true"
+							closable="true" />
+
+						<p:outputPanel id="memberEditProfilePanel" layout="block">
+							<p:panel>
+								<h:panelGrid columns="2">
+									<h:panelGroup id="memberPhotoPanel" styleClass="image-thumb"
+										layout="block">
+										<p:graphicImage id="memberPhoto"
+											value="/spring/assets#{memberView.memberPhoto}" />
+										<p:commandButton id="imageAddButton"
+											styleClass="imageAddButtonOverlay"
+											rendered="#{memberView.memberPhotoExists == false}"
+											onclick="dlg.show();" title="Add member photo" value="">
+											<f:param name="productId" value="20" />
+										</p:commandButton>
+										<p:commandButton id="imageUpdateButton"
+											styleClass="imageAddButtonOverlay"
+											rendered="#{memberView.memberPhotoExists == true}"
+											onclick="confirmation.show();" value=""
+											title="Update member picture">
+											<f:param name="productId" value="20" />
+										</p:commandButton>
+										<p:commandButton id="imageDeleteButton"
+											onclick="deleteConfirmation.show();"
+											rendered="#{memberView.memberPhotoExists == true}"
+											styleClass="imageRemoveButtonOverlay" value=""
+											title="Remove member picture">
+											<f:param name="productId" value="20" />
+										</p:commandButton>
+									</h:panelGroup>
+									<h:panelGroup>
+										<p:commandButton value="Update profile from LinkedIn"
+											actionListener="#{memberView.updateFromLinkedIn}"
+											id="updateFromLinkedIn" image="linkedInButton" />
+
+										<p:dialog id="photoUploadDialog" resizable="false"
+											modal="true" showEffect="explode" header="Upload Picture"
+											widgetVar="dlg">
+											<p:fileUpload
+												fileUploadListener="#{memberView.handleFileUpload}"
+												auto="true" mode="advanced" oncomplete="dlg.hide()"
+												id="fileUpload" sizeLimit="1048576"
+												update="memberPhoto memberPhotoPanel"
+												render="memberPhotoPanel"
+												allowTypes="/(\.|\/)(gif|jpe?g|png)$/">
+											</p:fileUpload>
+										</p:dialog>
+										<p:confirmDialog id="confirmDialog"
+											message="Are you sure you want to replace your existing picture"
+											header="Change Picture" severity="alert"
+											widgetVar="confirmation">
+											<p:commandButton id="confirm" value="Yes" update="messages"
+												oncomplete="confirmation.hide(); dlg.show();" />
+											<p:commandButton id="decline" value="No"
+												onclick="confirmation.hide()" type="button" />
+										</p:confirmDialog>
+										<p:confirmDialog id="deleteConfirm"
+											message="Are you sure you want to delete your existing picture?"
+											header="Delete Picture" severity="alert"
+											widgetVar="deleteConfirmation">
+											<p:commandButton id="deletePhotoConfirm" immediate="true"
+												value="Yes" update="memberPhotoPanel"
+												render="memberPhotoPanel"
+												oncomplete="deleteConfirmation.hide();"
+												action="#{memberView.deletePhoto}" />
+											<p:commandButton id="deleteLogoDecline" value="No"
+												onclick="deleteConfirmation.hide()" type="button" />
+										</p:confirmDialog>
+
+									</h:panelGroup>
+								</h:panelGrid>
+
+								<h:panelGrid columns="2" style="margin-top:10px;">
+
+									<h3>First Name</h3>
+									<h:inputText id="firstName" styleClass="input-block-level"
+										value="#{memberView.member.firstName}"
+										style="margin-bottom:5px" size="45" />
+									<p:watermark for="firstName" value="First Name" />
+									<p:tooltip for="firstName" value="Enter your First Name"
+										showEffect="fade" hideEffect="fade" />
+
+									<h3>Last Name</h3>
+									<h:inputText id="lastName" styleClass="input-block-level"
+										value="#{memberView.member.lastName}" size="45"
+										style="margin-bottom:5px" />
+									<p:watermark for="lastName" value="Last Name" />
+									<p:tooltip for="lastName" value="Enter your Last Name"
+										showEffect="fade" hideEffect="fade" />
+
+									<h3>Title</h3>
+									<h:inputText id="title" styleClass="input-block-level"
+										style="margin-bottom:5px" value="#{memberView.member.title}"
+										size="45" />
+									<p:watermark for="title" value="Title" />
+									<p:tooltip for="title" value="Enter your Title"
+										showEffect="fade" hideEffect="fade" />
+
+									<c:if test="#{!empty memberView.member.employer}">
+										<h3>Employer</h3>
+									</c:if>
+									<h:outputText rendered="#{!empty memberView.member.employer}"
+										disabled="true" value="#{memberView.member.employer.name}" />
+
+									<h3>Business Phone</h3>
+									<h:inputText id="businessPhone" styleClass="input-block-level"
+										value="#{memberView.member.businessPhone}"
+										style="margin-top:10px;margin-bottom:5px" size="45" />
+									<p:watermark for="businessPhone" value="Enter business phone" />
+									<p:tooltip for="businessPhone" value="Enter business phone"
+										showEffect="fade" hideEffect="fade" />
+
+									<h3>Mobile Phone</h3>
+									<h:inputText id="mobilePhone" styleClass="input-block-level"
+										value="#{memberView.member.mobilePhone}"
+										style="margin-bottom:10px" size="45" />
+									<p:watermark for="mobilePhone" value="Enter mobile phone" />
+									<p:tooltip for="mobilePhone" value="Enter mobile phone"
+										showEffect="fade" hideEffect="fade" />
+
+									<h:outputLabel for="industrySelect" value="Industry: " />
+									<ui:include src="industrySelect.xhtml" />
+
+									<h3>Street</h3>
+									<h:inputText id="memberStreet" styleClass="input-block-level"
+										value="#{memberView.member.addressDto.street}"
+										style="margin-top:10px;margin-bottom:10px" size="45" />
+									<p:watermark for="memberStreet" value="Enter the street" />
+									<p:tooltip for="memberStreet" value="Enter the street"
+										showEffect="fade" hideEffect="fade" />
+
+									<h3>City</h3>
+									<h:inputText id="memberCity" styleClass="input-block-level"
+										value="#{memberView.member.addressDto.city}"
+										style="margin-bottom:10px" size="45" />
+									<p:watermark for="memberCity" value="Enter the city" />
+									<p:tooltip for="memberCity" value="Enter the city"
+										showEffect="fade" hideEffect="fade" />
+
+									<h3>Country</h3>
+									<p:selectOneMenu id="countrySelect"
+										style="margin-bottom:10px;margin-top:10px;width:300px"
+										effect="fade" filter="true" filterMatchMode="startsWith"
+										styleClass="profile-input"
+										value="#{memberView.member.addressDto.country}">
+										<f:selectItem itemLabel="Select One..." itemValue="#{null}" />
+										<f:selectItems value="#{countryBean.countryList}"
+											var="countryType" itemLabel="#{countryType.countryName}"
+											itemValue="#{countryType.countryName}" />
+										<p:ajax event="change" update="stateSelectList"
+											execute="@this"
+											listener="#{memberView.loadStatesForSelectedCountry}" />
+									</p:selectOneMenu>
+
+									<h3>State</h3>
+									<p:selectOneMenu style="margin-bottom:10px;margin-top:10px"
+										styleClass="profile-input" effect="fade" filter="true"
+										filterMatchMode="startsWith" id="stateSelectList"
+										value="#{memberView.member.addressDto.state}">
+										<f:selectItem itemLabel="Select One..." itemValue="#{null}" />
+										<f:selectItems value="#{memberView.selectedStateList}"
+											var="stateType" itemLabel="#{stateType.stateName}"
+											itemValue="#{stateType.stateName}" />
+									</p:selectOneMenu>
+
+									<h3>Zip Code</h3>
+									<h:inputText id="memberZipCode" styleClass="input-block-level"
+										value="#{memberView.member.addressDto.zipCode}"
+										style="margin-top:10px;margin-bottom:10px" size="45" />
+									<p:watermark for="memberZipCode" value="Enter the Zipcode" />
+									<p:tooltip for="memberZipCode" value="Enter the Zipcode"
+										showEffect="fade" hideEffect="fade" />
+
+									<h3>About Me</h3>
+									<h:inputTextarea id="aboutMe" styleClass="input-block-level"
+										value="#{memberView.member.aboutMe}"
+										style="margin-bottom:5px;margin-top:5px" rows="6" cols="43" />
+
+									<h3>My Expertise</h3>
+									<ui:include src="addEditMemberExpertise.xhtml" />
+
+									<h3>My Interest</h3>
+									<ui:include src="addEditMemberInterest.xhtml" />
+
+								</h:panelGrid>
+							</p:panel>
+
+							<p:commandButton value="Update"
+								styleClass="btn btn-info btn-small"
+								action="#{memberView.updateMemberProfile}"
+								process="@this memberEditProfilePanel" ajax="false"
+								style="margin-top:10px;" />
+						</p:outputPanel>
+
+
+					</h:form>
+				</div>
+			</div>
+		</div>
+
+	</ui:define>
+
+</ui:composition>

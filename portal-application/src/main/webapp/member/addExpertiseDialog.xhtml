@@ -1,0 +1,17 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<p:dialog id="addExpertiseDialog" resizable="false" modal="true" showEffect="explode" 
+	                     header="Add Expertise" widgetVar="dlgAddExpertise" >
+       <p:outputPanel id="addExpertisePanel" layout="block" >
+         <h:panelGrid style="margin-top:10px;">
+	        <p:inputText id="addExpertiseText" size="30"/>
+         </h:panelGrid>
+          	  <p:commandButton value="Add" id="addExpertiseSubmit" style="margin-left:10px;margin-top:10px"/>
+       </p:outputPanel>
+	</p:dialog>
+</ui:composition>

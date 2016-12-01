@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:outputPanel id="memberExpertiseOutputPanel" autoUpdate="true"
+		style="width:325px">
+		<p:panel style="margin-bottom:20px;margin-top:20px;">
+			<p:panel id="addExpertiseTextPanel"
+				style="margin-bottom:2px;border:hidden">
+				<h:inputText id="addExpertiseText"
+					value="#{memberView.expertiseToAdd}" styleClass="input-block-level"
+					size="45" />
+				<p:commandButton id="addExpertiseBtn" value="Add"
+					action="#{memberView.addExpertise}" style="margin-left:10px;"
+					process="@this memberExpertiseOutputPanel"
+					update="memberExpertiseOutputPanel" />
+				<p:tooltip for="addExpertiseBtn" value="Add a new expertise"
+					showEffect="fade" hideEffect="fade" />
+			</p:panel>
+
+			<p:panel id="memberExpertisePanel"
+				style="width:265px;border-style:hidden">
+
+				<p:dataTable id="memberExpertiseDataTable"
+					styleClass="hide-column-names" rowKey="#{memberExpertise.id}"
+					selectionMode="single" var="memberExpertise"
+					selection="#{memberView.member.selectedMemberExpertise}"
+					value="#{memberView.member.expertise}">
+
+					<p:column style="width:200px;border:hidden">
+						<p:inplace editor="true">
+							<h:inputText value="#{memberExpertise.expertise}"
+								style="font-size:larger" size="50" />
+						</p:inplace>
+					</p:column>
+
+					<p:column style="border:hidden">
+						<p:commandButton id="deleteExpertiseBtn"
+							action="#{memberView.deleteExpertise}" value="Delete"
+							style="margin-left:10px;" update="memberExpertiseDataTable"
+							process="@this memberExpertiseDataTable">
+							<f:setPropertyActionListener
+								target="#{memberView.member.selectedMemberExpertise}"
+								value="#{memberExpertise}" />
+						</p:commandButton>
+						<p:tooltip for="deleteExpertiseBtn" value="Delete this expertise"
+							showEffect="fade" hideEffect="fade" />
+					</p:column>
+				</p:dataTable>
+
+			</p:panel>
+		</p:panel>
+	</p:outputPanel>
+</ui:composition>

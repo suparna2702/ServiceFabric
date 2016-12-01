@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd"
+	logicalFilePath="com/similan/domain/db/00014-user-audit-event.db.xml">
+
+	<changeSet id="AuditEvent-table" author="Suparna">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists tableName="AuditEvent" />
+			</not>
+		</preConditions>
+		<createTable tableName="AuditEvent">
+			<column name="id" type="bigint(20)" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" unique="true"
+					uniqueConstraintName="id" />
+			</column>
+			<column name="createdon" type="datetime" />
+			<column name="modifiedon" type="datetime" />
+			<column name="uuid" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="eventType" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="member_memberId" type="bigint(20)">
+				<constraints nullable="false" />
+			</column>
+			<column name="business_memberId" type="bigint(20)">
+				<constraints nullable="true" />
+			</column>
+		</createTable>
+		<createIndex tableName="AuditEvent" indexName="FKA35B36EEDEFCCD6Z">
+			<column name="member_memberId" type="bigint(20)" />
+		</createIndex>
+		<createIndex tableName="AuditEvent" indexName="FKA35B36EE282F2E29">
+			<column name="business_memberId" type="bigint(20)" />
+		</createIndex>
+	</changeSet>
+
+	<changeSet id="AuditEvent-fk-FKA35B36EEDEFCCD6Z" author="Suparna">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<foreignKeyConstraintExists
+					foreignKeyName="FKA35B36EEDEFCCD6Z" />
+			</not>
+		</preConditions>
+		<addForeignKeyConstraint constraintName="FKA35B36EEDEFCCD6Z"
+			baseTableName="AuditEvent" baseColumnNames="member_memberId"
+			referencedTableName="SocialActor" referencedColumnNames="memberId" />
+	</changeSet>
+
+	<changeSet id="AuditEvent-fk-FKA35B36EE282F2E29" author="Suparna">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<foreignKeyConstraintExists
+					foreignKeyName="FKA35B36EE282F2E29" />
+			</not>
+		</preConditions>
+		<addForeignKeyConstraint constraintName="FKA35B36EE282F2E29"
+			baseTableName="AuditEvent" baseColumnNames="business_memberId"
+			referencedTableName="SocialActor" referencedColumnNames="memberId" />
+	</changeSet>
+
+	<changeSet id="AuditEventAttribute-table" author="Suparna">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists tableName="AuditEventAttribute" />
+			</not>
+		</preConditions>
+		<createTable tableName="AuditEventAttribute">
+			<column name="id" type="bigint(20)" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="createdon" type="datetime" />
+			<column name="modifiedon" type="datetime" />
+			<column name="uuid" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="attributeType" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="value" type="varchar(500)" />
+			<column name="attributes_id" type="bigint(20)" />
+		</createTable>
+		<createIndex tableName="AuditEventAttribute" indexName="FKD4987FC545028FD">
+			<column name="attributes_id" type="bigint(20)" />
+		</createIndex>
+	</changeSet>
+
+	<changeSet id="AuditEventAttribute-fk-FKD4987FC545028FD"
+		author="Suparna">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<foreignKeyConstraintExists
+					foreignKeyName="FKD4987FC545028FD" />
+			</not>
+		</preConditions>
+		<addForeignKeyConstraint constraintName="FKD4987FC545028FD"
+			baseTableName="AuditEventAttribute" baseColumnNames="attributes_id"
+			referencedTableName="AuditEvent" referencedColumnNames="id" />
+	</changeSet>
+
+
+</databaseChangeLog>

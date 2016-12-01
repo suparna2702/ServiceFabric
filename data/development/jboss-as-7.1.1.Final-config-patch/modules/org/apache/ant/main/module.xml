@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module xmlns="urn:jboss:module:1.1" name="org.apache.ant">
+  <resources>
+    <resource-root path="ant-1.8.4.jar"/>
+  </resources>
+  <dependencies>
+  </dependencies>
+</module>

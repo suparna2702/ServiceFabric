@@ -1,0 +1,44 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:composite="http://java.sun.com/jsf/composite/composites"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:fragment value="#{not empty contactView.contactList}">
+
+		<ui:repeat var="contact" value="#{contactList}">
+			<ui:param name="actorType" value="#{contact.getType().name()}" />
+
+			<ui:fragment rendered="#{actorType eq 'Member'}">
+
+				<div class="row-fluid control-group">
+					<div class="span12 thumbnail control-groupl friend-contact">
+						<div class="caption">
+							<div class="row-fluid">
+								<div class="span2">
+									<img src="#{root}/spring/assets/#{contact.displayImage}"
+										class="img-circle" />
+								</div>
+								<div class="span9">
+									<p class="text-primary">#{contact.displayName}</p>
+								</div>
+
+								<div class="span9">
+									<b>#{contact.employer}</b>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</ui:fragment>
+
+		</ui:repeat>
+
+	</ui:fragment>
+
+
+</ui:composition>

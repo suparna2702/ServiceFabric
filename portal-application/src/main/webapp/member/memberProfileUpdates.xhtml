@@ -1,0 +1,109 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<style>
+		#updateWallPanel,#updateWall,#updateWall_content {
+			border: none !important;
+		}
+		.noBorder > div{
+			border: none !important;
+		}
+		.buttomBorder{
+			border-left: none !important; border-right: none !important;border-top: none !important;
+		}
+		
+	</style>
+	
+	<p:panel style="margin-top:15px;border-style: hidden" >
+	  <p:spacer height="20" />
+      <p:toolbar style="border-style: hidden">
+	    <p:toolbarGroup align="left">
+	        <p:selectOneButton value="#{memberPublicView.updateFilterType}" 
+			                       valueChangeListener="#{memberPublicView.updateFilterApply}">
+		            <f:selectItem itemLabel="Follow" itemValue="Follow" />
+		            <f:selectItem itemLabel="Connection" itemValue="Connection" />
+		            <f:selectItem itemLabel="Group" itemValue="Group" />
+             </p:selectOneButton>
+	    </p:toolbarGroup>
+
+	    <p:toolbarGroup align="right">
+	        <p:menuButton value="Sort">
+	            <p:menuitem value="Date" />
+	            <p:menuitem value="Relevance" />
+	        </p:menuButton>
+	    </p:toolbarGroup>
+
+      </p:toolbar>
+      
+      <p:outputPanel id="updateWallPanel">    
+        <p:spacer height="10" />
+	    <p:dataGrid id="updateWall" var="update" value="#{memberPublicView.memberUpdates}" columns="1"
+			paginator="false" >
+			  <p:panel columns="2" style="border-style: hidden;border-bottom-style:solid;">
+			  <h:panelGrid columns="2" style="border-style: hidden;">
+			     <p:graphicImage id="updateLogo" style="margin-right:20px" 
+			                  value="/images/updateIcon2.jpg" width="50" height="50"/>
+			     <h:panelGroup>
+			       <div style="color: #6666FF; text-decoration:underline;">
+				       <h3>#{update.updateLinkText}</h3>
+				   </div>
+			        <br></br>
+			        <h:outputText value="#{update.content}" />
+			        <br></br>
+			        <h:outputText value="#{update.date}"/>
+			        <p:spacer height="5" />
+			     </h:panelGroup>
+			     <br></br>
+			     <h:panelGroup>
+                    <p:graphicImage id="bookMarkButton" value="/images/bookMarkIcon.png"/>
+                    <p:tooltip for="bookMarkButton"
+							value="Bookmark this update" showEffect="fade"
+							hideEffect="fade" />
+			        <p:graphicImage id="commentIconButton" value="/images/commentIcon.png"/>
+			        <p:tooltip for="commentIconButton"
+							value="Comment on this update" showEffect="fade"
+							hideEffect="fade" />
+					<p:overlayPanel id="updateCommentPanel" for="commentIconButton" hideEffect="fade">
+					     <h:outputText value="Enter Your Comment" style="margin-bottom:10px"/>
+                         <br></br>
+                         <p:inputTextarea rows="6" cols="50" style="margin-top:10px;margin-bottom:10px"/>
+                         <br></br>
+                         <p:commandButton value="Post" id="updateCommentButton"  
+                                style="margin-top:10px;margin-left:10px;margin-bottom:5px"/>
+	                </p:overlayPanel>
+			        <p:graphicImage id="likeIconButton" value="/images/likeIcon.png"/>
+			        <p:tooltip for="likeIconButton"
+							value="Like this update" showEffect="fade"
+							hideEffect="fade" />
+					<p:overlayPanel id="updateLikePanel" for="likeIconButton" hideEffect="fade">
+					  <ui:include src="/util/shareBody.xhtml" />
+	                </p:overlayPanel>
+			        <p:graphicImage id="shareIconButton" value="/images/shareIcon.png"/>
+			        <p:tooltip for="shareIconButton"
+							value="Share this update" showEffect="fade"
+							hideEffect="fade" />
+				    <p:overlayPanel id="updateSharePanel" for="shareIconButton" hideEffect="fade">
+                         <h:outputText value="Enter Email Address" style="margin-bottom:10px"/>
+                         <br></br>
+                         <p:inputText id="businessName" size="30" style="margin-top:10px"/>
+                         <br></br>
+                         <p:commandButton value="Share" id="updateShareButton"  
+                                style="margin-top:10px;margin-left:10px;margin-bottom:5px"/>
+	                </p:overlayPanel>			     
+				  </h:panelGroup>
+			     </h:panelGrid>
+			  </p:panel>		
+		</p:dataGrid>
+		<p:commandButton id="updateMore" value="More" 
+	                 action="#{memberPublicView.moreUpdates}" process="@this updateWall" 
+	                              update="updateWall" style="width: 680px;margin-top:20px"/>
+	  </p:outputPanel>
+	           
+    </p:panel>
+	
+	
+</ui:composition>

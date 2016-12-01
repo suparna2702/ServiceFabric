@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/basemenulayout.xhtml">
+
+    <ui:param name="newContent" value="true" />
+    <ui:param name="skipToolbar" value="true" />
+    
+	<ui:define name="title">Workspace History</ui:define>
+	<ui:define name="centerContent">
+	  
+	  <div class="row-fluid">
+          <div class="span12">
+            <div class="iconbar iconbar-horizontal">
+              <ul>
+                <li><a href="#{root}/collabspace/workspaceMain.xhtml" class="fui-list-columned" 
+                              rel="tooltip" data-placement="bottom" title="Workspace List"></a></li>
+                
+                <li><a href="#{root}/collabspace/workspaceDetail.xhtml?wsname=#{workspaceHistoryView.workspace.key.name}&amp;owsname=#{workspaceHistoryView.workspace.key.owner.name}" 
+                        class="fui-radio-checked" rel="tooltip" data-placement="bottom" title="Workspace Details"></a></li>
+                        
+              </ul>
+            </div>
+          </div>
+      </div>
+      
+      <div class="row-fluid">
+          <div class="span12 well">
+          
+            <div class="span3">
+              <p:graphicImage value="/spring/assets/#{workspaceHistoryView.getWorkspaceLogo()}" width="80px"
+                height="80px" styleClass="img-rounded img-responsive" />
+            </div>
+            
+            <div class="span7">
+              <h5 class="muted">#{workspaceHistoryView.workspace.key.name}</h5>
+              <p>#{workspaceHistoryView.workspace.description}</p>
+              <h:outputText value="#{workspaceHistoryView.workspace.creationDate}">
+                <f:convertDateTime pattern="MM/dd/yyyy" />
+              </h:outputText>
+            </div>
+            
+          </div>
+       </div>
+	  
+	  <div class="row-fluid">
+	    <div class="span12">
+	       <ui:include src="workspaceTimeline.xhtml" />
+	    </div>
+	  </div>
+	  
+	  <script language="javascript">
+       $(document).ready(function(){
+	       $("[rel='tooltip']").tooltip();
+       })
+      </script>
+	  
+			 	         
+ 	</ui:define>
+
+</ui:composition>

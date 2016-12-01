@@ -1,0 +1,47 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:outputPanel>
+
+		<p:graphicImage id="bookMarkButton" value="/images/bookMarkIcon.png" />
+		<p:tooltip for="bookMarkButton" value="Bookmark this update"
+			showEffect="fade" hideEffect="fade" />
+		<p:graphicImage id="commentIconButton" value="/images/commentIcon.png" />
+		<p:tooltip for="commentIconButton" value="Comment on this update"
+			showEffect="fade" hideEffect="fade" />
+		<p:overlayPanel id="updateCommentPanel" for="commentIconButton"
+			hideEffect="fade">
+			<h:outputText value="Enter Your Comment" style="margin-bottom:10px" />
+			<br></br>
+			<p:inputTextarea rows="6" cols="50"
+				style="margin-top:10px;margin-bottom:10px" />
+			<br></br>
+			<p:commandButton value="Post" id="updateCommentButton"
+				style="margin-top:10px;margin-left:10px;margin-bottom:5px" />
+		</p:overlayPanel>
+		<p:graphicImage id="likeIconButton" value="/images/likeIcon.png" />
+		<p:tooltip for="likeIconButton" value="Like this update"
+			showEffect="fade" hideEffect="fade" />
+		<p:overlayPanel id="updateLikePanel" for="likeIconButton"
+			hideEffect="fade">
+			<ui:include src="/util/shareBody.xhtml" />
+		</p:overlayPanel>
+		<p:graphicImage id="shareIconButton" value="/images/shareIcon.png" />
+		<p:tooltip for="shareIconButton" value="Share this update"
+			showEffect="fade" hideEffect="fade" />
+		<p:overlayPanel id="updateSharePanel" for="shareIconButton"
+			hideEffect="fade">
+			<h:outputText value="Enter Email Address" style="margin-bottom:10px" />
+			<br></br>
+			<p:inputText id="businessName" size="30" style="margin-top:10px" />
+			<br></br>
+			<p:commandButton value="Share" id="updateShareButton"
+				style="margin-top:10px;margin-left:10px;margin-bottom:5px" />
+		</p:overlayPanel>
+
+	</p:outputPanel>
+
+</ui:composition>

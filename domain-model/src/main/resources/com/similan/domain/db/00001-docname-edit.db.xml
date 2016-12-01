@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd"
+  logicalFilePath="com/similan/domain/db/db-changelog-docname-edit.db.xml">
+
+	<changeSet id="VelocityDocumentTemplate-managementSpaceDocumentInfoUpdate"
+		author="migration">
+		<preConditions onFail="MARK_RAN">
+			<sqlCheck expectedResult="0">
+				select count(*) from
+				VelocityDocumentTemplate
+				where name =
+				'managementSpaceDocumentInfoUpdate.vm'
+			</sqlCheck>
+		</preConditions>
+		<insert tableName="VelocityDocumentTemplate">
+			<column name="name" value="managementSpaceDocumentInfoUpdate.vm" />
+			<column name="templatetype" value="Email" />
+			<column name="templatecontent">
+<![CDATA[
+Document information update in content workspace ${workspaceName}!
+<html>
+#parse("emailTemplateStyle.vm")
+<body>
+
+#parse("emailHeader.vm")
+
+<h4 class="h4">
+  Hi,
+</h4> 
+
+  <p>
+    ${prevDocumentName} information has been updated by ${initiatorName} in content workspace ${workspaceName}.
+    The new name is <strong>${newDocumentName}</strong> 
+  </p>
+  
+  <div>
+   <a href=${documentUrl}>Click Here to View</a>.
+  </div>
+  
+ 
+#parse("emailFooter.vm")
+
+</body>
+</html>
+
+]]>
+			</column>
+		</insert>
+		<insert tableName="VelocityTemplateAttribute">
+			<column name="attributes_id"
+				valueComputed="(select id from VelocityDocumentTemplate where name = 'managementSpaceDocumentInfoUpdate.vm')" />
+			<column name="name" value="workspaceName" />
+			<column name="sourcetype" value="Dynamic" />
+		</insert>
+		<insert tableName="VelocityTemplateAttribute">
+			<column name="attributes_id"
+				valueComputed="(select id from VelocityDocumentTemplate where name = 'managementSpaceDocumentInfoUpdate.vm')" />
+			<column name="name" value="prevDocumentName" />
+			<column name="sourcetype" value="Dynamic" />
+		</insert>
+		<insert tableName="VelocityTemplateAttribute">
+			<column name="attributes_id"
+				valueComputed="(select id from VelocityDocumentTemplate where name = 'managementSpaceDocumentInfoUpdate.vm')" />
+			<column name="name" value="newDocumentName" />
+			<column name="sourcetype" value="Dynamic" />
+		</insert>
+		<insert tableName="VelocityTemplateAttribute">
+			<column name="attributes_id"
+				valueComputed="(select id from VelocityDocumentTemplate where name = 'managementSpaceDocumentInfoUpdate.vm')" />
+			<column name="name" value="initiatorName" />
+			<column name="sourcetype" value="Dynamic" />
+		</insert>
+		<insert tableName="VelocityTemplateAttribute">
+			<column name="attributes_id"
+				valueComputed="(select id from VelocityDocumentTemplate where name = 'managementSpaceDocumentInfoUpdate.vm')" />
+			<column name="name" value="documentUrl" />
+			<column name="sourcetype" value="Dynamic" />
+		</insert>
+	</changeSet>
+
+
+
+</databaseChangeLog>

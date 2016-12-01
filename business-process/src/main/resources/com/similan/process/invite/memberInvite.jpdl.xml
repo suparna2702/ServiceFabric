@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process name="memberInvite" xmlns="http://jbpm.org/4.4/jpdl">
+   <start g="314,35,48,48" name="start1">
+      <transition g="-53,-11" name="Validate_Input" to="Member_Validate"/>
+   </start>
+   
+   <!-- Validates the member input  -->
+   <custom expr="#{validateMemberInviteInputAction}" g="262,129,150,63" name="Member_Validate">
+      <transition g="-54,-10" name="to_Validate_Member_Input" to="Validate_Member_Input"/>
+   </custom>
+   
+   <decision g="316,244,48,48" name="Validate_Member_Input">
+   	  <handler expr="#{memberValidationDecision}"/>
+      <transition g="-30,15" name="to_error2" to="error2"/>
+      <transition g="-91,-14" name="to_Send_Existing_Member_Validation_Email" to="Send_Existing_Member_Connection_Approval_Email"/>
+      <transition g="-248,-19" name="to_Send_New_Member_Validation_Email" to="Send_New_Member_Invitation_Email"/>
+   </decision>
+   
+   <!-- New Member -->
+   <!-- Sends the 1st Email -->
+   <custom expr="#{newMemberInvitationEmailSendAction}" g="14,320,259,75" name="Send_New_Member_Invitation_Email">
+      <transition g="-77,-13" name="to_Wait_For_Validation" to="Wait_For_Email_Validation"/>
+   </custom>
+   
+   <state g="41,482,207,79" name="Wait_For_Email_Validation">
+      <transition g="-81,-30" name="to_Email_Url_Validation" to="Email_Url_Validation"/>
+   </state>
+   
+   <!-- Validates Email Input  -->
+   <custom expr="#{inviteEmailUrlValidation}" g="53,646,176,74" name="Email_Url_Validation">
+           
+      <transition g="-96,-16" name="to_Validate_Email_Decision" to="Validate_Email_Decision"/>
+   </custom>
+   
+   <decision g="112,788,48,48" name="Validate_Email_Decision">
+      <handler expr="#{memberEmailValidationDecision}"/>
+      <transition g="-29,-2" name="to_error1" to="error1"/>
+      <transition g="-90,-29" name="to_Send_Welcome_Email" to="Send_Welcome_Email"/>
+   </decision>
+   
+   <end-error g="111,916,48,48" name="error1"/>
+   <end-error g="316,451,48,48" name="error2"/>
+   
+   <!-- Sends the 2nd Email that is welcome email -->
+   <custom expr="#{welcomeEmailSendAction}" g="306,783,177,66" name="Send_Welcome_Email">
+           
+      <transition g="-21,-10" name="to_end1" to="end1"/>
+   </custom>
+
+	<!-- Existing Member -->
+	<!-- Sends the 1st Email -->
+	<custom expr="#{existingMemberInvitationEmailSendAction}" g="443,375,388,69" name="Send_Existing_Member_Connection_Approval_Email">
+		<transition g="-131,-14" name="to_Wait_For_Existing_Member_Validation" to="Wait_For_Existing_Member_Connection_Validation"/>
+	</custom>
+
+	<state g="456,543,370,68" name="Wait_For_Existing_Member_Connection_Validation">
+		<transition g="-111,-27" name="to_Validate_Existing_Member_Email" to="Validate_Member_Connection_Status_Email"/>
+	</state>
+
+	<!-- Validates Email Input -->
+	<custom expr="#{existingMemberInviteEmailUrlValidation}" g="477,692,320,67" name="Validate_Member_Connection_Status_Email">
+		<transition g="-187,-34" name="to_Validate_Existing_Member_Email_Decision" to="Validate_Existing_Member_Email_Decision"/>
+	</custom>
+
+	<decision g="929,708,80,40" name="Validate_Existing_Member_Email_Decision">
+        <handler expr="#{existingMemberEmailValidationDecision}" />
+		<transition g="-97,-31" name="to_Existing_Member_Accept_Invite" to="Existing_Member_Accept_Invite"/>
+		<transition g="-116,-9" name="to_Existing_Member_Reject_Invite" to="Existing_Member_Reject_Invite"/>
+	</decision>
+
+	<!-- Validates Email Input -->
+	<custom expr="#{existingMemberAcceptedInviteEmailUrlValidation}" g="1194,698,259,71" name="Existing_Member_Accept_Invite">
+		<transition g="-86,-9" name="to_Send_Accepted_Email" to="Send_Accepted_Email"/>
+	</custom>
+
+	<custom expr="#{existingMemberRejectedInviteEmailUrlValidation}" g="837,845,234,67" name="Existing_Member_Reject_Invite">
+		<transition g="-97,-28" name="to_Send_Rejected_Email" to="Send_Rejected_Email"/>
+	</custom>
+	
+	<custom expr="#{acceptedMemberAssociationEmailSendAction}" g="1215,863,223,71" name="Send_Accepted_Email">
+      <transition name="to end3" to="end3" g="-30,-13"/>
+	</custom>
+	<custom expr="#{rejectedMemberAssociationEmailSendAction}" g="827,986,257,69" name="Send_Rejected_Email">
+      <transition name="to end2" to="end2" g="-19,-10"/>
+	</custom>
+   
+   <end g="369,920,48,48" name="end1"/>
+   <end name="end2" g="936,1120,48,48"/>
+   <end name="end3" g="1300,1011,48,48"/>
+   
+   
+</process>

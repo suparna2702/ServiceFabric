@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd"
+	logicalFilePath="com/similan/domain/db/00013-youtube-integration.db.xml">
+	
+	<changeSet id="ConfigurationParameter-platformCommonSettings-googleDeveloperApiKey" author="Suparna">
+    <preConditions onFail="MARK_RAN">
+      <sqlCheck expectedResult="0">
+        select count(*) from ConfigurationParameter
+        where beanName = 'platformCommonSettings'
+        and propertyName = 'googleDeveloperApiKey'
+      </sqlCheck>
+    </preConditions>
+    <insert tableName="ConfigurationParameter">
+      <column name="type" value="java.lang.String" />
+      <column name="beanName" value="platformCommonSettings" />
+      <column name="propertyName" value="googleDeveloperApiKey" />
+      <column name="value" value='"AIzaSyAm7OmEpLFRc_aTHp_1aYT99kB9KF-bhNw"' />
+    </insert>
+  </changeSet>
+  
+  <changeSet id="ConfigurationParameter-platformCommonSettings-googleDeveloperClientId" author="Suparna">
+    <preConditions onFail="MARK_RAN">
+      <sqlCheck expectedResult="0">
+        select count(*) from ConfigurationParameter
+        where beanName = 'platformCommonSettings'
+        and propertyName = 'googleDeveloperClientId'
+      </sqlCheck>
+    </preConditions>
+    <insert tableName="ConfigurationParameter">
+      <column name="type" value="java.lang.String" />
+      <column name="beanName" value="platformCommonSettings" />
+      <column name="propertyName" value="googleDeveloperClientId" />
+      <column name="value" value='"900242492105-nk0no4u9fig026up7ho4o3h1j47s3fpt.apps.googleusercontent.com"' />
+    </insert>
+  </changeSet>
+  
+  <changeSet id="ConfigurationParameter-platformCommonSettings-googleDeveloperClientSecret" author="Suparna">
+    <preConditions onFail="MARK_RAN">
+      <sqlCheck expectedResult="0">
+        select count(*) from ConfigurationParameter
+        where beanName = 'platformCommonSettings'
+        and propertyName = 'googleDeveloperClientSecret'
+      </sqlCheck>
+    </preConditions>
+    <insert tableName="ConfigurationParameter">
+      <column name="type" value="java.lang.String" />
+      <column name="beanName" value="platformCommonSettings" />
+      <column name="propertyName" value="googleDeveloperClientSecret" />
+      <column name="value" value='"_tSe8wQYKwH1C11iMsQkZH6S"' />
+    </insert>
+  </changeSet>
+
+
+</databaseChangeLog>

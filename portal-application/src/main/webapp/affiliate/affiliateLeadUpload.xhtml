@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/basemenulayout.xhtml">
+
+	<ui:define name="title">Lead Upload</ui:define>
+	<ui:define name="centerContent">
+	
+	<p:spacer height="10"/>
+	<p:fileUpload fileUploadListener="#{affiliateLeadUploadView.handleFileUpload}"
+		auto="true" mode="advanced" id="bulkLeadFileUpload" sizeLimit="100000"
+		update="bulkLeadUploadPanel" allowTypes="/(\.|\/)(csv)$/"/>
+
+	
+	 <p:outputPanel id="bulkLeadUploadPanel" layout="block" style="margin-top:15px;">
+		<p:outputPanel
+			rendered="#{not empty affiliateLeadUploadView.leadUploadList.leadList}">
+			
+		    <h:panelGrid columns="2">
+		        <h:outputLabel for="leadListName" value="List Name "/>
+		        <p:inputText id="leadListName" value="#{affiliateLeadUploadView.leadUploadList.name}" 
+		                                       style="margin-bottom:10px" size="30"/>
+		        <h:outputLabel for="leadListDescription" value="List Description "/>
+		        <p:inputTextarea rows="5" cols="30" id="leadListDescription" 
+		                                 value="#{affiliateLeadUploadView.leadUploadList.sourceDescription}" 
+		                                 style="margin-bottom:10px" size="30"/>
+		        <h:outputLabel for="leadDefaultPrice" value="Default Price (USD) "/>
+		        <p:inputText id="leadDefaultPrice" value="#{affiliateLeadUploadView.leadUploadList.defaultPrice}" 
+		                                       style="margin-bottom:10px" size="30"/>
+          </h:panelGrid>
+            
+            <p:dataTable var="lead" value="#{affiliateLeadUploadView.leadUploadList.leadList}" 
+                         id="leadUploadList" >
+                         
+                <p:column headerText="Name" styleClass="buttomBorder">
+					 <h:outputText value="#{lead.firstName} #{lead.lastName}" />
+				</p:column>
+				
+				<p:column headerText="Title" styleClass="buttomBorder">
+					 <h:outputText value="#{lead.title}" />
+				</p:column>
+				
+				<p:column headerText="Description" styleClass="buttomBorder">
+					 <h:outputText value="#{lead.description}" />
+				</p:column>
+				
+				<p:column headerText="Contact" styleClass="buttomBorder">
+					 <h:outputText value="Email : #{lead.contactEmail}" />
+					 <br />
+					 <h:outputText value="Phone : #{lead.contactPhone}" />
+				</p:column>
+				
+				<p:column headerText="Industry" styleClass="buttomBorder">
+					 <h:outputText value="#{lead.industry}" />
+				</p:column>
+				
+				<p:column headerText="Keywords" styleClass="buttomBorder">
+					 <h:outputText value="#{lead.keyword}" />
+				</p:column>
+
+				<p:column headerText="Address" styleClass="buttomBorder">
+					 <h:outputText value="#{lead.location.street}" />
+					 <br />
+					 <h:outputText value="#{lead.location.city}" />
+					 <br />
+					 <h:outputText value="#{lead.location.state}" />
+					 <br />
+					 <h:outputText value="#{lead.location.country}" />
+					 <br />
+					 <h:outputText value="#{lead.location.zipCode}" />
+				</p:column>
+            </p:dataTable>
+            
+			<p:commandButton value="Submit" process="@this bulkLeadUploadPanel" 
+			                 update="bulkLeadUploadPanel bulkLeadFileUpload"
+				             id="leadUploadSubmitButton" action="#{affiliateLeadUploadView.uploadLeads}"  
+				             style="margin-top:15px;float:left"/>
+				
+		</p:outputPanel>
+	 </p:outputPanel>
+	
+	</ui:define>	
+	<ui:define name="leftNavigationBar">
+		<ui:include src="/component/leftNavigationBar.xhtml" />
+	</ui:define>
+	
+</ui:composition>

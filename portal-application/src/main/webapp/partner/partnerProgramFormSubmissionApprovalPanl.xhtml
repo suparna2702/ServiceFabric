@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui">
+   
+   <p:messages showDetail="true" autoUpdate="true" closable="true" />
+   <p:outputPanel id="partnerProgramApprovalPanel" layout="block">
+      <h:outputText value="Partnership Response Form" style="margin-right:10px; margin-bottom:10px; font-weight:bold"/>
+      
+	  <p:panel style="background:rgb(252,244,254)">
+	      <h:panelGrid columns="2">
+	         <p:graphicImage value="/spring/assets#{partnerProgramApprovalView.partnership.program.logoLocation}" 
+                        width="40" height="40"/>
+             <h:outputText value=" " 
+		                style="margin-bottom:10px"/>
+		                
+	         <h:outputText value="Name" style="margin-right:10px; margin-bottom:10px; font-weight:bold"/>
+	         <h:outputText value="#{partnerProgramApprovalView.partnership.program.name} " 
+		                style="margin-bottom:10px;font-weight:bold"/>
+		                
+		     <h:outputText value="Description" style="margin-right:10px; margin-bottom:10px; font-weight:bold"/>
+		     <h:outputText value="#{partnerProgramApprovalView.partnership.program.description} " 
+		                style="margin-bottom:10px"/>
+		     
+		     <h:outputText value="Response Date" style="margin-right:10px; margin-bottom:10px; font-weight:bold"/>        
+		     <h:outputText value="#{partnerProgramApprovalView.partnership.created}" 
+		                style="margin-bottom:10px">
+		           <f:convertDateTime pattern="MM/dd/yyyy" />
+		     </h:outputText>
+		     
+		     <h:panelGroup>
+	             <p:graphicImage value="/spring/assets#{partnerProgramApprovalView.partnership.orgPartner.logoLocation}" 
+                            width="30" height="30"/>
+			     <h:outputText value="#{partnerProgramApprovalView.partnership.orgPartner.name}" 
+			                style="margin-bottom:10px;margin-left:10px"/>
+		     </h:panelGroup>
+	      </h:panelGrid>
+	  </p:panel>
+	  
+	  <h:form>
+		  <p:panel style="border-style:hidden;margin-left:30px">
+
+				<p:dataGrid id="preQualResponseTable" var="prequalResponse"
+					value="#{partnerProgramApprovalView.partnership.response.preQualQuestionResponses}"
+					rendered="#{not empty partnerProgramApprovalView.partnership.response.preQualQuestionResponses}"
+					styleClass="ui-datagrid-no-border" columns="1">
+
+						<p:panel id="preQualSubmissionAnswerPanel" styleClass="buttomBorder">
+							<ui:include src="/partner/preQualAnswerRating.xhtml" />
+							<ui:include src="/partner/preQualAnswerChoice.xhtml" />
+							<ui:include src="/partner/preQualAnswerTextInput.xhtml" />
+						</p:panel>
+				</p:dataGrid>
+				<h:outputText value="Comment " />
+                <p:inputTextarea id="commentField" style="margin-bottom:5px;margin-top:5px" 
+                                 value="#{partnerProgramApprovalView.partnership.comment}" 
+                                 rows="10" cols="50" />
+				<br></br>
+            <p:commandButton id="partnershipApprovBtn"
+                       value="Approve" icon="ui-icon-check" process="@this commentField"
+                       action="#{partnerProgramApprovalView.approvePartnership('true')}"
+                       style="margin-top:10px; margin-right:10px" />
+            <p:commandButton id="partnershipRejectBtn"  process="@this commentField"
+                       value="Reject" icon="ui-icon-close" 
+                       action="#{partnerProgramApprovalView.approvePartnership('false')}"
+                       style="margin-top:10px" />				                    
+	            
+		    
+		  </p:panel>
+	  </h:form>
+    </p:outputPanel>
+    	
+ </ui:composition>
+

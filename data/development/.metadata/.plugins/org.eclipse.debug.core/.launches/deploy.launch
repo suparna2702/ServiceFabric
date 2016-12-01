@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.ui.externaltools.ProgramLaunchConfigurationType">
+<mapAttribute key="org.eclipse.debug.core.environmentVariables">
+<mapEntry key="MAVEN_OPTS" value="-Xms256m -Xmx1024m -XX:PermSize=64M -XX:MaxPermSize=256M -Xdebug -Xrunjdwp:transport=dt_socket,address=8002,server=y,suspend=n"/>
+</mapAttribute>
+<stringAttribute key="org.eclipse.ui.externaltools.ATTR_LOCATION" value="${maven_home}\bin\mvn.bat"/>
+<stringAttribute key="org.eclipse.ui.externaltools.ATTR_TOOL_ARGUMENTS" value="-Dmaven.surefire.debug=&quot;-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8001 -Xnoagent -Djava.compiler=NONE&quot;&#13;&#10;clean install -Psimilan.deploy.portal -Psimilan.deploy.admin -Dsimilan.build.modifier=deploy"/>
+<stringAttribute key="org.eclipse.ui.externaltools.ATTR_WORKING_DIRECTORY" value="${workspace_loc:/portal-application}/.."/>
+</launchConfiguration>

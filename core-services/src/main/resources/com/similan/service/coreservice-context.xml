@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/util
+		http://www.springframework.org/schema/util/spring-util-3.1.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+		http://www.springframework.org/schema/task
+		http://www.springframework.org/schema/task/spring-task-3.1.xsd">
+
+	<context:component-scan base-package="com.similan.service.impl" />
+
+	<bean id="customerEngaementAnalyticService"
+		class="com.similan.service.impl.CustomerEngagementAnalyticsServiceImpl">
+	</bean>
+
+	<bean id="searchAnalyticService" class="com.similan.service.impl.SearchAnalyticServiceImpl" />
+
+	<bean id="domainEventManagementManagementService" class="com.similan.service.impl.DomainEventManagementServiceImpl" />
+
+	<bean id="service_businessProcessManagementService"
+		class="com.similan.service.impl.BusinessProcessManagementServiceImpl">
+	</bean>
+
+	<bean id="partnerManagementService" class="com.similan.service.impl.PartnerManagementServiceImpl" />
+
+	<bean id="externalPortalMarshaller"
+		class="com.similan.service.marshallers.ExternalBusinessPortalMarchaller" />
+
+	<bean id="memberFeedbackMarshaller"
+		class="com.similan.service.marshallers.MemberFeedbackMarshaller" />
+
+	<bean id="workflowTransientStateMarshaller"
+		class="com.similan.service.marshallers.WorkflowTransientStateMarshaller" />
+
+	<bean id="memberMarshaller" class="com.similan.service.marshallers.MemberMarshaller" />
+
+	<bean id="businessMarshaller" class="com.similan.service.marshallers.BusinessMarshaller" />
+
+	<bean id="partnerProgramMarshaller"
+		class="com.similan.service.marshallers.PartnerProgramMarshaller" />
+
+	<bean id="campaignManagementService" class="com.similan.service.impl.CampaignManagementServiceImpl"/>
+
+	<bean id="service_newsService" class="com.similan.service.impl.NewsServiceImpl"></bean>
+
+	<bean id="leadManagementService" class="com.similan.service.impl.LeadManagementServiceImpl">
+		<property name="leadSearchFilterDtoToDomainAttributeUpdater" ref="leadSearchFilterDtoToDomainAttributeUpdater" />
+		<property name="leadSearchFilterDomainToDtoAttributeUpdater" ref="leadSearchFilterDomainToDtoAttributeUpdater" />
+		<property name="crmSettingsDtoToDomainAttributeUpdater" ref="crmSettingsDtoToDomainAttributeUpdater" />
+		<property name="crmSettingsDomainToDtoAttributeUpdater" ref="crmSettingsDomainToDtoAttributeUpdater" />
+		<property name="leadDtoToDomainAttributeUpdater" ref="leadDtoToDomainAttributeUpdater" />
+		<property name="leadDomainToDtoAttributeUpdater" ref="leadDomainToDtoAttributeUpdater" />
+		<property name="affiliateLeadDtoToDomainAttributeUpdater" ref="affiliateLeadDtoToDomainAttributeUpdater" />
+		<property name="affiliateLeadDomainToDtoAttributeUpdater" ref="affiliateLeadDomainToDtoAttributeUpdater" />
+		<property name="adressDomainToDtoAttributeUpdater" ref="adressDomainToDtoAttributeUpdater" />
+		<property name="adressDtoToDomainAttributeUpdater" ref="adressDtoToDomainAttributeUpdater" />
+	</bean>
+
+	<bean id="domainSearchService" class="com.similan.service.impl.DomainSearchServiceImpl">
+		<property name="memberAttributeUpdater" ref="memberInfoBasicAttributeUpdater" />
+		<property name="orgAttributeUpdater" ref="organizationBasicAttributeUpdaterInfo" />
+		<property name="markerColorCode" ref="mapMarkerColor" />
+	</bean>
+
+	<util:map id="mapMarkerColor"
+		key-type="com.similan.domain.entity.community.OrganizationType">
+		<entry key="RESELLER"
+			value="http://maps.google.com/mapfiles/ms/micons/blue-dot.png" />
+		<entry key="DISTRIBUTOR"
+			value="http://maps.google.com/mapfiles/ms/micons/pink-dot.png" />
+		<entry key="SUPPLIER"
+			value="http://maps.google.com/mapfiles/ms/micons/yellow-dot.png" />
+		<entry key="UNSPECIFIED"
+			value="http://maps.google.com/mapfiles/ms/micons/red-dot.png" />
+	</util:map>
+
+	<bean id="accountManagementService" class="com.similan.service.impl.MemberManagementServiceImpl" />
+
+	<bean id="organizationManagementService" class="com.similan.service.impl.OrganizationManagementServiceImpl" />
+
+	<bean id="utilityDataService" class="com.similan.service.impl.UtilityDataServiceImpl" />
+
+	<bean id="messagingService" class="com.similan.service.impl.MessagingServiceImpl" />
+
+	<bean id="crmZohoConnect" class="com.similan.service.impl.CrmZohoConnect">
+		<property name="zohoFacade" ref="zohoFacade" />
+		<property name="leadManagementService" ref="leadManagementService" />
+		<property name="organizationManagementService" ref="organizationManagementService" />
+		<property name="crmIntegrationService" ref="crmIntegrationService" />
+	</bean>
+
+	<bean id="crmConnectFactory" class="com.similan.service.impl.CrmConnectFactoryImpl">
+		<property name="crmZohoConnect" ref="crmZohoConnect" />
+	</bean>
+
+	<bean id="crmIntegrationService" class="com.similan.service.impl.CrmIntegrationServiceImpl">
+		<property name="sender" value="no-reply@businessreach-inc.com" />
+		<property name="syncSuccessfulTemplate" value="leadSyncProcessSuccessful.vm" />
+		<property name="syncFailedTemplate" value="leadSyncProcessFailed.vm" />
+	</bean>
+
+	<bean id="socialManagementService" class="com.similan.service.impl.SocialManagementServiceImpl" />
+
+	<bean id="core_scriptService" class="com.similan.service.impl.ScriptServiceImpl" />
+
+	<bean id="restTemplate" class="org.springframework.web.client.RestTemplate" />
+
+	<bean id="zohoFacade" class="com.similan.service.impl.ZohoFacadeImpl">
+		<property name="restTemplate" ref="restTemplate" />
+	</bean>
+
+	<bean id="taskExecutor"
+		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<property name="corePoolSize" value="5" />
+		<property name="maxPoolSize" value="10" />
+		<property name="queueCapacity" value="25" />
+	</bean>
+
+	<bean id="assetStorage" class="com.similan.service.impl.FileSystemAssetStorage">
+		<property name="platformCommonSettings" ref="platformCommonSettings" />
+	</bean>
+
+	<!-- <task:scheduled-tasks scheduler="crmSyncScheduler"> <task:scheduled 
+		ref="crmIntegrationService" method="synchronizeAll" cron="* * 1 * * ?" /> 
+		</task:scheduled-tasks> -->
+
+	<task:scheduler id="crmSyncScheduler" pool-size="2" />
+
+	<util:map id="embeddedUrlList">
+		<entry key="Partner Login" value="/partner/partnerBrandedLogin.xhtml" />
+	</util:map>
+
+	<util:map id="ratingScaleMap">
+		<entry key="1 Star" value="1" />
+		<entry key="2 Star" value="2" />
+		<entry key="3 Star" value="3" />
+		<entry key="4 Star" value="4" />
+		<entry key="5 Star" value="5" />
+	</util:map>
+
+</beans>

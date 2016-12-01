@@ -1,0 +1,119 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:composite="http://java.sun.com/jsf/composite/composites"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:fragment value="#{not empty docWallEntryList}">
+
+		<ui:repeat var="entry" value="#{docWallEntryList}">
+			<ui:param name="entryType" value="#{entry.getType().name()}" />
+
+			<ui:fragment
+				rendered="#{entryType == 'COLLABORATION_WORKSPACE_DOCUMENT_UNSHARED'}">
+				<div class="element-item viewed mrl voffset2" data-category="viewed">
+					<ui:include
+						src="/history/document/COLLABORATION_WORKSPACE_DOCUMENT_UNSHARED.xhtml" />
+				</div>
+			</ui:fragment>
+
+			<ui:fragment
+				rendered="#{entryType == 'COLLABORATION_WORKSPACE_DOCUMENT_VIEWED'}">
+				<div class="element-item viewed mrl voffset2" data-category="viewed">
+					<ui:include
+						src="/history/document/COLLABORATION_WORKSPACE_DOCUMENT_VIEWED.xhtml" />
+				</div>
+			</ui:fragment>
+
+			<ui:fragment
+				rendered="#{entryType == 'COLLABORATION_WORKSPACE_DOCUMENT_DOWNLOADED'}">
+				<div class="element-item downloaded mrl voffset2"
+					data-category="downloaded">
+					<ui:include
+						src="/history/document/COLLABORATION_WORKSPACE_DOCUMENT_DOWNLOADED.xhtml" />
+				</div>
+			</ui:fragment>
+
+			<ui:fragment
+				rendered="#{entryType == 'COLLABORATION_WORKSPACE_DOCUMENT_SHARED'}">
+				<div class="element-item shared mrl voffset2" data-category="shared">
+					<ui:include
+						src="/history/document/COLLABORATION_WORKSPACE_DOCUMENT_SHARED.xhtml" />
+				</div>
+			</ui:fragment>
+
+			<ui:fragment
+				rendered="#{entryType == 'COLLABORATION_WORKSPACE_DOCUMENT_COMMENT'}">
+				<div class="element-item comment mrl voffset2"
+					data-category="comment">
+					<ui:include
+						src="/history/document/COLLABORATION_WORKSPACE_DOCUMENT_COMMENT.xhtml" />
+				</div>
+			</ui:fragment>
+
+			<ui:fragment
+				rendered="#{entryType == 'COLLABORATION_WORKSPACE_DOCUMENT_SHARED_ANOTHER_WORKSPACE'}">
+				<div class="element-item shared mrl voffset2" data-category="shared">
+					<ui:include
+						src="/history/document/COLLABORATION_WORKSPACE_DOCUMENT_SHARED_ANOTHER_WORKSPACE.xhtml" />
+				</div>
+			</ui:fragment>
+
+			<ui:fragment
+				rendered="#{entryType == 'COLLABORATION_WORKSPACE_DOCUMENT_EXTERNAL_SHARED'}">
+				<div class="element-item shared mrl voffset2" data-category="shared">
+					<ui:include
+						src="/history/document/COLLABORATION_WORKSPACE_DOCUMENT_EXTERNAL_SHARED.xhtml" />
+				</div>
+			</ui:fragment>
+
+			<ui:fragment
+				rendered="#{entryType == 'CONTENT_WORKSPACE_DOCUMENT_VIEWED'}">
+				<div class="element-item viewed mrl voffset2" data-category="viewed">
+					<ui:include
+						src="/history/document/CONTENT_WORKSPACE_DOCUMENT_VIEWED.xhtml" />
+				</div>
+			</ui:fragment>
+
+			<ui:fragment
+				rendered="#{entryType == 'CONTENT_WORKSPACE_DOCUMENT_DOWNLOADED'}">
+				<div class="element-item downloaded mrl voffset2"
+					data-category="downloaded">
+					<ui:include
+						src="/history/document/CONTENT_WORKSPACE_DOCUMENT_DOWNLOADED.xhtml" />
+				</div>
+			</ui:fragment>
+
+			<ui:fragment
+				rendered="#{entryType == 'CONTENT_WORKSPACE_DOCUMENT_UPLOADED'}">
+				<div class="element-item shared mrl voffset2" data-category="shared">
+					<ui:include
+						src="/history/document/CONTENT_WORKSPACE_DOCUMENT_UPLOADED.xhtml" />
+				</div>
+			</ui:fragment>
+
+			<ui:fragment
+				rendered="#{entryType == 'CONTENT_WORKSPACE_DOCUMENT_INNETWORK_SHARED'}">
+				<div class="element-item shared mrl voffset2" data-category="shared">
+					<ui:include
+						src="/history/document/CONTENT_WORKSPACE_DOCUMENT_INNETWORK_SHARED.xhtml" />
+				</div>
+			</ui:fragment>
+
+			<ui:fragment
+				rendered="#{entryType == 'CONTENT_WORKSPACE_DOCUMENT_UPDATED'}">
+				<div class="element-item shared mrl voffset2" data-category="viewed">
+					<ui:include
+						src="/history/document/CONTENT_WORKSPACE_DOCUMENT_UPDATED.xhtml" />
+				</div>
+			</ui:fragment>
+
+			<br></br>
+
+		</ui:repeat>
+
+	</ui:fragment>
+
+</ui:composition>

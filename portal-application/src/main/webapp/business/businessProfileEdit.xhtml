@@ -1,0 +1,221 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:composite="http://java.sun.com/jsf/composite/composites"
+	xmlns:sec="http://www.springframework.org/security/tags"
+	template="/templates/basemenulayout.xhtml">
+
+	<ui:param name="newContent" value="true" />
+	<ui:param name="skipToolbar" value="true" />
+	<ui:define name="title">Edit Business Profile</ui:define>
+
+	<ui:define name="centerContent">
+
+		<div class="row-fluid">
+			<div class="span12">
+				<div class="iconbar iconbar-horizontal">
+					<ul>
+						<li><a href="#{root}/member/memberHome.xhtml"
+							class="fui-home" rel="tooltip" data-placement="bottom"
+							title="My Network"></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="old-content">
+			<div class="row-fluid">
+				<div class="span12">
+					<h:form id="form" prependId="false" enctype="multipart/form-data">
+
+						<p:outputPanel id="businessEditProfilePanel" layout="block">
+							<p:panel>
+								<h:panelGrid columns="1">
+
+									<h:panelGroup id="businessLogoPanel" styleClass="image-thumb"
+										layout="block">
+
+										<p:graphicImage id="businessLogoPhoto"
+											value="/spring/assets#{orgView.businessLogo}" />
+
+										<p:commandButton id="imageAddButton"
+											styleClass="imageAddButtonOverlay"
+											rendered="#{orgView.businessLogoExists == false}"
+											onclick="dlg.show();" title="Add business logo" value="">
+											<f:param name="productId" value="20" />
+										</p:commandButton>
+
+										<p:commandButton id="imageUpdateButton"
+											styleClass="imageAddButtonOverlay"
+											rendered="#{orgView.businessLogoExists == true}"
+											onclick="confirmation.show();" value=""
+											title="Update business">
+											<f:param name="productId" value="20" />
+										</p:commandButton>
+
+										<p:commandButton id="imageDeleteButton"
+											onclick="deleteConfirmation.show();"
+											rendered="#{orgView.businessLogoExists == true}"
+											styleClass="imageRemoveButtonOverlay" value=""
+											title="Remove business">
+											<f:param name="productId" value="20" />
+										</p:commandButton>
+
+									</h:panelGroup>
+
+									<h:panelGroup>
+
+										<p:dialog id="logoUploadDialog" resizable="true" modal="true"
+											showEffect="explode" header="Upload Logo" widgetVar="dlg">
+											<p:fileUpload
+												fileUploadListener="#{orgView.handleLogoUpload}" auto="true"
+												mode="advanced" oncomplete="dlg.hide()" id="fileUpload"
+												sizeLimit="1048576"
+												update="businessLogoPhoto businessLogoPanel"
+												render="businessLogoPanel"
+												allowTypes="/(\.|\/)(gif|jpe?g|png)$/">
+											</p:fileUpload>
+										</p:dialog>
+
+										<p:confirmDialog id="confirmDialog"
+											message="Are you sure you want to replace your existing logo?"
+											header="Change Logo" severity="alert"
+											widgetVar="confirmation">
+											<p:commandButton id="confirm" value="Yes"
+												oncomplete="confirmation.hide(); dlg.show();" />
+											<p:commandButton id="decline" value="No"
+												onclick="confirmation.hide()" type="button" />
+										</p:confirmDialog>
+
+										<p:confirmDialog id="deleteConfirm"
+											message="Are you sure you want to delete your existing logo?"
+											header="Delete Logo" severity="alert"
+											widgetVar="deleteConfirmation">
+											<p:commandButton id="deleteLogoConfirm" immediate="true"
+												value="Yes" update="businessLogoPhoto businessLogoPanel"
+												render="businessLogoPanel"
+												oncomplete="deleteConfirmation.hide();"
+												action="#{orgView.deleteLogo}" />
+											<p:commandButton id="deleteLogoDecline" value="No"
+												onclick="deleteConfirmation.hide()" type="button" />
+										</p:confirmDialog>
+
+
+										<ui:include src="businessSettingsDialog.xhtml" />
+									</h:panelGroup>
+
+								</h:panelGrid>
+
+								<h:panelGrid columns="2">
+
+									<h3>Name</h3>
+									<h:inputText id="businessName" required="true"
+										styleClass="input-block-level"
+										style="margin-bottom:5px;margin-top:10px"
+										value="#{orgView.orgInfo.businessName}" size="45" />
+
+
+									<h3>Type</h3>
+									<p:selectOneRadio id="businessType"
+										styleClass="input-block-level"
+										value="#{orgView.orgInfo.businessType}"
+										style="margin-top:5px;margin-bottom:5px">
+										<f:selectItem id="reseller" itemLabel="Reseller"
+											itemValue="RESELLER" />
+										<f:selectItem id="distributor" itemLabel="Distributor"
+											itemValue="DISTRIBUTOR" />
+										<f:selectItem id="supplier" itemLabel="Supplier"
+											itemValue="SUPPLIER" />
+									</p:selectOneRadio>
+
+									<h3>Email</h3>
+									<h:inputText id="businessPrimaryEmail" required="true"
+										styleClass="input-block-level"
+										value="#{orgView.orgInfo.businessPrimaryEmail}"
+										style="margin-bottom:10px" size="45" />
+
+
+									<h3>Phone</h3>
+									<h:inputText id="businessPhoneNumber" required="true"
+										styleClass="input-block-level"
+										value="#{orgView.orgInfo.businessPhone}"
+										style="margin-bottom:10px" size="45" />
+
+
+									<h3>Home Page</h3>
+									<h:inputText id="businessHomeUrl" required="true"
+										styleClass="input-block-level" style="margin-bottom:10px"
+										value="#{orgView.orgInfo.homePageUrl}" size="45" />
+
+
+									<h3>Landing Page</h3>
+									<h:inputText id="landingPageUrl" styleClass="input-block-level"
+										style="margin-bottom:10px"
+										value="#{orgView.orgInfo.landingPageUrl}" size="45" />
+
+
+									<h3>Description</h3>
+									<h:inputTextarea id="businessDescription"
+										styleClass="input-block-level" style="margin-bottom:10px"
+										rows="5" cols="45"
+										value="#{orgView.orgInfo.businessDescription}"
+										autoResize="true" />
+
+									<h3>Industry</h3>
+									<p:selectOneMenu id="industrySelect"
+										style="width: 250px;margin-top:10px"
+										value="#{orgView.orgInfo.industry}">
+										<f:selectItems value="#{industryBean.industryList}"
+											var="industryType" itemLabel="#{industryType.insdustryName}"
+											itemValue="#{industryType.insdustryName}" />
+									</p:selectOneMenu>
+
+
+									<h3>Locations</h3>
+									<ui:include src="/business/addLocationPanel.xhtml" />
+
+									<c:if
+										test="#{sec:areAnyGranted('BUSINESS_PLUS') and sec:areAnyGranted('PARTNER_PROGRAM_ADMIN')}">
+										<h3>Show Partners</h3>
+										<p:selectBooleanCheckbox
+											value="#{orgView.orgInfo.showPartners}" />
+
+										<h3>External Portals</h3>
+										<ui:include src="/business/externalPortalPanel.xhtml" />
+
+									</c:if>
+
+								</h:panelGrid>
+
+							</p:panel>
+							<p:commandButton id="businessProfileUpdateBtn" value="Update"
+								action="#{orgView.updateBusinessProfile}"
+								process="@this businessEditProfilePanel"
+								styleClass="btn btn-info btn-small"
+								update="businessEditProfilePanel" style="margin-top:10px" />
+						</p:outputPanel>
+
+
+					</h:form>
+				</div>
+			</div>
+		</div>
+
+		<script language="javascript">
+			$(document).ready(function() {
+				$("[rel='tooltip']").tooltip();
+				$("[rel='popover']").popover({
+					'trigger' : 'hover',
+					'html' : true
+				});
+			})
+		</script>
+
+	</ui:define>
+
+</ui:composition>

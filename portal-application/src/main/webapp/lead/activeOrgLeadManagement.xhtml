@@ -1,0 +1,195 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:composite="http://java.sun.com/jsf/composite/composites"
+	xmlns:p="http://primefaces.org/ui">
+    
+    <ui:include src="/lead/leadSubmissionDialog.xhtml" />
+    <ui:include src="/lead/addNewLeadDialog.xhtml" />
+    
+    <p:confirmDialog id="leadTransferStartDialog" 
+         message="The lead synchronization process between CRM and Lead Exchange Portal has started. An email will be sent when sync process is done"  
+         header="Lead Sync" severity="alert" widgetVar="leadTransferStart">  
+        <p:commandButton id="syncConfirm" value="OK" 
+	     actionListener="#{organizationLeadView.performCrmSync}" 
+	     update="leadPanel"
+	     oncomplete="leadTransferStart.hide()"/>  
+    </p:confirmDialog>
+    
+    <p:confirmDialog id="deleteLeadDialog" message="Are you sure to delete leads?"  
+                header="Delete Lead" severity="alert" widgetVar="dlgDeleteLead">  
+                  
+        <p:commandButton id="deleteConfirm" value="Yes" 
+                         oncomplete="dlgDeleteLead.hide()"  
+                         actionListener="#{organizationLeadView.deleteLeads}"
+                         update="leadPanel"/>  
+        <p:commandButton id="deleteCancel" value="No" 
+                         onclick="dlgDeleteLead.hide()" type="button" />   
+                  
+    </p:confirmDialog>
+    
+    <p:panel style="background:rgb(252,244,254)">
+    
+        <h:panelGrid>
+          <h:panelGroup>
+             <p:commandButton id="addNewLeadBtn" oncomplete="dlgAddLead.show()" 
+                             value="Add" icon="ui-icon-plus" 
+		                     style="margin-right:5px; margin-bottom:10px; float:right"/> 
+		     <p:tooltip for="addNewLeadBtn" value="Add a new lead" 
+				                    showEffect="fade" hideEffect="fade" /> 
+				                    
+             <p:commandButton id="leadSendPartnerBtn" oncomplete="dlgLeadSubmit.show()" 
+                             value="Transfer" icon="ui-icon-person" 
+		                     style="margin-right:5px; margin-bottom:10px; float:right"/> 
+		     <p:tooltip for="leadSendPartnerBtn" value="Assign to partner" 
+				                    showEffect="fade" hideEffect="fade" />
+				                    
+		     <p:commandButton id="activeLeadAssignCrmBtn" 
+                             icon="ui-icon-extlink" value="Crm Sync"
+		                     style="margin-right:5px; margin-bottom:10px; float:right" 
+				      oncomplete="leadTransferStart.show()"/>	
+				     
+		     <p:tooltip for="activeLeadAssignCrmBtn" value="Synchronize with CRM" 
+	                    showEffect="fade" hideEffect="fade" />
+	                    
+	         <p:commandButton id="deleteLeadBtn" oncomplete="dlgDeleteLead.show()" 
+                             icon="ui-icon-close" value="Delete"
+		                     style="margin-right:5px; margin-bottom:10px; float:right"/> 
+		     <p:tooltip for="deleteLeadBtn" value="Delete selected leads" 
+				                    showEffect="fade" hideEffect="fade" />  
+          
+          </h:panelGroup>
+        </h:panelGrid>
+        
+	    <h:panelGrid columns="2">
+			<p:selectOneMenu id="leadFilterRefreshOption" value="#{organizationLeadView.leadFilterRefreshOption}" 
+			                 style="margin-bottom:10px">
+				<f:selectItem itemLabel="All" itemValue="All" />  
+		        <f:selectItem itemLabel="New Leads" itemValue="New" />  
+		        <f:selectItem itemLabel="Transferred Leads" itemValue="Transferred" />
+		    </p:selectOneMenu>
+		    
+		    <p:commandButton  id="leadFilterRefreshBtn" icon="ui-icon-search" 
+		                      actionListener="#{organizationLeadView.updateDataTable}" 
+	                             process="@this leadFilterRefreshOption" update="tabLeadManagementDetail:leadPanel"
+	                             style="margin-bottom:10px"/> 
+	    </h:panelGrid>
+    </p:panel>
+    
+    <p:spacer height="10"/>
+    
+   	<p:dataTable id="leadPanel" var="lead" paginator="true" paginatorPosition="bottom" 
+   	               paginatorAlwaysVisible="false" rows="10" draggableColumns="true"
+   	               value="#{organizationLeadView.leadModel}"
+   	               selection="#{organizationLeadView.selectedLeads}" 
+   	               rowStyleClass="#{lead.viewed eq false ? 'unOpenedLead' : 'openedLead'}">
+   	               
+          <p:column selectionMode="multiple" style="width:18px" styleClass="buttomBorderBlack" /> 
+          
+		  <p:column id="leadType" style="width:20px" headerText="Type" styleClass="buttomBorderBlack">
+	            <p:graphicImage id="contactLeadIcon" rendered="#{lead.leadTypeStr eq 'ContactLead'}" 
+	                            value="/images/monoicons/userIcon24.png" 
+	                            width="20" height="20" />
+	            <p:tooltip rendered="#{lead.leadTypeStr eq 'ContactLead'}" 
+	                       for="contactLeadIcon" value="Contact lead" 
+	                    showEffect="fade" hideEffect="fade" />
+	                    
+	            <p:graphicImage id="clickThroughLeadIcon" rendered="#{lead.leadTypeStr eq 'ClickThroughLead'}" 
+	                            value="/images/monoicons/zoomIcon24.png" 
+	                            width="20" height="20" />
+	            <p:tooltip for="clickThroughLeadIcon" rendered="#{lead.leadTypeStr eq 'ClickThroughLead'}" 
+	                    value="Click through lead" 
+	                    showEffect="fade" hideEffect="fade" />
+	                            
+	            <p:graphicImage id="searchLeadIcon" rendered="#{lead.leadTypeStr eq 'SearchLead'}" 
+	                            value="/images/monoicons/zoomIcon24.png" 
+	                            width="20" height="20" />
+	            <p:tooltip for="searchLeadIcon" rendered="#{lead.leadTypeStr eq 'SearchLead'}" 
+	                       value="Search lead" 
+	                       showEffect="fade" hideEffect="fade" />
+	                            
+	            <p:graphicImage id="acquiredLeadIcon" rendered="#{lead.leadTypeStr eq 'AcquiredLead'}" 
+	                            value="/images/monoicons/acquiredLeadIcon24.png" 
+	                            width="20" height="20" />
+	            <p:tooltip for="acquiredLeadIcon" rendered="#{lead.leadTypeStr eq 'AcquiredLead'}" 
+	                       value="Acquired lead" 
+	                       showEffect="fade" hideEffect="fade" />
+	                            
+	            <p:graphicImage id="transferLeadIcon" rendered="#{lead.leadTypeStr eq 'TransferLead'}" 
+	                            value="/images/monoicons/transferLeadIcon24.png" 
+	                            width="20" height="20" />
+	            <p:tooltip for="transferLeadIcon" rendered="#{lead.leadTypeStr eq 'TransferLead'}" 
+	                    value="Transferred lead" 
+	                    showEffect="fade" hideEffect="fade" />
+	                            
+	            <p:graphicImage id="unknownLeadIcon" rendered="#{lead.leadTypeStr eq 'Unknown'}" 
+	                            value="/images/monoicons/unknownLeadIcon24.png" 
+	                            width="20" height="20" />
+	            <p:tooltip for="unknownLeadIcon" rendered="#{lead.leadTypeStr eq 'Unknown'}" 
+	                       value="Unknown lead" 
+	                    showEffect="fade" hideEffect="fade" />
+	      </p:column>
+		  
+	      <p:column id="leadSource" style="width:50px" headerText="Lead Name" styleClass="buttomBorderBlack"
+	                filterBy="#{lead.firstName}" filterMatchMode="startsWith" sortBy="#{lead.firstName}">	            
+	            <h:outputText value="#{lead.firstName} #{lead.lastName}" />
+	            <br />
+	            <h:outputText value="#{lead.company}" />
+				<br />
+				<h:outputText value="#{lead.name}" />
+	      </p:column>
+	      
+	      <p:column id="leadSourcePhone" style="width:150px" headerText="Contact" styleClass="buttomBorderBlack"
+	                filterBy="#{lead.contactPhone}" filterMatchMode="startsWith" sortBy="#{lead.contactPhone}">
+	            <h:outputText rendered="#{!empty lead.contactPhone}" value="Phone #{lead.contactPhone}" />
+				<br/>
+				<h:outputText rendered="#{!empty lead.contactEmail}" value="Email #{lead.contactEmail}" />
+				<br/>
+				<h:outputText rendered="#{!empty lead.location.zipCode}" value="Zipcode #{lead.location.zipCode}" />
+	      </p:column>
+	      
+	      <p:column id="leadSourceDate" style="width:50px" headerText="Date" styleClass="buttomBorderBlack"
+	                filterBy="#{lead.timeStamp}" filterMatchMode="startsWith" sortBy="#{lead.timeStamp}">
+	            <h:outputText value="#{lead.timeStamp}">
+	                <f:convertDateTime pattern="MM/dd/yyyy" />
+	            </h:outputText>
+	      </p:column>
+	      
+	      <p:column id="leadSourceAction" style="width:80px" headerText="Action" styleClass="buttomBorderBlack">
+			<h:outputLink value="#{root}/lead/viewLeadDetail.xhtml" rendered="#{lead.transferState == null or lead.transferState == 'None' or lead.transferState == 'Accepted'}">
+				<f:param name="lid" value="#{lead.id}" />
+				<f:param name="ldtype" value="#{lead.leadTypeStr}" />
+				<p:graphicImage id="viewResultsButton"
+								value="/images/monoicons/zoomIcon24.png" 
+								width="20" height="20" />
+			</h:outputLink>
+			<h:commandLink id="transferLeadApproveLink"
+				actionListener="#{organizationLeadView.approveLeadTransfer(lead.id)}"
+				rendered="#{lead.transferState != null and lead.transferState == 'Pending'}" style="margin-right: 10px">
+				<f:ajax execute="@this" render="leadPanel" />
+				<p:graphicImage id="approveTransferLeadButton"
+					value="/images/monoicons/checkMarkIcon24.png" width="15"
+					height="15" />
+			</h:commandLink>
+			<p:tooltip
+				rendered="#{lead.transferState != null and lead.transferState == 'Pending'}"
+				for="transferLeadApproveLink" value="Accept lead" showEffect="fade"
+				hideEffect="fade" />
+			<h:commandLink id="transferLeadRejectLink"
+				actionListener="#{organizationLeadView.rejectLeadTransfer(lead.id)}"
+				rendered="#{lead.transferState != null and lead.transferState == 'Pending'}">
+				<f:ajax execute="@this" render="leadPanel" />
+				<p:graphicImage id="rejectTransferLeadButton"
+					value="/images/monoicons/deleteIcon24.png" width="15" height="15" />
+			</h:commandLink>
+			<p:tooltip
+				rendered="#{lead.transferState != null and lead.transferState == 'Pending'}"
+				for="transferLeadRejectLink" value="Reject lead" showEffect="fade"
+				hideEffect="fade" />
+
+		</p:column>
+	  </p:dataTable>
+
+</ui:composition>

@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:composite="http://java.sun.com/jsf/composite/composites"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/basemenulayout.xhtml">
+
+	<ui:define name="title">Lead View Edit</ui:define>
+	<ui:define name="centerContent">
+	
+      <p:spacer height="10"/>
+	  <ui:include src="/templates/menu/leadManagementMenu.xhtml" />
+	  <p:spacer height="20"/>
+	  
+	    <p:panel id="leadSearchSettingsPanel" style="border:hidden; text-align:center;"> 
+      
+          <h:panelGrid columns="2" style="text-align:left">
+          
+             <h:outputLabel for="leadSelectSearchName" value="Name: "/>
+             <p:inputText id="leadSelectSearchName" value="#{leadViewSettingsView.leadSetting.name}" 
+                                          style="margin-bottom:10px;" size="35"/>
+                                          
+             <h:outputLabel for="leadSearchIndustry" value="Industry: "/>
+             <p:pickList id="leadSearchIndustry" value="#{leadViewSettingsView.industryList}" var="industryType"   
+                itemLabel="#{industryType}" itemValue="#{industryType}" />
+                                          
+             <h:outputLabel for="leadSearchTitle" value="Title: "/>
+             <p:pickList id="leadSearchTitle" value="#{leadViewSettingsView.titleList}" var="title"   
+                      itemLabel="#{title}" itemValue="#{title}" style="margin-top:10px;margin-bottom:10px"/> 
+                      
+             <ui:include src="/lead/leadAddKeywordsFilter.xhtml" /> 
+                
+             <h:outputLabel for="leadCountrySelectSearch" value="Country: "/>
+             <p:selectOneMenu id="leadCountrySelectSearch" style="margin-bottom:10px;margin-top:10px;witdh:105%" 
+                  effect="fade" filter="true" filterMatchMode="startsWith"
+                  value="#{leadViewSettingsView.leadSetting.country}">
+                     <f:selectItems value="#{countryBean.countryList}" var="countryType"
+   			              itemLabel="#{countryType.countryName}" itemValue="#{countryType.countryName}" />
+                     <p:ajax update="leadStateSelectSearch" execute="@this"
+                         listener="#{leadViewSettingsView.loadSelectedStates}"/>
+             </p:selectOneMenu>
+    
+             <h:outputLabel for="leadStateSelectSearch" value="State: "/>
+             <p:selectOneMenu style="margin-bottom:10px;witdh:105%" 
+                   effect="fade" filter="true" filterMatchMode="startsWith"
+                  id="leadStateSelectSearch" value="#{leadViewSettingsView.leadSetting.state}">
+                  <f:selectItems value="#{leadViewSettingsView.selectedStateList}" var="stateType"
+ 			          itemLabel="#{stateType.stateName}" itemValue="#{stateType.stateName}" />
+             </p:selectOneMenu>
+             
+             <h:outputLabel for="leadSearchStreet" value="Street: "/>
+             <p:inputText id="leadSearchStreet" value="#{leadViewSettingsView.leadSetting.street}" 
+                                          style="margin-bottom:10px;" size="35"/>
+          
+             <h:outputLabel for="leadSearchCity" value="City: "/>
+             <p:inputText id="leadSearchCity" value="#{leadViewSettingsView.leadSetting.city}" 
+                                          style="margin-bottom:10px;" size="35"/>
+          
+             <h:outputLabel for="leadZipCodeSearch" value="Zip Code: "/>
+             <p:inputText id="leadZipCodeSearch" value="#{leadViewSettingsView.leadSetting.zipCode}" 
+                              style="margin-top:10px;margin-bottom:10px;" size="10"/>
+                              
+             <h:outputLabel for="leadSearchRadius" value="Within a Radius (mi): "/>
+             <h:panelGroup style="width:100%">
+	             <p:selectOneMenu id="leadSearchRadius" style="margin-bottom:10px;witdh:105%" 
+	                              value="#{leadViewSettingsView.leadSetting.radius}">  
+		            <f:selectItem itemLabel="25" itemValue="25" />  
+		            <f:selectItem itemLabel="50" itemValue="50" />  
+		            <f:selectItem itemLabel="75" itemValue="75" />  
+		            <f:selectItem itemLabel="100" itemValue="100" />
+	             </p:selectOneMenu>
+             </h:panelGroup>
+             
+             <h:outputLabel for="leadSearchFrequency" value="Frequency: "/>
+             <h:panelGroup style="width:100%">
+	             <p:selectOneMenu id="leadSearchFrequency" style="margin-bottom:10px;witdh:105%" 
+	                              value="#{leadViewSettingsView.leadSetting.frequency}">  
+		            <f:selectItem itemLabel="Daily" itemValue="Daily" />  
+		            <f:selectItem itemLabel="Every Other Day" itemValue="EveryOtherDay" />  
+		            <f:selectItem itemLabel="Weekly" itemValue="Weekly" />  
+	             </p:selectOneMenu>
+             </h:panelGroup>
+             
+          </h:panelGrid>
+                            
+          <p:commandButton  id="leadSearchFilterSaveBtn" value="Save" 
+                            action="#{leadViewSettingsView.saveFilter}" 
+                            process="@this leadSearchSettingsPanel"
+                            style="margin-top:10px;float:right"/>  
+       </p:panel>
+
+    </ui:define>
+	<ui:define name="leftNavigationBar">
+		<ui:include src="/component/leftNavigationBar.xhtml" />
+	</ui:define>
+</ui:composition>

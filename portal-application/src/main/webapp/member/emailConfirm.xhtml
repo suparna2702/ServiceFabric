@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:composite="http://java.sun.com/jsf/composite/composites"
+	xmlns:p="http://primefaces.org/ui" template="/templates/base.xhtml">
+
+	<ui:param name="newContent" value="true" />
+	<ui:param name="skipHeader" value="true" />
+	<ui:define name="title">Membership Confirmation</ui:define>
+	<ui:define name="baseContent">
+
+		<div class="row-fluid">
+			<div class="span12">
+
+				<c:if test="#{param['errorMsg'] eq 'Success'}">
+					<h2>Almost Done!</h2>
+					<p>
+						Before you dive into your BusinessReach account, you need to
+						confirm your email address. This helps us to filter out spam, bots
+						and other nastiness from our online communities. When you signed
+						up, an activation email was sent to the email address you
+						specified when signing up. <strong>Check your inbox and
+							locate the confirmation email.</strong> Click on the activation link in
+						the email to confirm your email address. You may want to check
+						your spam folder in case the activation email ended up there. We
+						do our best to make sure emails arrive in your inbox, but
+						sometimes they don't. If you don't see the email immediately,
+						check back within a day or so, in case it has been temporarily
+						held by your email provider. If you run into any other issues with
+						validating your email address, please reach out to <strong>response-team@businessreach-inc.com.</strong>
+					</p>
+				</c:if>
+
+				<c:if test="#{param['errorMsg'] eq 'Failure'}">
+					<p>
+						At this time we are unable to create your account. please reach
+						out to <strong>response-team@businessreach-inc.com.</strong>
+					</p>
+				</c:if>
+
+			</div>
+		</div>
+
+
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+                           http://www.springframework.org/schema/util 
+                           http://www.springframework.org/schema/util/spring-util-3.1.xsd">
+
+  <!-- Decisions -->
+  <bean id="validatePartnerProgramInputDecision" class="com.similan.process.action.DecisionStateAction">
+    <property name="decisionMap">
+      <map>
+        <entry key="valid" value="to_Send_Partner_Program_Input_Form" />
+        <entry key="inValid" value="to_cancel1" />
+      </map>
+    </property>
+  </bean>
+
+  <bean id="partnershipApprovalResponseDecision" class="com.similan.process.action.DecisionStateAction">
+    <property name="decisionMap">
+      <map>
+        <entry key="valid" value="to_Send_Partnership_Approval_Email" />
+        <entry key="inValid" value="to_Send_Partnership_Rejection_Email" />
+      </map>
+    </property>
+  </bean>
+
+  <bean id="partnerProgramResponseDecision" class="com.similan.process.action.DecisionStateAction">
+    <property name="decisionMap">
+      <map>
+        <entry key="valid" value="to_Send_Partner_Promgarm_Response_Evaluation_Email" />
+        <entry key="inValid" value="to_cancel2" />
+      </map>
+    </property>
+  </bean>
+
+  <!-- Emails -->
+  <bean id="sendPartnerProgramInputFormEmailAction" class="com.similan.process.action.SendEmailAction">
+    <property name="templateName" value="sendPartnerProgramInputFormEmail.vm" />
+  </bean>
+
+  <!-- Business Actions (joinPartnerProgram) -->
+
+  <bean id="partnerProgramInputValidateDecision" class="com.similan.process.action.DecisionStateAction">
+    <property name="decisionMap">
+      <map>
+        <entry key="valid" value="to_Send_Partner_Program_Evaluation_Email" />
+        <entry key="inValid" value="to_Send_Validation_Error_Email" />
+      </map>
+    </property>
+  </bean>
+
+  <bean id="sendPartnerProgramEvaluationEmailAction" class="com.similan.process.action.SendEmailAction">
+    <property name="templateName" value="sendPartnerProgramEvaluationEmail.vm" />
+  </bean>
+
+  <bean id="sendPartnerProgramApprovalEmailAction" class="com.similan.process.action.SendEmailAction">
+    <property name="templateName" value="sendPartnerProgramApprovalEmail.vm" />
+  </bean>
+
+  <bean id="sendPartnerJoinValidationErrorEmailAction" class="com.similan.process.action.SendEmailAction">
+    <property name="templateName" value="sendPartnerJoinValidationErrorEmail.vm" />
+  </bean>
+
+  <bean id="sendPartnerJoinRejectionEmailAction" class="com.similan.process.action.SendEmailAction">
+    <property name="templateName" value="sendPartnerProgramApprovalEmail.vm" />
+  </bean>
+
+  <bean id="partnerProgramResponseEvaluateDecision" class="com.similan.process.action.DecisionStateAction">
+    <property name="decisionMap" ref="partnerProgramResponseEvaluateDecisionMap" />
+  </bean>
+
+  <util:map id="partnerProgramResponseEvaluateDecisionMap">
+    <entry key="valid" value="to_Send_Approval_Email" />
+    <entry key="inValid" value="to_Send_Rejection_Email" />
+  </util:map>
+
+</beans>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+
+  <activeProfiles>
+    <activeProfile>similan-test</activeProfile>
+  </activeProfiles>
+
+  <profiles>
+    <profile>
+      <id>similan-test</id>
+      <properties>
+        <similan.test.jpa.driver>com.mysql.jdbc.Driver</similan.test.jpa.driver>
+        <similan.test.jpa.url>jdbc:mysql://localhost:3306/similan_test</similan.test.jpa.url>
+        <similan.test.jpa.username>root</similan.test.jpa.username>
+        <similan.test.jpa.password></similan.test.jpa.password>
+        <similan.test.jpa.adapter>MYSQL</similan.test.jpa.adapter>
+        <similan.test.jpa.sql>true</similan.test.jpa.sql>
+      </properties>
+    </profile>
+  </profiles>
+
+</settings>

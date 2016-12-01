@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:composite="http://java.sun.com/jsf/composite/composites"
+	template="/templates/basemenulayout.xhtml">
+
+	<ui:param name="newContent" value="true" />
+	<ui:param name="skipToolbar" value="true" />
+	<ui:define name="title">Connections</ui:define>
+	<ui:define name="centerContent">
+
+		<c:if test="#{not empty networkConnectionView.contactList}">
+			<div id="hero">
+
+				<div class="row-fluid control-group">
+
+					<div class="span12">
+
+						<div class="span4 pull-left">
+							<div class="filters button-group js-radio-button-group btn-group"
+								data-type="horizontal">
+								<label class="button btn btn-primary"> <input
+									type="radio" name="filter" value="*" checked="checked" /> <i
+									class="fa fa-cog mrm"></i> All
+								</label> <label class="button btn btn-info"> <input type="radio"
+									name="filter" value=".member" /> <i class="fui-user mrm"></i>
+									Member
+								</label> <label class="button btn btn-primary"> <input
+									type="radio" name="filter" value=".business" /> <i
+									class="fa fa-globe mrm"></i> Business
+								</label> <label class="button btn btn-info"> <input type="radio"
+									name="filter" value=".partner" /> <i class="fa fa-users mrm"></i>
+									Partner
+								</label>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+
+
+				<div class="row-fluid">
+
+					<div class="span12 thumbnail">
+						<div class="caption isotope is-varying-sizes rainbowed">
+
+							<ui:repeat var="contact"
+								value="#{networkConnectionView.contactList}">
+
+								<ui:include src="networkContactPanel.xhtml">
+									<ui:param name="contactEntry" value="#{contact}" />
+								</ui:include>
+
+							</ui:repeat>
+
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</c:if>
+
+		<c:if test="#{empty networkConnectionView.contactList}">
+			<p>
+				In order to connect with Business Partners specify your Business by
+				going to <b>Profile->Specify Business</b> menu.
+			</p>
+		</c:if>
+
+
+	</ui:define>
+
+</ui:composition>

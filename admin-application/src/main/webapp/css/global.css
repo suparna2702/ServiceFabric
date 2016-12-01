@@ -1,0 +1,42 @@
+body {
+	background-color: rgb(240,240,240);
+}
+th
+{
+	background-color: rgb(184,184,184);
+	color: black;
+}
+td
+{
+	height: 50px;
+	vertical-align: top;
+	padding: 5px;
+}
+table, td, th
+{
+	border:1px solid black;
+}
+ul
+{
+   list-style-type:none;
+   margin:0;
+   padding:0;
+}
+#navigation a:link,a:visited
+{
+   display:block;
+   color:rgb(0,0,0)
+   font-weight:bold;
+   width:180px;
+   text-align:left;
+   padding:4px;
+   text-decoration:none;
+   text-transform:none;
+}
+#navigation a:hover,a:active
+{
+  background-color:rgb(192,192,192);
+}
+
+
+

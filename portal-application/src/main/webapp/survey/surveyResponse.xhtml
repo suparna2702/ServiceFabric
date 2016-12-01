@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/basemenulayout.xhtml">
+
+	<ui:param name="newContent" value="true" />
+	<ui:param name="skipToolbar" value="true" />
+	<ui:define name="title">Submit Survey</ui:define>
+	<ui:define name="centerContent">
+
+		<!-- The Tool Bar -->
+		<ui:include src="/survey/surveyToolBar.xhtml" />
+
+		<div class="row-fluid well">
+			<div class="span12">
+				<h3>Please Fill Out The Requested Survey
+					#{pollSubmissionView.pollEvent.pollRunHeader}</h3>
+				<p>#{pollSubmissionView.pollEvent.pollRunDescription}</p>
+			</div>
+		</div>
+
+		<div class="old-content">
+			<div class="row-fluid">
+				<div class="span12">
+
+					<h:form id="surveyQuestionForm" prependId="false"
+						enctype="multipart/form-data">
+
+						<ui:fragment
+							rendered="#{not empty pollSubmissionView.pollTemplate.templateQuestion}">
+							<ui:repeat
+								value="#{pollSubmissionView.pollTemplate.templateQuestion}"
+								var="question">
+
+								<div class="panel panel-primary mvm">
+									<div class="panel-heading">
+										<h3 class="panel-title">#{question.questionType()}</h3>
+									</div>
+
+									<div class="panel-body">
+										<ui:include src="/survey/surveyViewQuestionMultiChoice.xhtml" />
+										<ui:include
+											src="/survey/surveyViewQuestionSingleChoiceList.xhtml" />
+										<ui:include
+											src="/survey/surveyViewQuestionSingleChoiceRadio.xhtml" />
+										<ui:include
+											src="/survey/surveyViewQuestionSingleChoiceRating.xhtml" />
+										<ui:include src="/survey/surveyViewQuestionTextInput.xhtml" />
+									</div>
+
+								</div>
+
+							</ui:repeat>
+							<p:commandButton id="pollSubmit"
+								styleClass="btn btn-sm btn-info btn-small" value="Submit"
+								action="#{pollSubmissionView.submitSurvey}"
+								process="surveyQuestionForm" />
+						</ui:fragment>
+
+						<ui:fragment
+							rendered="#{empty pollSubmissionView.pollTemplate.templateQuestion}">
+							<p>No survey question defined</p>
+						</ui:fragment>
+
+					</h:form>
+
+				</div>
+			</div>
+		</div>
+		
+		<script language="javascript">
+			$(document).ready(function() {
+				$("[rel='tooltip']").tooltip();
+			})
+		</script>
+	</ui:define>
+</ui:composition>

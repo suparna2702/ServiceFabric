@@ -1,0 +1,59 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<div class="navbar">
+		<div class="navbar-inner">
+			<div class="container">
+				<button type="button" class="btn btn-navbar" data-toggle="collapse"
+					data-target="#nav-collapse-01"></button>
+
+				<div class="brand" style="width: 150px; height: 150px;">
+					<p:graphicImage id="memberPhoto"
+						value="/spring/assets#{workspaceDetailView.getWorkspaceOwnerLogo()}"
+						style="max-width:100%;max-height:100%;" />
+				</div>
+
+				<div class="nav-collapse collapse" id="nav-collapse-01">
+
+					<ul class="nav pull-right">
+						<ui:include src="/templates/menu/shortcutMenuGrid.xhtml" />
+
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown"> <h:graphicImage
+									value="/spring/assets#{authenticatedMemberInfoView.memberPhoto}"
+									width="32" height="32" styleClass="img-rounded" />
+						</a>
+
+							<ul class="dropdown-menu">
+								<li><a href="#fakeLink"><font color="black">#{authenticatedMemberInfoView.getMember().getLoggedInName()}</font></a></li>
+								<li><a href="#{root}/account/accountConfiguration.xhtml"><font
+										color="black">Account Settings</font></a></li>
+								<li class="divider"></li>
+								<li><a href="#{root}/member/logout"><font color="black">Logout</font></a></li>
+							</ul></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="navbar navbar-inverse">
+		<div class="navbar-inner">
+			<div class="container">
+				<a class="btn btn-navbar" data-toggle="collapse"
+					data-target=".navbar-inverse-collapse"> <span class="icon-bar"></span>
+					<span class="icon-bar"></span> <span class="icon-bar"></span>
+				</a>
+
+				<div class="nav-collapse collapse navbar-inverse-collapse">
+					<ui:include src="/templates/menu/memberMainMenu.xhtml" class="nav" />
+				</div>
+			</div>
+		</div>
+	</div>
+
+</ui:composition>

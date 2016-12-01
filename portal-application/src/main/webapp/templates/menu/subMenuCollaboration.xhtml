@@ -1,0 +1,36 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<li class="dropdown"><a href="#" class="dropdown-toggle"
+		data-toggle="dropdown">Collaborate <b class="caret"></b></a>
+		<ul class="dropdown-menu">
+			<li><a href="#{root}/docspace/documentWorkspaceListView.xhtml"><i
+					class="fui-document mrm"></i>Content Workspaces</a></li>
+			<li><a href="#{root}/collabspace/workspaceMain.xhtml"><i
+					class="fui-radio-checked mrm"></i>Collaboration Workspaces</a></li>
+
+			<c:if test="#{sec:areAnyGranted('BUSINESS_PLUS')}">
+				<li><a href="#{root}/partner/partnerProgramManagement.xhtml"><i
+						class="fa fa-users mrm"></i>Partner Programs</a></li>
+				<li><a href="#{root}/survey/manageSurveys.xhtml"><i
+						class="fa fa-list-ol mrm"></i>Surveys</a></li>
+
+				<c:if
+					test="#{sec:areAnyGranted('PARTNER_PROGRAM_ADMIN') or sec:areAnyGranted('BUSINESS_ADMIN')}">
+					<li><a
+						href="#{root}/advertisement/displayNoticeCreateEditView.xhtml"><i
+							class="fa fa-bars mrm"></i>Banner Notice</a></li>
+				</c:if>
+
+			</c:if>
+
+			<li><a href="#{root}/utility/newsFeed.xhtml"><i
+					class="fa fa-rss mrm"></i>Information Share</a></li>
+		</ul></li>
+
+
+</ui:composition>

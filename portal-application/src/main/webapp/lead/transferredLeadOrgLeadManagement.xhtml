@@ -1,0 +1,58 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:composite="http://java.sun.com/jsf/composite/composites"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<p:spacer height="20"/>
+	  
+    <p:dataTable id="leadAssignmentPanel" var="leadAssignment" paginator="true" 
+	               rows="8" paginatorPosition="bottom" paginatorAlwaysVisible="false"
+   	               draggableColumns="true" value="#{organizationLeadView.leadAssignedList}">
+   	               
+   	      <f:facet name="header">  
+             Partner Tranferred Leads  
+          </f:facet>
+          
+	      <p:column id="assignedLeadType" style="width:60px" 
+	            filterBy="#{leadAssignment.theLead.leadType}" headerText="Lead Type" filterOptions="#{organizationLeadView.leadTypes}" 
+	            filterMatchMode="exact" sortBy="#{leadAssignment.theLead.leadType}">
+	            <h:outputText value="#{leadAssignment.theLead.leadType}" />
+	      </p:column>
+	      
+	      <p:column id="assignedLeadSource" style="width:100px" headerText="Lead Source" 
+	                filterBy="#{leadAssignment.theLead.leadSource.name}" filterMatchMode="startsWith" sortBy="#{leadAssignment.theLead.leadSource.name}">
+	            <h:outputText value="#{leadAssignment.theLead.leadSource.name}" />
+	      </p:column>
+	      
+	      <p:column id="assignedLeadSourceDate" style="width:100px" headerText="Date" 
+	                filterBy="#{leadAssignment.theLead.timeStamp}" filterMatchMode="startsWith" sortBy="#{leadAssignment.theLead.timeStamp}">
+	            <h:outputText value="#{leadAssignment.theLead.timeStamp}" />
+	      </p:column>
+	      
+	      <p:column id="assignedLeadSourceAction" style="width:100px" headerText="Action" >
+	          <h:outputLink value="#{root}/lead/viewLeadDetail.xhtml">
+	              <f:param name="lid" value="#{leadAssignment.theLead.id}" /> 
+	              <f:param name="ldtype" value="#{leadAssignment.theLead.leadTypeStr}" /> 
+                  <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;" />
+              </h:outputLink>
+	      </p:column>
+	      
+          <f:facet name="footer">  
+            <p:commandButton id="leadAssignCrmBtn" 
+                             icon="ui-icon-extlink" 
+		                     style="margin-right:5px; float:right"/>
+		    <p:tooltip for="leadAssignCrmBtn" value="Transfer to CRM" 
+	                    showEffect="fade" hideEffect="fade" />   
+		    <p:commandButton id="leadAssignEmailBtn" 
+                             icon="ui-icon-mail-closed" 
+		                     style="margin-left:5px; float:right"/>
+		    <p:tooltip for="leadAssignEmailBtn" value="Send Email" 
+	                    showEffect="fade" hideEffect="fade" />   
+         </f:facet>
+          
+	  </p:dataTable>
+	
+</ui:composition>

@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui">
+	
+      <p:spacer height="20"/>
+      <h:panelGrid>
+        <h:outputText value="Login History" 
+                 style="margin-left:10px;color:gray; font-size:10pt;margin-bottom:10px"/>
+        
+        <p:spacer height="20"/>
+	    <p:lineChart value="#{memberCommunityActivityView.sessionCartesianModel}" 
+                        legendPosition="ne" fill="false" stacked="false" 
+                        xaxisLabel="Session Over Time" yaxisLabel="Session Duration"
+                        style="width:600px; height:350px"/>
+                        
+        <p:spacer height="20"/>
+        <h:panelGroup>
+            <p:dataTable id="loginHistory" style="margin-top:10px" paginator="true" rows="10" 
+                       var="loginEvent" value="#{memberCommunityActivityView.longinInfoList}" >
+                       
+	           <p:column headerText="Session Start" id="loginStartTime">
+	               <h:outputText value="#{loginEvent.eventGenerationTime}" />
+	           </p:column>
+	         
+	           <p:column headerText="Session End" id="loginSessionTime">
+	               <h:outputText value="#{loginEvent.loginInfo.logoutTime}" />
+	           </p:column>
+	         
+	           <p:column headerText="Session Duration (sec.)" id="loginSessionDuration">
+	               <h:outputText value="#{loginEvent.sessionDuration}" />
+	           </p:column>
+          </p:dataTable>
+         </h:panelGroup>
+      </h:panelGrid>
+      
+</ui:composition>

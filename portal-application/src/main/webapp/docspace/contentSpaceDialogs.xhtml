@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:dialog id="addPerticipant" height="300" resizable="false"
+		modal="true" showEffect="explode" header="Add Participant"
+		widgetVar="addPertDlg">
+
+		<p:dataGrid id="addPerticipantList" var="perticipant" paginator="true"
+			paginatorPosition="bottom" paginatorAlwaysVisible="false" rows="10"
+			columns="1" rendered="#{not empty docWorkspaceView.shareList}"
+			value="#{docWorkspaceView.shareList}"
+			styleClass="ui-datagrid-no-border">
+
+			<p:panel id="pertListPanel" styleClass="buttomBorder">
+				<h:panelGrid columns="2" style="margin-bottom:10px">
+					<h:outputText value="Name "
+						style="margin-bottom:10px;font-weight:bold" />
+					<h:outputText value="#{perticipant.displayName}" />
+				</h:panelGrid>
+				<p:commandButton id="pertAddBtn" value="Add"
+					action="#{docWorkspaceView.addPerticipant(perticipant.key)}"
+					update=":perticipantList" style="margin-top:10px" />
+			</p:panel>
+		</p:dataGrid>
+		<p:commandButton id="pertAddCloseBtn" value="Close"
+			onclick="addPertDlg.hide();return false" style="margin-top:10px" />
+
+	</p:dialog>
+
+	<p:dialog id="editFileDialog" resizable="false" modal="true"
+		showEffect="explode" header="Edit File Properties"
+		widgetVar="editFileDlg">
+
+		<p:outputPanel id="editfileBrowserPanel">
+			<p:panel styleClass="noBorder">
+				<h:panelGrid columns="2">
+					<p:graphicImage value="/images/mimetype/linedpaper32.png"
+						width="20" height="20" />
+					<h:outputText
+						value="#{docWorkspaceView.getSelectedDocumentForEdit().getName()}"
+						style="font-weight:bold" />
+					<p:spacer height="10" />
+				</h:panelGrid>
+
+				<p:tabView id="documentTabView">
+
+					<p:tab id="tabCategories" title="Categories">
+						<p:outputPanel id="categoryPanel">
+							<h:inputText id="addNewCategory" styleClass="input-block-level"
+								value="#{docWorkspaceView.categoryToAdd}" size="40" />
+
+							<p:commandButton id="addCategoryBtn" value="Add"
+								action="#{docWorkspaceView.addCategory()}"
+								style="margin-left:10px;" process="@this categoryPanel"
+								update=":categoryFilterForm categoryPanel" />
+
+							<p:tooltip for="addCategoryBtn" value="Add a new category"
+								showEffect="fade" hideEffect="fade" />
+
+							<p:panel id="fileCategoryPanel" style="border-style:hidden">
+								<p:dataGrid id="fileCategoryDataTable" var="category"
+									styleClass="hide-column-names documentPageBorder"
+									value="#{docWorkspaceView.allCategories}" paginator="true"
+									rows="5" columns="1" paginatorAlwaysVisible="false"
+									paginatorPosition="bottom">
+
+									<p:panel id="categoryListPanel" styleClass="buttomBorder">
+										<h:panelGrid columns="3">
+											<p:panel styleClass="noBorder">
+												<p:selectBooleanCheckbox value="#{category.selected}" />
+											</p:panel>
+											<p:panel styleClass="noBorder">
+												<h:outputText value="#{category.name} " />
+											</p:panel>
+										</h:panelGrid>
+									</p:panel>
+								</p:dataGrid>
+							</p:panel>
+
+						</p:outputPanel>
+					</p:tab>
+
+				</p:tabView>
+			</p:panel>
+
+			<p:commandButton id="updateFile" value="Update"
+				oncomplete="editFileDlg.hide(); return false"
+				action="#{docWorkspaceView.editFileComplete}"
+				process="@this :formContent:editfileBrowserPanel"
+				style="margin-top:5px" />
+
+		</p:outputPanel>
+	</p:dialog>
+
+	<p:confirmDialog id="checkOutConfirmDialog"
+		message="Are you sure you want to checkout document?"
+		header="Checkout Document" severity="alert"
+		widgetVar="checkOutConfirmDialogDlg">
+		<p:commandButton id="checkoutOk" value="OK"
+			actionListener="#{docWorkspaceView.checkOutDocument()}"
+			update=":documentList" oncomplete="checkOutConfirmDialogDlg.hide()" />
+	</p:confirmDialog>
+
+	<p:confirmDialog id="checkInConfirmDialog"
+		message="Are you sure you want to checkin document?"
+		header="Checkin Document" severity="alert"
+		widgetVar="checkInConfirmDialogDlg">
+		<p:commandButton id="checkInOk" value="OK"
+			actionListener="#{docWorkspaceView.checkInDocument()}"
+			update=":documentList" oncomplete="checkInConfirmDialogDlg.hide()" />
+	</p:confirmDialog>
+
+	<p:confirmDialog id="deleteConfirmDialog"
+		message="Are you sure you want to delete the selected documents?"
+		header="Delete documents" severity="alert"
+		widgetVar="deleteConfirmDialogDlg">
+		<p:commandButton id="deleteOk" value="OK"
+			actionListener="#{docWorkspaceView.deleteSelectedFiles()}"
+			update=":documentList" oncomplete="deleteConfirmDialogDlg.hide()" />
+	</p:confirmDialog>
+
+	<p:confirmDialog id="downloadDialog"
+		message="Are you sure you want to download the document?"
+		header="Document document" severity="alert"
+		widgetVar="downloadDialogDlg">
+		<p:commandButton id="downloadOk" value="OK" ajax="false"
+			onclick="downloadDialogDlg.hide();">
+			<p:fileDownload value="#{docWorkspaceView.downloadDocument}" />
+		</p:commandButton>
+	</p:confirmDialog>
+
+	<p:confirmDialog id="shareConfirmationDialog"
+		message="The selected documents have been shared with the selected contants."
+		header="Share Documents" severity="alert"
+		widgetVar="shareConfirmationDialogVar">
+		<p:commandButton id="assignConfirm" value="OK"
+			oncomplete="shareConfirmationDialogVar.hide()" />
+	</p:confirmDialog>
+
+</ui:composition>

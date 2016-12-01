@@ -1,0 +1,33 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:composite="http://java.sun.com/jsf/composite/composites"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:fragment rendered="#{news.linkReference eq null}">
+		<p>
+			<h:outputText value="#{news.newsItem.newsDescription}" escape="false" />
+		</p>
+	</ui:fragment>
+
+	<ui:fragment rendered="#{news.linkReference != null}">
+		<a target="_tab" style="color: black;"
+			href="#{news.linkReference.url}"> <ui:fragment
+				rendered="#{news.linkReference.imageUrl != null}">
+				<div
+					style="width: 120px; float: left; margin-right: 4px; margin-bottom: 4px;">
+					<img src="#{news.linkReference.imageUrl}"
+						style="width: 100%; max-height: 100%;" />
+				</div>
+			</ui:fragment>
+			<p style="font-weight: lighter; font-size: small;">
+				#{news.linkReference.content == null ||
+				news.linkReference.content.length() &lt;= 250?
+				news.linkReference.content : news.linkReference.content.substring(0,
+				250).concat('...')}</p>
+		</a>
+	</ui:fragment>
+
+</ui:composition>

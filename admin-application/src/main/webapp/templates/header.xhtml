@@ -1,0 +1,38 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<div class="row">
+		<p:outputPanel rendered="#{adminView.admin.logged}" layout="block">
+			<div class="span3">
+			   <h:graphicImage id="logo1"
+		           value="/images/businessReachLogo.png" width="200" height="60" 
+		                 style="margin-left:5px;margin-bottom:5px;" />
+			</div>
+
+			<div class="span1">			   
+				<p:menuButton style="margin-left:550px;" value="#{adminView.admin.firstName}">
+					<p:menuitem value="Upgrade Account" />
+					<p:menuitem value="Logout" action="#{adminView.logout}"
+						ajax="false" immediate="true" />
+				</p:menuButton>
+			</div>
+		</p:outputPanel>
+		<p:outputPanel rendered="#{not adminView.admin.logged}"
+			layout="block">
+			<div class="span5">
+			   <h:graphicImage id="logo2"
+		           value="/images/businessReachLogo.png" width="200" height="60" 
+		           style="margin-left:5px;margin-bottom:5px;" />
+			</div>
+
+			<div class="span7">
+				
+			</div>
+			
+		</p:outputPanel>
+	</div>
+</ui:composition>

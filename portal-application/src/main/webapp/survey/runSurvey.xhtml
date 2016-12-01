@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/basemenulayout.xhtml">
+
+	<ui:param name="newContent" value="true" />
+	<ui:param name="skipToolbar" value="true" />
+	<ui:define name="title">Run Survey</ui:define>
+	<ui:define name="centerContent">
+
+		<!-- The Tool Bar -->
+		<ui:include src="/survey/surveyToolBar.xhtml" />
+
+		<div class="old-content">
+			<h:form id="formRun" prependId="false" enctype="multipart/form-data">
+				<p:dialog id="pollRunDialog" resizable="false" modal="true"
+					showEffect="explode" header="Survey" widgetVar="dlgPollRun">
+					<p:outputPanel id="pollRunPanel" layout="block">
+						<h:panelGrid columns="2">
+							<h:outputText value="Header " />
+							<p:inputText style="margin-bottom:10px" size="30"
+								value="#{pollRunView.pollRunHeader}" />
+
+							<h:outputText value="Description " />
+							<p:inputTextarea style="margin-bottom:5px;margin-top:5px"
+								value="#{pollRunView.pollRunDescription}" rows="10" cols="50" />
+
+							<h:outputText value="Due Date " />
+							<p:calendar value="#{pollRunView.pollDueDate}"
+								pattern="MM/dd/yyyy HH:mm" />
+						</h:panelGrid>
+						<p:commandButton value="Post" icon="ui-icon-check"
+							id="postPollDialogBtn" action="#{pollRunView.runPoll}"
+							onclick="dlgPollRun.hide()" process="@this pollRunPanel"
+							style="margin-left:10px;margin-top:10px" />
+					</p:outputPanel>
+				</p:dialog>
+			</h:form>
+		</div>
+
+		<div class="row-fluid">
+			<div class="span12 well">
+
+				<div class="span7">
+					<h3>#{pollRunView.pollTemplate.templateName}</h3>
+					<p>#{pollRunView.pollTemplate.templateDescription}</p>
+					<h:outputText value="#{pollRunView.pollTemplate.createStart}"
+						style="margin-bottom:10px">
+						<f:convertDateTime pattern="d-M-yyyy" />
+					</h:outputText>
+				</div>
+
+				<!-- High Level Stats -->
+				<div class="span3">
+					<blockquote>
+						<p>
+							<i class="fa fa-sign-in muted" rel="tooltip"
+								title="Survey Requests"></i>
+							#{pollRunView.pollTemplate.eventStatistics.getTotalRequestCount()}
+							<br></br>
+
+							<!-- Number of deployed survey -->
+							<i class="fui-check-inverted muted" rel="tooltip"
+								title="Survey Submissions"></i>
+							#{pollRunView.pollTemplate.eventStatistics.submissionCount} <br></br>
+
+							<!-- Number of submission -->
+							<i class="fa fa-question-circle muted" rel="tooltip"
+								title="Pending Requests"></i>
+							#{pollRunView.pollTemplate.eventStatistics.eventCount} <br></br>
+							<!-- Number of Pending -->
+						</p>
+					</blockquote>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="old-content">
+			<div class="row-fluid">
+				<div class="span12">
+					<h:form id="form" prependId="false" enctype="multipart/form-data">
+
+						<p:outputPanel id="pollSubmissionPanel" layout="block">
+
+							<p:spacer height="10" />
+							<p:dataTable id="contactDataTable" var="contact" paginator="true"
+								paginatorPosition="bottom" paginatorAlwaysVisible="false"
+								rows="10" value="#{pollRunView.contactList}"
+								rowKey="#{contact.contact.id}" styleClass="hide-column-names"
+								selection="#{pollRunView.selectedContacts}">
+
+								<p:column selectionMode="multiple" style="width:18px"
+									styleClass="buttomBorder" />
+
+								<p:column id="contactImage" style="width:50px"
+									styleClass="buttomBorder">
+									<p:graphicImage
+										value="/spring/assets#{contact.contact.displayImage}"
+										width="40" height="40" />
+								</p:column>
+
+								<p:column id="contactInfo" style="width:50px"
+									styleClass="buttomBorder">
+									<h:outputText value="#{contact.contact.displayName}" />
+								</p:column>
+
+							</p:dataTable>
+
+							<p:commandButton id="campaignRunBtn" value="Run"
+								icon="ui-icon-check" oncomplete="dlgPollRun.show()"
+								style="margin-right:5px;margin-top:5px">
+							</p:commandButton>
+						</p:outputPanel>
+
+					</h:form>
+				</div>
+			</div>
+		</div>
+
+		<script language="javascript">
+			$(document).ready(function() {
+				$("[rel='tooltip']").tooltip();
+			})
+		</script>
+
+	</ui:define>
+
+</ui:composition>

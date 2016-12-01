@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+    version="2.0">
+  <persistence-unit name="similan.admin" transaction-type="JTA">
+    
+    <provider>org.hibernate.ejb.HibernatePersistence</provider>
+    <jta-data-source>java:jboss/datasources/similan/${similan.build.modifier}</jta-data-source>
+    
+    <mapping-file>jbpm.repository.hbm.xml</mapping-file>
+    <mapping-file>jbpm.execution.hbm.xml</mapping-file>
+    <mapping-file>jbpm.history.hbm.xml</mapping-file>
+    <mapping-file>jbpm.task.hbm.xml</mapping-file>
+    <mapping-file>jbpm.identity.hbm.xml</mapping-file>
+    
+    <jar-file>lib/domain-model-${project.version}.jar</jar-file>
+    <jar-file>domain-model/target/domain-model-${project.version}.jar</jar-file>
+    
+    <properties>
+<!--       <property name="hibernate.hbm2ddl.auto" value="validate" /> -->
+      <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
+      <property name="hibernate.id.new_generator_mappings" value="true" />
+      <property name="jboss.entity.manager.jndi.name" value="java:module/EntityManager"/>
+      <property name="jboss.entity.manager.factory.jndi.name" value="java:module/EntityManagerFactory"/>
+      <property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.DefaultComponentSafeNamingStrategy"/> 
+    </properties>
+    
+  </persistence-unit>
+</persistence>

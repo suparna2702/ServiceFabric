@@ -1,0 +1,55 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:panelGrid id="memberPanel" columns="1" style="width:100%;"
+		rendered="#{searchResultItem.personType == 'true'}"
+		onclick="showSearchResultInfoWindow(googleMap.getMap(), '#{searchResultItem.memberInfo.latidute}', '#{searchResultItem.memberInfo.longitude}', '#{searchResultItem.memberInfo.firstName} #{searchResultItem.memberInfo.lastName}', '#{searchResultItem.memberInfo.employer.name}','#{searchResultItem.memberInfo.street}', '#{searchResultItem.memberInfo.city}', '#{searchResultItem.memberInfo.state}', '#{searchResultItem.memberInfo.zipCode}', '#{searchResultItem.memberInfo.country}', '#{searchResultItem.memberInfo.mobilePhone}', '#{searchResultItem.memberInfo.businessPhone}', '#{searchResultItem.memberInfo.email}', '');">
+		<h:panelGroup>
+			<h:panelGrid columns="1" columnclasses="leftAligned">
+			    <h:panelGrid columns="2">
+				    <h:outputLink id="memberImageLink"
+						value="#{root}/member/memberPublicProfile.xhtml?mid=#{searchResultItem.memberInfo.id}" style="margin-right:3px">
+						<p:graphicImage id="memberlogo" value="/spring/assets#{searchResultItem.memberInfo.photoLocation}" 
+	                        width="40" height="40" styleClass="img-rounded img-responsive"/>
+					</h:outputLink>
+					
+					<h:panelGroup>
+						<h:outputLink id="memberNameLink"
+							value="#{root}/member/memberPublicProfile.xhtml?mid=#{searchResultItem.memberInfo.id}">
+							<h:outputText
+								value="#{searchResultItem.memberInfo.firstName} #{searchResultItem.memberInfo.lastName}"
+								style="font-size:10pt;font-weight:bold" />
+						</h:outputLink> <br></br>
+						<h:outputText value="#{searchResultItem.memberInfo.title}"
+						  style="color:#989898;font-size:10pt;font-weight:bold" />
+				    </h:panelGroup>
+			    </h:panelGrid>
+				<br></br>
+				<c:if test="#{searchResultItem.memberInfo.employer != null}">
+					<h:outputText id="memberCompany"
+						value="#{searchResultItem.memberInfo.employer.name}"
+						style="color:#989898;font-size:10pt;font-weight:bold" />
+				</c:if>
+				
+				<h:outputText value="#{searchResultItem.memberInfo.industry}"
+					style="color:#989898;font-size:10pt;font-weight:bold;" />
+				<h:outputText value="#{searchResultItem.memberInfo.street}" />
+				
+				<p:outputPanel style="text-align:left;border:hidden;">
+					<h:outputText value="#{searchResultItem.memberInfo.city}" />
+					<h:outputText style="padding-right:5px;"
+						rendered="#{searchResultItem.memberInfo.city != null}" value="," />
+					<h:outputText style="padding-right:5px;" value="#{searchResultItem.memberInfo.state}" />
+					<h:outputText value="#{searchResultItem.memberInfo.zipCode} #{searchResultItem.memberInfo.country}" />
+				</p:outputPanel>
+			</h:panelGrid>
+		</h:panelGroup>
+	</h:panelGrid>
+
+	<p:spacer width="5" />
+
+</ui:composition>

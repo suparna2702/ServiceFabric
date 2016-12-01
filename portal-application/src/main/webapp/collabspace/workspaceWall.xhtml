@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui">
+
+	<div class="span12 well">
+		<div class="span2">
+			<p:graphicImage
+				value="/spring/assets/#{workspaceDetailView.getWorkspaceLogo()}"
+				width="80px" height="80px" styleClass="img-rounded img-responsive" />
+		</div>
+		<div class="span6">
+			<h5 class="muted">#{workspaceDetailView.workspace.key.name}</h5>
+			<p>#{workspaceDetailView.workspace.description}</p>
+			<h:outputText value="#{workspaceDetailView.workspace.creationDate}">
+				<f:convertDateTime pattern="MM/dd/yyyy" />
+			</h:outputText>
+		</div>
+		<div class="span3">
+
+			<ui:fragment
+				rendered="#{workspaceDetailView.isCreator(workspaceDetailView.workspace, workspaceDetailView.accessorKey) eq 'true'}">
+				<div class="btn-toolbar">
+					<div class="btn-group">
+						<a
+							href="#{workspaceDetailView.collaborationWorkspaceView('collabspace/workspaceEdit.xhtml', workspaceDetailView.workspace.key)}"
+							class="btn btn-primary active"> <i
+							class="fa fa-pencil-square-o"></i> Edit
+						</a>
+					</div>
+				</div>
+			</ui:fragment>
+
+		</div>
+	</div>
+
+	<div class="row-fluid mbm">
+		<ui:include src="../wall/wallPostForm.xhtml">
+			<ui:param name="wallPostingView" value="#{workspaceDetailView}" />
+			<ui:param name="displayImage"
+				value="#{workspaceDetailView.member.imagePath}" />
+			<ui:param name="displayName"
+				value="#{workspaceDetailView.member.fullName}" />
+		</ui:include>
+	</div>
+
+	<ui:include src="../wall/wall.xhtml">
+		<ui:param name="wallView" value="#{workspaceDetailView}" />
+	</ui:include>
+
+	<div class="row-fluid mbm">
+		<h:form id="wallMoreForm" styleClass="caption">
+			<div class="control-group">
+				<p:commandButton value="More" styleClass="btn btn-info btn-large"
+					action="#{workspaceDetailView.moreWallEntries}" ajax="false" />
+			</div>
+		</h:form>
+	</div>
+
+</ui:composition>

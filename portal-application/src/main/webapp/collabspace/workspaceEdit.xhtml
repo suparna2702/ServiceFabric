@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/basemenulayout.xhtml">
+
+	<ui:param name="newContent" value="true" />
+	<ui:param name="skipToolbar" value="true" />
+	<ui:define name="title">Edit Workspace</ui:define>
+	<ui:define name="centerContent">
+
+		<div class="row-fluid">
+			<div class="span12">
+				<div class="iconbar iconbar-horizontal">
+					<ul>
+						<li><a href="#{root}/collabspace/workspaceMain.xhtml"
+							class="fui-list-columned"></a></li>
+						<li><a
+							href="#{root}/collabspace/workspaceDocument.xhtml?wsname=#{workspaceEditView.workspace.key.name}"
+							class="fui-document"> </a></li>
+
+						<li><a href="#" class="fui-user"> <span
+								class="iconbar-unread">#{workspaceDetailView.numberParticipants}</span>
+						</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<h2>#{workspaceEditView.workspace.key.name}</h2>
+
+
+		<div class="old-content">
+			<div class="row-fluid">
+				<div class="span12">
+
+					<h:form id="form" prependId="false" enctype="multipart/form-data">
+						<p:outputPanel id="workspaceProfilePanel" layout="block">
+							<p:panel>
+								<h:panelGrid columns="2">
+
+									<h:panelGroup id="workspacePhotoPanel" styleClass="image-thumb"
+										layout="block">
+										<p:graphicImage id="workspacePhoto"
+											value="/spring/assets#{workspaceEditView.workspaceLogo}" />
+										<p:commandButton id="imageAddButton"
+											styleClass="imageAddButtonOverlay"
+											rendered="#{workspaceEditView.workspaceLogoExists == false}"
+											onclick="dlg.show();" title="Add workspace logo" value="">
+										</p:commandButton>
+										<p:commandButton id="imageUpdateButton"
+											styleClass="imageAddButtonOverlay"
+											rendered="#{workspaceEditView.workspaceLogoExists == true}"
+											onclick="confirmation.show();" value=""
+											title="Update workspace logo">
+										</p:commandButton>
+										<p:commandButton id="imageDeleteButton"
+											onclick="deleteConfirmation.show();"
+											rendered="#{workspaceEditView.workspaceLogoExists == true}"
+											styleClass="imageRemoveButtonOverlay" value=""
+											title="Remove workspace logo">
+										</p:commandButton>
+									</h:panelGroup>
+
+									<h:panelGroup>
+										<p:dialog id="photoUploadDialog" resizable="false"
+											modal="true" showEffect="explode" header="Upload Picture"
+											widgetVar="dlg">
+											<p:fileUpload
+												fileUploadListener="#{workspaceEditView.handleFileUpload}"
+												auto="true" mode="advanced" oncomplete="dlg.hide()"
+												id="fileUpload" sizeLimit="1048576"
+												update="workspacePhoto workspacePhotoPanel"
+												render="workspacePhotoPanel"
+												allowTypes="/(\.|\/)(gif|jpe?g|png)$/">
+											</p:fileUpload>
+										</p:dialog>
+										<p:confirmDialog id="confirmDialog"
+											message="Are you sure you want to replace your existing picture"
+											header="Change Picture" severity="alert"
+											widgetVar="confirmation">
+											<p:commandButton id="confirm" value="Yes"
+												oncomplete="confirmation.hide(); dlg.show();" />
+											<p:commandButton id="decline" value="No"
+												onclick="confirmation.hide()" type="button" />
+										</p:confirmDialog>
+										<p:confirmDialog id="deleteConfirm"
+											message="Are you sure you want to delete your existing picture?"
+											header="Delete Picture" severity="alert"
+											widgetVar="deleteConfirmation">
+											<p:commandButton id="deletePhotoConfirm" immediate="true"
+												value="Yes" update="workspacePhotoPanel"
+												render="workspacePhotoPanel"
+												oncomplete="deleteConfirmation.hide();"
+												action="#{workspaceEditView.deletePhoto}" />
+											<p:commandButton id="deleteLogoDecline" value="No"
+												onclick="deleteConfirmation.hide()" type="button" />
+										</p:confirmDialog>
+
+									</h:panelGroup>
+
+									<h3 class="mrl">Description</h3>
+									<h:panelGroup>
+										<h:inputTextarea id="description"
+											style="margin-bottom:5px;margin-top:5px"
+											styleClass="input-block-level" rows="5" cols="60"
+											value="#{workspaceEditView.workspaceDescription}" />
+										<p:watermark for="description" value="Workspace description" />
+										<p:tooltip for="description"
+											value="Enter workspace description" showEffect="fade"
+											hideEffect="fade" />
+									</h:panelGroup>
+
+									<h3 class="mrl">Show Participants</h3>
+									<p:selectBooleanCheckbox
+										value="#{workspaceEditView.showParticipants}" />
+
+									<h3 class="mrl">Show Participants Activities</h3>
+									<p:selectBooleanCheckbox
+										value="#{workspaceEditView.showActivities}" />
+
+								</h:panelGrid>
+							</p:panel>
+							<p:commandButton value="Update"
+								styleClass="btn btn-info btn-small"
+								action="#{workspaceEditView.save}"
+								process="@this workspaceProfilePanel" ajax="false"
+								style="margin-top:10px;" />
+						</p:outputPanel>
+
+					</h:form>
+
+				</div>
+			</div>
+		</div>
+
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,51 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:composite="http://java.sun.com/jsf/composite/composites"
+	xmlns:p="http://primefaces.org/ui">
+	
+	   	<p:dataTable id="leadAvailablePanel" var="availablelead" paginator="true" paginatorPosition="bottom" 
+   	               paginatorAlwaysVisible="false" rows="15" draggableColumns="true"
+   	               value="#{organizationLeadView.availableLeads}" 
+   	               rendered="#{organizationLeadView.availableLead == 'true'}">
+	      
+	      <f:facet name="header">
+             Available Leads
+          </f:facet>
+          
+	      <p:column id="availableLeadSource" style="width:50px" headerText="Lead Source" 
+	                filterBy="#{availablelead.leadSource.name}" filterMatchMode="startsWith" sortBy="#{availablelead.leadSource.name}">
+	            <h:outputText value="#{availablelead.leadSource.name}" />
+	      </p:column>
+	      
+	      <p:column id="availableLeadLocation" style="width:50px" headerText="Location" 
+	                filterBy="#{availablelead.leadSource.zipCode}" filterMatchMode="startsWith" sortBy="#{availablelead.leadSource.zipCode}">
+	            <h:outputText value="#{availablelead.leadSource.zipCode}" />
+	      </p:column>
+	      
+	      <p:column id="availableLeadKeywords" style="width:50px" headerText="Keywords" 
+	                sortBy="#{availablelead.keyword}" filterMatchMode="startsWith">
+	            <h:outputText value="#{availablelead.keyword}" />
+	      </p:column>
+	      
+	      <p:column id="availLeadDate" style="width:100px" headerText="Date" 
+	                filterBy="#{availablelead.timeStamp}" filterMatchMode="startsWith" sortBy="#{availablelead.timeStamp}">
+	            <h:outputText value="#{availablelead.timeStamp}" />
+	      </p:column>
+	      
+	      <p:column id="availLeadPurchasePrice" style="width:100px" headerText="Price" 
+	                filterBy="#{availablelead.purchasePrice}" filterMatchMode="startsWith" sortBy="#{availablelead.purchasePrice}">
+	            <h:outputText value="#{availablelead.purchasePrice}" />
+	      </p:column>
+	      
+	      <p:column id="availableLeadPurchaseAction" style="width:100px" headerText="Buy" >
+	         <p:commandButton id="availableLeadPurchaseActionBtn" icon="ui-icon-cart" >  
+                <f:setPropertyActionListener value="#{availablelead}" target="#{organizationLeadView.purchaseAvailableLead}" />  
+             </p:commandButton> 
+	      </p:column>
+	      
+	  </p:dataTable>
+
+</ui:composition>

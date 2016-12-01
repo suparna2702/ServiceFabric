@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:sec="http://www.springframework.org/security/tags"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p>#{partnerProgramDetailView.partnerProgram.description}</p>
+
+	<!-- The other information Tab -->
+	<div class="span9">
+		<ul class="nav nav-tabs nav-append-content">
+			<li class="active"><a href="#tabDetails"><i
+					class="fui-tag mrm"></i>About</a></li>
+			<li><a href="#tabRelationshipCategory"><i
+					class="fui-list-bulleted mrm"></i>Partner Relationship Category</a></li>
+			<li><a href="#tabBenifits"><i
+					class="fui-checkbox-checked mrm"></i>Benefits</a></li>
+
+		</ul>
+
+		<div class="tab-content">
+
+			<div class="tab-pane active" id="tabDetails">
+				<ui:include src="/partner/partnerProgramDetails.xhtml" />
+			</div>
+
+			<div class="tab-pane" id="tabRelationshipCategory">
+				<ui:include src="/partner/partnerProgramRelationshipCategory.xhtml" />
+			</div>
+
+			<div class="tab-pane" id="tabBenifits">
+				<ui:include src="/partner/partnerProgramBenifits.xhtml" />
+			</div>
+
+		</div>
+	</div>
+
+</ui:composition>

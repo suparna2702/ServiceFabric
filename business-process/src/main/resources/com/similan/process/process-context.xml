@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+                           http://www.springframework.org/schema/util 
+                           http://www.springframework.org/schema/util/spring-util-3.1.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+  <context:component-scan base-package="com.similan.process.config" />
+
+  <import resource="classpath:/com/similan/process/process-invite-context.xml" />
+  <import resource="classpath:/com/similan/process/process-account-context.xml" />
+  <import resource="classpath:/com/similan/process/process-business-context.xml" />
+  <import resource="classpath:/com/similan/process/process-collaboration-workspace-context.xml" />
+  <import resource="classpath:/com/similan/process/process-lead-context.xml" />
+  <import resource="classpath:/com/similan/process/process-partner-context.xml" />
+  <import resource="classpath:/com/similan/process/existing-partner-invite.xml" />
+
+  <bean id="acceptedMemberAssociationEmailSendAction" class="com.similan.process.action.SendEmailAction">
+    <property name="templateName" value="existingMemberInviteAcceptedEmail.vm" />
+  </bean>
+
+  <bean id="rejectedMemberAssociationEmailSendAction" class="com.similan.process.action.SendEmailAction">
+    <property name="templateName" value="existingMemberInviteRejectedEmail.vm" />
+  </bean>
+
+  <bean id="welcomeEmailSendAction" class="com.similan.process.action.SendEmailAction">
+    <property name="templateName" value="memberWelcomeEmail.vm" />
+  </bean>
+
+  <bean id="newMemberInvitationEmailSendAction" class="com.similan.process.action.SendEmailAction">
+    <property name="templateName" value="memberInviteEmail.vm" />
+  </bean>
+
+  <bean id="existingMemberInvitationEmailSendAction" class="com.similan.process.action.SendEmailAction">
+    <property name="templateName" value="existingMemberInviteEmail.vm" />
+  </bean>
+
+  <bean id="memberValidationDecision" class="com.similan.process.action.DecisionStateAction">
+    <property name="decisionMap">
+      <map>
+        <entry key="validExistingMember" value="to_Send_Existing_Member_Validation_Email" />
+        <entry key="validNewMember" value="to_Send_New_Member_Validation_Email" />
+        <entry key="inValid" value="to_error2" />
+      </map>
+    </property>
+  </bean>
+
+  <bean id="memberEmailValidationDecision" class="com.similan.process.action.DecisionStateAction">
+    <property name="decisionMap">
+      <map>
+        <entry key="valid" value="to_Send_Welcome_Email" />
+        <entry key="inValid" value="to_error1" />
+      </map>
+    </property>
+  </bean>
+
+  <bean id="existingMemberEmailValidationDecision" class="com.similan.process.action.DecisionStateAction">
+    <property name="decisionMap">
+      <map>
+        <entry key="accepted" value="to_Existing_Member_Accept_Invite" />
+        <entry key="rejected" value="to_Existing_Member_Reject_Invite" />
+      </map>
+    </property>
+  </bean>
+</beans>

@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<p:accordionPanel>
+       <p:tab title="Statistics"> 		
+	    <h:panelGrid columns="3">
+	        <h:panelGroup >
+	            <h:panelGrid columns="2" style="margin-right:40px">
+		                <h:graphicImage library="img" name="view16.png" width="12"
+							   height="12" title="View count" styleClass="smallIcon" style="margin-bottom:10px;margin-right:5px"/>
+		                <h:outputText value="Viewed #{docWorkspaceDocumentDetailView.docStatistics.vieweCount}" 
+						              style="font-size:x-small"/>
+
+		                <h:graphicImage library="img" name="like16.png" width="12"
+							   height="12" title="Like count" styleClass="smallIcon" style="margin-bottom:10px;margin-right:5px"/>
+		                <h:outputText value="Liked #{docWorkspaceDocumentDetailView.docStatistics.likeCount}" 
+						             style="font-size:x-small"/>
+
+		                <h:graphicImage library="img" name="share16.png" width="12"
+							   height="12" title="Share count" styleClass="smallIcon" style="margin-bottom:10px;margin-right:5px"/>
+		                <h:outputText value="Shared #{docWorkspaceDocumentDetailView.docStatistics.shareCount}" 
+						           style="font-size:x-small"/>
+	            </h:panelGrid>
+	        </h:panelGroup>	        
+	        <h:panelGroup>
+	        	<h:panelGrid columns="2" style="margin-right:40px">
+		        	    <h:graphicImage library="img" name="comment16.png" width="12"
+							   height="12" title="Comment count" styleClass="smallIcon" style="margin-bottom:10px;margin-right:5px"/>
+		        	    <h:outputText value="Commented #{docWorkspaceDocumentDetailView.docStatistics.commentCount}" 
+						              style="font-size:x-small"/>
+
+		        	    <h:graphicImage library="img" name="review16.png" width="12"
+							   height="12" title="Review count" styleClass="smallIcon" style="margin-bottom:10px;margin-right:5px"/>
+		                <h:outputText value="Reviewed #{docWorkspaceDocumentDetailView.docStatistics.reviewCount}" 
+						            style="font-size:x-small"/>
+
+		                <h:graphicImage library="img" name="approve16.png" width="12"
+							   height="12" title="Approve count" styleClass="smallIcon" style="margin-bottom:10px;margin-right:5px"/>
+		                <h:outputText value="Approved #{docWorkspaceDocumentDetailView.docStatistics.approveCount}" 
+						        style="font-size:x-small"/>
+	            </h:panelGrid>       
+	        </h:panelGroup>
+	        <h:panelGroup>
+	            <h:panelGrid columns="2">
+		                <h:graphicImage library="img" name="edit16.png" width="12"
+							   height="12" title="Download count" styleClass="smallIcon" style="margin-bottom:10px;margin-right:5px"/>
+		                <h:outputText value="Modified #{docWorkspaceDocumentDetailView.docStatistics.modificationCount}" 
+						          style="font-size:x-small"/>
+
+		                <h:graphicImage library="img" name="download16.png" width="12"
+							   height="12" title="Download count" styleClass="smallIcon" style="margin-bottom:10px;margin-right:5px"/>
+		                <h:outputText value="Downloaded #{docWorkspaceDocumentDetailView.docStatistics.downloadCount}" 
+						           style="font-size:x-small"/>
+	            </h:panelGrid>
+	        </h:panelGroup>
+	    </h:panelGrid>
+	   </p:tab>
+	</p:accordionPanel>
+</ui:composition>

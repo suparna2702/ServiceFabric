@@ -1,0 +1,181 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:custom="http://www.businessreach.com/custom"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/basemenulayout.xhtml">
+
+	<ui:param name="newContent" value="true" />
+	<ui:param name="skipToolbar" value="true" />
+	<ui:define name="title">Add/ Edit Product</ui:define>
+	<ui:define name="centerContent">
+
+		<div class="row-fluid">
+			<div class="span12">
+				<div class="iconbar iconbar-horizontal">
+					<ul>
+						<li><a href="#{root}/member/memberHome.xhtml"
+							class="fui-home" rel="tooltip" data-placement="bottom"
+							title="My Network"></a></li>
+
+						<li><a href="#{root}/product/productManagement.xhtml"
+							class="fui-list-thumbnailed" rel="tooltip"
+							data-placement="bottom" title="Manage Products"></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="old-content">
+			<div class="row-fluid">
+				<div class="span12">
+					<h:form id="form" prependId="false" enctype="multipart/form-data">
+						<p:outputPanel id="addProductPanel" layout="block">
+							<p:panel>
+								<h:panelGrid columns="2">
+
+									<h:panelGroup id="productLogoPanel" styleClass="image-thumb"
+										layout="block">
+
+										<p:graphicImage id="productLogoPhoto"
+											value="/spring/assets#{productView.productLogo}" />
+										<p:commandButton id="imageAddButton"
+											styleClass="imageAddButtonOverlay"
+											rendered="#{productView.productLogoExists == false}"
+											onclick="dlg.show();" title="Add product logo" value="">
+										</p:commandButton>
+										<p:commandButton id="imageUpdateButton"
+											styleClass="imageAddButtonOverlay"
+											rendered="#{productView.productLogoExists == true}"
+											onclick="confirmation.show();" value=""
+											title="Update Product Logo">
+										</p:commandButton>
+										<p:commandButton id="imageDeleteButton"
+											onclick="deleteConfirmation.show();"
+											rendered="#{productView.productLogoExists == true}"
+											styleClass="imageRemoveButtonOverlay" value=""
+											title="Remove Product Logo">
+											<f:param name="productId" value="20" />
+										</p:commandButton>
+
+									</h:panelGroup>
+
+									<h:panelGroup>
+
+										<p:dialog id="logoUploadDialog" resizable="false" modal="true"
+											showEffect="explode" header="Upload Logo" widgetVar="dlg">
+											<p:fileUpload
+												fileUploadListener="#{productView.handleLogoUpload}"
+												auto="true" mode="advanced" oncomplete="dlg.hide()"
+												id="fileUpload" sizeLimit="1048576"
+												update="productLogoPhoto productLogoPanel"
+												render="productLogoPanel"
+												allowTypes="/(\.|\/)(gif|jpe?g|png)$/">
+											</p:fileUpload>
+										</p:dialog>
+
+										<p:confirmDialog id="confirmDialog"
+											message="Are you sure you want to replace your existing logo?"
+											header="Change Logo" severity="alert"
+											widgetVar="confirmation">
+											<p:commandButton id="confirm" value="Yes"
+												oncomplete="confirmation.hide(); dlg.show();" />
+											<p:commandButton id="decline" value="No"
+												onclick="confirmation.hide()" type="button" />
+										</p:confirmDialog>
+										<p:confirmDialog id="deleteConfirm"
+											message="Are you sure you want to delete your existing logo?"
+											header="Delete Logo" severity="alert"
+											widgetVar="deleteConfirmation">
+											<p:commandButton id="deleteLogoConfirm" immediate="true"
+												value="Yes" update="productLogoPhoto productLogoPanel"
+												render="productLogoPanel"
+												oncomplete="deleteConfirmation.hide();"
+												action="#{productView.deleteLogo}" />
+											<p:commandButton id="deleteLogoDecline" value="No"
+												onclick="deleteConfirmation.hide()" type="button" />
+										</p:confirmDialog>
+									</h:panelGroup>
+
+									<h3>Type</h3>
+									<p:selectOneRadio id="productType"
+										value="#{productView.productNodeType}"
+										style="margin-top:5px;margin-bottom:5px">
+										<f:selectItem id="product" itemLabel="Product"
+											itemValue="Product" />
+										<f:selectItem id="service" itemLabel="Service"
+											itemValue="Service" />
+									</p:selectOneRadio>
+
+									<h3>Name</h3>
+									<h:inputText id="productName" styleClass="input-block-level"
+										value="#{productView.name}" required="true"
+										style="margin-bottom:5px;margin-top:10px" size="45"
+										requiredMessage="Enter Product Name">
+										<f:validateLength minimum="5" maximum="50" />
+									</h:inputText>
+
+
+									<h3>Category</h3>
+									<h:inputText id="productCode" styleClass="input-block-level"
+										value="#{productView.productNodeCode}" required="true"
+										requiredMessage="Enter Product Category"
+										style="margin-bottom:5px;margin-top:10px" size="45">
+										<f:validateLength minimum="5" maximum="50" />
+									</h:inputText>
+
+									<h3>Description</h3>
+									<p:editor id="productDescription"
+										styleClass="input-block-level"
+										style="margin-bottom:10px;margin-top:5px"
+										value="#{productView.description}" />
+
+									<ui:fragment rendered="#{not empty productView.product}">
+										<h3>Tag</h3>
+									</ui:fragment>
+
+									<ui:fragment rendered="#{not empty productView.product}">
+										<ui:include src="/product/addProductTag.xhtml" />
+									</ui:fragment>
+
+									<ui:fragment rendered="#{not empty productView.product}">
+										<h3>Feature</h3>
+									</ui:fragment>
+
+									<ui:fragment rendered="#{not empty productView.product}">
+										<ui:include src="/product/addProductFeature.xhtml" />
+									</ui:fragment>
+
+								</h:panelGrid>
+							</p:panel>
+
+							<p:commandButton rendered="#{empty productView.product}"
+								id="newProductBtn" styleClass="btn btn-info btn-small"
+								action="#{productView.saveProduct}"
+								process="@this addProductPanel" value="Save"
+								style="margin-top:10px" />
+
+							<p:commandButton rendered="#{not empty productView.product}"
+								id="updateProductBtn" styleClass="btn btn-info btn-small"
+								action="#{productView.updateProduct}"
+								process="@this addProductPanel" value="Update"
+								style="margin-top:10px" />
+
+						</p:outputPanel>
+
+					</h:form>
+				</div>
+			</div>
+		</div>
+
+		<script language="javascript">
+			$(document).ready(function() {
+				$("[rel='tooltip']").tooltip();
+			})
+		</script>
+
+
+	</ui:define>
+</ui:composition>

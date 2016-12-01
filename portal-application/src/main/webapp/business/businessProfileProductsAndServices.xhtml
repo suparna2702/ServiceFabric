@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:sec="http://www.springframework.org/security/tags"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<c:if test="#{not empty orgPublicView.productList}">
+	
+	 <ui:repeat var="productModel" value="#{orgPublicView.productList}">
+		
+		<!-- Product Information -->
+        <div class="row-fluid product-row">
+            <div class="span1">
+			    <p:graphicImage value="/spring/assets#{productModel.imageLocation}" 
+						styleClass="img-rounded img-responsive"/>
+            </div>
+            <div class="span10">
+                <strong>#{productModel.product.key.name}</strong><br></br>
+                <h:outputText id="productDescr" value="#{productModel.product.description}" escape="false" />
+            </div>
+            <div class="span1 dropdown-product" data-for=".cyruxx">
+                <i class="icon-chevron-down text-muted"></i>
+            </div>
+        </div>
+        <div class="row-fluid user-infos cyruxx">
+            <div class="span10 offset1">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">#{productModel.product.key.name} Details</h3>
+                    </div>
+                    
+                    <!-- Product Tags -->
+                    <div class="panel-body">
+                        <div class="row-fluid">
+                            <div class="span9">
+                                <br></br>
+                                <c:if test="#{productModel.tags != 'null'}">
+								    
+								    <ui:repeat var="tag" value="#{productModel.tags}">
+									   <span class="label label-large mrm">#{tag.key.name}</span>
+									</ui:repeat>
+									
+                                </c:if>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Product Features -->
+                    <div class="panel-body">
+                        <div class="row-fluid">
+                            <div class="span9">
+                               <c:if test="#{productModel.tags != 'null'}">
+                                  <div class="caption">  
+				                    <h3>Features</h3> 
+				                    <ui:repeat var="feature" value="#{productModel.features}">
+				                       <p><i class="fui-radio-unchecked mrm"></i><b>#{feature.name}</b></p>
+				                       <p>#{feature.description}</p>  
+				                    </ui:repeat> 
+				                 </div>
+                              </c:if>
+ 				             </div>
+                        </div>
+                    </div>
+                    
+                    <div class="panel-footer">
+							<button class="btn  btn-primary" type="button"
+									rel="tooltip"
+									title="Share with others"><i class="icon-share icon-white"></i>
+							</button>
+                            <button class="btn btn-info" type="button"
+                                    rel="tooltip"
+                                    title="View associated documents"><i class="icon-book icon-white"></i>
+							</button>
+                            <button class="btn btn-primary" type="button"
+                                    rel="tooltip"
+                                    title="Bookmark"><i class="icon-star icon-white"></i>
+							</button>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- Product Information -->
+        
+        <br></br>
+        <br></br>   
+		</ui:repeat>
+	</c:if>
+	
+	<script language="javascript">
+       $(document).ready(function(){
+	       $("[rel='tooltip']").tooltip();
+       })
+    </script>
+</ui:composition>

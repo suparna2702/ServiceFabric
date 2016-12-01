@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd"
+	logicalFilePath="com/similan/domain/db/00018-partner-admin-invitereminder-notification-emialtemplate-fix.db.xml">
+
+	<changeSet
+		id="VelocityDocumentTemplate-memberJoinNotification-Temaplate"
+		author="suparna">
+
+		<preConditions onFail="MARK_RAN">
+			<sqlCheck expectedResult="1">
+				select count(*) from
+				VelocityDocumentTemplate
+				where
+				name='memberJoinNotification.vm'
+			</sqlCheck>
+		</preConditions>
+
+		<update tableName="VelocityDocumentTemplate">
+			<column name="templatecontent">
+        
+       <![CDATA[
+Partner Program Invitation Reminder Notification!
+<html>
+#parse("memberJoinNotification.vm")
+<body>
+
+#parse("emailHeader.vm")
+
+<h4 class="h4">
+  Hi
+</h4> 
+
+  <h3>Join Business Reach Network - Network for collaborating Businesses </h3>
+  <p>
+    <strong>$firstName $lastName</strong> from <strong>$business</strong> please click
+     the URL to provide necessary information to join Business Reach
+     <a href=${joinUrl}></a>.
+  </p>
+  
+#parse("emailFooter.vm")
+
+</body>
+</html>
+
+]]>
+
+			</column>
+			<where>name = 'memberJoinNotification.vm'</where>
+		</update>
+	</changeSet>
+
+</databaseChangeLog>
